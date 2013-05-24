@@ -1,0 +1,75 @@
+<resources>
+
+    <!-- Profile Tab -->
+    <string name="profileTextUser">User</string>
+    <string name="profileTextServer">Server</string>
+    <string name="profileButtonFavorites">Favorites</string>
+    <string name="profileButtonCheckIn">Check-In</string>
+    <string name="profileButtonSettings">Settings</string>
+    <string name="profileButtonCamera">Camera</string>
+    
+    <string name="profileImageDescriptionUser">User Image</string>
+    <string name="profileImageDescriptionServer">Server Image</string>
+    
+    <!-- Menu Tab -->
+    
+    <!-- Cart Tab -->
+    
+    <string name="app_title">FlashVIP</string>
+    <string name="app_name">FlashVIP v1</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="menu_help">Help</string>
+    <string name="title_activity_main">MainActivity</string>
+	<string name="button_send">Send</string>
+	<string name="edit_message">Enter a message</string>
+	<string name="bar_name">(Select Bar)</string>
+	<string name="feedback_button">Feedback</string>
+	<string name="tab_button">Tab</string><string name="condes_beer">Beers</string>
+    <string name="condes_cocktail">Cocktails</string>
+    <string name="condes_shot">Shots</string>
+    <string name="condes_martini">Martinis</string>
+    <string name="textbox_search_default">Search</string>
+    
+    <string name="condes_imgbut_add">Add to Tab</string>
+    <string name="condes_imgbut_delete">Delete from Tab</string>
+    
+    <string-array name="array_sort_order">
+        <item>↑ Ascending</item>
+        <item>↓ Descending</item>
+    </string-array>
+    
+    <string-array name="array_sort_servers">
+        <item>→ Sort by Name</item>
+        <item>→ Sort by Address</item>
+        <item>→ Sort by City</item>
+        <item>→ Sort by State</item>
+        <item>→ Sort by Zip</item>
+        <item>→ Sort by Phone Number</item>
+    </string-array>
+    
+    <string-array name="array_sort_drinks">
+        <item>→ Sort by Name</item>
+        <item>→ Sort by Price</item>
+        <item>→ Sort by Type</item>
+    </string-array>
+    
+    <string-array name="array_default_alcohols">
+        <item>House Liquor</item>
+    </string-array>
+        
+    <string-array name="array_quantity">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+        <string name="buttonProfileCamera">Camera</string>
+    
+</resources>

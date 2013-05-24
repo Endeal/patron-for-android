@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Defining a container for you List Item-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:gravity="center_vertical" >
+
+<!-- First Row -->
+
+<TextView
+    android:id="@+id/text_server_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dip"
+    android:gravity="left"
+    android:text="@string/app_title"
+    android:textColor="@color/white"
+    android:textSize="@dimen/ListItemSize" />
+
+<TextView
+    android:id="@+id/text_server_phone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="4dip"
+    android:layout_toLeftOf="@+id/cbox_server_favorite"
+    android:layout_alignTop="@+id/text_server_name"
+    android:text="@string/app_title" />
+
+<CheckBox
+    android:id="@+id/cbox_server_favorite"
+    style="@style/DarkTheme"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:layout_alignParentRight="true"
+    android:focusable="false" />
+
+<!-- Second Row -->
+
+<TextView
+    android:id="@+id/text_server_address"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dip"
+    android:gravity="left"
+    android:layout_below="@+id/text_server_name"
+    android:text="@string/app_title" />
+
+</RelativeLayout>
