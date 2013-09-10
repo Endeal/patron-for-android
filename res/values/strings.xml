@@ -16,7 +16,12 @@
     <!-- Menu Tab -->
     
     <!-- Cart Tab -->
+    <string name="cartButtonPlaceOrder">Place Order</string>
+    <string name="cartButtonViewCodes">View Codes</string>
     
+    <string name="cartButtonDesc"
+    
+    <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>
     <string name="app_name">FlashVIP v1</string>
     <string name="hello_world">Hello world!</string>
