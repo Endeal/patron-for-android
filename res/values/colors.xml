@@ -24,4 +24,7 @@
     <color
         name="spinner_alcohol"
         >#888888</color>
+    <color
+        name="red"
+        >#FF0000</color>
 </resources>

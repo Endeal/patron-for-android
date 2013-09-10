@@ -78,9 +78,9 @@ public class FlashClient extends Activity
         super.onCreate(savedInstanceState);
         setTitle("Flash VIP");
         Globals.setContext(this);
-        setContentView(R.layout.activity_main);
-        setXmlElements();
-        updateAll();
+        setContentView(R.layout.layout_main);
+        //setXmlElements();
+        //updateAll();
     }
 
     @Override

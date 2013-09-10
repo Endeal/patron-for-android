@@ -1,4 +1,6 @@
 <resources>
+    
+    <!-- Manifest -->
 
     <!-- Profile Tab -->
     <string name="profileTextUser">User</string>
@@ -15,7 +17,7 @@
     
     <!-- Cart Tab -->
     
-    <string name="app_title">FlashVIP</string>
+    <string name="app_title">Flash VIP</string>
     <string name="app_name">FlashVIP v1</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>

@@ -10,7 +10,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
@@ -18,13 +18,17 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="52dp"
+                android:background="@color/white" >
+
             </TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_below="@android:id/tabs"
+                android:background="@color/red" >
 
                 <RelativeLayout
                     android:id="@+id/Profile"
@@ -135,12 +139,20 @@
                     </LinearLayout>
 
                 </RelativeLayout>
-
-                <LinearLayout
+                
+                <RelativeLayout
                     android:id="@+id/Menu"
+                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
-                </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/listView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                    </ListView>
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/Cart"
@@ -148,7 +160,7 @@
                     android:layout_height="match_parent" >
                 </LinearLayout>
             </FrameLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </TabHost>
 
 </RelativeLayout>

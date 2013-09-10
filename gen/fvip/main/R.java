@@ -23,6 +23,7 @@ public final class R {
         public static final int darkblue=0x7f040003;
         public static final int lightblue=0x7f040004;
         public static final int lightgray=0x7f040005;
+        public static final int red=0x7f040008;
         public static final int spinner=0x7f040006;
         public static final int spinner_alcohol=0x7f040007;
         public static final int white=0x7f040001;
@@ -46,7 +47,7 @@ public final class R {
         public static final int ic_menu_shots=0x7f02000b;
     }
     public static final class id {
-        public static final int Cart=0x7f0a001e;
+        public static final int Cart=0x7f0a001f;
         public static final int Menu=0x7f0a001d;
         public static final int Profile=0x7f0a0011;
         public static final int SearchBar1=0x7f0a0004;
@@ -56,16 +57,16 @@ public final class R {
         public static final int buttonProfileCheckIn=0x7f0a001a;
         public static final int buttonProfileFavorites=0x7f0a0019;
         public static final int buttonProfileSettings=0x7f0a001b;
-        public static final int cbox_favorite=0x7f0a0026;
-        public static final int cbox_server_favorite=0x7f0a0029;
-        public static final int cbox_tab_favorite=0x7f0a0032;
+        public static final int cbox_favorite=0x7f0a0027;
+        public static final int cbox_server_favorite=0x7f0a002a;
+        public static final int cbox_tab_favorite=0x7f0a0033;
         public static final int cocktail_imgbut=0x7f0a000d;
         public static final int drop_sort_order=0x7f0a0007;
         public static final int drop_sort_servers=0x7f0a0006;
         public static final int imageProfileServer=0x7f0a0014;
         public static final int imageProfileUser=0x7f0a0013;
-        public static final int imgbut_add=0x7f0a001f;
-        public static final int imgbut_delete=0x7f0a002b;
+        public static final int imgbut_add=0x7f0a0020;
+        public static final int imgbut_delete=0x7f0a002c;
         public static final int imgbut_search=0x7f0a0005;
         public static final int layoutProfileButtons=0x7f0a0018;
         public static final int layoutProfilePictures=0x7f0a0012;
@@ -73,46 +74,48 @@ public final class R {
         public static final int linearLayout1=0x7f0a0000;
         public static final int linearLayout2=0x7f0a0008;
         public static final int linearLayout3=0x7f0a0009;
+        public static final int listView1=0x7f0a001e;
         public static final int list_home=0x7f0a000b;
-        public static final int list_main_text=0x7f0a0033;
+        public static final int list_main_text=0x7f0a0034;
         public static final int martini_imgbut=0x7f0a000f;
-        public static final int menu_feedback=0x7f0a0036;
-        public static final int menu_help=0x7f0a0038;
-        public static final int menu_settings=0x7f0a0037;
+        public static final int menu_feedback=0x7f0a0037;
+        public static final int menu_help=0x7f0a0039;
+        public static final int menu_settings=0x7f0a0038;
         public static final int progress_bar_1=0x7f0a000a;
         public static final int searchLayout=0x7f0a0003;
         public static final int shot_imgbut=0x7f0a000e;
-        public static final int spinnerTarget=0x7f0a0035;
-        public static final int spinner_alcohol=0x7f0a0023;
-        public static final int spinner_alcohol_text=0x7f0a0034;
-        public static final int spinner_quantity=0x7f0a0024;
-        public static final int spinner_tab_alcohol=0x7f0a002f;
-        public static final int spinner_tab_quantity=0x7f0a0030;
+        public static final int spinnerTarget=0x7f0a0036;
+        public static final int spinner_alcohol=0x7f0a0024;
+        public static final int spinner_alcohol_text=0x7f0a0035;
+        public static final int spinner_quantity=0x7f0a0025;
+        public static final int spinner_tab_alcohol=0x7f0a0030;
+        public static final int spinner_tab_quantity=0x7f0a0031;
         public static final int tabHostMain=0x7f0a0010;
         public static final int tab_button=0x7f0a0002;
         public static final int textServer=0x7f0a0017;
         public static final int textUser=0x7f0a0016;
-        public static final int text_alcohol=0x7f0a0021;
-        public static final int text_name=0x7f0a0020;
-        public static final int text_price=0x7f0a0022;
-        public static final int text_server_address=0x7f0a002a;
-        public static final int text_server_name=0x7f0a0027;
-        public static final int text_server_phone=0x7f0a0028;
-        public static final int text_tab_alcohol=0x7f0a002d;
-        public static final int text_tab_name=0x7f0a002c;
-        public static final int text_tab_price=0x7f0a002e;
-        public static final int text_tab_type=0x7f0a0031;
-        public static final int text_type=0x7f0a0025;
+        public static final int text_alcohol=0x7f0a0022;
+        public static final int text_name=0x7f0a0021;
+        public static final int text_price=0x7f0a0023;
+        public static final int text_server_address=0x7f0a002b;
+        public static final int text_server_name=0x7f0a0028;
+        public static final int text_server_phone=0x7f0a0029;
+        public static final int text_tab_alcohol=0x7f0a002e;
+        public static final int text_tab_name=0x7f0a002d;
+        public static final int text_tab_price=0x7f0a002f;
+        public static final int text_tab_type=0x7f0a0032;
+        public static final int text_type=0x7f0a0026;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int layout_main=0x7f030001;
-        public static final int list_item_drink=0x7f030002;
-        public static final int list_item_server=0x7f030003;
-        public static final int list_item_tab_drink=0x7f030004;
-        public static final int list_main_layout=0x7f030005;
-        public static final int spinner_alcohol_layout=0x7f030006;
-        public static final int spinner_layout=0x7f030007;
+        public static final int layout_profile=0x7f030002;
+        public static final int list_item_drink=0x7f030003;
+        public static final int list_item_server=0x7f030004;
+        public static final int list_item_tab_drink=0x7f030005;
+        public static final int list_main_layout=0x7f030006;
+        public static final int spinner_alcohol_layout=0x7f030007;
+        public static final int spinner_layout=0x7f030008;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;
@@ -145,7 +148,8 @@ public final class R {
         public static final int profileImageDescriptionServer=0x7f060007;
         public static final int profileImageDescriptionUser=0x7f060006;
         public static final int profileTextServer=0x7f060001;
-        /**  Profile Tab 
+        /**  Manifest 
+ Profile Tab 
          */
         public static final int profileTextUser=0x7f060000;
         public static final int tab_button=0x7f060013;
