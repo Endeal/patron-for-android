@@ -5,10 +5,10 @@
     <!-- Profile Tab -->
     <string name="profileTextUser">User</string>
     <string name="profileTextServer">Server</string>
+    <string name="profileButtonMenu">Menu</string>
+    <string name="profileButtonCart">Cart</string>
+    <string name="profileButtonCodes">Codes</string>
     <string name="profileButtonFavorites">Favorites</string>
-    <string name="profileButtonCheckIn">Check-In</string>
-    <string name="profileButtonSettings">Settings</string>
-    <string name="profileButtonCamera">Camera</string>
     
     <string name="profileImageDescriptionUser">User Image</string>
     <string name="profileImageDescriptionServer">Server Image</string>
@@ -18,8 +18,6 @@
     <!-- Cart Tab -->
     <string name="cartButtonPlaceOrder">Place Order</string>
     <string name="cartButtonViewCodes">View Codes</string>
-    
-    <string name="cartButtonDesc"
     
     <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>

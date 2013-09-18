@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -78,7 +77,7 @@ public class FlashClient extends Activity
         super.onCreate(savedInstanceState);
         setTitle("Flash VIP");
         Globals.setContext(this);
-        setContentView(R.layout.layout_main);
+        setContentView(R.layout.layout_profile);
         //setXmlElements();
         //updateAll();
     }
