@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Defining a container for you List Item-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<!-- First Row -->
+
+<TextView
+    android:id="@+id/locationListItemTextName"
+    style="@style/StyleLocationListItemTextName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_toLeftOf="@+id/locationListItemTextPhone"
+    android:layout_alignParentTop="true"
+    android:layout_margin="10dip" />
+
+<TextView
+    android:id="@+id/locationListItemTextPhone"
+    style="@style/StyleLocationListItemTextPhone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/locationListItemToggleButtonFavorite"
+    android:layout_alignTop="@+id/locationListItemTextName"
+    android:layout_marginRight="10dip" />
+
+<ToggleButton
+    android:id="@+id/locationListItemToggleButtonFavorite"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:focusable="false" />
+
+<!-- Second Row -->
+
+<TextView
+    android:id="@+id/locationListItemTextAddress"
+    style="@style/StyleLocationListItemTextAddress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_toLeftOf="@+id/locationListItemToggleButtonFavorite"
+    android:layout_below="@+id/locationListItemTextName"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:paddingBottom="10dp" />
+
+</RelativeLayout>

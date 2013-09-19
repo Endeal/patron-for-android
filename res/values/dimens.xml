@@ -2,4 +2,55 @@
 <resources>
 
     <dimen name="SpinnerPadding">6dp</dimen>
-    <dimen name="ListItemSize">16dip</dimen></resources>
+    <dimen name="ListItemSize">16dip</dimen>
+    
+    <!-- Home Screen -->
+    <dimen name="dimHomeTextUser">15sp</dimen>
+    <dimen name="dimHomeTextLocation">15sp</dimen>
+    <dimen name="dimHomeButtonMenuText">12sp</dimen>
+    <dimen name="dimHomeButtonCartText">12sp</dimen>
+    <dimen name="dimHomeButtonCodesText">12sp</dimen>
+    <dimen name="dimHomeButtonFavoritesText">12sp</dimen>
+    
+    <!-- Menu Screen -->
+    <dimen name="dimMenuButtonCheckoutText">16sp</dimen>
+    <dimen name="dimMenuButtonFavoritesText">8sp</dimen>
+    <dimen name="dimMenuButtonBeerText">8sp</dimen>
+    <dimen name="dimMenuButtonShotsText">8sp</dimen>
+    <dimen name="dimMenuButtonCocktailsText">8sp</dimen>
+    <dimen name="dimMenuButtonMartinisText">8sp</dimen>
+    <dimen name="dimMenuButtonWineText">8sp</dimen>
+    <dimen name="dimMenuListItemsDividerHeight">3px</dimen>
+    
+    <!-- Cart Screen -->
+    <dimen name="dimCartButtonFinishText">20sp</dimen>
+    
+    <!-- Location List -->
+    <dimen name="dimLocationListDividerHeight">3px</dimen>
+    
+    <!-- Location List Item -->
+    <dimen name="dimLocationListItemTextName">15sp</dimen>
+    <dimen name="dimLocationListItemTextAddress">11sp</dimen>
+    <dimen name="dimLocationListItemTextPhone">15sp</dimen>
+    
+    <!-- Product List Item -->
+    <dimen name="dimProductListItemTextName">12sp</dimen>
+    <dimen name="dimProductListItemTextType">12sp</dimen>
+    <dimen name="dimProductListItemTextAlcohol">12sp</dimen>
+    <dimen name="dimProductListItemTextPrice">24sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextAlcohol">12sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextQuantity">12sp</dimen>
+    
+    <!-- Cart List Item -->
+    <dimen name="dimCartListItemTextName">12sp</dimen>
+    <dimen name="dimCartListItemTextType">12sp</dimen>
+    <dimen name="dimCartListItemTextAlcohol">12sp</dimen>
+    <dimen name="dimCartListItemTextPrice">12sp</dimen>
+    <dimen name="dimCartListItemSpinnerTextAlcohol">12sp</dimen>
+    <dimen name="dimCartListItemSpinnerTextQuantity">12sp</dimen>
+    
+    <!-- Miscellaneous UI Elements -->
+    <dimen name="dimMiscTextNoLocations">18sp</dimen>
+    <dimen name="dimMiscTextNoItems">18sp</dimen>
+    
+</resources>

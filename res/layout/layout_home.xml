@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- The Linear Layout containing the
+        User and Server images. -->
+    <LinearLayout
+        android:id="@+id/homeLayoutProfilePictures"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <ImageView
+            android:id="@+id/homeImageProfileUser"
+            android:contentDescription="@string/homeImageDescriptionUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_default_profile_user_selected" />
+
+        <ImageView
+            android:id="@+id/homeImageProfileServer"
+            android:contentDescription="@string/homeImageDescriptionServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_default_profile_server_selected" />
+    </LinearLayout>
+
+    <!-- The Linear Layout containing the text for the
+        User & Server names. -->
+    <LinearLayout
+        android:id="@+id/homeLayoutProfileText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeLayoutProfilePictures"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/homeTextUser"
+            style="@style/StyleHomeTextUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/homeTextLocation"
+            style="@style/StyleHomeTextLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <!-- The Linear Layout containing the
+        buttons for Menu, Cart, Codes, & Favorites -->
+    <LinearLayout
+        android:id="@+id/homeLayoutProfileButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/homeLayoutProfileText"
+        android:layout_marginTop="20dp"
+        android:weightSum="4" >
+
+        <Button
+            android:id="@+id/homeButtonMenu"
+            style="@style/StyleHomeButtonMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/homeButtonMenu" />
+
+        <Button
+            android:id="@+id/homeButtonCart"
+            style="@style/StyleHomeButtonCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/homeButtonCart" />
+
+        <Button
+            android:id="@+id/homeButtonCodes"
+            style="@style/StyleHomeButtonCodes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/homeButtonCodes" />
+
+        <Button
+            android:id="@+id/homeButtonFavorites"
+            style="@style/StyleHomeButtonFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/homeButtonFavorites" />
+
+    </LinearLayout>
+
+</RelativeLayout>

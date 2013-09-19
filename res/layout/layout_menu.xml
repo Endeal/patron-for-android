@@ -5,12 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- The main list of items -->
+
     <ListView
-        android:id="@+id/listMenu"
+        android:id="@+id/menuListItems"
+        style="@style/StyleMenuListItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/menuHorizontalScrollViewTypes"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
+
     </ListView>
+    
+    <!-- The checkout button -->
+
+    <Button
+        android:id="@+id/menuButtonCheckout"
+        style="@style/StyleMenuButtonCheckout"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
+    <!-- The scroll view for the types of drinks -->
+    <HorizontalScrollView
+        android:id="@+id/menuHorizontalScrollViewTypes"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/menuButtonCheckout" >
+
+        <LinearLayout
+            android:id="@+id/menuLayoutTypes"
+            style="@style/StyleMenuLayoutTypes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+            
+            <!-- The buttons for selecting each drink type -->
+            
+            <Button
+                android:id="@+id/menuButtonFavorites"
+                style="@style/StyleMenuButtonFavorites"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+            <Button
+                android:id="@+id/menuButtonBeer"
+                style="@style/StyleMenuButtonBeer"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+            <Button
+                android:id="@+id/menuButtonShots"
+                style="@style/StyleMenuButtonShots"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+            <Button
+                android:id="@+id/menuButtonCocktails"
+                style="@style/StyleMenuButtonCocktails"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+            <Button
+                android:id="@+id/menuButtonMartinis"
+                style="@style/StyleMenuButtonMartinis"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+            <Button
+                android:id="@+id/menuButtonWine"
+                style="@style/StyleMenuButtonWine"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_margin="10dp" />
+            
+        </LinearLayout>
+    </HorizontalScrollView>
     
 </RelativeLayout>

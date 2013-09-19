@@ -2,22 +2,56 @@
     
     <!-- Manifest -->
 
-    <!-- Profile Tab -->
-    <string name="profileTextUser">User</string>
-    <string name="profileTextServer">Server</string>
-    <string name="profileButtonMenu">Menu</string>
-    <string name="profileButtonCart">Cart</string>
-    <string name="profileButtonCodes">Codes</string>
-    <string name="profileButtonFavorites">Favorites</string>
+    <!-- Home Screen -->
+    <string name="homeTextUser">User</string>
+    <string name="homeTextLocation">Location</string>
+    <string name="homeButtonMenu">Menu</string>
+    <string name="homeButtonCart">Cart</string>
+    <string name="homeButtonCodes">Codes</string>
+    <string name="homeButtonFavorites">Favorites</string>
     
-    <string name="profileImageDescriptionUser">User Image</string>
-    <string name="profileImageDescriptionServer">Server Image</string>
+    <string name="homeImageDescriptionUser">User Image</string>
+    <string name="homeImageDescriptionServer">Server Image</string>
     
-    <!-- Menu Tab -->
+    <string name="homeImageButtonDescriptionMenu">Menu</string>
+    <string name="homeImageButtonDescriptionCart">Cart</string>
+    <string name="homeImageButtonDescriptionCodes">Codes</string>
+    <string name="homeImageButtonDescriptionFavorites">Favorites</string>
     
-    <!-- Cart Tab -->
-    <string name="cartButtonPlaceOrder">Place Order</string>
-    <string name="cartButtonViewCodes">View Codes</string>
+    <!-- Menu Screen -->
+    <string name="menuButtonCheckout">Checkout</string>
+    <string name="menuButtonFavorites">Favorites</string>
+    <string name="menuButtonBeer">Beer</string>
+    <string name="menuButtonShots">Shots</string>
+    <string name="menuButtonCocktails">Cocktails</string>
+    <string name="menuButtonMartinis">Martinis</string>
+    <string name="menuButtonWine">Wine</string>
+    
+    <!-- Cart Screen -->
+    <string name="cartButtonFinish">Close Tab</string>
+    
+    <string name="menuImageButtonDescriptionDelete">Delete from Tab</string>
+    
+    <!-- Location List Item -->
+    <string name="locationListItemTextName">John\'s</string>
+    <string name="locationListItemTextAddress">Los Angeles, 100 Olympia Avenue, CA 90091</string>
+    <string name="locationListItemTextPhone">(852) 928&#8211;8737</string>
+    
+    <!-- Product List Item -->
+    <string name="productListItemTextName">Budweiser</string>
+    <string name="productListItemTextType">Domestic Beer</string>
+    <string name="productListItemTextAlcohol">None</string>
+    <string name="productListItemTextPrice">$2.00</string>
+    
+    <string name="productListItemImageButtonDescriptionAdd">Add to Tab</string>
+    
+    <!-- Cart List Item -->
+    <string name="cartListItemTextName">Budweiser</string>
+    <string name="cartListItemTextType">Domestic Beer</string>
+    <string name="cartListItemTextAlcohol">None</string>
+    <string name="cartListItemTextPrice">$2.00</string>
+    
+    <string name="cartListItemImageButtonDescriptionDelete">Delete from Tab</string>
     
     <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>
@@ -26,7 +60,20 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_help">Help</string>
-    <string name="title_activity_main">MainActivity</string>
+    
+    <string name="titleActivityHome">Flash VIP</string>
+    <string name="titleActivityMenu">Menu</string>
+    <string name="titleActivityCart">Cart</string>
+    <string name="titleActivityCodes">Codes</string>
+    <string name="titleActivityScan">Scan</string>
+    <string name="titleActivityFavorites">Favorites</string>
+    <string name="titleActivityLocations">Locations</string>
+    <string name="titleActivityProfile">Profile</string>
+    <string name="titleActivitySettings">Settings</string>
+    
+    <string name="miscTextNoLocations">Unable to find any locations.</string>
+    <string name="miscTextNoItems">Unable to find any items on the menu.</string>
+    
 	<string name="button_send">Send</string>
 	<string name="edit_message">Enter a message</string>
 	<string name="bar_name">(Select Bar)</string>
@@ -36,9 +83,6 @@
     <string name="condes_shot">Shots</string>
     <string name="condes_martini">Martinis</string>
     <string name="textbox_search_default">Search</string>
-    
-    <string name="condes_imgbut_add">Add to Tab</string>
-    <string name="condes_imgbut_delete">Delete from Tab</string>
     
     <string-array name="array_sort_order">
         <item>↑ Ascending</item>

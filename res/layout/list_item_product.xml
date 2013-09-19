@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Defining a container for List Item-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<!-- First Row -->
+
+<ToggleButton
+    android:id="@+id/productListItemToggleButtonFavorite"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="4dip" />
+
+<TextView
+    android:id="@+id/productListItemTextName"
+    style="@style/StyleProductListItemTextName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_margin="10dip"
+    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite" />
+
+<Spinner
+    android:id="@+id/productListItemSpinnerAlcohol"
+    style="@layout/spinner_alcohol_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginRight="10dip"
+    android:
+    android:entries="@array/array_default_alcohols"
+    android:focusable="false" />
+
+<!-- Center Row -->
+
+<TextView
+    android:id="@+id/productListItemTextPrice"
+    style="@style/StyleProductListItemTextPrice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toLeftOf="@+id/productListItemSpinnerAlcohol"
+    android:layout_centerVertical="true" />"
+
+<!-- Bottom Row -->
+
+<TextView
+    android:id="@+id/productListItemTextType"
+    style="@style/StyleProductListItemTextType"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
+    android:layout_below="@+id/productListItemTextName"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="20dip"
+    android:layout_marginTop="10dip"
+    android:layout_marginBottom="10dip" />
+
+<TextView
+    android:id="@+id/productListItemTextAlcohol"
+    style="@style/StyleProductListItemTextAlcohol"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/productListItemTextType"
+    android:layout_below="@+id/productListItemTextName"
+    android:layout_margin="10dip" />
+
+<Spinner
+    android:id="@+id/productListItemSpinnerQuantity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/productListItemSpinnerAlcohol"
+    android:layout_marginRight="10dip"
+    android:entries="@array/array_quantity"
+    android:focusable="false" />
+
+</RelativeLayout>

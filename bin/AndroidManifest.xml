@@ -1,33 +1,117 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fvip.main"
+    package="com.flashvip.main"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="7" />
-    
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+        android:targetSdkVersion="18" />
     
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.flashvip.main.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.flashvip.main.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <!-- OPTIONAL - This permission is only necessary if your app has multiple processes -->
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <!-- END OPTIONAL Urban Airship Settings -->
+    
     <application
         android:icon="@drawable/ic_menu_beer"
+        android:allowClearUserData="true"
+        android:enabled="true"
         android:label="@string/app_title"
         android:allowBackup="true">
+        
+        <!-- The Home Screen Activity -->
         <activity
-            android:name="fvip.main.FlashClient"
-            android:label="@string/title_activity_main"
+            android:name="com.flashvip.main.FlashClient"
+            android:label="@string/titleActivityHome"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- The Menu Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashMenu"
+            android:label="@string/titleActivityMenu"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashClient">
+            
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Cart Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashCart"
+            android:label="@string/titleActivityCart"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashMenu">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashMenu" />
+        </activity>
+        
+        <!-- The Locations Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashLocations"
+            android:label="@string/titleActivityLocations"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashClient">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- Urban Airship GCM receivers -->
+        <receiver android:name="com.urbanairship.CoreReceiver" />
+        <receiver android:name="com.urbanairship.push.GCMPushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.flashvip.main" />
+            </intent-filter>
+            <!-- REQUIRED for detecting when the application is upgraded so it can request a new GCM ID -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+        
+        <service android:name="com.urbanairship.push.PushService"
+            android:label="Push Notification Service"/>
+        <service android:name="com.urbanairship.analytics.EventService"
+            android:label="Event Service"/>
+        
+        <!-- This is required for persisting preferences related to push and location -->
+        <provider android:name="com.urbanairship.UrbanAirshipProvider"
+            android:authorities="com.flashvip.main.urbanairship.provider"
+            android:exported="true"
+            android:multiprocess="true" />
+        
+        <!-- OPTIONAL (for segments support) -->
+        <service android:name="com.urbanairship.location.LocationService" android:label="Segments Service"/>
+        
+        <!-- OPTIONAL, if you want to receive push, push opened and registration completed intents -->
+        <!-- Replace the receiver below with your package and class name -->
+        <receiver android:name="com.flashvip.main.NotificationsReceiver" />
+        
     </application>
 
 </manifest>
