@@ -204,7 +204,6 @@ public class FlashClient extends ActionBarActivity
     	text_price = (TextView) ((Activity)Globals.getContext()).findViewById(R.id.productListItemTextPrice);
     	cbox_favorite = (ToggleButton) ((Activity)Globals.getContext()).findViewById(R.id.productListItemToggleButtonFavorite);
     	spinner_alcohol = (Spinner) ((Activity)Globals.getContext()).findViewById(R.id.productListItemSpinnerAlcohol);
-    	spinner_quantity = (Spinner) ((Activity)Globals.getContext()).findViewById(R.id.productListItemSpinnerQuantity);
     	text_alcohol = (TextView) ((Activity)Globals.getContext()).findViewById(R.id.productListItemTextAlcohol);
     	text_type = (TextView) ((Activity)Globals.getContext()).findViewById(R.id.productListItemTextType);
     	
@@ -332,16 +331,14 @@ public class FlashClient extends ActionBarActivity
     				"alcohol",
     				"type",
     				"orders",
-    				"spinnerAlcohol",
-    				"spinnerQuantity"};
+    				"spinnerAlcohol"};
     		
     		int[] to = {R.id.productListItemTextName,
     				R.id.productListItemTextPrice,
     				R.id.productListItemTextAlcohol,
     				R.id.productListItemTextType,
     				R.array.array_quantity,
-    				R.id.productListItemSpinnerAlcohol,
-    				R.id.productListItemSpinnerQuantity};
+    				R.id.productListItemSpinnerAlcohol};
     		
     		for (int i = 0; i < Globals.getAllOrders().size(); i++)
     		{

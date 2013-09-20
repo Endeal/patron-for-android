@@ -1,6 +1,7 @@
 package com.flashvip.db;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -18,12 +19,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.flashvip.main.Drink;
-import com.flashvip.main.FlashClient;
 import com.flashvip.main.FlashLocations;
 import com.flashvip.main.Globals;
 
@@ -115,9 +113,12 @@ public class DrinkConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 					String type = array_type.getString(i);
 					String alcohol = array_alcohol.getString(i);
 					String price = array_price.getString(i);
-					Drink drink = new Drink(id, name, type, alcohol, Double.parseDouble(price));
-					if (type.equals("Premium Liquor"))
+					Drink drink = new Drink(id, name, type, alcohol, Float.parseFloat(price));
+					if (drink.getType() == Drink.Type.PREMIUM)
+					{
+						System.out.println("Added to premiums: " + drink.getName());
 						alcohols.add(drink);
+					}
 					else
 						drinks.add(drink);
 				}

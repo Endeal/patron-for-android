@@ -13,31 +13,31 @@ public class Drink
 {
 	public static enum Alcohol
 	{
-		BRANDY, GIN, HOUSE_LIQUOR, NONE, OTHER, TEQUILA, VODKA, WHISKEY;
+		BRANDY, GIN, HOUSE_LIQUOR, NON_ALCOHOLIC, NONE, OTHER, TEQUILA, VODKA, WHISKEY;
 	}
 	public static enum Type
 	{
-		BEER, COCKTAIL, MARTINI, MIXED, NONE, OTHER, PREMIUM, SHOT;
+		DOMESTIC_BEER, IMPORTED_BEER, COCKTAIL, MARTINI, MIXED, NONE, OTHER, PREMIUM, SHOT, SODA;
 	}
 	
 	private String id;
 	private String name;
 	private Type type;
 	private Alcohol alcohol;
-	private double price;
+	private float price;
 	private boolean topOrder;
 	
 	public Drink()
 	{
 		id = "" + Integer.parseInt(name) + Integer.parseInt(alcohol.toString());
 		name = "";
-		type = Type.BEER;
+		type = Type.DOMESTIC_BEER;
 		alcohol = Alcohol.HOUSE_LIQUOR;
 		price = 0;
 		topOrder = false;
 	}
 	
-	public Drink(String id, String name, Type type, Alcohol alcohol, double price)
+	public Drink(String id, String name, Type type, Alcohol alcohol, float price)
 	{
 		this.id = id;
 		this.name = name;
@@ -56,7 +56,7 @@ public class Drink
 		}
 	}
 	
-	public Drink(String id, String name, String type, String alcohol, double price)
+	public Drink(String id, String name, String type, String alcohol, float price)
 	{
 		this.id = id;
 		this.name = name;
@@ -95,23 +95,30 @@ public class Drink
 	
 	public Alcohol decodeAlcohol(String s)
 	{
+		s = s.toLowerCase(Locale.US);
 		Alcohol a;
-		if (s.equals("Brandy"))
+
+		/* Switch statements with strings only allowed in Java 1.7 & up.
+		 	Android needs Java 1.5 or 1.6. Keep the if-else. */
+		if (s.equals("brandy"))
 			a = Alcohol.BRANDY;
-		else if (s.equals("Gin"))
+		else if (s.equals("gin"))
 			a = Alcohol.GIN;
-		else if (s.equals("House"))
+		else if (s.equals("house liquor"))
 			a = Alcohol.HOUSE_LIQUOR;
-		else if (s.equals("Tequila"))
+		else if (s.equals("non-alcoholic"))
+			a = Alcohol.NON_ALCOHOLIC;
+		else if (s.equals("tequila"))
 			a = Alcohol.TEQUILA;
-		else if (s.equals("Vodka"))
+		else if (s.equals("vodka"))
 			a = Alcohol.VODKA;
-		else if (s.equals("Whiskey"))
+		else if (s.equals("whiskey"))
 			a = Alcohol.WHISKEY;
-		else if (s.equals("Other"))
+		else if (s.equals("other"))
 			a = Alcohol.OTHER;
 		else
 			a = Alcohol.NONE;
+
 		return a;
 	}
 	
@@ -119,23 +126,85 @@ public class Drink
 	{
 		s = s.toLowerCase(Locale.US);
 		Type t;
-		
-		// Switching Strings isn't permitted until Android 1.7. Keep the if-else.
-		if (s.equals("beer"))
-			t = Type.BEER;
+
+		/* Switch statements with strings only allowed in Java 1.7 & up.
+		 	Android needs Java 1.5 or 1.6. Keep the if-else. */
+		if (s.equals("domestic beer"))
+			t = Type.DOMESTIC_BEER;
+		else if (s.equals("imported beer"))
+			t = Type.IMPORTED_BEER;
 		else if (s.equals("cocktail"))
 			t = Type.COCKTAIL;
 		else if (s.equals("martini"))
 			t = Type.MARTINI;
 		else if (s.equals("mixed"))
 			t = Type.MIXED;
-		else if (s.equals("premium"))
+		else if (s.equals("premium liquor"))
 			t = Type.PREMIUM;
 		else if (s.equals("shot"))
 			t = Type.SHOT;
+		else if (s.equals("soda"))
+			t = Type.SODA;
 		else
 			t = Type.OTHER;
+
 		return t;
+	}
+	
+	public static String getAlcoholName(Alcohol a)
+	{
+		String s;
+
+		/* Switch statements with strings only allowed in Java 1.7 & up.
+		 	Android needs Java 1.5 or 1.6. Keep the if-else. */
+		if (a == Alcohol.BRANDY)
+			s = "Brandy";
+		else if (a == Alcohol.GIN)
+			s = "Gin";
+		else if (a == Alcohol.HOUSE_LIQUOR)
+			s = "House Liquor";
+		else if (a == Alcohol.NON_ALCOHOLIC)
+			s = "Non-Alcoholic";
+		else if (a == Alcohol.TEQUILA)
+			s = "Tequila";
+		else if (a == Alcohol.VODKA)
+			s = "Vodka";
+		else if (a == Alcohol.WHISKEY)
+			s = "Whiskey";
+		else if (a == Alcohol.OTHER)
+			s = "Other";
+		else
+			s = "";
+
+		return s;
+	}
+	
+	public static String getTypeName(Type t)
+	{
+		String s;
+		
+		/* Switch statements with strings only allowed in Java 1.7 & up.
+		 	Android needs Java 1.5 or 1.6. Keep the if-else. */
+		if (t == Type.DOMESTIC_BEER)
+			s = "Domestic Beer";
+		else if (t == Type.IMPORTED_BEER)
+			s = "Imported Beer";
+		else if (t == Type.COCKTAIL)
+			s = "Cocktail";
+		else if (t == Type.MARTINI)
+			s = "Martini";
+		else if (t == Type.MIXED)
+			s = "Mixed Drink";
+		else if (t == Type.PREMIUM)
+			s = "Premium Liquor";
+		else if (t == Type.SHOT)
+			s = "Shot";
+		else if (t == Type.SODA)
+			s = "Soda";
+		else
+			s = "Other";
+		
+		return s;
 	}
 	
 	// SETTER METHODS
@@ -159,7 +228,7 @@ public class Drink
 		this.alcohol = alcohol;
 	}
 	
-	public void setPrice(double price)
+	public void setPrice(float price)
 	{
 		this.price = price;
 	}

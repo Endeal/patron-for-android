@@ -34,12 +34,12 @@
     <dimen name="dimLocationListItemTextPhone">15sp</dimen>
     
     <!-- Product List Item -->
-    <dimen name="dimProductListItemTextName">12sp</dimen>
+    <dimen name="dimProductListItemTextName">16sp</dimen>
     <dimen name="dimProductListItemTextType">12sp</dimen>
     <dimen name="dimProductListItemTextAlcohol">12sp</dimen>
-    <dimen name="dimProductListItemTextPrice">24sp</dimen>
-    <dimen name="dimProductListItemSpinnerTextAlcohol">12sp</dimen>
-    <dimen name="dimProductListItemSpinnerTextQuantity">12sp</dimen>
+    <dimen name="dimProductListItemTextPrice">16sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextAlcohol">10sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextQuantity">10sp</dimen>
     
     <!-- Cart List Item -->
     <dimen name="dimCartListItemTextName">12sp</dimen>

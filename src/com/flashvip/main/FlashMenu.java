@@ -5,6 +5,7 @@
 
 package com.flashvip.main;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class FlashMenu extends ActionBarActivity
 {
@@ -111,23 +117,29 @@ public class FlashMenu extends ActionBarActivity
     				R.id.productListItemSpinnerQuantity};
     		
     		for (int i = 0; i < Globals.getAllOrders().size(); i++)
-    		{
+    		{	
         		Map<String, String> mapping = new HashMap<String, String>();
     			Drink currentDrink = Globals.getAllOrders().get(i);
+    			NumberFormat formatter = NumberFormat.getCurrencyInstance();
+    			String price = formatter.format(currentDrink.getPrice());
     			mapping.put("name", currentDrink.getName());
-    			mapping.put("price", "$" + currentDrink.getPrice());
-    			mapping.put("type", currentDrink.getType().toString());
-    			mapping.put("alcohol", currentDrink.getAlcohol().toString());
+    			mapping.put("price", price);
+    			mapping.put("type", Drink.getTypeName(currentDrink.getType()));
+    			mapping.put("alcohol", Drink.getAlcoholName(currentDrink.getAlcohol()));
     			mapping.put("orders", currentDrink.getId().toString());
-    			mapping.put("add", currentDrink.getId());
     			mapping.put("spinnerAlcohol", currentDrink.getId());
     			mapping.put("spinnerQuantity", currentDrink.getId());
     			drinks.add(mapping);
     		}
-    		SimpleAdapter adapter = new SimpleAdapter(Globals.getContext(),
+    		SimpleAdapter adapter = new SimpleAdapter(this,
     				drinks, R.layout.list_item_product, from, to);
     		adapter.setViewBinder(new DrinkBinder());
     		listMenu.setAdapter(adapter);
+    		if (adapter.areAllItemsEnabled())
+    			System.out.println("ALLGOOD");
+    		else
+    			System.out.println("LOOK OUT!!!");
+    		
     	}
     	else
     	{
@@ -137,6 +149,51 @@ public class FlashMenu extends ActionBarActivity
 	
 	private void initializeButtonListeners()
 	{
+		listMenu.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View v, int row,
+					long rowId)
+			{
+				// Get the layout containing this view, the 'Add' button
+				RelativeLayout rl = (RelativeLayout) v;
+				
+				// Get the spinners, which are the 4th and 5th view in the list_item_drink.xml layout file.
+				Spinner spinnerAlcohol = (Spinner) rl.getChildAt(5);
+				Spinner spinnerQuantity = (Spinner) rl.getChildAt(6);
+				
+				// Gets the drink for this given row.
+				Drink d = Globals.getAllOrders().get(row);
+				
+				// Creates a TabDrink that has the given drink, gets the spinners position, and quantities position.
+				int alcoholRow;
+				
+				if (spinnerAlcohol == null)
+				{
+					System.out.println("NO ALCOHOL SPINNER");
+				}
+				if (spinnerQuantity == null)
+				{
+					System.out.println("NO QUANTITY SPINNER");
+				}
+				
+				if (spinnerAlcohol.getVisibility() == View.INVISIBLE)
+					alcoholRow = 0;
+				else
+					alcoholRow = spinnerAlcohol.getSelectedItemPosition();
+				
+				TabDrink td = new TabDrink(d, alcoholRow,
+						spinnerQuantity.getSelectedItemPosition());
+				
+				// Adds the TabDrink that was just created to the tab.
+				Globals.addOrderToTab(td);
+				
+				// Creates a Toast that informs the user that the drink has been added to the tab.
+				Toast toast = Toast.makeText(Globals.getContext(),
+						"Drink added to tab.", Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
+		
 		buttonCheckout.setOnClickListener(new OnClickListener() {
 			public void onClick(View v)
 			{
@@ -145,5 +202,4 @@ public class FlashMenu extends ActionBarActivity
 			}
 		});
 	}
-	
 }

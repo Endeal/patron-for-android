@@ -170,8 +170,8 @@
     </style>
     
     <style name="StyleProductListItemTextPrice">
-        <item name="android:textColor">#222222</item>
-        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#11CC11</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimProductListItemTextPrice</item>
         <item name="android:text">@string/productListItemTextPrice</item>
     </style>
