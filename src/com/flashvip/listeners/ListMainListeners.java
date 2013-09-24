@@ -17,13 +17,13 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.flashvip.db.CodeConnector;
-import com.flashvip.db.DrinkConnector;
+import com.flashvip.db.ProductConnector;
 import com.flashvip.db.ServerConnector;
 import com.flashvip.lists.ListLinks;
 import com.flashvip.lists.ListScreens;
 import com.flashvip.main.FlashClient;
 import com.flashvip.main.Globals;
-import com.flashvip.main.Server;
+import com.flashvip.main.Location;
 
 public class ListMainListeners
 {
@@ -98,8 +98,8 @@ public class ListMainListeners
 				break;*/
 			case 1: // Browse Drinks
 				if (Globals.getCurrentServer() != null &&
-				Globals.getAllOrders() != null &&
-				!Globals.getAllOrders().isEmpty())
+				Globals.getProducts() != null &&
+				!Globals.getProducts().isEmpty())
 				{
 					Globals.setCurrentScreen(ListScreens.SCREEN_BROWSE_DRINKS);
 					FlashClient.updateListViewAdapter();
@@ -122,8 +122,8 @@ public class ListMainListeners
 				break;
 			case 3: // My Top 7
 				if (Globals.getCurrentServer() != null &&
-				Globals.getMyTopOrders() != null &&
-				Globals.getMyTopOrders().size() > 0)
+				Globals.getFavoriteProducts() != null &&
+				Globals.getFavoriteProducts().size() > 0)
 				{
 					Globals.setCurrentScreen(ListScreens.SCREEN_MY_TOP);
 					FlashClient.updateListViewAdapter();
@@ -138,8 +138,8 @@ public class ListMainListeners
 				break;
 			case 4: // Add Random Drink to Tab
 				if (Globals.getCurrentServer() != null &&
-				Globals.getAllOrders() != null && 
-				!Globals.getAllOrders().isEmpty())
+				Globals.getProducts() != null && 
+				!Globals.getProducts().isEmpty())
 				{
 					Toast toastRandomDrinkSelected = Toast.makeText(Globals.getContext(),
 							"Random drink selected and added to tab.",

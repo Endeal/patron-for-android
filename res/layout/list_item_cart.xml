@@ -1,85 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Defining a container for you List Item-->
+
+<!-- Defining a container for List Item-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/black"
-    android:gravity="center_vertical" >
+    android:descendantFocusability="blocksDescendants" >
 
 <!-- First Row -->
 
-<ImageButton
-    android:id="@+id/cartListItemImageButtonDelete"
-    android:contentDescription="@string/cartListItemImageButtonDescriptionDelete"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:src="@android:drawable/ic_delete" />
-
 <TextView
     android:id="@+id/cartListItemTextName"
-    style="@style/StyleCartListItemTextName"
+    style="@style/StyleProductListItemTextName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:layout_marginLeft="4dip"
-    android:layout_toRightOf="@+id/cartListItemImageButtonDelete" />
-
-<TextView
-    android:id="@+id/cartListItemTextAlcohol"
-    style="@style/StyleCartListItemTextAlcohol"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_marginRight="16dip"
-    android:layout_toLeftOf="@+id/cartListItemTextPrice" />
+    android:layout_margin="10dip"
+    android:layout_toRightOf="@+id/cartListItemButtonRemove" />
 
 <TextView
     android:id="@+id/cartListItemTextPrice"
-    style="@style/StyleCartListItemTextPrice"
+    style="@style/StyleProductListItemTextPrice"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
-    android:layout_alignParentTop="true" />
+    android:layout_alignParentTop="true"
+    android:layout_margin="10dip" />
+
+<!-- Center Row -->
+
+<Button
+    android:id="@+id/cartListItemButtonRemove"
+    style="@style/StyleProductListItemToggleButtonFavorite"
+    android:layout_width="@dimen/dimProductListItemToggleButtonFavoriteWidth"
+    android:layout_height="@dimen/dimProductListItemToggleButtonFavoriteHeight"
+    android:layout_alignParentLeft="true"
+    android:layout_centerVertical="true"
+    android:layout_margin="5dip" />
 
 <!-- Bottom Row -->
+
+<TextView
+    android:id="@+id/cartListItemTextType"
+    style="@style/StyleProductListItemTextType"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/cartListItemButtonRemove"
+    android:layout_below="@+id/cartListItemTextName"
+    android:layout_marginLeft="10dip" />
+
+<TextView
+    android:id="@+id/cartListItemTextAlcohol"
+    style="@style/StyleProductListItemTextAlcohol"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@+id/cartListItemButtonRemove"
+    android:layout_below="@+id/cartListItemTextType"
+    android:layout_marginLeft="10dip"
+    android:layout_marginBottom="10dip" />
 
 <Spinner
     android:id="@+id/cartListItemSpinnerAlcohol"
     style="@layout/spinner_alcohol_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_below="@+id/cartListItemImageButtonDelete"
-    android:entries="@array/array_default_alcohols"
-    android:focusable="false" />
+    android:layout_toLeftOf="@+id/cartListItemSpinnerQuantity"
+    android:layout_below="@+id/cartListItemTextPrice" />
 
-<Spinner
+<Spinner 
     android:id="@+id/cartListItemSpinnerQuantity"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dip"
-    android:layout_toRightOf="@+id/cartListItemSpinnerAlcohol"
-    android:layout_alignParentBottom="true"
-    android:entries="@array/array_quantity"
-    android:focusable="false" />
-
-<TextView
-    android:id="@+id/cartListItemTextType"
-    style="@style/StyleCartListItemTextType"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/cartListItemTextAlcohol"
-    android:layout_marginRight="16dip"
-    android:layout_toLeftOf="@+id/cartListItemTextPrice" />
-
-<CheckBox
-    android:id="@+id/cartListItemCheckboxFavorite"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
-    android:layout_alignParentBottom="true"
-    android:focusable="false" />
+    android:layout_below="@+id/cartListItemTextPrice"
+    android:entries="@array/array_quantity" />
 
 </RelativeLayout>

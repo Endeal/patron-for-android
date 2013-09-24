@@ -34,8 +34,8 @@ public class SearchButtonListener implements OnClickListener
 		}
 		else
 		{
-			if (Globals.getAllOrders() != null &&
-					!Globals.getAllOrders().isEmpty())
+			if (Globals.getProducts() != null &&
+					!Globals.getProducts().isEmpty())
 			{
 				if (Globals.getCurrentScreen() != ListScreens.SCREEN_SEARCH_DRINKS)
 					Globals.setCurrentScreen(ListScreens.SCREEN_SEARCH_DRINKS);

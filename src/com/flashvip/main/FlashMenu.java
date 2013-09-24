@@ -6,29 +6,27 @@
 package com.flashvip.main;
 
 import java.text.NumberFormat;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.flashvip.listeners.ButtonCheckoutListener;
+import com.flashvip.listeners.ButtonFavoritesListener;
+import com.flashvip.listeners.ButtonTypesListener;
+import com.flashvip.listeners.ListItemMenuAddListener;
 import com.flashvip.lists.ListFonts;
+import com.flashvip.main.Product.Type;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 public class FlashMenu extends ActionBarActivity
 {
@@ -80,7 +78,6 @@ public class FlashMenu extends ActionBarActivity
 		buttonWine = (Button) findViewById(R.id.menuButtonWine);
 		
 		// Set the custom fonts.
-		
 		buttonCheckout.setTypeface(typeface);
 		buttonFavorites.setTypeface(typeface);
 		buttonBeer.setTypeface(typeface);
@@ -89,16 +86,16 @@ public class FlashMenu extends ActionBarActivity
 		buttonMartinis.setTypeface(typeface);
 		buttonWine.setTypeface(typeface);
 		
-		initializeMenu();
+		updateListViewMenu();
 		initializeButtonListeners();
 	}
 	
-	private void initializeMenu()
+	public void updateListViewMenu()
 	{
 		// Set main list items to a list of drinks.
-    	if (Globals.getAllOrders() != null && !Globals.getAllOrders().isEmpty())
+    	if (Globals.getCurrentProducts() != null && !Globals.getCurrentProducts().isEmpty())
     	{
-    		List<Map<String, String>> drinks = new ArrayList<Map<String, String>>();
+    		List<Map<String, String>> products = new ArrayList<Map<String, String>>();
     		
     		String[] from = {"name",
     				"price",
@@ -106,7 +103,8 @@ public class FlashMenu extends ActionBarActivity
     				"type",
     				"orders",
     				"spinnerAlcohol",
-    				"spinnerQuantity"};
+    				"spinnerQuantity",
+    				"toggleButtonFavorite"};
     		
     		int[] to = {R.id.productListItemTextName,
     				R.id.productListItemTextPrice,
@@ -114,31 +112,29 @@ public class FlashMenu extends ActionBarActivity
     				R.id.productListItemTextType,
     				R.array.array_quantity,
     				R.id.productListItemSpinnerAlcohol,
-    				R.id.productListItemSpinnerQuantity};
+    				R.id.productListItemSpinnerQuantity,
+    				R.id.productListItemToggleButtonFavorite};
     		
-    		for (int i = 0; i < Globals.getAllOrders().size(); i++)
+    		for (int i = 0; i < Globals.getCurrentProducts().size(); i++)
     		{	
         		Map<String, String> mapping = new HashMap<String, String>();
-    			Drink currentDrink = Globals.getAllOrders().get(i);
+    			Product currentProduct = Globals.getCurrentProducts().get(i);
     			NumberFormat formatter = NumberFormat.getCurrencyInstance();
-    			String price = formatter.format(currentDrink.getPrice());
-    			mapping.put("name", currentDrink.getName());
+    			String price = formatter.format(currentProduct.getPrice());
+    			mapping.put("name", currentProduct.getName());
     			mapping.put("price", price);
-    			mapping.put("type", Drink.getTypeName(currentDrink.getType()));
-    			mapping.put("alcohol", Drink.getAlcoholName(currentDrink.getAlcohol()));
-    			mapping.put("orders", currentDrink.getId().toString());
-    			mapping.put("spinnerAlcohol", currentDrink.getId());
-    			mapping.put("spinnerQuantity", currentDrink.getId());
-    			drinks.add(mapping);
+    			mapping.put("type", Product.getTypeName(currentProduct.getType()));
+    			mapping.put("alcohol", Product.getAlcoholName(currentProduct.getAlcohol()));
+    			mapping.put("orders", currentProduct.getId().toString());
+    			mapping.put("spinnerAlcohol", currentProduct.getId());
+    			mapping.put("spinnerQuantity", currentProduct.getId());
+    			mapping.put("toggleButtonFavorite", currentProduct.getId());
+    			products.add(mapping);
     		}
     		SimpleAdapter adapter = new SimpleAdapter(this,
-    				drinks, R.layout.list_item_product, from, to);
-    		adapter.setViewBinder(new DrinkBinder());
+    				products, R.layout.list_item_product, from, to);
+    		adapter.setViewBinder(new ProductBinder());
     		listMenu.setAdapter(adapter);
-    		if (adapter.areAllItemsEnabled())
-    			System.out.println("ALLGOOD");
-    		else
-    			System.out.println("LOOK OUT!!!");
     		
     	}
     	else
@@ -149,57 +145,14 @@ public class FlashMenu extends ActionBarActivity
 	
 	private void initializeButtonListeners()
 	{
-		listMenu.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View v, int row,
-					long rowId)
-			{
-				// Get the layout containing this view, the 'Add' button
-				RelativeLayout rl = (RelativeLayout) v;
-				
-				// Get the spinners, which are the 4th and 5th view in the list_item_drink.xml layout file.
-				Spinner spinnerAlcohol = (Spinner) rl.getChildAt(5);
-				Spinner spinnerQuantity = (Spinner) rl.getChildAt(6);
-				
-				// Gets the drink for this given row.
-				Drink d = Globals.getAllOrders().get(row);
-				
-				// Creates a TabDrink that has the given drink, gets the spinners position, and quantities position.
-				int alcoholRow;
-				
-				if (spinnerAlcohol == null)
-				{
-					System.out.println("NO ALCOHOL SPINNER");
-				}
-				if (spinnerQuantity == null)
-				{
-					System.out.println("NO QUANTITY SPINNER");
-				}
-				
-				if (spinnerAlcohol.getVisibility() == View.INVISIBLE)
-					alcoholRow = 0;
-				else
-					alcoholRow = spinnerAlcohol.getSelectedItemPosition();
-				
-				TabDrink td = new TabDrink(d, alcoholRow,
-						spinnerQuantity.getSelectedItemPosition());
-				
-				// Adds the TabDrink that was just created to the tab.
-				Globals.addOrderToTab(td);
-				
-				// Creates a Toast that informs the user that the drink has been added to the tab.
-				Toast toast = Toast.makeText(Globals.getContext(),
-						"Drink added to tab.", Toast.LENGTH_SHORT);
-				toast.show();
-			}
-		});
+		listMenu.setOnItemClickListener(new ListItemMenuAddListener());
 		
-		buttonCheckout.setOnClickListener(new OnClickListener() {
-			public void onClick(View v)
-			{
-				Intent intent = new Intent(getActivity(), FlashCart.class);
-				getActivity().startActivity(intent);
-			}
-		});
+		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
+		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this));
+		buttonBeer.setOnClickListener(new ButtonTypesListener(this, Type.DOMESTIC_BEER));
+		buttonCocktails.setOnClickListener(new ButtonTypesListener(this, Type.COCKTAIL));
+		buttonShots.setOnClickListener(new ButtonTypesListener(this, Type.SHOT));
+		buttonMartinis.setOnClickListener(new ButtonTypesListener(this, Type.MARTINI));
+		buttonWine.setOnClickListener(new ButtonTypesListener(this, Type.WINE));
 	}
 }

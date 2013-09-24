@@ -34,10 +34,10 @@ public class ListMain
 			Collections.sort(items);
 			break;
 		case ListScreens.SCREEN_BROWSE_DRINKS: // Browse Drinks Screen
-			counter = Globals.getAllOrders().size();
+			counter = Globals.getProducts().size();
 			for (int i = 0; i < counter; i++)
 			{
-				items.add(Globals.getAllOrders().get(i).getName());
+				items.add(Globals.getProducts().get(i).getName());
 			}
 			Collections.sort(items);
 			break;
@@ -62,9 +62,9 @@ public class ListMain
 		case ListScreens.SCREEN_MY_TOP: // My top drinks Screen
 			break; 
 		case ListScreens.SCREEN_TAB: // The Tab Screen
-			for (int i = 0; i < Globals.getTabDrinks().size(); i++)
+			for (int i = 0; i < Globals.getTabProducts().size(); i++)
 			{
-				items.add(Globals.getTabDrinks().get(i).getDrink().getName());
+				items.add(Globals.getTabProducts().get(i).getDrink().getName());
 			}
 			Collections.sort(items);
 			break;

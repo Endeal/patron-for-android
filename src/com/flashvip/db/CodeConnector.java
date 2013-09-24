@@ -23,6 +23,8 @@ import org.json.JSONObject;
 import com.flashvip.lists.ListScreens;
 import com.flashvip.main.FlashClient;
 import com.flashvip.main.Globals;
+import com.urbanairship.push.PushManager;
+
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	 */
 	private ArrayList<String> codes;
 	private String result;
+	private String apid;
 	
 	/**
 	 * Default constructor.
@@ -40,6 +43,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	public CodeConnector()
 	{
 		codes = new ArrayList<String>();
+		apid = PushManager.shared().getAPID();
 	}
 
 	@Override
@@ -65,7 +69,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 				ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 				NameValuePair tableNumber = new BasicNameValuePair("table_number",
 						Globals.getCurrentServer().getId());
-				NameValuePair clientId = new BasicNameValuePair("client_id", Globals.DEVICE_ID);
+				NameValuePair clientId = new BasicNameValuePair("client_id", apid);
 
 				postData.add(tableNumber);
 				postData.add(clientId);

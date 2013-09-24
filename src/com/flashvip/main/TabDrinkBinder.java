@@ -30,7 +30,7 @@ public class TabDrinkBinder implements SimpleAdapter.ViewBinder
         	
         	// Add alcohols based on current drink's alcohol type.
         	String[] drinkInfo = data.toString().split(";");
-        	Drink currentDrink = Globals.getOrderById(drinkInfo[0]);
+        	Product currentDrink = Globals.getProductById(drinkInfo[0]);
         	for (int i = 0; i < Globals.getAlcohols().size(); i++)
         	{
         		if (Globals.getAlcohols().get(i).getAlcohol() == currentDrink.getAlcohol())
@@ -45,13 +45,13 @@ public class TabDrinkBinder implements SimpleAdapter.ViewBinder
         	
         	// Set the listener and the default item
         	final int item = Integer.parseInt(drinkInfo[1]);
-        	((Spinner)view).setSelection(Globals.getTabDrinks().get(item).getAlcoholPosition());
+        	((Spinner)view).setSelection(Globals.getTabProducts().get(item).getAlcoholPosition());
         	((Spinner)view).setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				public void onItemSelected(AdapterView<?> adapter, View view,
 						int position, long id)
 				{
-					Globals.getTabDrinks().get(item).setAlcohol(position);
+					Globals.getTabProducts().get(item).setAlcohol(position);
 				}
 
 				public void onNothingSelected(AdapterView<?> adapter)
@@ -65,13 +65,13 @@ public class TabDrinkBinder implements SimpleAdapter.ViewBinder
         else if (view.getId() == R.id.cartListItemSpinnerQuantity)
         {
         	final int item = Integer.parseInt(data.toString());
-        	((Spinner)view).setSelection(Globals.getTabDrinks().get(item).getQuantityPosition());
+        	((Spinner)view).setSelection(Globals.getTabProducts().get(item).getQuantityPosition());
         	((Spinner)view).setOnItemSelectedListener(new OnItemSelectedListener() {
 
         		public void onItemSelected(AdapterView<?> adapter, View view,
         				int position, long id)
         		{
-        			Globals.getTabDrinks().get(item).setQuantity(position);
+        			Globals.getTabProducts().get(item).setQuantity(position);
         		}
 
 				public void onNothingSelected(AdapterView<?> adapter)

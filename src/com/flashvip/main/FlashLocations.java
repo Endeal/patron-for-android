@@ -20,7 +20,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.flashvip.db.DrinkConnector;
+import com.flashvip.db.ProductConnector;
 import com.flashvip.db.ServerConnector;
 import com.flashvip.lists.ListLinks;
 
@@ -107,7 +107,7 @@ public class FlashLocations extends ActionBarActivity
     		for (int i = 0; i < Globals.getServers().size(); i++)
     		{
     			Map<String, String> mapping = new HashMap<String, String>();
-    			Server currentServer = Globals.getServers().get(i);
+    			Location currentServer = Globals.getServers().get(i);
     			mapping.put("name", currentServer.getName());
     			mapping.put("phone", currentServer.getPhone());
     			mapping.put("address", currentServer.getAddress() + ", " +
@@ -139,10 +139,10 @@ public class FlashLocations extends ActionBarActivity
 		public void onItemClick(AdapterView<?> adapter, View v, int item,
 				long row)
 		{
-			Server server = Globals.getServers().get(item);
+			Location server = Globals.getServers().get(item);
 			Globals.setServerName(server.getName());
 			Globals.setCurrentServer(server);
-			DrinkConnector dbdrink = new DrinkConnector(activity);
+			ProductConnector dbdrink = new ProductConnector(activity);
 			try
 			{
 				URL url = new URL(ListLinks.LINK_GET_DRINKS);

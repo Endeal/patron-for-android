@@ -21,9 +21,9 @@ import com.flashvip.lists.ListScreens;
 import com.flashvip.main.FlashClient;
 import com.flashvip.main.FlashLocations;
 import com.flashvip.main.Globals;
-import com.flashvip.main.Server;
+import com.flashvip.main.Location;
 
-public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Server>>
+public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 {
 	/**
 	 * Private variables.
@@ -39,10 +39,10 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Server>>
 	}
 	
 	@Override
-	protected ArrayList<Server> doInBackground(URL... params)
+	protected ArrayList<Location> doInBackground(URL... params)
 	{
 		// The list of servers.
-		ArrayList<Server> servers = new ArrayList<Server>();
+		ArrayList<Location> servers = new ArrayList<Location>();
 		
 		// HTTP Post.
 		try
@@ -88,7 +88,7 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Server>>
 					if (phone.length() > 6)
 					phone = "(" + phone.substring(0, 3) + ") " + phone.substring(3, 6) +
 							"-" + phone.substring(6);
-					servers.add(new Server(name, id, address, city, state, zip, phone));
+					servers.add(new Location(name, id, address, city, state, zip, phone));
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Server>>
 	}
 	
 	@Override
-	protected void onPostExecute(ArrayList<Server> list)
+	protected void onPostExecute(ArrayList<Location> list)
 	{
 		Globals.setServers(list);
 		if (Globals.getServers() != null &&

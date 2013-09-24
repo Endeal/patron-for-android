@@ -30,8 +30,9 @@
 
 <ToggleButton
     android:id="@+id/productListItemToggleButtonFavorite"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    style="@style/StyleProductListItemToggleButtonFavorite"
+    android:layout_width="@dimen/dimProductListItemToggleButtonFavoriteWidth"
+    android:layout_height="@dimen/dimProductListItemToggleButtonFavoriteHeight"
     android:layout_alignParentLeft="true"
     android:layout_centerVertical="true"
     android:layout_margin="5dip" />

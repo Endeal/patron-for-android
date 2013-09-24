@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class SortServers
 {
-	public static ArrayList<Server> getByName(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByName(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -20,7 +20,7 @@ public class SortServers
 							servers.get(i).getName().compareTo(servers.get(0).getName()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}
@@ -30,7 +30,7 @@ public class SortServers
 		return servers;
 	}
 	
-	public static ArrayList<Server> getByAddress(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByAddress(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -46,7 +46,7 @@ public class SortServers
 							servers.get(i).getAddress().compareTo(servers.get(0).getAddress()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}
@@ -56,7 +56,7 @@ public class SortServers
 		return servers;
 	}
 	
-	public static ArrayList<Server> getByCity(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByCity(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -72,7 +72,7 @@ public class SortServers
 							servers.get(i).getCity().compareTo(servers.get(0).getCity()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}
@@ -82,7 +82,7 @@ public class SortServers
 		return servers;
 	}
 	
-	public static ArrayList<Server> getByState(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByState(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -98,7 +98,7 @@ public class SortServers
 							servers.get(i).getState().compareTo(servers.get(0).getState()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}
@@ -108,7 +108,7 @@ public class SortServers
 		return servers;
 	}
 	
-	public static ArrayList<Server> getByZip(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByZip(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -124,7 +124,7 @@ public class SortServers
 							servers.get(i).getZip().compareTo(servers.get(0).getZip()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}
@@ -134,7 +134,7 @@ public class SortServers
 		return servers;
 	}
 	
-	public static ArrayList<Server> getByPhone(ArrayList<Server> servers, boolean ascending)
+	public static ArrayList<Location> getByPhone(ArrayList<Location> servers, boolean ascending)
 	{
 		if (servers != null & !servers.isEmpty())
 		{
@@ -150,7 +150,7 @@ public class SortServers
 							servers.get(i).getPhone().compareTo(servers.get(0).getPhone()) > 0) )
 					{
 						changed = true;
-						Server tempServer = servers.get(i);
+						Location tempServer = servers.get(i);
 						servers.remove(i);
 						servers.add(0, tempServer);
 					}

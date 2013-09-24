@@ -12,9 +12,9 @@
         style="@style/StyleMenuListItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/menuHorizontalScrollViewTypes"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/menuHorizontalScrollViewTypes" >
 
     </ListView>
     

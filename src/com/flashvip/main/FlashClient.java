@@ -305,7 +305,7 @@ public class FlashClient extends ActionBarActivity
     		for (int i = 0; i < Globals.getServers().size(); i++)
     		{
     			Map<String, String> mapping = new HashMap<String, String>();
-    			Server currentServer = Globals.getServers().get(i);
+    			Location currentServer = Globals.getServers().get(i);
     			mapping.put("name", currentServer.getName());
     			mapping.put("phone", currentServer.getPhone());
     			mapping.put("address", currentServer.getAddress() + ", " +
@@ -322,7 +322,7 @@ public class FlashClient extends ActionBarActivity
     public static void updateDrinksAdapter()
     {
     	// Set main list items to a list of drinks.
-    	if (Globals.getAllOrders() != null && !Globals.getAllOrders().isEmpty())
+    	if (Globals.getProducts() != null && !Globals.getProducts().isEmpty())
     	{
     		List<Map<String, String>> drinks = new ArrayList<Map<String, String>>();
     		
@@ -340,10 +340,10 @@ public class FlashClient extends ActionBarActivity
     				R.array.array_quantity,
     				R.id.productListItemSpinnerAlcohol};
     		
-    		for (int i = 0; i < Globals.getAllOrders().size(); i++)
+    		for (int i = 0; i < Globals.getProducts().size(); i++)
     		{
         		Map<String, String> mapping = new HashMap<String, String>();
-    			Drink currentDrink = Globals.getAllOrders().get(i);
+    			Product currentDrink = Globals.getProducts().get(i);
     			mapping.put("name", currentDrink.getName());
     			mapping.put("price", "$" + currentDrink.getPrice());
     			mapping.put("type", currentDrink.getType().toString());
@@ -355,7 +355,7 @@ public class FlashClient extends ActionBarActivity
     		}
     		adapter_drinks = new SimpleAdapter(Globals.getContext(),
     				drinks, R.layout.list_item_product, from, to);
-    		adapter_drinks.setViewBinder(new DrinkBinder());
+    		adapter_drinks.setViewBinder(new ProductBinder());
     		list_main.setAdapter(adapter_drinks);
     	}
     }
@@ -363,7 +363,7 @@ public class FlashClient extends ActionBarActivity
     public static void updateTabAdapter()
     {
     	// Set main list items to a list of drinks.
-    	if (Globals.getTabDrinks() != null && !Globals.getTabDrinks().isEmpty())
+    	if (Globals.getTabProducts() != null && !Globals.getTabProducts().isEmpty())
     	{
     		List<Map<String, String>> drinks = new ArrayList<Map<String, String>>();
     		String[] from = {"name", "price", "type", "alcohol", "delete", "alcohol_pos",
@@ -371,10 +371,10 @@ public class FlashClient extends ActionBarActivity
     		int[] to = {R.id.cartListItemTextName, R.id.cartListItemTextPrice, R.id.cartListItemTextType,
     				R.id.cartListItemTextAlcohol, R.id.cartListItemImageButtonDelete, R.id.cartListItemSpinnerAlcohol,
     				R.id.cartListItemSpinnerQuantity};
-    		for (int i = 0; i < Globals.getTabDrinks().size(); i++)
+    		for (int i = 0; i < Globals.getTabProducts().size(); i++)
     		{
         		Map<String, String> mapping = new HashMap<String, String>();
-    			TabDrink currentDrink = Globals.getTabDrinks().get(i);
+    			TabProduct currentDrink = Globals.getTabProducts().get(i);
     			mapping.put("name", currentDrink.getDrink().getName());
     			mapping.put("price", "$" + currentDrink.getDrink().getPrice());
     			mapping.put("type", currentDrink.getDrink().getType().toString());

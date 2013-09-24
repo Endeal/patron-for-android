@@ -20,16 +20,18 @@ import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 import android.widget.Toast;
-import com.flashvip.main.Drink;
+
+import com.flashvip.main.Product;
 import com.flashvip.main.FlashClient;
 import com.flashvip.main.Globals;
+import com.urbanairship.push.PushManager;
 
-public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
+public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 {
 	/**
 	 * Private variables.
 	 */
-	private ArrayList<Drink> drinks;
+	private ArrayList<Product> products;
 	private String result;
 
 	/**
@@ -37,7 +39,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 	 */
 	public AddOrderConnector()
 	{
-		drinks = new ArrayList<Drink>();
+		products = new ArrayList<Product>();
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 	}
 
 	@Override
-	protected ArrayList<Drink> doInBackground(URL... params)
+	protected ArrayList<Product> doInBackground(URL... params)
 	{
 		// The list of drinks.
 		HttpResponse response = null;
@@ -66,18 +68,15 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 			String drinkIds = "";
 			String alcoholIds = "";
 			String quantities = "";
-			System.out.println("size:" + Globals.getTabDrinks().size());
-			for (int i = 0; i < Globals.getTabDrinks().size(); i++)
+			String apid = PushManager.shared().getAPID();
+			System.out.println("size:" + Globals.getTabProducts().size());
+			for (int i = 0; i < Globals.getTabProducts().size(); i++)
 			{
-				System.out.println(Globals.getTabDrinks().get(i).getDrink().getId());
-				System.out.println(Globals.getAlcohols().get(Globals.getTabDrinks(
-						).get(i).getAlcoholPosition()).getId());
-
-				drinkIds = drinkIds + Globals.getTabDrinks().get(i).getDrink().getId();
-				alcoholIds = alcoholIds + Globals.getAlcohols().get(Globals.getTabDrinks(
+				drinkIds = drinkIds + Globals.getTabProducts().get(i).getDrink().getId();
+				alcoholIds = alcoholIds + Globals.getAlcohols().get(Globals.getTabProducts(
 						).get(i).getAlcoholPosition()).getId();
-				quantities = quantities + (Globals.getTabDrinks().get(i).getQuantityPosition() + 1);
-				if (i < Globals.getTabDrinks().size() - 1)
+				quantities = quantities + (Globals.getTabProducts().get(i).getQuantityPosition() + 1);
+				if (i < Globals.getTabProducts().size() - 1)
 				{
 					drinkIds = drinkIds + ",";
 					alcoholIds = alcoholIds + ",";
@@ -88,7 +87,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 			// Set up the name-value pairs.
 			NameValuePair nvpTableNumber = new BasicNameValuePair("table",
 					Globals.getCurrentServer().getId());
-			NameValuePair nvpClientId = new BasicNameValuePair("client_id", "jww93");
+			NameValuePair nvpClientId = new BasicNameValuePair("client_id", apid);
 			NameValuePair nvpDrinkIds = new BasicNameValuePair("drink_ids", drinkIds);
 			NameValuePair nvpAlcoholIds = new BasicNameValuePair("alcohol_ids", alcoholIds);
 			NameValuePair nvpQuantities = new BasicNameValuePair("quantities", quantities);
@@ -133,17 +132,17 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Drink>>
 		}
 		catch (IOException e)
 		{
-			drinks = null;
+			products = null;
 		}
 
 		// Return drinks.
-		return drinks;
+		return products;
 	}
 
 	@Override
-	protected void onPostExecute(ArrayList<Drink> list)
+	protected void onPostExecute(ArrayList<Product> list)
 	{	
-		Globals.getTabDrinks().clear();
+		Globals.getTabProducts().clear();
 		Globals.goToMainScreen();
 		FlashClient.updateAll();
 		FlashClient.endLoading();

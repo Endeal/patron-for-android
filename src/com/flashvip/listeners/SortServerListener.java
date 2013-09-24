@@ -3,7 +3,7 @@ package com.flashvip.listeners;
 import com.flashvip.lists.ListScreens;
 import com.flashvip.lists.ListSort;
 import com.flashvip.main.Globals;
-import com.flashvip.main.SortDrinks;
+import com.flashvip.main.ProductSorter;
 import com.flashvip.main.SortServers;
 import android.view.View;
 import android.widget.AdapterView;
@@ -48,13 +48,13 @@ public class SortServerListener implements OnItemSelectedListener
 			switch (position)
 			{
 			case ListSort.BY_NAME:
-				Globals.setOrders(SortDrinks.getByName(Globals.getAllOrders(), true));
+				Globals.setProducts(ProductSorter.getByName(Globals.getProducts(), true));
 				break;
 			case ListSort.BY_PRICE:
-				Globals.setOrders(SortDrinks.getByPrice(Globals.getAllOrders(), true));
+				Globals.setProducts(ProductSorter.getByPrice(Globals.getProducts(), true));
 				break;
 			case ListSort.BY_TYPE:
-				Globals.setOrders(SortDrinks.getByType(Globals.getAllOrders(), true));
+				//Globals.setProducts(ProductSorter.getByType(Globals.getProducts(),  true));
 				break;
 			}
 		}

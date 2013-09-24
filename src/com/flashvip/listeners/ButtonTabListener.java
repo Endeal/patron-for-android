@@ -21,8 +21,8 @@ public class ButtonTabListener implements OnClickListener
 
 	public void onClick(View view)
 	{
-		if (Globals.getTabDrinks() != null &&
-				!Globals.getTabDrinks().isEmpty())
+		if (Globals.getTabProducts() != null &&
+				!Globals.getTabProducts().isEmpty())
 		{
 			if (Globals.getCurrentScreen() != ListScreens.SCREEN_TAB)
 			{

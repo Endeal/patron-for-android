@@ -13,7 +13,7 @@ public class ButtonDeleteListener implements OnClickListener
 	public void onClick(View v)
 	{
 		String position = (String)v.getTag();
-		if (Globals.getTabDrinks().size() <= 1 &&
+		if (Globals.getTabProducts().size() <= 1 &&
 				Globals.getCurrentScreen() == ListScreens.SCREEN_TAB)
 			Globals.setCurrentScreen(ListScreens.SCREEN_MAIN);
 		Globals.removeOrderFromTab(Integer.parseInt(position));
