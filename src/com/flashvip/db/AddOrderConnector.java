@@ -3,6 +3,7 @@ package com.flashvip.db;
 import java.io.IOException;
 
 
+
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -21,9 +22,10 @@ import org.apache.http.util.EntityUtils;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.flashvip.listeners.ButtonFinishListener;
 import com.flashvip.main.Product;
-import com.flashvip.main.FlashClient;
 import com.flashvip.main.Globals;
+import com.flashvip.main.CartProduct;
 import com.urbanairship.push.PushManager;
 
 public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
@@ -33,19 +35,15 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 	 */
 	private ArrayList<Product> products;
 	private String result;
+	private ButtonFinishListener listener;
 
 	/**
 	 * Default constructor.
 	 */
-	public AddOrderConnector()
+	public AddOrderConnector(ButtonFinishListener listener)
 	{
+		this.listener = listener;
 		products = new ArrayList<Product>();
-	}
-
-	@Override
-	protected void onPreExecute()
-	{
-		FlashClient.beginLoading();
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 	{
 		// The list of drinks.
 		HttpResponse response = null;
-		if (Globals.getCurrentServer() == null)
+		if (Globals.getCurrentLocation() == null)
 			return null;
 
 		// HTTP Post.
@@ -69,14 +67,23 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 			String alcoholIds = "";
 			String quantities = "";
 			String apid = PushManager.shared().getAPID();
-			System.out.println("size:" + Globals.getTabProducts().size());
-			for (int i = 0; i < Globals.getTabProducts().size(); i++)
+			for (int i = 0; i < Globals.getCartProducts().size(); i++)
 			{
-				drinkIds = drinkIds + Globals.getTabProducts().get(i).getDrink().getId();
-				alcoholIds = alcoholIds + Globals.getAlcohols().get(Globals.getTabProducts(
-						).get(i).getAlcoholPosition()).getId();
-				quantities = quantities + (Globals.getTabProducts().get(i).getQuantityPosition() + 1);
-				if (i < Globals.getTabProducts().size() - 1)
+				CartProduct currentProduct = Globals.getCartProducts().get(i);
+				ArrayList<Product> alcohols = new ArrayList<Product>();
+				for (int j = 0; j < Globals.getAlcohols().size(); j++)
+				{
+					if (Globals.getAlcohols().get(j).getAlcohol() == currentProduct.getDrink().getAlcohol())
+					{
+						alcohols.add(Globals.getAlcohols().get(j));
+					}
+				}
+				
+				drinkIds = drinkIds + currentProduct.getDrink().getId();
+				if (alcohols != null && !alcohols.isEmpty())
+					alcoholIds = alcoholIds + alcohols.get(currentProduct.getAlcoholPosition()); 
+				quantities = quantities + (Globals.getCartProducts().get(i).getQuantityPosition() + 1);
+				if (i < Globals.getCartProducts().size() - 1)
 				{
 					drinkIds = drinkIds + ",";
 					alcoholIds = alcoholIds + ",";
@@ -86,7 +93,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 
 			// Set up the name-value pairs.
 			NameValuePair nvpTableNumber = new BasicNameValuePair("table",
-					Globals.getCurrentServer().getId());
+					Globals.getCurrentLocation().getId());
 			NameValuePair nvpClientId = new BasicNameValuePair("client_id", apid);
 			NameValuePair nvpDrinkIds = new BasicNameValuePair("drink_ids", drinkIds);
 			NameValuePair nvpAlcoholIds = new BasicNameValuePair("alcohol_ids", alcoholIds);
@@ -126,7 +133,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 			result = EntityUtils.toString(response.getEntity());
 			if (!result.equals("1"))
 			{
-				Toast toast = Toast.makeText(Globals.getContext(), result, Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(listener.getActivity(), result, Toast.LENGTH_SHORT);
 				toast.show();
 			}
 		}
@@ -142,9 +149,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 	@Override
 	protected void onPostExecute(ArrayList<Product> list)
 	{	
-		Globals.getTabProducts().clear();
-		Globals.goToMainScreen();
-		FlashClient.updateAll();
-		FlashClient.endLoading();
+		Globals.getCartProducts().clear();
+		listener.orderFinished();
 	}
 }

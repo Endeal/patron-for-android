@@ -43,15 +43,11 @@
     <string name="productListItemTextAlcohol">None</string>
     <string name="productListItemTextPrice">$2.00</string>
     
-    <string name="productListItemImageButtonDescriptionAdd">Add to Tab</string>
-    
     <!-- Cart List Item -->
     <string name="cartListItemTextName">Budweiser</string>
     <string name="cartListItemTextType">Domestic Beer</string>
     <string name="cartListItemTextAlcohol">None</string>
     <string name="cartListItemTextPrice">$2.00</string>
-    
-    <string name="cartListItemImageButtonDescriptionDelete">Delete from Tab</string>
     
     <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>
@@ -73,6 +69,7 @@
     
     <string name="miscTextNoLocations">Unable to find any locations.</string>
     <string name="miscTextNoItems">Unable to find any items on the menu.</string>
+    <string name="miscTextNoItemsCart">No items have been added to your cart.</string>
     
 	<string name="button_send">Send</string>
 	<string name="edit_message">Enter a message</string>

@@ -1,22 +1,18 @@
 package com.flashvip.main;
 
-public class TabProduct
+public class CartProduct
 {
 	private Product product;
 	private int posAlcohol;
 	private int posQuantity;
 	private double total_price;
 	
-	public TabProduct(Product product, int posAlcohol, int posQuantity)
+	public CartProduct(Product product, int posAlcohol, int posQuantity)
 	{
 		this.product = product;
 		this.posAlcohol = posAlcohol;
 		this.posQuantity = posQuantity;
-		Product d = Globals.getAlcohols().get(posAlcohol);
-		if (d != null)
-			total_price = product.getPrice() + d.getPrice();
-		else
-			total_price = product.getPrice();
+		updatePrice();
 	}
 
 	// SETTERS
@@ -61,6 +57,20 @@ public class TabProduct
 	public double getPrice()
 	{
 		return total_price;
+	}
+	
+	// Main
+	
+	public void updatePrice()
+	{
+		float alcoholPrice = 0.0f;
+		if (posAlcohol != -1 && Globals.getAlcohols() != null)
+		{
+			Product alcohol = Globals.getAlcohols().get(posAlcohol);
+			if (alcohol != null)
+				alcoholPrice = (float) alcohol.getPrice();
+		}
+		total_price = (product.getPrice() + alcoholPrice) * (posQuantity + 1);
 	}
 	
 }

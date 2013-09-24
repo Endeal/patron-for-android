@@ -1,13 +1,13 @@
 package com.flashvip.main;
 
 import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,13 +15,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.flashvip.db.ProductConnector;
-import com.flashvip.db.ServerConnector;
+import com.flashvip.db.LocationConnector;
 import com.flashvip.lists.ListLinks;
 
 public class FlashLocations extends ActionBarActivity
@@ -62,7 +60,7 @@ public class FlashLocations extends ActionBarActivity
 	
 	private void updateLocations()
 	{
-		ServerConnector dbconnector = new ServerConnector(this);
+		LocationConnector dbconnector = new LocationConnector(this);
 		URL url = null;
 		try
 		{
@@ -83,11 +81,6 @@ public class FlashLocations extends ActionBarActivity
 		}
 	}
 	
-	private Activity getActivity()
-	{
-		return this;
-	}
-	
 	// Layout
 	private void initializeLayout()
 	{
@@ -96,7 +89,7 @@ public class FlashLocations extends ActionBarActivity
 	
 	public void updateList()
 	{
-    	if (Globals.getServers() != null && !Globals.getServers().isEmpty())
+    	if (Globals.getLocations() != null && !Globals.getLocations().isEmpty())
     	{
     		setContentView(R.layout.layout_locations);
     		initializeLayout();
@@ -104,10 +97,10 @@ public class FlashLocations extends ActionBarActivity
     		String[] from = {"name", "phone", "address"};
     		int[] to = {R.id.locationListItemTextName, R.id.locationListItemTextPhone,
     				R.id.locationListItemTextAddress};
-    		for (int i = 0; i < Globals.getServers().size(); i++)
+    		for (int i = 0; i < Globals.getLocations().size(); i++)
     		{
     			Map<String, String> mapping = new HashMap<String, String>();
-    			Location currentServer = Globals.getServers().get(i);
+    			Location currentServer = Globals.getLocations().get(i);
     			mapping.put("name", currentServer.getName());
     			mapping.put("phone", currentServer.getPhone());
     			mapping.put("address", currentServer.getAddress() + ", " +
@@ -139,9 +132,9 @@ public class FlashLocations extends ActionBarActivity
 		public void onItemClick(AdapterView<?> adapter, View v, int item,
 				long row)
 		{
-			Location server = Globals.getServers().get(item);
-			Globals.setServerName(server.getName());
-			Globals.setCurrentServer(server);
+			Location server = Globals.getLocations().get(item);
+			Globals.setLocationName(server.getName());
+			Globals.setCurrentLocation(server);
 			ProductConnector dbdrink = new ProductConnector(activity);
 			try
 			{

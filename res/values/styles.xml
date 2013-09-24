@@ -119,6 +119,12 @@
         <item name="android:text">@string/cartButtonFinish</item>
     </style>
     
+    <!-- Favorites Screen Styles -->
+    <style name="StyleFavoritesListItems">
+        <item name="android:divider">#000000</item>
+        <item name="android:dividerHeight">@dimen/dimFavoritesListItemsDividerHeight</item>
+    </style>
+    
     <!--  Location List -->
     <style name="StyleLocationList">
         <item name="android:divider">#000000</item>
@@ -205,10 +211,14 @@
     </style>
     
     <style name="StyleCartListItemTextPrice">
-        <item name="android:textColor">#222222</item>
+        <item name="android:textColor">#11CC11</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimCartListItemTextPrice</item>
         <item name="android:text">@string/cartListItemTextPrice</item>
+    </style>
+    
+    <style name="StyleCartListItemButtonRemove">
+        <item name="android:background">@drawable/buttonremoveproduct</item>
     </style>
     
     <!-- Miscellaneous Styles -->
@@ -224,6 +234,13 @@
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMiscTextNoItems</item>
         <item name="android:text">@string/miscTextNoItems</item>
+    </style>
+    
+    <style name="StyleMiscTextNoItemsCart">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoItemsCart</item>
+        <item name="android:text">@string/miscTextNoItemsCart</item>
     </style>
     
 </resources>

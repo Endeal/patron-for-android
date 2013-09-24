@@ -54,7 +54,6 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
         // Set up the alcohol spinner.
 		else if (view.getId() == R.id.productListItemSpinnerAlcohol)
         {
-        	view.setFocusable(false);
         	ArrayList<String> names = new ArrayList<String>();
         	
         	// Add alcohols based on current drink's alcohol type.
@@ -65,15 +64,18 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
         			names.add(Globals.getAlcohols().get(i).getName());
         	}
         	
-        	// Set to invisible if empty
+        	// Set to invisible if empty.
         	if (names.size() == 0)
         	{
         		view.setVisibility(View.INVISIBLE);
         	}
         	else
         	{
+        		// Set to visible if not empty.
         		view.setVisibility(View.VISIBLE);
-        		ArrayAdapter<String> alcohol_adapter = new ArrayAdapter<String>(Globals.getContext(),
+        		
+        		// Bind the adapter to the names.
+        		ArrayAdapter<String> alcohol_adapter = new ArrayAdapter<String>(view.getContext(),
         				android.R.layout.simple_spinner_item, names);
         		((Spinner)view).setAdapter(alcohol_adapter);
         	

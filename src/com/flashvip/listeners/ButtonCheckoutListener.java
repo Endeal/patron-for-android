@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.flashvip.main.FlashCart;
+import com.flashvip.main.Globals;
 
 public class ButtonCheckoutListener implements OnClickListener
 {
@@ -18,7 +20,17 @@ public class ButtonCheckoutListener implements OnClickListener
 	
 	public void onClick(View v)
 	{
-		Intent intent = new Intent(activity, FlashCart.class);
-		activity.startActivity(intent);
+		if (Globals.getCartProducts() != null && !Globals.getCartProducts().isEmpty())
+		{
+			Intent intent = new Intent(activity, FlashCart.class);
+			activity.startActivity(intent);
+		}
+		else
+		{
+			Toast toast = Toast.makeText(v.getContext(),
+					"No items have been added to your cart.",
+					Toast.LENGTH_SHORT);
+			toast.show();
+		}
 	}
 }

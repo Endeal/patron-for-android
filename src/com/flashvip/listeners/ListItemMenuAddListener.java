@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.flashvip.main.Product;
 import com.flashvip.main.Globals;
-import com.flashvip.main.TabProduct;
+import com.flashvip.main.CartProduct;
 
 public class ListItemMenuAddListener implements OnItemClickListener
 {	
@@ -25,24 +25,24 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Spinner spinnerQuantity = (Spinner) rl.getChildAt(6);
 		
 		// Gets the drink for this given row.
-		Product d = Globals.getProducts().get(row);
+		Product product = Globals.getCurrentProducts().get(row);
 		
 		// Creates a TabDrink that has the given drink, gets the spinners position, and quantities position.
 		int alcoholRow;
 		
 		if (spinnerAlcohol.getVisibility() == View.INVISIBLE)
-			alcoholRow = 0;
+			alcoholRow = -1;
 		else
 			alcoholRow = spinnerAlcohol.getSelectedItemPosition();
 		
-		TabProduct td = new TabProduct(d, alcoholRow,
+		CartProduct td = new CartProduct(product, alcoholRow,
 				spinnerQuantity.getSelectedItemPosition());
 		
 		// Adds the TabDrink that was just created to the tab.
-		Globals.addOrderToTab(td);
+		Globals.addCartProduct(td);
 		
 		// Creates a Toast that informs the user that the drink has been added to the tab.
-		Toast toast = Toast.makeText(Globals.getContext(),
+		Toast toast = Toast.makeText(v.getContext(),
 				"Drink added to tab.", Toast.LENGTH_SHORT);
 		toast.show();
 	}

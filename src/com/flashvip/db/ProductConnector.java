@@ -50,7 +50,7 @@ public class ProductConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 	{
 		// The list of drinks.
 		HttpResponse response = null;
-		if (Globals.getCurrentServer() == null)
+		if (Globals.getCurrentLocation() == null)
 			return null;
 		
 		// HTTP Post.
@@ -61,7 +61,7 @@ public class ProductConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 			NameValuePair tableNumber = new BasicNameValuePair("table_number",
-					Globals.getCurrentServer().getId());
+					Globals.getCurrentLocation().getId());
 			postData.add(tableNumber);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);
@@ -136,11 +136,11 @@ public class ProductConnector extends AsyncTask<URL, Void, ArrayList<Product>>
 		Globals.setProducts(products);
 		Globals.setCurrentProducts(products);
 		Globals.setAlcohols(alcohols);
-		if (Globals.getCurrentServer() != null &&
+		if (Globals.getCurrentLocation() != null &&
 				Globals.getProducts() != null && 
 				Globals.getProducts().size() > 0)
 		{
-			Globals.setFavoriteProducts(Globals.getCurrentServer().getTopDrinks());
+			Globals.setFavoriteProducts(Globals.getCurrentLocation().getTopDrinks());
 		}
 		
 		activity.loadedMenu();

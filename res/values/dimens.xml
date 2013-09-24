@@ -25,6 +25,9 @@
     <!-- Cart Screen -->
     <dimen name="dimCartButtonFinishText">20sp</dimen>
     
+    <!-- Favorites Screen -->
+    <dimen name="dimFavoritesListItemsDividerHeight">3px</dimen>
+    
     <!-- Location List -->
     <dimen name="dimLocationListDividerHeight">3px</dimen>
     
@@ -45,15 +48,19 @@
     <dimen name="dimProductListItemToggleButtonFavoriteHeight">33dp</dimen>
     
     <!-- Cart List Item -->
-    <dimen name="dimCartListItemTextName">12sp</dimen>
+    <dimen name="dimCartListItemTextName">18sp</dimen>
     <dimen name="dimCartListItemTextType">12sp</dimen>
     <dimen name="dimCartListItemTextAlcohol">12sp</dimen>
-    <dimen name="dimCartListItemTextPrice">12sp</dimen>
+    <dimen name="dimCartListItemTextPrice">18sp</dimen>
     <dimen name="dimCartListItemSpinnerTextAlcohol">12sp</dimen>
     <dimen name="dimCartListItemSpinnerTextQuantity">12sp</dimen>
+    
+    <dimen name="dimCartListItemButtonRemoveWidth">34dp</dimen>
+    <dimen name="dimCartListItemButtonRemoveHeight">34dp</dimen>
     
     <!-- Miscellaneous UI Elements -->
     <dimen name="dimMiscTextNoLocations">18sp</dimen>
     <dimen name="dimMiscTextNoItems">18sp</dimen>
+    <dimen name="dimMiscTextNoItemsCart">18sp</dimen>
     
 </resources>

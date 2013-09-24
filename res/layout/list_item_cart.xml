@@ -3,14 +3,13 @@
 <!-- Defining a container for List Item-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:descendantFocusability="blocksDescendants" >
+    android:layout_height="fill_parent" >
 
 <!-- First Row -->
 
 <TextView
     android:id="@+id/cartListItemTextName"
-    style="@style/StyleProductListItemTextName"
+    style="@style/StyleCartListItemTextName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
@@ -19,7 +18,7 @@
 
 <TextView
     android:id="@+id/cartListItemTextPrice"
-    style="@style/StyleProductListItemTextPrice"
+    style="@style/StyleCartListItemTextPrice"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
@@ -30,9 +29,9 @@
 
 <Button
     android:id="@+id/cartListItemButtonRemove"
-    style="@style/StyleProductListItemToggleButtonFavorite"
-    android:layout_width="@dimen/dimProductListItemToggleButtonFavoriteWidth"
-    android:layout_height="@dimen/dimProductListItemToggleButtonFavoriteHeight"
+    style="@style/StyleCartListItemButtonRemove"
+    android:layout_width="@dimen/dimCartListItemButtonRemoveWidth"
+    android:layout_height="@dimen/dimCartListItemButtonRemoveHeight"
     android:layout_alignParentLeft="true"
     android:layout_centerVertical="true"
     android:layout_margin="5dip" />
@@ -41,7 +40,7 @@
 
 <TextView
     android:id="@+id/cartListItemTextType"
-    style="@style/StyleProductListItemTextType"
+    style="@style/StyleCartListItemTextType"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/cartListItemButtonRemove"
@@ -50,7 +49,7 @@
 
 <TextView
     android:id="@+id/cartListItemTextAlcohol"
-    style="@style/StyleProductListItemTextAlcohol"
+    style="@style/StyleCartListItemTextAlcohol"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/cartListItemButtonRemove"

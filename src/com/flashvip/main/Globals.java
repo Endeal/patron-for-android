@@ -3,57 +3,51 @@ package com.flashvip.main;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import android.content.Context;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 public class Globals
 {	
-	public static final String DEVICE_ID = "jww93";
-	private static ArrayList<String> orderCodes = new ArrayList<String>();
-	
-	private static Context context;
+	private static ArrayList<String> codes = new ArrayList<String>();
 
 	private static ArrayList<Location> locations = new ArrayList<Location>();
 	private static Location currentServer;
-	private static String serverName;
-	
-	private static int currentScreen = 0;
-	private static ArrayList<Integer> previousScreen = new ArrayList<Integer>();
-	private static int screenPosition = 0;
+	private static String locationName;
 	
 	private static ArrayList<Product> products = new ArrayList<Product>();
 	private static ArrayList<Product> currentProducts = new ArrayList<Product>();
 	private static ArrayList<Product> alcohols = new ArrayList<Product>();
-	private static ArrayList<Product> serverTopOrders = new ArrayList<Product>();
+	private static ArrayList<Product> recommendations = new ArrayList<Product>();
 	private static ArrayList<Product> favoriteProducts =  new ArrayList<Product>();
-	private static ArrayList<TabProduct> tabProducts = new ArrayList<TabProduct>();
+	private static ArrayList<Location> favoriteLocations = new ArrayList<Location>();
+	private static ArrayList<CartProduct> cartProducts = new ArrayList<CartProduct>();
+	
 	private static SparseArray<String> mapSpinnerToAlcohol = new SparseArray<String>();
 	private static SparseIntArray mapArrayToAlcohol = new SparseIntArray();
 	private static SparseIntArray mapArrayToQuantity = new SparseIntArray();
 	
-	private static double tabTotal;
+	private static float cartTotal;
 	
 	// MAIN METHODS
 	
-	public static void addOrderCode(String code)
+	public static void addCode(String code)
 	{
-		orderCodes.add(code);
+		codes.add(code);
 	}
 	
-	public static void removeAllOrderCodes()
+	public static void clearCodes()
 	{
-		orderCodes.clear();
+		codes.clear();
 	}
 	
-	public static void addOrderToTab(TabProduct order)
+	public static void addCartProduct(CartProduct order)
 	{
-		tabProducts.add(order);
+		cartProducts.add(order);
 	}
 	
-	public static void removeOrderFromTab(int position)
+	public static void removeProductFromCart(CartProduct product)
 	{
-		tabProducts.remove(position);
+		cartProducts.remove(product);
 	}
 	
 	public static void addFavoriteProduct(Product order)
@@ -64,9 +58,22 @@ public class Globals
 			favoriteProducts.add(order);
 	}
 	
+	public static void addFavoriteLocation(Location location)
+	{
+		if (favoriteLocations == null)
+			favoriteLocations = new ArrayList<Location>();
+		if (location != null)
+			favoriteLocations.add(location);
+	}
+	
 	public static void removeFavoriteProduct(int position)
 	{
 		favoriteProducts.remove(position);
+	}
+	
+	public static void removeFavoriteLocation(int position)
+	{
+		favoriteLocations.remove(position);
 	}
 	
 	public static void addAlcohol(Product alcohol)
@@ -75,51 +82,30 @@ public class Globals
 		mapSpinnerToAlcohol.put(alcohols.size() - 1, alcohol.getId());
 	}
 	
-	public static void removeAllAlcohols()
+	public static void clearAlcohols()
 	{
 		alcohols.clear();
 		mapSpinnerToAlcohol.clear();
 	}
 	
-	public static void addServerTopOrder(Product order)
+	public static void addRecommendation(Product order)
 	{
-		serverTopOrders.add(order);
+		recommendations.add(order);
 	}
 	
-	public static void removeAllServerTopOrders()
+	public static void clearRecommendations()
 	{
-		serverTopOrders.clear();
+		recommendations.clear();
 	}
 	
-	public static void calculateTabTotal()
+	public static void updateCartTotal()
 	{
-		double total = 0.0;
-		for (int i = 0; i < tabProducts.size(); i++)
+		float total = 0.0f;
+		for (int i = 0; i < cartProducts.size(); i++)
 		{
-			total += tabProducts.get(i).getPrice();
+			total += cartProducts.get(i).getPrice();
 		}
-		tabTotal = total;
-	}
-	
-	public static void goToPreviousScreen()
-	{
-		if (screenPosition > 0)
-		{
-			screenPosition--;
-			currentScreen = previousScreen.get(screenPosition);
-			previousScreen.remove(previousScreen.size() - 1);
-		}
-		else
-			currentScreen = 0;
-		FlashClient.updateAll();
-	}
-	
-	public static void goToMainScreen()
-	{
-		screenPosition = 0;
-		currentScreen = 0;
-		previousScreen.clear();
-		FlashClient.updateAll();
+		cartTotal = total;
 	}
 	
 	public static Product getProductById(String id)
@@ -133,7 +119,7 @@ public class Globals
 		return d;
 	}
 	
-	public static void removeAllArrayToValues()
+	public static void clearSpinnerMappings()
 	{
 		mapArrayToAlcohol.clear();
 		mapArrayToQuantity.clear();
@@ -141,36 +127,17 @@ public class Globals
 	
 	// SETTER METHODS
 	
-	public static void setOrderCodes(ArrayList<String> codes)
+	public static void setCodes(ArrayList<String> newCodes)
 	{
-		orderCodes = codes;
+		codes = newCodes;
 	}
 	
-	public static void setContext(Context c)
+	public static void setLocationName(String s)
 	{
-		context = c;
+		locationName = s;
 	}
 	
-	public static void setServerName(String s)
-	{
-		serverName = s;
-	}
-	
-	public static void setCurrentScreen(int i)
-	{
-		addPreviousScreen(currentScreen);
-		currentScreen = i;
-		screenPosition = previousScreen.size();
-	}
-	
-	public static void addPreviousScreen(int i)
-	{
-		if (previousScreen.size() >= 30)
-			previousScreen.remove(0);
-		previousScreen.add(i);
-	}
-	
-	public static void setServers(ArrayList<Location> newLocations)
+	public static void setLocations(ArrayList<Location> newLocations)
 	{
 		locations = newLocations;
 	}
@@ -190,27 +157,32 @@ public class Globals
 		alcohols = newAlcohols;
 	}
 	
-	public static void setServerTopOrders(ArrayList<Product> orders)
+	public static void setRecommendations(ArrayList<Product> products)
 	{
-		serverTopOrders = orders;
+		recommendations = products;
 	}
 	
-	public static void setFavoriteProducts(ArrayList<Product> orders)
+	public static void setFavoriteProducts(ArrayList<Product> products)
 	{
-		favoriteProducts = orders;
+		favoriteProducts = products;
 	}
 	
-	public static void setTabProducts(ArrayList<TabProduct> orders)
+	public static void setFavoriteLocations(ArrayList<Location> locations)
 	{
-		tabProducts = orders;
+		favoriteLocations = locations;
 	}
 	
-	public static void setTabTotal(double total)
+	public static void setCartProducts(ArrayList<CartProduct> product)
 	{
-		tabTotal = total;
+		cartProducts = product;
 	}
 	
-	public static void setCurrentServer(Location s)
+	public static void setCartTotal(float total)
+	{
+		cartTotal = total;
+	}
+	
+	public static void setCurrentLocation(Location s)
 	{
 		currentServer = s;
 	}
@@ -227,43 +199,22 @@ public class Globals
 	
 	// ACCESSOR METHODS
 	
-	public static Context getContext()
+	public static String getLocationName()
 	{
-		return context;
-		
-	}
-	
-	public static String getServerName()
-	{
-		if (serverName != null && serverName.length() > 0)
-			return serverName;
+		if (locationName != null && locationName.length() > 0)
+			return locationName;
 		else
 			return "(Select Bar)";
 	}
 	
-	public static int getCurrentScreen()
-	{
-		return currentScreen;
-	}
-	
-	public static ArrayList<Integer> getPreviousScreen()
-	{
-		return previousScreen;
-	}
-	
-	public static int getScreenPosition()
-	{
-		return screenPosition;
-	}
-	
-	public static ArrayList<Location> getServers()
+	public static ArrayList<Location> getLocations()
 	{
 		return locations;
 	}
 	
-	public static ArrayList<Location> getSearchServers()
+	public static ArrayList<Location> searchLocations(String query)
 	{
-		String s = FlashClient.search_drinks.getText().toString().toLowerCase(Locale.US);
+		String s = query.toLowerCase(Locale.US);
 		ArrayList<Location> items = new ArrayList<Location>();
 		for (int i = 0; i < locations.size(); i++)
 		{
@@ -283,9 +234,9 @@ public class Globals
 		return currentProducts;
 	}
 	
-	public static ArrayList<Product> getSearchOrders()
+	public static ArrayList<Product> searchProducts(String query)
 	{
-		String s = FlashClient.search_drinks.getText().toString().toLowerCase(Locale.US);
+		String s = query.toLowerCase(Locale.US);
 		ArrayList<Product> items = new ArrayList<Product>();
 		for (int i = 0; i < products.size(); i++)
 		{
@@ -295,9 +246,9 @@ public class Globals
 		return items;
 	}
 	
-	public static ArrayList<Product> getServerTopOrders()
+	public static ArrayList<Product> getRecommendations()
 	{
-		return serverTopOrders;
+		return recommendations;
 	}
 	
 	public static ArrayList<Product> getFavoriteProducts()
@@ -305,19 +256,24 @@ public class Globals
 		return favoriteProducts;
 	}
 	
-	public static ArrayList<TabProduct> getTabProducts()
+	public static ArrayList<Location> getFavoriteLocations()
 	{
-		return tabProducts;
+		return favoriteLocations;
 	}
 	
-	public static ArrayList<TabProduct> getSearchTabDrinks()
+	public static ArrayList<CartProduct> getCartProducts()
 	{
-		String s = FlashClient.search_drinks.getText().toString().toLowerCase(Locale.US);
-		ArrayList<TabProduct> items = new ArrayList<TabProduct>();
-		for (int i = 0; i < tabProducts.size(); i++)
+		return cartProducts;
+	}
+	
+	public static ArrayList<CartProduct> searchCartProducts(String query)
+	{
+		String s = query.toLowerCase(Locale.US);
+		ArrayList<CartProduct> items = new ArrayList<CartProduct>();
+		for (int i = 0; i < cartProducts.size(); i++)
 		{
-			if (tabProducts.get(i).getDrink().getName().toLowerCase(Locale.US).contains(s))
-				items.add(tabProducts.get(i));
+			if (cartProducts.get(i).getDrink().getName().toLowerCase(Locale.US).contains(s))
+				items.add(cartProducts.get(i));
 		}
 		return items;
 	}
@@ -333,12 +289,12 @@ public class Globals
 		return alcohol_id;
 	}
 	
-	public static double getTabTotal()
+	public static double getCartTotal()
 	{
-		return tabTotal;
+		return cartTotal;
 	}
 	
-	public static Location getCurrentServer()
+	public static Location getCurrentLocation()
 	{
 		return currentServer;
 	}
@@ -353,8 +309,8 @@ public class Globals
 		return mapArrayToQuantity.get(listPosition);
 	}
 	
-	public static ArrayList<String> getOrderCodes()
+	public static ArrayList<String> getCodes()
 	{
-		return orderCodes;
+		return codes;
 	}
 }

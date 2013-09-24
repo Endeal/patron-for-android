@@ -47,19 +47,13 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	}
 
 	@Override
-	protected void onPreExecute()
-	{
-		FlashClient.beginLoading();
-	}
-
-	@Override
 	protected ArrayList<String> doInBackground(URL... params)
 	{
 		// The list of drinks.
 		HttpResponse response = null;
 
 		// HTTP Post.
-		if (Globals.getCurrentServer() != null)
+		if (Globals.getCurrentLocation() != null)
 		{
 			try
 			{
@@ -68,7 +62,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 				HttpPost post = new HttpPost(path.toURI());
 				ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 				NameValuePair tableNumber = new BasicNameValuePair("table_number",
-						Globals.getCurrentServer().getId());
+						Globals.getCurrentLocation().getId());
 				NameValuePair clientId = new BasicNameValuePair("client_id", apid);
 
 				postData.add(tableNumber);
@@ -115,8 +109,8 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 			}
 			catch (Exception e)
 			{
-				Toast toast = Toast.makeText(Globals.getContext(), result, Toast.LENGTH_SHORT);
-				toast.show();
+//				Toast toast = Toast.makeText(Globals.getContext(), result, Toast.LENGTH_SHORT);
+//				toast.show();
 				codes = null;
 			}
 		}
@@ -130,17 +124,14 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	{
 		if (codes.size() > 0)
 		{
-			Globals.setOrderCodes(codes);
-			Globals.setCurrentScreen(ListScreens.SCREEN_CODES);
-			FlashClient.updateAll();
+			Globals.setCodes(codes);
 		}
 		else
 		{
-			Toast toastNoSearch = Toast.makeText(Globals.getContext(),
-					"Failed to retrieve the list of order codes.",
-					Toast.LENGTH_SHORT);
-			toastNoSearch.show();
+//			Toast toastNoSearch = Toast.makeText(Globals.getContext(),
+//					"Failed to retrieve the list of order codes.",
+//					Toast.LENGTH_SHORT);
+//			toastNoSearch.show();
 		}
-		FlashClient.endLoading();
 	}
 }

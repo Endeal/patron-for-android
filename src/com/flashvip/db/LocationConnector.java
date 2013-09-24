@@ -1,6 +1,7 @@
 package com.flashvip.db;
 
 import java.net.URL;
+
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -17,13 +18,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.flashvip.lists.ListScreens;
-import com.flashvip.main.FlashClient;
 import com.flashvip.main.FlashLocations;
 import com.flashvip.main.Globals;
 import com.flashvip.main.Location;
 
-public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
+public class LocationConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 {
 	/**
 	 * Private variables.
@@ -33,7 +32,7 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 	private HttpResponse response;
 	private FlashLocations activity;
 	
-	public ServerConnector(FlashLocations activity)
+	public LocationConnector(FlashLocations activity)
 	{
 		this.activity = activity;
 	}
@@ -41,7 +40,7 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 	@Override
 	protected ArrayList<Location> doInBackground(URL... params)
 	{
-		// The list of servers.
+		// The list of locations.
 		ArrayList<Location> servers = new ArrayList<Location>();
 		
 		// HTTP Post.
@@ -94,7 +93,7 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 		}
 		catch(Exception e)
 		{
-			Toast toast = Toast.makeText(Globals.getContext(), result, Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(activity, result, Toast.LENGTH_SHORT);
 			toast.show();
 			servers = null;
 		}
@@ -104,19 +103,12 @@ public class ServerConnector extends AsyncTask<URL, Void, ArrayList<Location>>
 	@Override
 	protected void onPostExecute(ArrayList<Location> list)
 	{
-		Globals.setServers(list);
-		if (Globals.getServers() != null &&
-				Globals.getServers().size() > 0)
+		Globals.setLocations(list);
+		if (Globals.getLocations() == null ||
+				Globals.getLocations().size() <= 0)
 		{
-			Globals.setCurrentScreen(ListScreens.SCREEN_CHOOSE_BAR);
-//			FlashClient.updateListViewAdapter();
-		}
-		else
-		{
-			Globals.setCurrentScreen(ListScreens.SCREEN_MAIN);
-//			FlashClient.updateListViewAdapter();
-			Toast noBarsAvailable = Toast.makeText(Globals.getContext(),
-					"Failed to retrieve list of bars available.",
+			Toast noBarsAvailable = Toast.makeText(activity,
+					"Failed to retrieve the list of bars available.",
 					Toast.LENGTH_SHORT);
 			noBarsAvailable.show();
 		}
