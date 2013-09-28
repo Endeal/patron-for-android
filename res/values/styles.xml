@@ -153,6 +153,12 @@
         <item name="android:text">@string/locationListItemTextPhone</item>
     </style>
     
+    <style name="StyleLocationListItemToggleButtonFavorite">
+        <item name="android:background">@drawable/selector_toggle_button_favorite</item>
+        <item name="android:textOff"></item>
+        <item name="android:textOn"></item>
+    </style>
+    
     <!-- Product List Item -->
     <style name="StyleProductListItemTextName">
         <item name="android:textColor">#222222</item>
@@ -219,6 +225,28 @@
     
     <style name="StyleCartListItemButtonRemove">
         <item name="android:background">@drawable/buttonremoveproduct</item>
+    </style>
+    
+    <!-- Code List Item -->
+    <style name="StyleCodeListItemTextProducts">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextProducts</item>
+        <item name="android:text">@string/codeListItemTextProducts</item>
+    </style>
+    
+    <style name="StyleCodeListItemTextTime">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextTime</item>
+        <item name="android:text">@string/codeListItemTextTime</item>
+    </style>
+    
+    <style name="StyleCodeListItemTextStatus">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextStatus</item>
+        <item name="android:text">@string/codeListItemTextStatus</item>
     </style>
     
     <!-- Miscellaneous Styles -->

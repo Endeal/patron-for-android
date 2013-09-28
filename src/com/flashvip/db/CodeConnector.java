@@ -3,6 +3,7 @@ package com.flashvip.db;
 import java.io.IOException;
 
 
+
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -20,8 +21,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.flashvip.lists.ListScreens;
-import com.flashvip.main.FlashClient;
 import com.flashvip.main.Globals;
 import com.urbanairship.push.PushManager;
 
@@ -122,7 +121,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	@Override
 	protected void onPostExecute(ArrayList<String> codes)
 	{
-		if (codes.size() > 0)
+		if (codes != null && codes.size() > 0)
 		{
 			Globals.setCodes(codes);
 		}

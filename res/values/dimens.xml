@@ -58,6 +58,11 @@
     <dimen name="dimCartListItemButtonRemoveWidth">34dp</dimen>
     <dimen name="dimCartListItemButtonRemoveHeight">34dp</dimen>
     
+    <!-- Code List Item -->
+    <dimen name="dimCodeListItemTextProducts">12sp</dimen>
+    <dimen name="dimCodeListItemTextTime">16sp</dimen>
+    <dimen name="dimCodeListItemTextStatus">16sp</dimen>
+    
     <!-- Miscellaneous UI Elements -->
     <dimen name="dimMiscTextNoLocations">18sp</dimen>
     <dimen name="dimMiscTextNoItems">18sp</dimen>

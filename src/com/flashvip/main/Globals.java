@@ -10,16 +10,18 @@ public class Globals
 {	
 	private static ArrayList<String> codes = new ArrayList<String>();
 
+	private static Location currentLocation = null;
+	private static String locationName = null;
+
 	private static ArrayList<Location> locations = new ArrayList<Location>();
-	private static Location currentServer;
-	private static String locationName;
+	private static ArrayList<Location> currentLocations = new ArrayList<Location>();
+	private static ArrayList<Location> favoriteLocations = new ArrayList<Location>();
 	
 	private static ArrayList<Product> products = new ArrayList<Product>();
 	private static ArrayList<Product> currentProducts = new ArrayList<Product>();
 	private static ArrayList<Product> alcohols = new ArrayList<Product>();
 	private static ArrayList<Product> recommendations = new ArrayList<Product>();
 	private static ArrayList<Product> favoriteProducts =  new ArrayList<Product>();
-	private static ArrayList<Location> favoriteLocations = new ArrayList<Location>();
 	private static ArrayList<CartProduct> cartProducts = new ArrayList<CartProduct>();
 	
 	private static SparseArray<String> mapSpinnerToAlcohol = new SparseArray<String>();
@@ -142,6 +144,11 @@ public class Globals
 		locations = newLocations;
 	}
 	
+	public static void setCurrentLocations(ArrayList<Location> newLocations)
+	{
+		currentLocations = newLocations;
+	}
+	
 	public static void setProducts(ArrayList<Product> newProducts)
 	{
 		products = newProducts;
@@ -184,7 +191,7 @@ public class Globals
 	
 	public static void setCurrentLocation(Location s)
 	{
-		currentServer = s;
+		currentLocation = s;
 	}
 	
 	public static void setArrayToAlcohol(int listPosition, int selection)
@@ -210,6 +217,11 @@ public class Globals
 	public static ArrayList<Location> getLocations()
 	{
 		return locations;
+	}
+	
+	public static ArrayList<Location> getCurrentLocations()
+	{
+		return currentLocations;
 	}
 	
 	public static ArrayList<Location> searchLocations(String query)
@@ -296,7 +308,7 @@ public class Globals
 	
 	public static Location getCurrentLocation()
 	{
-		return currentServer;
+		return currentLocation;
 	}
 	
 	public static int getAlcoholSelectionForKey(int listPosition)

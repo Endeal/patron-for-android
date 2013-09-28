@@ -49,6 +49,11 @@
     <string name="cartListItemTextAlcohol">None</string>
     <string name="cartListItemTextPrice">$2.00</string>
     
+    <!-- Code List Item -->
+    <string name="codeListItemTextProducts">1 Budweiser</string>
+    <string name="codeListItemTextTime">1/1/10, 12:00 PM</string>
+    <string name="codeListItemTextStatus">Waiting</string>
+    
     <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>
     <string name="app_name">FlashVIP v1</string>

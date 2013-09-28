@@ -25,7 +25,7 @@ import com.flashvip.lists.ListLinks;
 public class FlashLocations extends ActionBarActivity
 {
 	// The layout elements.
-	private ListView list;
+	private ListView listLocations;
 	
 	// Activity methods.
 	@Override
@@ -33,8 +33,6 @@ public class FlashLocations extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.misc_loading);
-
-		updateLocations();
 	}
 	
 	@Override
@@ -48,6 +46,7 @@ public class FlashLocations extends ActionBarActivity
     public void onWindowFocusChanged(boolean hasFocus)
     {
     	super.onWindowFocusChanged(hasFocus);
+    	initializeLayout();
     	updateLocations();
     }
 	
@@ -84,7 +83,7 @@ public class FlashLocations extends ActionBarActivity
 	// Layout
 	private void initializeLayout()
 	{
-		list = (ListView) findViewById(R.id.locationsList);
+		listLocations = (ListView) findViewById(R.id.locationsList);
 	}
 	
 	public void updateList()
@@ -92,26 +91,36 @@ public class FlashLocations extends ActionBarActivity
     	if (Globals.getLocations() != null && !Globals.getLocations().isEmpty())
     	{
     		setContentView(R.layout.layout_locations);
-    		initializeLayout();
-    		List<Map<String, String>> servers = new ArrayList<Map<String, String>>();
-    		String[] from = {"name", "phone", "address"};
-    		int[] to = {R.id.locationListItemTextName, R.id.locationListItemTextPhone,
-    				R.id.locationListItemTextAddress};
+    		List<Map<String, String>> locations = new ArrayList<Map<String, String>>();
+    		
+    		String[] from = {"textName",
+    				"textPhone",
+    				"textAddress",
+    				"toggleButtonFavorite"};
+    		
+    		int[] to = {R.id.locationListItemTextName,
+    				R.id.locationListItemTextPhone,
+    				R.id.locationListItemTextAddress,
+    				R.id.locationListItemToggleButtonFavorite};
+    		
     		for (int i = 0; i < Globals.getLocations().size(); i++)
     		{
     			Map<String, String> mapping = new HashMap<String, String>();
-    			Location currentServer = Globals.getLocations().get(i);
-    			mapping.put("name", currentServer.getName());
-    			mapping.put("phone", currentServer.getPhone());
-    			mapping.put("address", currentServer.getAddress() + ", " +
-    					currentServer.getCity() + ", " + currentServer.getState() +
-    					currentServer.getZip());
-    			servers.add(mapping);
+    			Location currentLocation = Globals.getLocations().get(i);
+    			mapping.put("textName", currentLocation.getName());
+    			mapping.put("textPhone", currentLocation.getPhone());
+    			mapping.put("textAddress", currentLocation.getAddress() +
+    					", " + currentLocation.getCity() +
+    					", " + currentLocation.getState() +
+    					currentLocation.getZip());
+    			mapping.put("toggleButtonFavorite", "" + i);
+    			locations.add(mapping);
     		}
     		SimpleAdapter adapter = new SimpleAdapter(this,
-    				servers, R.layout.list_item_location, from, to);
-    		list.setAdapter(adapter);
-    		list.setOnItemClickListener(new LocationItemListener(this));
+    				locations, R.layout.list_item_location, from, to);
+    		adapter.setViewBinder(new LocationBinder());
+    		listLocations.setAdapter(adapter);
+    		listLocations.setOnItemClickListener(new LocationItemListener(this));
     		adapter.notifyDataSetChanged();
     	}
     	else

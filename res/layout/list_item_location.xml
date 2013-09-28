@@ -6,13 +6,22 @@
 
 <!-- First Row -->
 
+<ToggleButton
+    android:id="@+id/locationListItemToggleButtonFavorite"
+    style="@style/StyleLocationListItemToggleButtonFavorite"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_centerVertical="true"
+    android:layout_margin="5dip"
+    android:focusable="false" />
+
 <TextView
     android:id="@+id/locationListItemTextName"
     style="@style/StyleLocationListItemTextName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_toLeftOf="@+id/locationListItemTextPhone"
+    android:layout_toRightOf="@+id/locationListItemToggleButtonFavorite"
     android:layout_alignParentTop="true"
     android:layout_margin="10dip" />
 
@@ -21,17 +30,9 @@
     style="@style/StyleLocationListItemTextPhone"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_toLeftOf="@+id/locationListItemToggleButtonFavorite"
-    android:layout_alignTop="@+id/locationListItemTextName"
-    android:layout_marginRight="10dip" />
-
-<ToggleButton
-    android:id="@+id/locationListItemToggleButtonFavorite"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
-    android:layout_centerVertical="true"
-    android:focusable="false" />
+    android:layout_alignParentTop="true"
+    android:layout_margin="10dip" />
 
 <!-- Second Row -->
 
@@ -40,9 +41,8 @@
     style="@style/StyleLocationListItemTextAddress"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_toLeftOf="@+id/locationListItemToggleButtonFavorite"
-    android:layout_below="@+id/locationListItemTextName"
+    android:layout_alignParentRight="true"
+    android:layout_below="@+id/locationListItemTextPhone"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:paddingBottom="10dp" />

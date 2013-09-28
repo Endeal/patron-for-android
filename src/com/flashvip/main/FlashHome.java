@@ -16,19 +16,17 @@ import com.urbanairship.Logger;
 import com.urbanairship.UAirship;
 import com.urbanairship.push.PushManager;
 
-public class FlashClient extends ActionBarActivity
+public class FlashHome extends ActionBarActivity
 {
-	// Main XML Elements
+	// Layout elements.
 	public static TextView textLocation; // The bar's name.
 	public static TextView textUser; // The user's name.
-	
-	// Profile Menu Elements
 	public static Button buttonHomeMenu; // Go to Server Menu
 	public static Button buttonHomeCart; // Go to Cart
 	public static Button buttonHomeCodes; // Go to Codes
 	public static Button buttonHomeFavorites; // Go to Favorites
 	
-
+	// Activity methods.
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -84,6 +82,7 @@ public class FlashClient extends ActionBarActivity
         return true;
     }
     
+    // Layout methods.
     public void initializeLayout()
     {
     	// Main XML Elements

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.flashvip.main.FlashCart;
-import com.flashvip.main.FlashClient;
+import com.flashvip.main.FlashHome;
 import com.flashvip.main.Globals;
 
 public class ButtonFinishListener implements View.OnClickListener
@@ -41,7 +41,7 @@ public class ButtonFinishListener implements View.OnClickListener
 	
 	public void orderFinished()
 	{
-		Intent intent = new Intent(activity, FlashClient.class);
+		Intent intent = new Intent(activity, FlashHome.class);
 		activity.startActivity(intent);
 		
 		Toast toast = Toast.makeText(activity,

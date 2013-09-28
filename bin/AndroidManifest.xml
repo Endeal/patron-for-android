@@ -30,7 +30,7 @@
         
         <!-- The Home Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashClient"
+            android:name="com.flashvip.main.FlashHome"
             android:label="@string/titleActivityHome"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
@@ -47,7 +47,7 @@
             android:label="@string/titleActivityMenu"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashClient">
+            android:parentActivityName="com.flashvip.main.FlashHome">
             
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
@@ -72,7 +72,7 @@
             android:label="@string/titleActivityLocations"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashClient">
+            android:parentActivityName="com.flashvip.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.flashvip.main.FlashClient" />
