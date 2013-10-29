@@ -370,9 +370,9 @@ int id listMode 0x7f050001
 int id list_home 0x7f05004d
 int id list_item 0x7f050027
 int id locationListItemTextAddress 0x7f050079
-int id locationListItemTextName 0x7f050076
-int id locationListItemTextPhone 0x7f050077
-int id locationListItemToggleButtonFavorite 0x7f050078
+int id locationListItemTextName 0x7f050077
+int id locationListItemTextPhone 0x7f050078
+int id locationListItemToggleButtonFavorite 0x7f050076
 int id locationsList 0x7f050061
 int id martini_imgbut 0x7f050051
 int id menuButtonBeer 0x7f050067

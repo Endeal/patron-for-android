@@ -1139,9 +1139,9 @@ containing a value of this type.
         public static final int list_home=0x7f05004d;
         public static final int list_item=0x7f050027;
         public static final int locationListItemTextAddress=0x7f050079;
-        public static final int locationListItemTextName=0x7f050076;
-        public static final int locationListItemTextPhone=0x7f050077;
-        public static final int locationListItemToggleButtonFavorite=0x7f050078;
+        public static final int locationListItemTextName=0x7f050077;
+        public static final int locationListItemTextPhone=0x7f050078;
+        public static final int locationListItemToggleButtonFavorite=0x7f050076;
         public static final int locationsList=0x7f050061;
         public static final int martini_imgbut=0x7f050051;
         public static final int menuButtonBeer=0x7f050067;
