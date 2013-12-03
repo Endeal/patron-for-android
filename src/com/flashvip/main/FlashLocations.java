@@ -32,6 +32,7 @@ public class FlashLocations extends ActionBarActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		initializeLayout();
 		setContentView(R.layout.misc_loading);
 	}
 	
@@ -119,6 +120,8 @@ public class FlashLocations extends ActionBarActivity
     		SimpleAdapter adapter = new SimpleAdapter(this,
     				locations, R.layout.list_item_location, from, to);
     		adapter.setViewBinder(new LocationBinder());
+    		if (listLocations == null)
+    			initializeLayout();
     		listLocations.setAdapter(adapter);
     		listLocations.setOnItemClickListener(new LocationItemListener(this));
     		adapter.notifyDataSetChanged();
