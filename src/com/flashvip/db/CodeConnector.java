@@ -1,9 +1,6 @@
 package com.flashvip.db;
 
 import java.io.IOException;
-
-
-
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -22,17 +19,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.flashvip.main.Globals;
+import com.flashvip.model.Code;
 import com.urbanairship.push.PushManager;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
+public class CodeConnector extends AsyncTask<URL, Void, ArrayList<Code>>
 {
 	/**
 	 * Private variables.
 	 */
-	private ArrayList<String> codes;
+	private ArrayList<Code> codes;
 	private String result;
 	private String apid;
 	
@@ -41,18 +38,18 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	 */
 	public CodeConnector()
 	{
-		codes = new ArrayList<String>();
+		codes = new ArrayList<Code>();
 		apid = PushManager.shared().getAPID();
 	}
 
 	@Override
-	protected ArrayList<String> doInBackground(URL... params)
+	protected ArrayList<Code> doInBackground(URL... params)
 	{
 		// The list of drinks.
 		HttpResponse response = null;
 
 		// HTTP Post.
-		if (Globals.getCurrentLocation() != null)
+		if (Globals.getVendor() != null)
 		{
 			try
 			{
@@ -60,8 +57,8 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 				HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost(path.toURI());
 				ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-				NameValuePair tableNumber = new BasicNameValuePair("table_number",
-						Globals.getCurrentLocation().getId());
+				NameValuePair tableNumber = new BasicNameValuePair("vendor_id",
+						Globals.getVendor().getVendorId());
 				NameValuePair clientId = new BasicNameValuePair("client_id", apid);
 
 				postData.add(tableNumber);
@@ -102,7 +99,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 					int length = array_codes.length();
 					for (int i = 0; i < length; i++)
 					{
-						codes.add(array_codes.getString(i));
+						//codes.add(array_codes.getString(i));
 					}
 				}
 			}
@@ -119,7 +116,7 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<String>>
 	}
 	
 	@Override
-	protected void onPostExecute(ArrayList<String> codes)
+	protected void onPostExecute(ArrayList<Code> codes)
 	{
 		if (codes != null && codes.size() > 0)
 		{

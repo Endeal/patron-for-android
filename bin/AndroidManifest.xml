@@ -68,8 +68,20 @@
         
         <!-- The Locations Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashLocations"
+            android:name="com.flashvip.main.FlashVendors"
             android:label="@string/titleActivityLocations"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Codes Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashCodes"
+            android:label="@string/titleActivityCodes"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:parentActivityName="com.flashvip.main.FlashHome">

@@ -948,6 +948,7 @@ containing a value of this type.
         public static final int dimMenuButtonShotsText=0x7f08001c;
         public static final int dimMenuButtonWineText=0x7f08001f;
         public static final int dimMenuListItemsDividerHeight=0x7f080020;
+        public static final int dimMiscTextNoCodes=0x7f08003d;
         public static final int dimMiscTextNoItems=0x7f08003b;
         public static final int dimMiscTextNoItemsCart=0x7f08003c;
         /**  Miscellaneous UI Elements 
@@ -1069,7 +1070,8 @@ containing a value of this type.
         public static final int ic_menu_martini=0x7f020065;
         public static final int ic_menu_shots=0x7f020066;
         public static final int mainbutton=0x7f020067;
-        public static final int selector_toggle_button_favorite=0x7f020068;
+        public static final int mainbuttonselected=0x7f020068;
+        public static final int selector_toggle_button_favorite=0x7f020069;
     }
     public static final class id {
         public static final int SearchBar1=0x7f050040;
@@ -1084,25 +1086,26 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
+        public static final int action_search=0x7f05007c;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int bar_name=0x7f05003d;
         public static final int beer_imgbut=0x7f050048;
         public static final int beginning=0x7f050011;
         public static final int cartButtonFinish=0x7f05004d;
-        public static final int cartListItemButtonRemove=0x7f050067;
-        public static final int cartListItemSpinnerAlcohol=0x7f05006b;
-        public static final int cartListItemSpinnerQuantity=0x7f05006c;
-        public static final int cartListItemTextAlcohol=0x7f05006a;
-        public static final int cartListItemTextName=0x7f050066;
-        public static final int cartListItemTextPrice=0x7f050068;
-        public static final int cartListItemTextType=0x7f050069;
+        public static final int cartListItemButtonRemove=0x7f050064;
+        public static final int cartListItemLayout=0x7f050062;
+        public static final int cartListItemSpinnerQuantity=0x7f050065;
+        public static final int cartListItemTextCategories=0x7f050067;
+        public static final int cartListItemTextName=0x7f050063;
+        public static final int cartListItemTextPrice=0x7f050066;
         public static final int cartListItems=0x7f05004c;
         public static final int checkbox=0x7f05002d;
         public static final int cocktail_imgbut=0x7f050049;
-        public static final int codeListItemTextProducts=0x7f05006d;
-        public static final int codeListItemTextStatus=0x7f05006f;
-        public static final int codeListItemTextTime=0x7f05006e;
+        public static final int codeListItemTextProducts=0x7f05006a;
+        public static final int codeListItemTextStatus=0x7f050069;
+        public static final int codeListItemTextTime=0x7f050068;
+        public static final int codesList=0x7f05004e;
         public static final int collapseActionView=0x7f05000d;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
@@ -1114,64 +1117,59 @@ containing a value of this type.
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int favoritesListItems=0x7f05004f;
+        public static final int favoritesListItems=0x7f050050;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
-        public static final int homeButtonCart=0x7f050058;
-        public static final int homeButtonCodes=0x7f050059;
-        public static final int homeButtonFavorites=0x7f05005a;
-        public static final int homeButtonMenu=0x7f050057;
-        public static final int homeImageProfileServer=0x7f050052;
-        public static final int homeImageProfileUser=0x7f050051;
-        public static final int homeLayoutProfileButtons=0x7f050056;
-        public static final int homeLayoutProfilePictures=0x7f050050;
-        public static final int homeLayoutProfileText=0x7f050053;
-        public static final int homeTextLocation=0x7f050055;
-        public static final int homeTextUser=0x7f050054;
+        public static final int homeButtonCart=0x7f050059;
+        public static final int homeButtonCodes=0x7f05005a;
+        public static final int homeButtonFavorites=0x7f05005b;
+        public static final int homeButtonMenu=0x7f050058;
+        public static final int homeImageProfileServer=0x7f050053;
+        public static final int homeImageProfileUser=0x7f050052;
+        public static final int homeLayoutProfileButtons=0x7f050057;
+        public static final int homeLayoutProfilePictures=0x7f050051;
+        public static final int homeLayoutProfileText=0x7f050054;
+        public static final int homeTextLocation=0x7f050056;
+        public static final int homeTextUser=0x7f050055;
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
         public static final int imgbut_search=0x7f050041;
-        public static final int layoutMenu=0x7f05004e;
+        public static final int layoutMenu=0x7f05004f;
         public static final int linearLayout1=0x7f05003c;
         public static final int linearLayout2=0x7f050044;
         public static final int linearLayout3=0x7f050045;
         public static final int listMode=0x7f050001;
         public static final int list_home=0x7f050047;
         public static final int list_item=0x7f050029;
-        public static final int locationListItemTextAddress=0x7f050073;
-        public static final int locationListItemTextName=0x7f050071;
-        public static final int locationListItemTextPhone=0x7f050072;
-        public static final int locationListItemToggleButtonFavorite=0x7f050070;
-        public static final int locationsList=0x7f05005b;
+        public static final int locationListItemTextAddress=0x7f05006e;
+        public static final int locationListItemTextName=0x7f05006c;
+        public static final int locationListItemTextPhone=0x7f05006d;
+        public static final int locationListItemToggleButtonFavorite=0x7f05006b;
+        public static final int locationsList=0x7f05005c;
         public static final int martini_imgbut=0x7f05004b;
-        public static final int menuButtonBeer=0x7f050061;
-        public static final int menuButtonCheckout=0x7f05005e;
-        public static final int menuButtonCocktails=0x7f050063;
-        public static final int menuButtonFavorites=0x7f050060;
-        public static final int menuButtonMartinis=0x7f050064;
-        public static final int menuButtonShots=0x7f050062;
-        public static final int menuButtonWine=0x7f050065;
-        public static final int menuHorizontalScrollViewTypes=0x7f05005d;
-        public static final int menuLayoutTypes=0x7f05005f;
-        public static final int menuListItems=0x7f05005c;
-        public static final int menu_help=0x7f050082;
-        public static final int menu_settings=0x7f050081;
+        public static final int menuButtonCheckout=0x7f05005f;
+        public static final int menuButtonFavorites=0x7f050061;
+        public static final int menuHorizontalScrollViewTypes=0x7f05005e;
+        public static final int menuLayoutTypes=0x7f050060;
+        public static final int menuListItems=0x7f05005d;
+        public static final int menu_help=0x7f05007e;
+        public static final int menu_settings=0x7f05007d;
         public static final int middle=0x7f050012;
-        public static final int miscProgressBarIndicator=0x7f05007b;
-        public static final int miscTextNoItems=0x7f05007c;
-        public static final int miscTextNoItemsCart=0x7f05007d;
-        public static final int miscTextNoLocations=0x7f05007e;
+        public static final int miscProgressBarIndicator=0x7f050075;
+        public static final int miscTextNoCodes=0x7f050076;
+        public static final int miscTextNoItems=0x7f050077;
+        public static final int miscTextNoItemsCart=0x7f050078;
+        public static final int miscTextNoLocations=0x7f050079;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int productListItemSpinnerAlcohol=0x7f050079;
-        public static final int productListItemSpinnerQuantity=0x7f05007a;
-        public static final int productListItemTextAlcohol=0x7f050078;
-        public static final int productListItemTextName=0x7f050074;
-        public static final int productListItemTextPrice=0x7f050076;
-        public static final int productListItemTextType=0x7f050077;
-        public static final int productListItemToggleButtonFavorite=0x7f050075;
+        public static final int productListItemLayout=0x7f05006f;
+        public static final int productListItemSpinnerQuantity=0x7f050072;
+        public static final int productListItemTextCategories=0x7f050074;
+        public static final int productListItemTextName=0x7f050070;
+        public static final int productListItemTextPrice=0x7f050073;
+        public static final int productListItemToggleButtonFavorite=0x7f050071;
         public static final int progress_bar_1=0x7f050046;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
@@ -1192,8 +1190,8 @@ containing a value of this type.
         public static final int showCustom=0x7f050007;
         public static final int showHome=0x7f050004;
         public static final int showTitle=0x7f050006;
-        public static final int spinnerTarget=0x7f050080;
-        public static final int spinner_alcohol_text=0x7f05007f;
+        public static final int spinnerTarget=0x7f05007b;
+        public static final int spinner_alcohol_text=0x7f05007a;
         public static final int split_action_bar=0x7f05001e;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
@@ -1255,25 +1253,27 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int activity_main=0x7f030017;
         public static final int layout_cart=0x7f030018;
-        public static final int layout_favorites=0x7f030019;
-        public static final int layout_home=0x7f03001a;
-        public static final int layout_locations=0x7f03001b;
-        public static final int layout_main=0x7f03001c;
-        public static final int layout_menu=0x7f03001d;
-        public static final int list_item_cart=0x7f03001e;
-        public static final int list_item_code=0x7f03001f;
-        public static final int list_item_location=0x7f030020;
-        public static final int list_item_product=0x7f030021;
-        public static final int misc_loading=0x7f030022;
-        public static final int misc_no_items=0x7f030023;
-        public static final int misc_no_items_cart=0x7f030024;
-        public static final int misc_no_locations=0x7f030025;
-        public static final int spinner_alcohol_layout=0x7f030026;
-        public static final int spinner_layout=0x7f030027;
-        public static final int support_simple_spinner_dropdown_item=0x7f030028;
+        public static final int layout_codes=0x7f030019;
+        public static final int layout_favorites=0x7f03001a;
+        public static final int layout_home=0x7f03001b;
+        public static final int layout_locations=0x7f03001c;
+        public static final int layout_main=0x7f03001d;
+        public static final int layout_menu=0x7f03001e;
+        public static final int list_item_cart=0x7f03001f;
+        public static final int list_item_code=0x7f030020;
+        public static final int list_item_location=0x7f030021;
+        public static final int list_item_product=0x7f030022;
+        public static final int misc_loading=0x7f030023;
+        public static final int misc_no_codes=0x7f030024;
+        public static final int misc_no_items=0x7f030025;
+        public static final int misc_no_items_cart=0x7f030026;
+        public static final int misc_no_locations=0x7f030027;
+        public static final int spinner_alcohol_layout=0x7f030028;
+        public static final int spinner_layout=0x7f030029;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002a;
     }
     public static final class menu {
-        public static final int activity_main=0x7f0d0000;
+        public static final int menu_home=0x7f0d0000;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1320,9 +1320,9 @@ containing a value of this type.
         /**  Miscellaneous 
          */
         public static final int app_title=0x7f0a0030;
-        public static final int bar_name=0x7f0a0044;
-        public static final int buttonProfileCamera=0x7f0a004c;
-        public static final int button_send=0x7f0a0042;
+        public static final int bar_name=0x7f0a0048;
+        public static final int buttonProfileCamera=0x7f0a0050;
+        public static final int button_send=0x7f0a0046;
         /**  Cart Screen 
          */
         public static final int cartButtonFinish=0x7f0a0020;
@@ -1337,12 +1337,12 @@ containing a value of this type.
         public static final int codeListItemTextProducts=0x7f0a002d;
         public static final int codeListItemTextStatus=0x7f0a002f;
         public static final int codeListItemTextTime=0x7f0a002e;
-        public static final int condes_beer=0x7f0a0047;
-        public static final int condes_cocktail=0x7f0a0048;
-        public static final int condes_martini=0x7f0a004a;
-        public static final int condes_shot=0x7f0a0049;
-        public static final int edit_message=0x7f0a0043;
-        public static final int feedback_button=0x7f0a0045;
+        public static final int condes_beer=0x7f0a004b;
+        public static final int condes_cocktail=0x7f0a004c;
+        public static final int condes_martini=0x7f0a004e;
+        public static final int condes_shot=0x7f0a004d;
+        public static final int edit_message=0x7f0a0047;
+        public static final int feedback_button=0x7f0a0049;
         public static final int hello_world=0x7f0a0032;
         public static final int homeButtonCart=0x7f0a0010;
         public static final int homeButtonCodes=0x7f0a0011;
@@ -1376,27 +1376,31 @@ containing a value of this type.
         public static final int menuImageButtonDescriptionDelete=0x7f0a0021;
         public static final int menu_feedback=0x7f0a0034;
         public static final int menu_help=0x7f0a0035;
+        public static final int menu_search=0x7f0a0036;
         public static final int menu_settings=0x7f0a0033;
-        public static final int miscTextNoItems=0x7f0a0040;
-        public static final int miscTextNoItemsCart=0x7f0a0041;
-        public static final int miscTextNoLocations=0x7f0a003f;
+        public static final int miscTextNoCodes=0x7f0a0045;
+        public static final int miscTextNoConnection=0x7f0a0041;
+        public static final int miscTextNoItems=0x7f0a0043;
+        public static final int miscTextNoItemsCart=0x7f0a0044;
+        public static final int miscTextNoLocations=0x7f0a0042;
         public static final int productListItemTextAlcohol=0x7f0a0027;
         /**  Product List Item 
          */
         public static final int productListItemTextName=0x7f0a0025;
         public static final int productListItemTextPrice=0x7f0a0028;
         public static final int productListItemTextType=0x7f0a0026;
-        public static final int tab_button=0x7f0a0046;
-        public static final int textbox_search_default=0x7f0a004b;
-        public static final int titleActivityCart=0x7f0a0038;
-        public static final int titleActivityCodes=0x7f0a0039;
-        public static final int titleActivityFavorites=0x7f0a003b;
-        public static final int titleActivityHome=0x7f0a0036;
-        public static final int titleActivityLocations=0x7f0a003c;
-        public static final int titleActivityMenu=0x7f0a0037;
-        public static final int titleActivityProfile=0x7f0a003d;
-        public static final int titleActivityScan=0x7f0a003a;
-        public static final int titleActivitySettings=0x7f0a003e;
+        public static final int tab=0x7f0a0037;
+        public static final int tab_button=0x7f0a004a;
+        public static final int textbox_search_default=0x7f0a004f;
+        public static final int titleActivityCart=0x7f0a003a;
+        public static final int titleActivityCodes=0x7f0a003b;
+        public static final int titleActivityFavorites=0x7f0a003d;
+        public static final int titleActivityHome=0x7f0a0038;
+        public static final int titleActivityLocations=0x7f0a003e;
+        public static final int titleActivityMenu=0x7f0a0039;
+        public static final int titleActivityProfile=0x7f0a003f;
+        public static final int titleActivityScan=0x7f0a003c;
+        public static final int titleActivitySettings=0x7f0a0040;
     }
     public static final class style {
         public static final int AppTheme=0x7f0b0083;
@@ -1404,21 +1408,22 @@ containing a value of this type.
         /**  Cart Screen Styles 
          */
         public static final int StyleCartButtonFinish=0x7f0b0094;
-        public static final int StyleCartListItemButtonRemove=0x7f0b00a4;
-        public static final int StyleCartListItemTextAlcohol=0x7f0b00a2;
+        public static final int StyleCartListItemButtonRemove=0x7f0b00a8;
+        public static final int StyleCartListItemTextAlcohol=0x7f0b00a6;
         /**  Cart List Item 
          */
-        public static final int StyleCartListItemTextName=0x7f0b00a0;
-        public static final int StyleCartListItemTextPrice=0x7f0b00a3;
-        public static final int StyleCartListItemTextType=0x7f0b00a1;
-        /**  Code List Item 
+        public static final int StyleCartListItemTextName=0x7f0b00a4;
+        public static final int StyleCartListItemTextPrice=0x7f0b00a7;
+        public static final int StyleCartListItemTextType=0x7f0b00a5;
+        public static final int StyleCodeListItemTextProducts=0x7f0b0096;
+        public static final int StyleCodeListItemTextStatus=0x7f0b0098;
+        public static final int StyleCodeListItemTextTime=0x7f0b0097;
+        /**  Codes Screen Styles 
          */
-        public static final int StyleCodeListItemTextProducts=0x7f0b00a5;
-        public static final int StyleCodeListItemTextStatus=0x7f0b00a7;
-        public static final int StyleCodeListItemTextTime=0x7f0b00a6;
+        public static final int StyleCodesList=0x7f0b0095;
         /**  Favorites Screen Styles 
          */
-        public static final int StyleFavoritesListItems=0x7f0b0095;
+        public static final int StyleFavoritesListItems=0x7f0b0099;
         public static final int StyleHomeButtonCart=0x7f0b0088;
         public static final int StyleHomeButtonCodes=0x7f0b0089;
         public static final int StyleHomeButtonFavorites=0x7f0b008a;
@@ -1427,15 +1432,13 @@ containing a value of this type.
         /**  Home Screen Styles 
          */
         public static final int StyleHomeTextUser=0x7f0b0085;
-        /**   Location List 
+        /**   Locations Screen Styles 
          */
-        public static final int StyleLocationList=0x7f0b0096;
-        public static final int StyleLocationListItemTextAddress=0x7f0b0098;
-        /**  Location List Item 
-         */
-        public static final int StyleLocationListItemTextName=0x7f0b0097;
-        public static final int StyleLocationListItemTextPhone=0x7f0b0099;
-        public static final int StyleLocationListItemToggleButtonFavorite=0x7f0b009a;
+        public static final int StyleLocationList=0x7f0b009a;
+        public static final int StyleLocationListItemTextAddress=0x7f0b009c;
+        public static final int StyleLocationListItemTextName=0x7f0b009b;
+        public static final int StyleLocationListItemTextPhone=0x7f0b009d;
+        public static final int StyleLocationListItemToggleButtonFavorite=0x7f0b009e;
         public static final int StyleMenuButtonBeer=0x7f0b008d;
         /**  Menu Screen Styles 
          */
@@ -1447,18 +1450,19 @@ containing a value of this type.
         public static final int StyleMenuButtonWine=0x7f0b0091;
         public static final int StyleMenuLayoutTypes=0x7f0b0093;
         public static final int StyleMenuListItems=0x7f0b0092;
-        public static final int StyleMiscTextNoItems=0x7f0b00a9;
-        public static final int StyleMiscTextNoItemsCart=0x7f0b00aa;
+        public static final int StyleMiscTextNoCodes=0x7f0b00ac;
+        public static final int StyleMiscTextNoItems=0x7f0b00aa;
+        public static final int StyleMiscTextNoItemsCart=0x7f0b00ab;
         /**  Miscellaneous Styles 
          */
-        public static final int StyleMiscTextNoLocations=0x7f0b00a8;
-        public static final int StyleProductListItemTextAlcohol=0x7f0b009d;
+        public static final int StyleMiscTextNoLocations=0x7f0b00a9;
+        public static final int StyleProductListItemTextAlcohol=0x7f0b00a1;
         /**  Product List Item 
          */
-        public static final int StyleProductListItemTextName=0x7f0b009b;
-        public static final int StyleProductListItemTextPrice=0x7f0b009e;
-        public static final int StyleProductListItemTextType=0x7f0b009c;
-        public static final int StyleProductListItemToggleButtonFavorite=0x7f0b009f;
+        public static final int StyleProductListItemTextName=0x7f0b009f;
+        public static final int StyleProductListItemTextPrice=0x7f0b00a2;
+        public static final int StyleProductListItemTextType=0x7f0b00a0;
+        public static final int StyleProductListItemToggleButtonFavorite=0x7f0b00a3;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;

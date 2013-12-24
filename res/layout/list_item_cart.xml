@@ -2,6 +2,7 @@
 
 <!-- Defining a container for List Item-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cartListItemLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
@@ -15,6 +16,14 @@
     android:layout_alignParentTop="true"
     android:layout_margin="10dip"
     android:layout_toRightOf="@+id/cartListItemButtonRemove" />
+
+<Spinner 
+    android:id="@+id/cartListItemSpinnerQuantity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toLeftOf="@+id/cartListItemTextPrice"
+    android:entries="@array/array_quantity" />
 
 <TextView
     android:id="@+id/cartListItemTextPrice"
@@ -39,38 +48,13 @@
 <!-- Bottom Row -->
 
 <TextView
-    android:id="@+id/cartListItemTextType"
+    android:id="@+id/cartListItemTextCategories"
     style="@style/StyleCartListItemTextType"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/cartListItemButtonRemove"
     android:layout_below="@+id/cartListItemTextName"
-    android:layout_marginLeft="10dip" />
-
-<TextView
-    android:id="@+id/cartListItemTextAlcohol"
-    style="@style/StyleCartListItemTextAlcohol"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/cartListItemButtonRemove"
-    android:layout_below="@+id/cartListItemTextType"
-    android:layout_marginLeft="10dip"
-    android:layout_marginBottom="10dip" />
-
-<Spinner
-    android:id="@+id/cartListItemSpinnerAlcohol"
-    style="@layout/spinner_alcohol_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toLeftOf="@+id/cartListItemSpinnerQuantity"
-    android:layout_below="@+id/cartListItemTextPrice" />
-
-<Spinner 
-    android:id="@+id/cartListItemSpinnerQuantity"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:layout_below="@+id/cartListItemTextPrice"
-    android:entries="@array/array_quantity" />
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

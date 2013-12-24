@@ -1,35 +1,49 @@
 package com.flashvip.listeners;
 
+import java.util.List;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.flashvip.main.FlashCart;
 import com.flashvip.main.Globals;
+import com.flashvip.model.Fragment;
+import com.flashvip.model.Order;
 
 public class SpinnerQuantityListener implements OnItemSelectedListener 
 {
-	private FlashCart activity;
-	private int row;
+	private Fragment fragment;
 	private boolean firstCall;
 	
-	public SpinnerQuantityListener(FlashCart activity, int row)
+	public SpinnerQuantityListener(Fragment fragment)
 	{
-		this.activity = activity;
-		this.row = row;
+		this.fragment = fragment;
 		firstCall = true;
 	}
 	
 	public void onItemSelected(AdapterView<?> adapter, View view,
 			int position, long id)
 	{
-		Globals.getCartProducts().get(row).setQuantity(position);
-		Globals.getCartProducts().get(row).updatePrice();
-
-		if (firstCall)
-			firstCall = false;
-		else
-			activity.updateListViewCart();
+		Order order = Globals.getOrder();
+		for (int i = 0; i < order.getFragments().size(); i++)
+		{
+			if (order.getFragments().get(i) == fragment)
+			{
+				fragment.setQuantity(position + 1);
+				List<Fragment> fragments = order.getFragments();
+				fragments.set(i, fragment);
+				order.setFragments(fragments);
+				Globals.setOrder(order);
+				/*
+				if (firstCall)
+					firstCall = false;
+				else
+					activity.updateListViewCart();*/
+				
+				break;
+			}
+		}
 	}
 
 	public void onNothingSelected(AdapterView<?> adapter)

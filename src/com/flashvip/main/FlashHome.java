@@ -44,6 +44,7 @@ public class FlashHome extends ActionBarActivity
         PushManager.enablePush();
         
         String apid = PushManager.shared().getAPID();
+        Globals.setDeviceId(apid);
         Logger.info("My Application onCreate - App APID: " + apid);
     }
     
@@ -62,10 +63,17 @@ public class FlashHome extends ActionBarActivity
 				getActivity().startActivity(intent);
 			}
     	});
+    	buttonHomeCodes.setOnClickListener(new OnClickListener() {
+			public void onClick(View view)
+			{
+				Intent intent = new Intent(getActivity(), FlashCodes.class);
+				getActivity().startActivity(intent);
+			}
+    	});
     	ImageView locations = (ImageView)findViewById(R.id.homeImageProfileServer);
     	locations.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), FlashLocations.class);
+				Intent intent = new Intent(getActivity(), FlashVendors.class);
 				getActivity().startActivity(intent);
 			}
     	});
@@ -79,7 +87,7 @@ public class FlashHome extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
     
@@ -101,6 +109,8 @@ public class FlashHome extends ActionBarActivity
     
     public void updateLayout()
     {
-    	textLocation.setText(Globals.getLocationName());
+    	if (Globals.getVendor() != null &&
+    			Globals.getVendor().getName() != null)
+    	textLocation.setText(Globals.getVendor().getName());
     }
 }

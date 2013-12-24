@@ -67,5 +67,6 @@
     <dimen name="dimMiscTextNoLocations">18sp</dimen>
     <dimen name="dimMiscTextNoItems">18sp</dimen>
     <dimen name="dimMiscTextNoItemsCart">18sp</dimen>
+    <dimen name="dimMiscTextNoCodes">18sp</dimen>
     
 </resources>

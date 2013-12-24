@@ -22,8 +22,9 @@ public class ButtonFinishListener implements View.OnClickListener
 	
 	public void onClick(View view)
 	{
-		if (Globals.getCartProducts() != null &&
-				!Globals.getCartProducts().isEmpty())
+		if (Globals.getOrder() != null &&
+				Globals.getOrder().getFragments() != null &&
+				!Globals.getOrder().getFragments().isEmpty())
 		{
 			OnClickListener dialogClickListener =new DialogFinishListener(activity, this);
 			AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());

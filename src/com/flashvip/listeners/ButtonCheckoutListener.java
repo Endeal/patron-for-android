@@ -20,7 +20,9 @@ public class ButtonCheckoutListener implements OnClickListener
 	
 	public void onClick(View v)
 	{
-		if (Globals.getCartProducts() != null && !Globals.getCartProducts().isEmpty())
+		if (Globals.getOrder() != null &&
+				Globals.getOrder().getFragments() != null &&
+				!Globals.getOrder().getFragments().isEmpty())
 		{
 			Intent intent = new Intent(activity, FlashCart.class);
 			activity.startActivity(intent);

@@ -1,11 +1,11 @@
 package com.flashvip.listeners;
 
 import com.flashvip.lists.ListScreens;
-
 import com.flashvip.lists.ListSort;
 import com.flashvip.main.Globals;
-import com.flashvip.main.ProductSorter;
-import com.flashvip.main.SortServers;
+import com.flashvip.sort.ProductSorter;
+import com.flashvip.sort.SortServers;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;

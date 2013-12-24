@@ -2,6 +2,7 @@
 
 <!-- Defining a container for List Item-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/productListItemLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:descendantFocusability="blocksDescendants" >
@@ -14,8 +15,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:layout_margin="10dip"
-    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite" />
+    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
+    android:layout_margin="10dip" />
+
+<Spinner 
+    android:id="@+id/productListItemSpinnerQuantity"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toLeftOf="@+id/productListItemTextPrice"
+    android:entries="@array/array_quantity" />
 
 <TextView
     android:id="@+id/productListItemTextPrice"
@@ -40,38 +49,16 @@
 <!-- Bottom Row -->
 
 <TextView
-    android:id="@+id/productListItemTextType"
+    android:id="@+id/productListItemTextCategories"
     style="@style/StyleProductListItemTextType"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
     android:layout_below="@+id/productListItemTextName"
-    android:layout_marginLeft="10dip" />
+    android:layout_marginLeft="10dp"
+    android:paddingBottom="10dp" />
 
-<TextView
-    android:id="@+id/productListItemTextAlcohol"
-    style="@style/StyleProductListItemTextAlcohol"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
-    android:layout_below="@+id/productListItemTextType"
-    android:layout_marginLeft="10dip"
-    android:layout_marginBottom="10dip" />
-
-<Spinner
-    android:id="@+id/productListItemSpinnerAlcohol"
-    style="@layout/spinner_alcohol_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toLeftOf="@+id/productListItemSpinnerQuantity"
-    android:layout_below="@+id/productListItemTextPrice" />
-
-<Spinner 
-    android:id="@+id/productListItemSpinnerQuantity"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:layout_below="@+id/productListItemTextPrice"
-    android:entries="@array/array_quantity" />
+<!-- Selections -->
+<!-- Supplements -->
 
 </RelativeLayout>

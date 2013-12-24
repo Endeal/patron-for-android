@@ -9,9 +9,11 @@ package com.flashvip.lists;
 
 public class ListLinks
 {
-	public static final String LINK_GET_DRINKS = "http://jameswhiteman.info/getDrinks.php";
-	public static final String LINK_GET_SERVERS = "http://jameswhiteman.info/getServers.php";
-	public static final String LINK_GET_CODES = "http://jameswhiteman.info/getCodes.php";
-	public static final String LINK_ADD_ORDER = "http://jameswhiteman.info/addIncoming.php";
+	private static final String BASE_URL = "http://jameswhiteman.info/flash-core/";
+	public static final String LINK_GET_ITEMS = BASE_URL + "get/getItems.php";
+	public static final String LINK_GET_VENDORS = BASE_URL + "get/getVendors.php";
+	public static final String LINK_GET_CATEGORIES = BASE_URL + "get/getCategories.php";
+	public static final String LINK_GET_CODES = BASE_URL + "get/getCodes.php";
+	public static final String LINK_ADD_ORDER = BASE_URL + "add/addOrder.php";
 	public static final String LINK_DIRECTORY_CODES = "http://jameswhiteman.info/";
 }

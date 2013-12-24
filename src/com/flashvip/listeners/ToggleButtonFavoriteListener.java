@@ -1,8 +1,9 @@
 package com.flashvip.listeners;
 
 import com.flashvip.main.Globals;
-import com.flashvip.main.Product;
-import com.flashvip.main.Location;
+
+import com.flashvip.model.Item;
+import com.flashvip.model.Vendor;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,20 +12,20 @@ import android.widget.Toast;
 public class ToggleButtonFavoriteListener implements OnClickListener
 {
 	// The favorite product if a product toggle button.
-	private Product product;
+	private Item item;
 	
 	// The favorite location if a location toggle button.
-	private Location location;
+	private Vendor location;
 	
-	public ToggleButtonFavoriteListener(Product product)
+	public ToggleButtonFavoriteListener(Item item)
 	{
-		this.product = product;
+		this.item = item;
 		this.location = null;
 	}
 	
-	public ToggleButtonFavoriteListener(Location location)
+	public ToggleButtonFavoriteListener(Vendor location)
 	{
-		this.product = null;
+		this.item = null;
 		this.location = location;
 	}
 	
@@ -32,19 +33,19 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	public void onClick(View buttonView)
 	{
 		// A product was selected.
-		if (product != null)
+		if (item != null)
 		{
-			if (Globals.getFavoriteProducts() != null && Globals.getFavoriteProducts().contains(product))
+			if (Globals.getFavoriteItems() != null && Globals.getFavoriteItems().contains(item))
 			{
 				Toast toast = Toast.makeText(buttonView.getContext(), "Removed from favorites.", Toast.LENGTH_SHORT);
 				toast.show();
-				if (Globals.getFavoriteProducts() != null && Globals.getFavoriteProducts().size() > 0)
+				if (Globals.getFavoriteItems() != null && Globals.getFavoriteItems().size() > 0)
 				{
-					for (int i = 0; i < Globals.getFavoriteProducts().size(); i++)
+					for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
 					{
-						if (Globals.getFavoriteProducts().get(i) == product)
+						if (Globals.getFavoriteItems().get(i) == item)
 						{
-							Globals.removeFavoriteProduct(i);
+							Globals.getFavoriteItems().remove(i);
 						}
 					}
 				}
@@ -53,24 +54,24 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 			{
 				Toast toast = Toast.makeText(buttonView.getContext(), "Added to favorites.", Toast.LENGTH_SHORT);
 				toast.show();
-				Globals.addFavoriteProduct(product);
+				Globals.getFavoriteItems().add(item);
 			}
 		}
 		
 		// A location was selected.
 		else
 		{
-			if (Globals.getFavoriteLocations() != null && Globals.getFavoriteLocations().contains(location))
+			if (Globals.getFavoriteVendors() != null && Globals.getFavoriteVendors().contains(location))
 			{
 				Toast toast = Toast.makeText(buttonView.getContext(), "Removed from favorites.", Toast.LENGTH_SHORT);
 				toast.show();
-				if (Globals.getFavoriteLocations() != null && Globals.getFavoriteLocations().size() > 0)
+				if (Globals.getFavoriteVendors() != null && Globals.getFavoriteVendors().size() > 0)
 				{
-					for (int i = 0; i < Globals.getFavoriteLocations().size(); i++)
+					for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
 					{
-						if (Globals.getFavoriteLocations().get(i) == location)
+						if (Globals.getFavoriteVendors().get(i) == location)
 						{
-							Globals.removeFavoriteLocation(i);
+							Globals.getFavoriteVendors().remove(i);
 						}
 					}
 				}
@@ -79,7 +80,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 			{
 				Toast toast = Toast.makeText(buttonView.getContext(), "Added to favorites.", Toast.LENGTH_SHORT);
 				toast.show();
-				Globals.addFavoriteLocation(location);
+				Globals.getFavoriteVendors().add(location);
 			}
 		}
 	}

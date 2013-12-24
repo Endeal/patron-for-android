@@ -49,10 +49,11 @@
             <Button
                 android:id="@+id/menuButtonFavorites"
                 style="@style/StyleMenuButtonFavorites"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
                 android:layout_margin="10dp" />
-            
+            <!-- 
             <Button
                 android:id="@+id/menuButtonBeer"
                 style="@style/StyleMenuButtonBeer"
@@ -87,6 +88,8 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_margin="10dp" />
+                
+                -->
             
         </LinearLayout>
     </HorizontalScrollView>
