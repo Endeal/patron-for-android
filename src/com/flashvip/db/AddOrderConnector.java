@@ -15,8 +15,8 @@ import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
-import com.flashvip.listeners.ButtonFinishListener;
-import com.flashvip.main.Globals;
+import com.flashvip.main.FlashCart;
+import com.flashvip.system.Globals;
 import com.google.gson.Gson;
 
 public class AddOrderConnector extends AsyncTask<URL, Void, String>
@@ -25,14 +25,14 @@ public class AddOrderConnector extends AsyncTask<URL, Void, String>
 	 * Private variables.
 	 */
 	private String result;
-	private ButtonFinishListener listener;
+	private FlashCart activity;
 
 	/**
 	 * Default constructor.
 	 */
-	public AddOrderConnector(ButtonFinishListener listener)
+	public AddOrderConnector(FlashCart activity)
 	{
-		this.listener = listener;
+		this.activity = activity;
 	}
 
 	@Override
@@ -53,8 +53,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, String>
 			post.setHeader("Accept", "application/json");
 			Gson gson = new Gson();
 			String postData = gson.toJson(Globals.getOrder());
-			System.out.println("POSTBOY:" + postData);
-			System.out.println(postData);
+			System.out.println("GOIN' POSTAL: " + postData);
 
 			// Set the post data to the request and execute the request.
 			post.setEntity(new StringEntity(postData));
@@ -82,22 +81,32 @@ public class AddOrderConnector extends AsyncTask<URL, Void, String>
 		{
 			result = EntityUtils.toString(response.getEntity());
 		}
+		catch (NullPointerException e)
+		{
+			e.printStackTrace();
+		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 
 		// Return drinks.
+		result = result.replaceAll("\\n", "");
 		return result;
 	}
 
 	@Override
 	protected void onPostExecute(String result)
-	{	
-		if (result.toString().equals("1"));
+	{
+		Globals.setOrder(null);
+		activity.orderFinished();
+		if (result.equals("1"))
 		{
-			Globals.setOrder(null);
-			listener.orderFinished();
+			activity.message("Order placed.");
+		}
+		else
+		{
+			activity.message(result);
 		}
 	}
 }

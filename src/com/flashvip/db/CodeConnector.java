@@ -18,9 +18,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.flashvip.main.Globals;
+import com.flashvip.main.FlashCodes;
 import com.flashvip.model.Code;
-import com.urbanairship.push.PushManager;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
+import com.flashvip.system.Parser;
 
 import android.os.AsyncTask;
 
@@ -29,17 +31,17 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<Code>>
 	/**
 	 * Private variables.
 	 */
+	private Loadable activity;
 	private ArrayList<Code> codes;
 	private String result;
-	private String apid;
-	
+
 	/**
 	 * Default constructor.
 	 */
-	public CodeConnector()
+	public CodeConnector(FlashCodes activity)
 	{
+		this.activity = activity;
 		codes = new ArrayList<Code>();
-		apid = PushManager.shared().getAPID();
 	}
 
 	@Override
@@ -49,68 +51,53 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<Code>>
 		HttpResponse response = null;
 
 		// HTTP Post.
-		if (Globals.getVendor() != null)
+		try
 		{
-			try
-			{
-				URL path = params[0];
-				HttpClient client = new DefaultHttpClient();
-				HttpPost post = new HttpPost(path.toURI());
-				ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-				NameValuePair tableNumber = new BasicNameValuePair("vendor_id",
-						Globals.getVendor().getVendorId());
-				NameValuePair clientId = new BasicNameValuePair("client_id", apid);
+			URL path = params[0];
+			HttpClient client = new DefaultHttpClient();
+			HttpPost post = new HttpPost(path.toURI());
+			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
+			NameValuePair deviceId = new BasicNameValuePair("deviceId", Globals.getDeviceId());
 
-				postData.add(tableNumber);
-				postData.add(clientId);
-				post.setEntity(new UrlEncodedFormEntity(postData));
-				response = client.execute(post);
-			}
-			catch (URISyntaxException e)
-			{
-				e.printStackTrace();
-			}
-			catch (UnsupportedEncodingException e)
-			{
-				e.printStackTrace();
-			}
-			catch (ClientProtocolException e)
-			{
-				e.printStackTrace();
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			postData.add(deviceId);
+			post.setEntity(new UrlEncodedFormEntity(postData));
+			response = client.execute(post);
+		}
+		catch (URISyntaxException e)
+		{
+			e.printStackTrace();
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClientProtocolException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
-			// HTTP Response
-			try
+		// HTTP Response
+		try
+		{
+			// Convert results to string, then as a JSON Object.
+			result = EntityUtils.toString(response.getEntity());
+			JSONArray rawCodes = new JSONArray(result);
+			for (int i = 0; i < rawCodes.length(); i++)
 			{
-				// Convert results to string, then as a JSON Object.
-				result = EntityUtils.toString(response.getEntity());
-				JSONObject obj = new JSONObject(result);
-
-				// Create JSON Arrays out of the JSON Object.
-				JSONArray array_codes = obj.getJSONArray("codes");
-
-				// Create arrays out of the JSON Arrays.
-				if (array_codes != null)
-				{
-					int length = array_codes.length();
-					for (int i = 0; i < length; i++)
-					{
-						//codes.add(array_codes.getString(i));
-					}
-				}
-			}
-			catch (Exception e)
-			{
-//				Toast toast = Toast.makeText(Globals.getContext(), result, Toast.LENGTH_SHORT);
-//				toast.show();
-				codes = null;
+				JSONObject rawCode = rawCodes.getJSONObject(i);
+				Code code = Parser.getCode(rawCode);
+				codes.add(code);
 			}
 		}
-		
+		catch (Exception e)
+		{
+			codes = null;
+		}
+
 		// Return codes.
 		return codes;
 	}
@@ -124,10 +111,9 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<Code>>
 		}
 		else
 		{
-//			Toast toastNoSearch = Toast.makeText(Globals.getContext(),
-//					"Failed to retrieve the list of order codes.",
-//					Toast.LENGTH_SHORT);
-//			toastNoSearch.show();
+			Globals.setCodes(null);
+			activity.message(result);
 		}
+		activity.endLoading();
 	}
 }

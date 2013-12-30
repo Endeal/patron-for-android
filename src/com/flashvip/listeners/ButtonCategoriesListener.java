@@ -7,11 +7,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.flashvip.main.FlashMenu;
-import com.flashvip.main.Globals;
 import com.flashvip.main.R;
 import com.flashvip.model.Category;
 import com.flashvip.model.Item;
 import com.flashvip.sort.ProductSorter;
+import com.flashvip.system.Globals;
 
 public class ButtonCategoriesListener implements OnClickListener
 {
@@ -50,13 +50,13 @@ public class ButtonCategoriesListener implements OnClickListener
 			ArrayList<Item> items = Globals.getVendor().getItems();
 			ArrayList<Item> newItems = ProductSorter.getByCategory(items, category, true);
 			Globals.getVendor().setFilteredItems(newItems);
-			activity.updateListViewMenu();
+			activity.update();
 		}
 		else
 		{
 			v.setBackgroundResource(R.drawable.mainbutton);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
-			activity.updateListViewMenu();
+			activity.update();
 		}
 	}
 }

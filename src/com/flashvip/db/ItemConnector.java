@@ -1,7 +1,6 @@
 package com.flashvip.db;
 
 import java.io.IOException;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -17,15 +16,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-import com.flashvip.main.FlashVendors;
-import com.flashvip.main.Globals;
+import com.flashvip.model.Category;
 import com.flashvip.model.Item;
-import com.flashvip.model.Parser;
 import com.flashvip.sort.ProductSorter;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
+import com.flashvip.system.Parser;
 
 public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 {
@@ -34,15 +36,17 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 	 */
 	private ArrayList<Item> items;
 	private String result;
-	private FlashVendors activity;
+	private Loadable activity;
+	private SharedPreferences preferences;
 	
 	/**
 	 * Custom constructor.
 	 */
-	public ItemConnector(FlashVendors activity)
+	public ItemConnector(Loadable activity, SharedPreferences preferences)
 	{
 		items = new ArrayList<Item>();
 		this.activity = activity;
+		this.preferences = preferences;
 	}
 	
 	@Override
@@ -60,7 +64,7 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-			NameValuePair vendorId = new BasicNameValuePair("vendor_id",
+			NameValuePair vendorId = new BasicNameValuePair("vendorId",
 					Globals.getVendor().getVendorId());
 			postData.add(vendorId);
 			post.setEntity(new UrlEncodedFormEntity(postData));
@@ -95,6 +99,8 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 			JSONArray rawItems = new JSONArray(result);
 			
 			// Add the items.
+			ArrayList<Category> categories = new ArrayList<Category>();
+			Globals.setCategories(categories);
 			for (int i = 0; i < rawItems.length(); i++)
 			{
 				JSONObject rawItem = rawItems.getJSONObject(i);
@@ -102,8 +108,14 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 				items.add(item);
 			}
 		}
-		catch (Exception e)
+		catch (JSONException e)
 		{
+			activity.message(result);
+			return null;
+		}
+		catch (IOException e)
+		{
+			activity.message("Error converting HTTP results.");
 			return null;
 		}
 		
@@ -114,16 +126,33 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 	@Override
 	protected void onPostExecute(ArrayList<Item> items)
 	{
-		Globals.setOrder(null);
-		Globals.getVendor().setItems(items);
-		Globals.getVendor().setFilteredItems(items);
-		if (Globals.getVendor() != null &&
-				Globals.getVendor().getItems() != null && 
-				Globals.getVendor().getItems().size() > 0)
+		// Set favorite items.
+		String json = preferences.getString("favoriteItems", "");
+		System.out.println("Got Favorites: " + json);
+		try
 		{
-			//Globals.setFavoriteProducts(Globals.getVendor().getTopDrinks());
+			JSONArray rawItems = new JSONArray(json);
+			ArrayList<Item> favoriteItems = new ArrayList<Item>(); 
+			for (int i = 0; i < rawItems.length(); i++)
+			{
+				JSONObject rawItem = rawItems.getJSONObject(i);
+				Item item = Parser.getItem(rawItem);
+				favoriteItems.add(item);
+			}
+			Globals.setFavoriteItems(favoriteItems);
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+
+		Globals.setOrder(null);
+		if (Globals.getVendor() != null)
+		{
+			Globals.getVendor().setItems(items);
+			Globals.getVendor().setFilteredItems(items);
 		}
 		
-		activity.loadedMenu();
+		activity.endLoading();
 	}
 }

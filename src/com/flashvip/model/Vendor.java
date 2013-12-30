@@ -11,6 +11,7 @@ public class Vendor
 	private String state;
 	private String zip;
 	private String phone;
+	private String paypal;
 	
 	private ArrayList<Item> items;
 	private ArrayList<Item> filteredItems;
@@ -24,8 +25,9 @@ public class Vendor
 		items = new ArrayList<Item>();
 	}
 	
-	public Vendor(String vendorId, String name, String address, String city, String state,
-			String zip, String phone, ArrayList<Item> items, ArrayList<Item> recommendations)
+	public Vendor(String vendorId, String name, String address, String city,
+			String state, String zip, String phone, String paypal, 
+			ArrayList<Item> items, ArrayList<Item> recommendations)
 	{
 		this.vendorId = vendorId;
 		this.name = name;
@@ -34,6 +36,7 @@ public class Vendor
 		this.state = state;
 		this.zip = zip;
 		this.phone = phone;
+		this.paypal = paypal;
 		this.items = items;
 		this.recommendations = recommendations;
 	}
@@ -72,6 +75,11 @@ public class Vendor
 	public void setPhone(String phone)
 	{
 		this.phone = phone;
+	}
+	
+	public void setPaypal(String paypal)
+	{
+		this.paypal = paypal;
 	}
 	
 	public void setItems(ArrayList<Item> items)
@@ -124,6 +132,11 @@ public class Vendor
 	public String getPhone()
 	{
 		return phone;
+	}
+	
+	public String getPaypal()
+	{
+		return paypal;
 	}
 	
 	public ArrayList<Item> getItems()

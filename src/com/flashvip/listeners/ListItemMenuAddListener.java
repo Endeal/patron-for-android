@@ -10,13 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.flashvip.main.Globals;
 import com.flashvip.model.Attribute;
 import com.flashvip.model.Fragment;
 import com.flashvip.model.Item;
 import com.flashvip.model.Option;
 import com.flashvip.model.Order;
 import com.flashvip.model.Selection;
+import com.flashvip.system.Globals;
 
 public class ListItemMenuAddListener implements OnItemClickListener
 {	

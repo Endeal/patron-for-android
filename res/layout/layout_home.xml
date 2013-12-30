@@ -78,6 +78,15 @@
         android:weightSum="4" >
 
         <Button
+            android:id="@+id/homeButtonVendors"
+            style="@style/StyleHomeButtonVendors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/homeButtonVendors" />
+
+        <Button
             android:id="@+id/homeButtonMenu"
             style="@style/StyleHomeButtonMenu"
             android:layout_width="match_parent"
@@ -85,15 +94,6 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:text="@string/homeButtonMenu" />
-
-        <Button
-            android:id="@+id/homeButtonCart"
-            style="@style/StyleHomeButtonCart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:text="@string/homeButtonCart" />
 
         <Button
             android:id="@+id/homeButtonCodes"

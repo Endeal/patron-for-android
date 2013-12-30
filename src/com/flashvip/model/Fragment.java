@@ -27,15 +27,18 @@ public class Fragment
 	public BigDecimal getPrice()
 	{
 		BigDecimal total = new BigDecimal(0);
-		total.add(item.getPrice());
+		total = total.add(item.getPrice());
+		if (selections != null && selections.size() > 0)
 		for (int i = 0; i < selections.size(); i++)
 		{
-			total.add(selections.get(i).getOption().getPrice());
+			total = total.add(selections.get(i).getOption().getPrice());
 		}
+		if (supplements != null && selections.size() > 0)
 		for (int i = 0; i < supplements.size(); i++)
 		{
-			total.add(supplements.get(i).getPrice());
+			total = total.add(supplements.get(i).getPrice());
 		}
+		total = total.multiply(new BigDecimal(quantity));
 		return total;
 	}
 

@@ -16,18 +16,18 @@
         <item name="android:textStyle">bold</item>
     </style>
     
+    <style name="StyleHomeButtonVendors">
+        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHomeButtonVendorsText</item>
+    </style>
+    
     <style name="StyleHomeButtonMenu">
         <item name="android:background">@drawable/mainbutton</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonMenuText</item>
-    </style>
-    
-    <style name="StyleHomeButtonCart">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/dimHomeButtonCartText</item>
     </style>
     
     <style name="StyleHomeButtonCodes">
@@ -61,53 +61,16 @@
         <item name="android:text">@string/menuButtonFavorites</item>
     </style>
     
-    <style name="StyleMenuButtonBeer">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/dimMenuButtonFavoritesText</item>
-        <item name="android:text">@string/menuButtonBeer</item>
-    </style>
-    
-    <style name="StyleMenuButtonShots">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/dimMenuButtonShotsText</item>
-        <item name="android:text">@string/menuButtonShots</item>
-    </style>
-    
-    <style name="StyleMenuButtonCocktails">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/dimMenuButtonCocktailsText</item>
-        <item name="android:text">@string/menuButtonCocktails</item>
-    </style>
-    
-    <style name="StyleMenuButtonMartinis">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/dimMenuButtonMartinisText</item>
-        <item name="android:text">@string/menuButtonMartinis</item>
-    </style>
-    
-    <style name="StyleMenuButtonWine">
-        <item name="android:background">@drawable/mainbutton</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/dimMenuButtonWineText</item>
-        <item name="android:text">@string/menuButtonWine</item>
-    </style>
-    
     <style name="StyleMenuListItems">
         <item name="android:divider">#000000</item>
         <item name="android:dividerHeight">@dimen/dimMenuListItemsDividerHeight</item>
     </style>
     
     <style name="StyleMenuLayoutTypes">
-        <item name="android:background">#777777</item>
+    </style>
+    
+    <style name="StyleMenuHorizontalScrollViewTypes">
+        <item name="android:background">@color/colorMenuHorizontalScrollViewTypes</item>
     </style>
     
     <!-- Cart Screen Styles -->
@@ -145,6 +108,8 @@
         <item name="android:textSize">@dimen/dimCodeListItemTextStatus</item>
         <item name="android:text">@string/codeListItemTextStatus</item>
     </style>
+    
+    <!-- Code Image Screen Styles -->
     
     <!-- Favorites Screen Styles -->
     <style name="StyleFavoritesListItems">
@@ -280,6 +245,13 @@
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMiscTextNoCodes</item>
         <item name="android:text">@string/miscTextNoCodes</item>
+    </style>
+    
+    <style name="StyleMiscTextNoCodeImage">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoCodeImage</item>
+        <item name="android:text">@string/miscTextNoCodeImage</item>
     </style>
     
 </resources>

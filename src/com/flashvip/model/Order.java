@@ -21,7 +21,7 @@ package com.flashvip.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.flashvip.main.Globals;
+import com.flashvip.system.Globals;
 
 public class Order
 {	
@@ -56,11 +56,28 @@ public class Order
 		BigDecimal total = new BigDecimal(0);
 		for (int i = 0; i < fragments.size(); i++)
 		{
-			total.add(fragments.get(i).getPrice());
+			total = total.add(fragments.get(i).getPrice());
 		}
 		return total;
 	}
-	
+
+	public static Status getIntStatus(int i)
+	{
+		switch (i)
+		{
+		case 0:
+			return Status.WAITING;
+		case 1:
+			return Status.READY;
+		case 2:
+			return Status.SCANNED;
+		case 3:
+			return Status.COMPLETED;
+		default:
+			return Status.REJECTED;
+		}
+	}
+
 	public static int getStatusInt(Status status)
 	{
 		switch (status)
@@ -71,7 +88,10 @@ public class Order
 			return 1;
 		case SCANNED:
 			return 2;
-			
+		case COMPLETED:
+			return 3;
+		default:
+			return 4;
 		}
 	}
 	
@@ -90,6 +110,47 @@ public class Order
 		default:
 			return "Rejected";
 		}
+	}
+
+	public String getOrderText()
+	{
+		String s = "";
+		for (int i = 0; i < fragments.size(); i++)
+		{
+			if (i > 0)
+			{
+				s = s + "\n";
+			}
+			Fragment fragment = fragments.get(i);
+			int quantity = fragments.get(i).getQuantity();
+			String name;
+			if (fragments.get(i).getItem() != null &&
+					fragments.get(i).getItem().getName() != null)
+			{
+				name = fragments.get(i).getItem().getName();
+			}
+			else
+			{
+				name = "";
+			}
+			s = s + quantity  +
+					"\u0009" +
+					name;
+			for (int j = 0; j < fragment.getSelections().size(); j++)
+			{
+				if (j == 0)
+				{
+					s = s + " with ";
+				}
+				else
+				{
+					s = ", ";
+				}
+				String optionName = fragment.getSelections().get(j).getOption().getName();
+				s = s + optionName;
+			}
+		}
+		return s;
 	}
 	
 	// Setters

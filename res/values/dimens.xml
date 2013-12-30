@@ -7,8 +7,8 @@
     <!-- Home Screen -->
     <dimen name="dimHomeTextUser">15sp</dimen>
     <dimen name="dimHomeTextLocation">15sp</dimen>
+    <dimen name="dimHomeButtonVendorsText">12sp</dimen>
     <dimen name="dimHomeButtonMenuText">12sp</dimen>
-    <dimen name="dimHomeButtonCartText">12sp</dimen>
     <dimen name="dimHomeButtonCodesText">12sp</dimen>
     <dimen name="dimHomeButtonFavoritesText">12sp</dimen>
     
@@ -68,5 +68,6 @@
     <dimen name="dimMiscTextNoItems">18sp</dimen>
     <dimen name="dimMiscTextNoItemsCart">18sp</dimen>
     <dimen name="dimMiscTextNoCodes">18sp</dimen>
+    <dimen name="dimMiscTextNoCodeImage">18sp</dimen>
     
 </resources>

@@ -6,21 +6,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.flashvip.main.Globals;
 import com.flashvip.model.Attribute;
 import com.flashvip.model.Fragment;
 import com.flashvip.model.Order;
 import com.flashvip.model.Selection;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
 
-public class SpinnerAttributeListener implements OnItemSelectedListener 
+public class SpinnerAttributeListener implements OnItemSelectedListener
 {
 	private Fragment fragment;
 	private Attribute attribute;
+	private Loadable activity;
+	private boolean firstCallHappened;
 	
-	public SpinnerAttributeListener(Fragment fragment, Attribute attribute)
+	public SpinnerAttributeListener(Fragment fragment, Attribute attribute, Loadable activity)
 	{
 		this.fragment = fragment;
 		this.attribute = attribute;
+		this.activity = activity;
+		firstCallHappened = false;
 	}
 	
 	public void onItemSelected(AdapterView<?> adapter, View view,
@@ -51,9 +56,15 @@ public class SpinnerAttributeListener implements OnItemSelectedListener
 				fragments.set(i, fragment);
 				order.setFragments(fragments);
 				Globals.setOrder(order);
+				if (firstCallHappened)
+				{
+					activity.update();
+				}
+				firstCallHappened = true;
 				break;
 			}
 		}
+		firstCallHappened = true;
 	}
 
 	public void onNothingSelected(AdapterView<?> adapter)

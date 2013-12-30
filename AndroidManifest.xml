@@ -4,9 +4,20 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="18" />
     
+    <!-- PayPal Permissions -->
+        <!-- for card.io card scanning -->
+    <uses-permission android:name="android.permission.CAMERA" />
+        <!-- for most things, including card.io and paypal -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <!-- Camera features -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
+    
+    <!-- Urban Airship -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -23,11 +34,27 @@
     
     <application
         android:icon="@drawable/ic_menu_beer"
+        android:name="com.flashvip.system.FlashApplication"
         android:allowClearUserData="true"
         android:enabled="true"
         android:label="@string/app_title"
         android:allowBackup="true">
         
+        <!-- Intent Receivers -->
+        <receiver android:name="com.urbanairship.CoreReceiver" />  
+        <receiver android:name="com.flashvip.system.FlashIntentReceiver" />
+        
+        <!-- PayPal Activities -->
+        <service android:name="com.paypal.android.sdk.payments.PayPalService" android:exported="false"/>
+        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
+        <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
+
         <!-- The Home Screen Activity -->
         <activity
             android:name="com.flashvip.main.FlashHome"
@@ -66,7 +93,7 @@
                 android:value="com.flashvip.main.FlashMenu" />
         </activity>
         
-        <!-- The Locations Screen Activity -->
+        <!-- The Vendors Screen Activity -->
         <activity
             android:name="com.flashvip.main.FlashVendors"
             android:label="@string/titleActivityLocations"
@@ -85,6 +112,42 @@
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:parentActivityName="com.flashvip.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Scan Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashScan"
+            android:label="@string/titleActivityScan"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashCodes">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Search Vendors Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashSearchVendors"
+            android:label="@string/titleActivitySearchVendors"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashVendors">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Search Items Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashSearchItems"
+            android:label="@string/titleActivitySearchItems"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashMenu">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.flashvip.main.FlashClient" />
@@ -122,7 +185,7 @@
         
         <!-- OPTIONAL, if you want to receive push, push opened and registration completed intents -->
         <!-- Replace the receiver below with your package and class name -->
-        <receiver android:name="com.flashvip.main.NotificationsReceiver" />
+        <receiver android:name="com.flashvip.system.NotificationsReceiver" />
         
     </application>
 

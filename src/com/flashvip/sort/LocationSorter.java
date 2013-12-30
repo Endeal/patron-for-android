@@ -2,8 +2,8 @@ package com.flashvip.sort;
 
 import java.util.ArrayList;
 
-import com.flashvip.main.Globals;
 import com.flashvip.model.Vendor;
+import com.flashvip.system.Globals;
 
 public class LocationSorter
 {
@@ -26,5 +26,27 @@ public class LocationSorter
 			}
 		}
 		return newLocations;
+	}
+	
+	public static ArrayList<Vendor> getBySearch(ArrayList<Vendor> vendors, CharSequence text)
+	{
+		ArrayList<Vendor> newVendors = new ArrayList<Vendor>();
+		if (vendors != null && !vendors.isEmpty())
+		{
+			for (int i = 0; i < vendors.size(); i++)
+			{
+				Vendor currentVendor = vendors.get(i);
+				if (currentVendor.getName().toLowerCase().contains(text.toString().toLowerCase()) ||
+						currentVendor.getAddress().toLowerCase().contains(text.toString().toLowerCase()) ||
+						currentVendor.getCity().toLowerCase().contains(text.toString().toLowerCase()) ||
+						currentVendor.getState().toLowerCase().contains(text.toString().toLowerCase()) ||
+						currentVendor.getZip().toLowerCase().contains(text.toString().toLowerCase()) ||
+						currentVendor.getPhone().toLowerCase().contains(text.toString().toLowerCase()))
+				{
+					newVendors.add(vendors.get(i));
+				}
+			}
+		}
+		return newVendors;
 	}
 }

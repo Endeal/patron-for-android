@@ -1,16 +1,16 @@
 package com.flashvip.bind;
 
-import com.flashvip.listeners.ToggleButtonFavoriteListener;
-import com.flashvip.lists.ListFonts;
-import com.flashvip.main.Globals;
-import com.flashvip.main.R;
-import com.flashvip.model.Vendor;
-
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.flashvip.listeners.ToggleButtonFavoriteListener;
+import com.flashvip.lists.ListFonts;
+import com.flashvip.main.R;
+import com.flashvip.model.Vendor;
+import com.flashvip.system.Globals;
 
 public class VendorBinder implements SimpleAdapter.ViewBinder
 {
@@ -34,18 +34,23 @@ public class VendorBinder implements SimpleAdapter.ViewBinder
 		}
 		
 		// Set the toggled state of the favorite button.
-		else if (view.getId() == R.id.productListItemToggleButtonFavorite)
+		else if (view.getId() == R.id.locationListItemToggleButtonFavorite)
 		{
 			int row = Integer.parseInt(data.toString());
 			ToggleButton toggle = (ToggleButton) view;
-			Vendor location = Globals.getVendors().get(row);
-			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(location);
+			Vendor vendor = Globals.getVendors().get(row);
+			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(vendor);
 			toggle.setOnClickListener(listener);
 			
-			if (Globals.getFavoriteItems() != null && Globals.getFavoriteItems().contains(location))
-				toggle.setChecked(true);
-			else
-				toggle.setChecked(false);
+			toggle.setChecked(false);
+			for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
+			{
+				Vendor favoriteVendor = Globals.getFavoriteVendors().get(i);
+				if (favoriteVendor.getVendorId().equals(vendor.getVendorId()))
+				{
+					toggle.setChecked(true);
+				}
+			}
 			
         	return true;
 		}

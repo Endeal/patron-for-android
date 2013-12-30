@@ -28,9 +28,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
 
-    <!-- The scroll view for the types of drinks -->
+    <!-- The scroll view for the categories -->
     <HorizontalScrollView
         android:id="@+id/menuHorizontalScrollViewTypes"
+        style="@style/StyleMenuHorizontalScrollViewTypes"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
@@ -59,37 +60,7 @@
                 style="@style/StyleMenuButtonBeer"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                android:layout_margin="10dp" />
-            
-            <Button
-                android:id="@+id/menuButtonShots"
-                style="@style/StyleMenuButtonShots"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp" />
-            
-            <Button
-                android:id="@+id/menuButtonCocktails"
-                style="@style/StyleMenuButtonCocktails"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp" />
-            
-            <Button
-                android:id="@+id/menuButtonMartinis"
-                style="@style/StyleMenuButtonMartinis"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp" />
-            
-            <Button
-                android:id="@+id/menuButtonWine"
-                style="@style/StyleMenuButtonWine"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_margin="10dp" />
-                
-                -->
+                android:layout_margin="10dp" /> -->
             
         </LinearLayout>
     </HorizontalScrollView>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/settingsLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!-- Settings Text -->
+
+        <TextView
+            android:id="@+id/settingsTextLocate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:text="@string/settingsTextLocate" />
+
+        <TextView
+            android:id="@+id/settingsTextFacebookPublishOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/settingsTextLocate"
+            android:layout_margin="10dp"
+            android:text="@string/settingsTextFacebookPublishOrder" />
+
+        <TextView
+            android:id="@+id/settingsTextFacebookPublishFavoriteVendor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/settingsTextFacebookPublishOrder"
+            android:layout_margin="10dp"
+            android:text="@string/settingsTextFacebookPublishFavoriteVendor" />
+
+        <TextView
+            android:id="@+id/settingsTextFacebookPublishFavoriteItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/settingsTextFacebookPublishFavoriteVendor"
+            android:layout_margin="10dp"
+            android:text="@string/settingsTextFacebookPublishFavoriteItem" />
+
+        <!-- Settings Checkboxes -->
+
+        <CheckBox
+            android:id="@+id/settingsCheckboxLocate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/settingsTextLocate"
+            android:layout_margin="10dp" />
+        
+        <CheckBox 
+            android:id="@+id/settingsCheckboxFacebookPublishOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/settingsTextFacebookPublishOrder"
+            android:layout_margin="10dp"/>
+        
+        <CheckBox
+            android:id="@+id/settingsCheckboxFacebookPublishFavoriteVendor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/settingsTextFacebookPublishFavoriteVendor"
+            android:layout_margin="10dp" />
+        
+        <CheckBox
+            android:id="@+id/settingsCheckboxFacebookPublishFavoriteItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@+id/settingsTextFacebookPublishFavoriteItem"
+            android:layout_margin="10dp" />
+        
+        <!-- Feedback & Rate App Buttons -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsTextFacebookPublishFavoriteItem"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <Button
+            android:id="@+id/settingsButtonFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="@string/settingsButtonFeedback" />
+
+        <Button
+            android:id="@+id/settingsButtonRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="@string/settingsButtonRate" />
+    </LinearLayout>
+    
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:flashvip="http://schemas.android.com/apk/res-auto">
+    
+    <item android:id="@+id/menuItemSearch"
+          android:icon="@drawable/ic_action_search"
+          android:title="@string/menuItemSearch"
+          flashvip:showAsAction="ifRoom"/>
+    
+    <item android:id="@+id/menuItemSettings"
+        android:title="@string/menuItemSettings"
+        android:orderInCategory="100" />
+    
+    <item android:id="@+id/menuItemHelp"
+        android:title="@string/menuItemHelp" />
+    
+</menu>

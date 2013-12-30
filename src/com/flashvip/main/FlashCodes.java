@@ -7,36 +7,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.flashvip.bind.VendorBinder;
+import com.flashvip.bind.CodeBinder;
 import com.flashvip.db.CodeConnector;
 import com.flashvip.lists.ListLinks;
 import com.flashvip.model.Code;
 import com.flashvip.model.Order;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
 
-public class FlashCodes extends ActionBarActivity
+public class FlashCodes extends ActionBarActivity implements Loadable
 {
 	// The layout elements.
 	private ListView listCodes;
+	private View viewLoading;
+	private View viewCodes;
 	
-	// Activity methods.
+	// Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_codes);
-		listCodes = (ListView) findViewById(R.id.codesList);
-		updateList();
+		LayoutInflater inflater = LayoutInflater.from(this);
+		viewLoading = inflater.inflate(R.layout.misc_loading, null);
+		viewCodes = inflater.inflate(R.layout.layout_codes, null);
+		setContentView(viewLoading);
+		beginLoading();
 	}
 	
 	@Override
@@ -44,8 +54,24 @@ public class FlashCodes extends ActionBarActivity
     {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_home, menu);
+	    inflater.inflate(R.menu.menu_main, menu);
 	    return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch (item.getItemId())
+    	{
+    	case R.id.menuItemSettings:
+    		message("Settings.");
+    		return true;
+    	case R.id.menuItemHelp:
+    		message("Help");
+    		return true;
+    	default:
+    		return false;
+    	}
     }
 	
 	@Override
@@ -54,29 +80,28 @@ public class FlashCodes extends ActionBarActivity
     	super.onWindowFocusChanged(hasFocus);
     }
 	
-	// Main methods.
-	public void loadedMenu()
+	// Loading
+	public void beginLoading()
 	{
-		Intent intent = new Intent(this, FlashMenu.class);
-		startActivity(intent);
+		listCodes = (ListView) viewCodes.findViewById(R.id.codesList);
+		load();
 	}
 	
-	private void updateCodes()
+	public void load()
 	{
-		CodeConnector dbconnector = new CodeConnector();
 		URL url = null;
 		try
 		{
 			try
 			{
 				url = new URL(ListLinks.LINK_GET_CODES);
-
 			}
 			catch (MalformedURLException e)
 			{
 				e.printStackTrace();
 			}
-			dbconnector.execute(url);
+			CodeConnector codeConnector = new CodeConnector(this);
+			codeConnector.execute(url);
 		}
 		catch (Exception e)
 		{
@@ -84,78 +109,70 @@ public class FlashCodes extends ActionBarActivity
 		}
 	}
 	
-	// Layout
-	private void initializeLayout()
+	public void endLoading()
 	{
-		listCodes = (ListView) findViewById(R.id.codesList);
-	}
-	
-	public void updateList()
-	{
-		ArrayList<Code> testCodes = new ArrayList<Code>();
-    	/*if (testCodes() != null && !Globals.getCodes().isEmpty())
-    	{*/
-    		//setContentView(R.layout.layout_codes);
-    		List<Map<String, String>> codes = new ArrayList<Map<String, String>>();
-    		
-    		String[] from = {"textTime",
-    				"textStatus",
-    				"textOrders"};
-    		
-    		int[] to = {R.id.codeListItemTextTime,
-    				R.id.codeListItemTextStatus,
-    				R.id.codeListItemTextProducts};
-    		
-    		for (int i = 0; i < testCodes.size(); i++)
-    		{
-    			Map<String, String> mapping = new HashMap<String, String>();
-    			Code code = testCodes.get(i);
-    			mapping.put("textTime", code.getTimestampText());
-    			mapping.put("textStatus", Order.getStatusText(code.getOrder().getStatus()));
-    			mapping.put("textOrders", code.getOrdersText());
-    			codes.add(mapping);
-    		}
-    		SimpleAdapter adapter = new SimpleAdapter(this,
-    				codes, R.layout.list_item_code, from, to);
-    		adapter.setViewBinder(new VendorBinder());
-    		if (listCodes == null)
-    			initializeLayout();
-    		listCodes.setAdapter(adapter);
-    		listCodes.setOnItemClickListener(new LocationItemListener(this));
-    		adapter.notifyDataSetChanged();
-    	/*}
-    	else
-    	{
-    		setContentView(R.layout.misc_no_locations);
-    	}*/
-	}
-	
-	public static class LocationItemListener implements OnItemClickListener
-	{
-		//private FlashCodes activity;
-		
-		public LocationItemListener(FlashCodes activity)
+		if (Globals.getCodes() != null && Globals.getCodes().size() > 0)
 		{
-			//this.activity = activity;
+			setContentView(viewCodes);
+		}
+		else
+		{
+			setContentView(R.layout.misc_no_codes);
+		}
+		update();
+	}
+	
+	public void update()
+	{
+		ArrayList<Code> codes = Globals.getCodes();
+		List<Map<String, String>> codesMap = new ArrayList<Map<String, String>>();
+
+		String[] from = {"textTime",
+				"textStatus",
+				"textOrders"};
+
+		int[] to = {R.id.codeListItemTextTime,
+				R.id.codeListItemTextStatus,
+				R.id.codeListItemTextProducts};
+
+		for (int i = 0; i < codes.size(); i++)
+		{
+			Map<String, String> mapping = new HashMap<String, String>();
+			Code code = codes.get(i);
+			mapping.put("textTime", code.getTimestampText());
+			mapping.put("textStatus", Order.getStatusText(code.getOrder().getStatus()));
+			mapping.put("textOrders", code.getOrder().getOrderText());
+			codesMap.add(mapping);
+		}
+		SimpleAdapter adapter = new SimpleAdapter(this,
+				codesMap, R.layout.list_item_code, from, to);
+		adapter.setViewBinder(new CodeBinder());
+		listCodes.setAdapter(adapter);
+		listCodes.setOnItemClickListener(new CodeItemListener(this));
+		adapter.notifyDataSetChanged();
+	}
+	
+	public void message(String msg)
+	{
+		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		toast.show();
+	}
+	
+	// List item listener.
+	public static class CodeItemListener implements OnItemClickListener
+	{
+		private Activity activity;
+		
+		public CodeItemListener(Activity activity)
+		{
+			this.activity = activity;
 		}
 		
-		public void onItemClick(AdapterView<?> adapter, View v, int item,
-				long row)
+		public void onItemClick(AdapterView<?> adapter, View v, int item, long row)
 		{
-			/*
-			Location server = Globals.getLocations().get(item);
-			Globals.setLocationName(server.getName());
-			Globals.setCurrentLocation(server);
-			ProductConnector dbdrink = new ProductConnector(activity);
-			try
-			{
-				URL url = new URL(ListLinks.LINK_GET_DRINKS);
-				dbdrink.execute(url);
-			}
-			catch (MalformedURLException e)
-			{
-				e.printStackTrace();
-			}*/
+			Intent intent = new Intent(activity, FlashScan.class);
+			intent.putExtra("orderRow", "" + item);
+			activity.startActivity(intent);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.flashvip.db;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -11,15 +12,16 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.flashvip.main.FlashVendors;
-import com.flashvip.main.Globals;
 import com.flashvip.model.Vendor;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
+import com.flashvip.system.Parser;
 
 public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 {
@@ -29,9 +31,9 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 	private ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	private String result;
 	private HttpResponse response;
-	private FlashVendors activity;
+	private Loadable activity;
 	
-	public VendorConnector(FlashVendors activity)
+	public VendorConnector(Loadable activity)
 	{
 		this.activity = activity;
 	}
@@ -65,40 +67,28 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 			for (int i = 0; i < rawVendors.length(); i++)
 			{
 				JSONObject rawVendor = rawVendors.getJSONObject(i);
-				String vendorId = rawVendor.getString("vendor_id");
-				String name = rawVendor.getString("name");
-				String address = rawVendor.getString("address");
-				String city = rawVendor.getString("city");
-				String state = rawVendor.getString("state");
-				String zip = rawVendor.getString("zip");
-				String phone = rawVendor.getString("phone");
-				Vendor vendor = new Vendor(vendorId, name,
-						address, city, state, zip, phone, null, null);
+				Vendor vendor = Parser.getVendor(rawVendor);
 				vendors.add(vendor);
 			}
 		}
-		catch(Exception e)
+		catch(JSONException e)
 		{
-			/*Toast toast = Toast.makeText(activity, result, Toast.LENGTH_SHORT);
-			toast.show();*/
+			activity.message(result);
+			vendors = null;
+		}
+		catch (IOException e)
+		{
+			activity.message("Failed to convert HTTP result.");
 			vendors = null;
 		}
 		return vendors;
 	}
 	
 	@Override
-	protected void onPostExecute(ArrayList<Vendor> list)
+	protected void onPostExecute(ArrayList<Vendor> vendors)
 	{
-		Globals.setVendors(list);
-		if (Globals.getVendors() == null ||
-				Globals.getVendors().size() <= 0)
-		{
-			Toast noBarsAvailable = Toast.makeText(activity,
-					"Failed to retrieve the list of bars available.",
-					Toast.LENGTH_SHORT);
-			noBarsAvailable.show();
-		}
-		
-		activity.updateList();
+		Globals.setVendors(vendors);
+		Globals.setFilteredVendors(vendors);
+		activity.endLoading();
 	}
 }

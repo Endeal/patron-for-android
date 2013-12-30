@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.flashvip.main.FlashCart;
-import com.flashvip.main.Globals;
+import com.flashvip.system.Globals;
 
 public class ButtonCheckoutListener implements OnClickListener
 {

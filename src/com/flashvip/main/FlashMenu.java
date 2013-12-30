@@ -5,39 +5,52 @@
 
 package com.flashvip.main;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.flashvip.bind.ProductBinder;
-import com.flashvip.listeners.ButtonCheckoutListener;
-import com.flashvip.listeners.ButtonFavoritesListener;
-import com.flashvip.listeners.ButtonCategoriesListener;
-import com.flashvip.listeners.ListItemMenuAddListener;
-import com.flashvip.lists.ListFonts;
-import com.flashvip.model.Item;
-
-import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
-public class FlashMenu extends ActionBarActivity
+import com.flashvip.bind.ProductBinder;
+import com.flashvip.db.ItemConnector;
+import com.flashvip.listeners.ButtonCategoriesListener;
+import com.flashvip.listeners.ButtonCheckoutListener;
+import com.flashvip.listeners.ButtonFavoritesListener;
+import com.flashvip.listeners.ListItemMenuAddListener;
+import com.flashvip.lists.ListFonts;
+import com.flashvip.lists.ListLinks;
+import com.flashvip.model.Item;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
+
+public class FlashMenu extends ActionBarActivity implements Loadable
 {
 	// The layout elements.
 	private ListView listMenu;
 	private Button buttonCheckout;
 	private Button buttonFavorites;
 	private ArrayList<Button> buttonCategories = new ArrayList<Button>(); 
+	private View viewLoading;
+	private View viewMenu;
+	private View viewNone;
 
 	// Setters
 	public void setListMenu(ListView listMenu)
@@ -86,38 +99,98 @@ public class FlashMenu extends ActionBarActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_menu);
-		initializeLayout();
+		LayoutInflater inflater = LayoutInflater.from(this);
+		viewLoading = inflater.inflate(R.layout.misc_loading, null);
+		viewMenu = inflater.inflate(R.layout.layout_menu, null);
+		viewNone = inflater.inflate(R.layout.misc_no_items, null);
+		setContentView(viewLoading);
+		beginLoading();
 	}
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         return true;
     }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch (item.getItemId())
+    	{
+    	case R.id.menuItemSearch:
+    		if (Globals.getVendor() != null &&
+				Globals.getVendor().getItems() != null &&
+				!Globals.getVendor().getItems().isEmpty())
+    		{
+    			Intent intent = new Intent(this, FlashSearchItems.class);
+				startActivity(intent);
+			}
+    		else
+			{
+				message("There are no items to search.");
+			}
+    		return true;
+    	case R.id.menuItemSettings:
+    		message("Settings.");
+    		return true;
+    	case R.id.menuItemHelp:
+    		message("Help");
+    		return true;
+    	default:
+    		return false;
+    	}
+    }
 	
-	// Getters & Setters
-	public Activity getActivity()
+	// Loadable
+	public void beginLoading()
 	{
-		return this;
+		// Find the views.
+		listMenu = (ListView) viewMenu.findViewById(R.id.menuListItems);
+		buttonCheckout = (Button) viewMenu.findViewById(R.id.menuButtonCheckout);
+		buttonFavorites = (Button) viewMenu.findViewById(R.id.menuButtonFavorites);
+		
+		// Set the custom fonts.
+		Typeface typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
+		buttonCheckout.setTypeface(typeface);
+		buttonFavorites.setTypeface(typeface);
+		
+		// Set button listeners
+		listMenu.setOnItemClickListener(new ListItemMenuAddListener());
+		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
+		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this));
+		
+		load();
 	}
 	
-	// )Layout
-	private void initializeLayout()
+	public void load()
 	{
-		Typeface typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
-		
-		// Set category items to the list of categories.
+		ItemConnector itemConnector = new ItemConnector(this,
+				getSharedPreferences("favoriteItems", MODE_PRIVATE));
+		try
+		{
+			URL url = new URL(ListLinks.LINK_GET_ITEMS);
+			itemConnector.execute(url);
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public void endLoading()
+	{
+		// Update the categories
 		if (Globals.getCategories() != null && !Globals.getCategories().isEmpty())
 		{
-			LinearLayout linearLayout = (LinearLayout)findViewById(R.id.menuLayoutTypes);
+			LinearLayout linearLayout = (LinearLayout)viewMenu.findViewById(R.id.menuLayoutTypes);
 
 			for (int i = 0; i < Globals.getCategories().size(); i++)
 			{
 				Button button = new Button(linearLayout.getContext());
 				button.setBackgroundResource(R.drawable.mainbutton);
-				button.setTextAppearance(this, R.style.StyleMenuButtonBeer);
+				button.setTextAppearance(this, R.style.StyleMenuButtonFavorites);
 				float width = Globals.convertDpToPixel(60, this);
 				float height = Globals.convertDpToPixel(60, this);
 				LayoutParams params = new LayoutParams((int)width, (int)height);
@@ -131,25 +204,26 @@ public class FlashMenu extends ActionBarActivity
 				buttonCategories.add(button);
 			}
 		}
-		
-		// Find the views.
-		listMenu = (ListView) findViewById(R.id.menuListItems);
-		buttonCheckout = (Button) findViewById(R.id.menuButtonCheckout);
-		buttonFavorites = (Button) findViewById(R.id.menuButtonFavorites);
-		
-		// Set the custom fonts.
-		buttonCheckout.setTypeface(typeface);
-		buttonFavorites.setTypeface(typeface);
-		
-		updateListViewMenu();
-		initializeButtonListeners();
+
+		// Update the list view
+		if (Globals.getVendor() != null &&
+				Globals.getVendor().getItems() != null &&
+				!Globals.getVendor().getItems().isEmpty())
+		{
+			setContentView(viewMenu);
+		}
+		else
+		{
+			setContentView(viewNone);
+		}
+		update();
 	}
 	
-	public void updateListViewMenu()
+	public void update()
 	{	
 		// Set main list items to a list of drinks.
-    	if (Globals.getVendor() != null && Globals.getVendor().getFilteredItems() != null &&
-    			!Globals.getVendor().getFilteredItems().isEmpty())
+		//Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
+    	if (Globals.getVendor() != null && Globals.getVendor().getFilteredItems() != null)
     	{
     		List<Map<String, String>> products = new ArrayList<Map<String, String>>();
     		
@@ -193,15 +267,13 @@ public class FlashMenu extends ActionBarActivity
     	}
     	else
     	{
-    		setContentView(R.layout.misc_no_items);
+    		setContentView(viewNone);
     	}
 	}
 	
-	private void initializeButtonListeners()
+	public void message(String msg)
 	{
-		listMenu.setOnItemClickListener(new ListItemMenuAddListener());
-		
-		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
-		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this));
+		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		toast.show();
 	}
 }

@@ -2,18 +2,17 @@ package com.flashvip.listeners;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
-import com.flashvip.main.FlashCart;
-import com.flashvip.main.Globals;
 import com.flashvip.model.Fragment;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
 
 public class ButtonRemoveListener implements OnClickListener
 {	
-	private FlashCart activity;
+	private Loadable activity;
 	private Fragment fragment;
 	
-	public ButtonRemoveListener(FlashCart activity, Fragment fragment)
+	public ButtonRemoveListener(Loadable activity, Fragment fragment)
 	{
 		this.activity = activity;
 		this.fragment = fragment;
@@ -25,10 +24,7 @@ public class ButtonRemoveListener implements OnClickListener
 				Globals.getOrder().getFragments() != null)
 		{
 			Globals.getOrder().getFragments().remove(fragment);
-			Toast toast = Toast.makeText(activity,
-					"Item removed from order.", Toast.LENGTH_SHORT);
-			toast.show();
 		}
-		activity.updateListViewCart();
+		activity.update();
 	}
 }

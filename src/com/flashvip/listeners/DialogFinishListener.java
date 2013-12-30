@@ -22,7 +22,7 @@ public class DialogFinishListener implements DialogInterface.OnClickListener
 		this.listener = listener;
 	}
 	
-	public void onClick(DialogInterface dialog, int which) {
+	public void onClick(DialogInterface dialog, int which) {/*
 		switch (which){
 		case DialogInterface.BUTTON_POSITIVE:
 			activity.setContentView(R.layout.misc_loading);
@@ -43,6 +43,6 @@ public class DialogFinishListener implements DialogInterface.OnClickListener
 
 		case DialogInterface.BUTTON_NEGATIVE:
 			break;
-		}
+		}*/
 	}
 }

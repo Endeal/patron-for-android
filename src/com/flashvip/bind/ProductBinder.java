@@ -1,12 +1,5 @@
 package com.flashvip.bind;
 
-import com.flashvip.listeners.ToggleButtonFavoriteListener;
-import com.flashvip.lists.ListFonts;
-import com.flashvip.main.Globals;
-import com.flashvip.main.R;
-import com.flashvip.model.Attribute;
-import com.flashvip.model.Item;
-
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +9,13 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.flashvip.listeners.ToggleButtonFavoriteListener;
+import com.flashvip.lists.ListFonts;
+import com.flashvip.main.R;
+import com.flashvip.model.Attribute;
+import com.flashvip.model.Item;
+import com.flashvip.system.Globals;
 
 public class ProductBinder implements SimpleAdapter.ViewBinder
 {
@@ -46,10 +46,15 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(item);
 			toggle.setOnClickListener(listener);
 			
-			if (Globals.getFavoriteItems() != null && Globals.getFavoriteItems().contains(item))
-				toggle.setChecked(true);
-			else
-				toggle.setChecked(false);
+			toggle.setChecked(false);
+			for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
+			{
+				Item favoriteItem = Globals.getFavoriteItems().get(i);
+				if (favoriteItem.getItemId().equals(item.getItemId()))
+				{
+					toggle.setChecked(true);
+				}
+			}
 			
         	return true;
 		}

@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.flashvip.lists.ListLinks;
-import com.flashvip.main.Globals;
+import com.flashvip.system.Globals;
 
 public class ListItemCodeListener implements OnItemClickListener
 {

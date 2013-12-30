@@ -24,9 +24,17 @@ import com.flashvip.model.Option;
 import com.flashvip.model.Selection;
 import com.flashvip.model.Fragment;
 import com.flashvip.model.Item;
+import com.flashvip.system.Loadable;
 
 public class CartProductBinder implements ViewBinder
 {
+	private Loadable activity;
+	
+	public CartProductBinder(Loadable activity)
+	{
+		this.activity = activity;
+	}
+	
 	public boolean setViewValue(View view, Object data, String textRepresentation)
 	{
 		// Change the font of the name and price.
@@ -127,9 +135,8 @@ public class CartProductBinder implements ViewBinder
 					}
 					spinner.setLayoutParams(params);
 					spinner.setSelection(selectedIndex);
-					
 					SpinnerAttributeListener listener = new
-							SpinnerAttributeListener(fragment, attribute);
+							SpinnerAttributeListener(fragment, attribute, activity);
 					spinner.setOnItemSelectedListener(listener);
 
 					// Add the attribute to the view.
@@ -145,9 +152,10 @@ public class CartProductBinder implements ViewBinder
         else if (view.getId() == R.id.cartListItemSpinnerQuantity)
         {
         	Fragment fragment = (Fragment)data;
+        	System.out.println("Quantity: " + fragment.getQuantity());
         	((Spinner)view).setSelection(fragment.getQuantity() - 1);
         	SpinnerQuantityListener listener = new
-        			SpinnerQuantityListener(fragment);
+        			SpinnerQuantityListener(fragment, activity);
         	((Spinner)view).setOnItemSelectedListener(listener);
         	return true;
         }

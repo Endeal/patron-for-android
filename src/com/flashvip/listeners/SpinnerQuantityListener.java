@@ -6,20 +6,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.flashvip.main.FlashCart;
-import com.flashvip.main.Globals;
 import com.flashvip.model.Fragment;
 import com.flashvip.model.Order;
+import com.flashvip.system.Globals;
+import com.flashvip.system.Loadable;
 
 public class SpinnerQuantityListener implements OnItemSelectedListener 
 {
 	private Fragment fragment;
-	private boolean firstCall;
+	private Loadable activity;
+	private boolean firstCallHappened;
 	
-	public SpinnerQuantityListener(Fragment fragment)
+	public SpinnerQuantityListener(Fragment fragment, Loadable activity)
 	{
 		this.fragment = fragment;
-		firstCall = true;
+		this.activity = activity;
+		firstCallHappened = false;
 	}
 	
 	public void onItemSelected(AdapterView<?> adapter, View view,
@@ -35,15 +37,15 @@ public class SpinnerQuantityListener implements OnItemSelectedListener
 				fragments.set(i, fragment);
 				order.setFragments(fragments);
 				Globals.setOrder(order);
-				/*
-				if (firstCall)
-					firstCall = false;
-				else
-					activity.updateListViewCart();*/
-				
+				if (firstCallHappened)
+				{
+					activity.update();
+				}
+				firstCallHappened = true;
 				break;
 			}
 		}
+		firstCallHappened = true;
 	}
 
 	public void onNothingSelected(AdapterView<?> adapter)
