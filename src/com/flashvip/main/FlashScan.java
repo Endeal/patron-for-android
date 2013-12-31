@@ -3,6 +3,7 @@ package com.flashvip.main;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -63,18 +64,19 @@ public class FlashScan extends ActionBarActivity implements Loadable
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		switch(item.getItemId())
-		{
+		switch (item.getItemId())
+    	{
     	case R.id.menuItemSettings:
-    		message("Settings.");
+    		Intent intentSettings = new Intent(this, FlashSettings.class);
+    		startActivity(intentSettings);
     		return true;
     	case R.id.menuItemHelp:
-    		message("Help");
+    		Intent intentHelp = new Intent(this, FlashHelp.class);
+    		startActivity(intentHelp);
     		return true;
-		default:
-			message("Menu item tapped.");
-			return false;
-		}
+    	default:
+    		return false;
+    	}
 	}
 	
 	@Override

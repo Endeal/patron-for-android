@@ -97,10 +97,12 @@ public class FlashCart extends ActionBarActivity implements Loadable
     	switch (item.getItemId())
     	{
     	case R.id.menuItemSettings:
-    		message("Settings.");
+    		Intent intentSettings = new Intent(this, FlashSettings.class);
+    		startActivity(intentSettings);
     		return true;
     	case R.id.menuItemHelp:
-    		message("Help");
+    		Intent intentHelp = new Intent(this, FlashHelp.class);
+    		startActivity(intentHelp);
     		return true;
     	default:
     		return false;

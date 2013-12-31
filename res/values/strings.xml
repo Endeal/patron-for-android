@@ -49,6 +49,22 @@
     <string name="settingsButtonFeedback">Give Feedback</string>
     <string name="settingsButtonRate">Rate App</string>
     
+    <!-- Help Screen -->
+    <string name="helpText1">Select a Vendor</string>
+    <string name="helpText2">Buy Stuff</string>
+    <string name="helpText3">Review and Purchase</string>
+    <string name="helpText4">Wait for Notification or Manually Check Codes</string>
+    <string name="helpText5">Scan your QR Code to verify your order</string>
+    <string name="helpTextPage">1 / 5</string>
+    <string name="helpButtonStart">Get Started!</string>
+    <string name="helpImage1ContentDescription">Image 1</string>
+    <string name="helpImage2ContentDescription">Image 2</string>
+    <string name="helpImage3ContentDescription">Image 3</string>
+    <string name="helpImage4ContentDescription">Image 4</string>
+    <string name="helpImage5ContentDescription">Image 5</string>
+    <string name="helpImageButtonNextContentDescription">Next</string>
+    <string name="helpImageButtonPreviousContentDescription">Previous</string>
+    
     <!-- Location List Item -->
     <string name="locationListItemTextName">John\'s</string>
     <string name="locationListItemTextAddress">Los Angeles, 100 Olympia Avenue, CA 90091</string>
@@ -86,9 +102,10 @@
     <string name="titleActivityFavorites">Favorites</string>
     <string name="titleActivityLocations">Locations</string>
     <string name="titleActivityProfile">Profile</string>
-    <string name="titleActivitySettings">Settings</string>
     <string name="titleActivitySearchVendors">Search</string>
     <string name="titleActivitySearchItems">Search</string>
+    <string name="titleActivitySettings">Settings</string>
+    <string name="titleActivityHelp">Help</string>
     
     <!-- Menu Items -->
     <string name="menuItemSettings">Settings</string>

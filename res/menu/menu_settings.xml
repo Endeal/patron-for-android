@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:flashvip="http://schemas.android.com/apk/res-auto">
+      
+    <item android:id="@+id/menuItemHelp"
+        android:title="@string/menuItemHelp" />
+    
+</menu>

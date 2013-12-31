@@ -111,6 +111,52 @@
     
     <!-- Code Image Screen Styles -->
     
+    <!-- Settings Screen styles -->
+    
+    <!-- Help Screen Styles -->
+    <style name="StyleHelpText1">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText1</item>
+    </style>
+    <style name="StyleHelpText2">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText2</item>
+    </style>
+    <style name="StyleHelpText3">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText3</item>
+    </style>
+    <style name="StyleHelpText4">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText4</item>
+    </style>
+    <style name="StyleHelpText5">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText5</item>
+    </style>
+    <style name="StyleHelpTextPage">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpTextPage</item>
+        <item name="android:text">@string/helpTextPage</item>
+    </style>
+    <style name="StyleHelpButtonStart">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHelpButtonStart</item>
+        <item name="android:text">@string/helpButtonStart</item>
+    </style>
+    
     <!-- Favorites Screen Styles -->
     <style name="StyleFavoritesListItems">
         <item name="android:divider">#000000</item>

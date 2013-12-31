@@ -153,6 +153,30 @@
                 android:value="com.flashvip.main.FlashClient" />
         </activity>
         
+        <!-- The Settings Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashSettings"
+            android:label="@string/titleActivitySettings"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
+        <!-- The Help Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashHelp"
+            android:label="@string/titleActivityHelp"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.flashvip.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.flashvip.main.FlashClient" />
+        </activity>
+        
         <!-- Urban Airship GCM receivers -->
         <receiver android:name="com.urbanairship.CoreReceiver" />
         <receiver android:name="com.urbanairship.push.GCMPushReceiver"

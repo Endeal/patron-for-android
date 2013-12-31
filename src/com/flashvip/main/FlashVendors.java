@@ -18,14 +18,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.flashvip.bind.VendorBinder;
 import com.flashvip.db.VendorConnector;
@@ -61,8 +60,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
     public boolean onCreateOptionsMenu(Menu menu)
     {
 	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_search, menu);
+	    getMenuInflater().inflate(R.menu.menu_search, menu);
 	    return super.onCreateOptionsMenu(menu);
     }
 	
@@ -76,21 +74,22 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 			{
 				Intent intent = new Intent(this, FlashSearchVendors.class);
 				startActivity(intent);
-				
+
 			}
 			else
 			{
-				message("There are no vendors to search through.");
+				message("There are no vendors to search.");
 			}
 			return true;
-    	case R.id.menuItemSettings:
-    		message("Settings.");
-    		return true;
-    	case R.id.menuItemHelp:
-    		message("Help");
-    		return true;
+		case R.id.menuItemSettings:
+			Intent intentSettings = new Intent(this, FlashSettings.class);
+			startActivity(intentSettings);
+			return true;
+		case R.id.menuItemHelp:
+			Intent intentHelp = new Intent(this, FlashHelp.class);
+			startActivity(intentHelp);
+			return true;
 		default:
-			message("Menu item tapped.");
 			return false;
 		}
 	}

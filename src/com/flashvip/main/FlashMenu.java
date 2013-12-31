@@ -113,35 +113,37 @@ public class FlashMenu extends ActionBarActivity implements Loadable
         getMenuInflater().inflate(R.menu.menu_search, menu);
         return true;
     }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-    	switch (item.getItemId())
-    	{
-    	case R.id.menuItemSearch:
-    		if (Globals.getVendor() != null &&
-				Globals.getVendor().getItems() != null &&
-				!Globals.getVendor().getItems().isEmpty())
-    		{
-    			Intent intent = new Intent(this, FlashSearchItems.class);
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.menuItemSearch:
+			if (Globals.getVendor() != null &&
+			Globals.getVendor().getItems() != null &&
+			!Globals.getVendor().getItems().isEmpty())
+			{
+				Intent intent = new Intent(this, FlashSearchItems.class);
 				startActivity(intent);
 			}
-    		else
+			else
 			{
 				message("There are no items to search.");
 			}
-    		return true;
-    	case R.id.menuItemSettings:
-    		message("Settings.");
-    		return true;
-    	case R.id.menuItemHelp:
-    		message("Help");
-    		return true;
-    	default:
-    		return false;
-    	}
-    }
+			return true;
+		case R.id.menuItemSettings:
+			Intent intentSettings = new Intent(this, FlashSettings.class);
+			startActivity(intentSettings);
+			return true;
+		case R.id.menuItemHelp:
+			Intent intentHelp = new Intent(this, FlashHelp.class);
+			startActivity(intentHelp);
+			return true;
+		default:
+			return false;
+		}
+	}
 	
 	// Loadable
 	public void beginLoading()

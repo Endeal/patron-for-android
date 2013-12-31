@@ -1,6 +1,8 @@
 package com.flashvip.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -62,10 +64,12 @@ public class FlashHome extends ActionBarActivity implements Loadable
     	switch (item.getItemId())
     	{
     	case R.id.menuItemSettings:
-    		message("Settings.");
+    		Intent intentSettings = new Intent(this, FlashSettings.class);
+    		startActivity(intentSettings);
     		return true;
     	case R.id.menuItemHelp:
-    		message("Help");
+    		Intent intentHelp = new Intent(this, FlashHelp.class);
+    		startActivity(intentHelp);
     		return true;
     	default:
     		return false;
@@ -127,7 +131,13 @@ public class FlashHome extends ActionBarActivity implements Loadable
     
     public void endLoading()
     {
-    	
+    	SharedPreferences preferences = getSharedPreferences("firstLaunch", MODE_PRIVATE);
+    	if (preferences.getBoolean("firstLaunch", false) == false)
+    	{
+    		Editor editor = preferences.edit();
+    		editor.putBoolean("firstLaunch", true);
+    		editor.commit();
+    	}
     }
     
     public void update()

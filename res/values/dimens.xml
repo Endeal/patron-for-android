@@ -28,6 +28,11 @@
     <!-- Favorites Screen -->
     <dimen name="dimFavoritesListItemsDividerHeight">3px</dimen>
     
+    <!-- Help Screen -->
+    <dimen name="dimHelpText">18sp</dimen>
+    <dimen name="dimHelpTextPage">24sp</dimen>
+    <dimen name="dimHelpButtonStart">16sp</dimen>
+    
     <!-- Location List -->
     <dimen name="dimLocationListDividerHeight">3px</dimen>
     
