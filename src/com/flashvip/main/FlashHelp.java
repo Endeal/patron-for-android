@@ -36,6 +36,7 @@ public class FlashHelp extends ActionBarActivity
         imageButtonPrevious = (ImageButton)viewMain.findViewById(R.id.helpImageButtonPrevious);
         buttonStart = (Button)viewMain.findViewById(R.id.helpButtonStart);
         textPage = (TextView)viewMain.findViewById(R.id.helpTextPage);
+        imageButtonPrevious.setVisibility(View.INVISIBLE);
         page = 1;
         
         // Set up the next button.
@@ -48,8 +49,17 @@ public class FlashHelp extends ActionBarActivity
 					viewAnimator.setInAnimation(view.getContext(), R.anim.slide_in_right);
 		        	viewAnimator.setOutAnimation(view.getContext(), R.anim.slide_out_left);
 					viewAnimator.showNext();
+					if (page == 5)
+					{
+						imageButtonNext.setVisibility(View.INVISIBLE);
+					}
+					else
+					{
+						imageButtonNext.setVisibility(View.VISIBLE);
+					}
 					textPage.setText(page + " / 5");
 				}
+				imageButtonPrevious.setVisibility(View.VISIBLE);
 			}
 		});
         
@@ -63,8 +73,17 @@ public class FlashHelp extends ActionBarActivity
 					viewAnimator.setInAnimation(view.getContext(), R.anim.slide_in_left);
 					viewAnimator.setOutAnimation(view.getContext(), R.anim.slide_out_right);
 					viewAnimator.showPrevious();
+					if (page == 1)
+					{
+						imageButtonPrevious.setVisibility(View.INVISIBLE);
+					}
+					else
+					{
+						imageButtonPrevious.setVisibility(View.VISIBLE);
+					}
 					textPage.setText(page + " / 5");
 				}
+				imageButtonNext.setVisibility(View.VISIBLE);
 			}
 		});
         

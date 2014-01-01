@@ -24,7 +24,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		// if a notification is received ...   
 		if (action.equals(PushManager.ACTION_PUSH_RECEIVED))
 		{
-			beginLoading();
+			//beginLoading();
 			System.out.println(msg + ": 1");
 		}
 		// if the notification is opened/clicked ...
@@ -50,7 +50,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		}
 		else if (action.equals(PushManager.ACTION_REGISTRATION_FINISHED))
 		{   
-			beginLoading();
+			//beginLoading();
 			System.out.println(msg + ": 3");
 			// to log the APID ...  
 			Log.i("Log", "Registration complete. APID:"  
