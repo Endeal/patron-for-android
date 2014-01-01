@@ -77,8 +77,9 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Globals.setOrder(order);
 		
 		// Creates a Toast that informs the user that the drink has been added to the tab.
+		System.out.println("SHOWING TOAST");
 		Toast toast = Toast.makeText(v.getContext(),
-				"Drink added to tab.", Toast.LENGTH_SHORT);
+				"Added " + item.getName() + ".", Toast.LENGTH_SHORT);
 		toast.show();
 	}
 }

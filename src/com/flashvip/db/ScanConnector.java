@@ -57,13 +57,22 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 			NameValuePair deviceId = new BasicNameValuePair("deviceId", Globals.getDeviceId());
-			NameValuePair vendorId = new BasicNameValuePair("vendorId", order.getVendorId());
-			NameValuePair orderId = new BasicNameValuePair("orderId", order.getOrderId());
+			NameValuePair vendorId = null;
+			NameValuePair orderId = null;
+			if (order != null)
+			{
+				vendorId = new BasicNameValuePair("vendorId", order.getVendorId());
+				orderId = new BasicNameValuePair("orderId", order.getOrderId());
+			}
 			postData.add(deviceId);
 			postData.add(vendorId);
 			postData.add(orderId);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);
+		}
+		catch (NullPointerException e)
+		{
+			e.printStackTrace();
 		}
 		catch (URISyntaxException e)
 		{
@@ -90,6 +99,10 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 			byte[] bytes = EntityUtils.toByteArray(entity);
 			Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 			image = bitmap;
+		}
+		catch (NullPointerException e)
+		{
+			e.printStackTrace();
 		}
 		catch (IOException e)
 		{

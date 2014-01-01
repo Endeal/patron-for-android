@@ -6,7 +6,7 @@
     <string name="homeTextUser">User</string>
     <string name="homeTextLocation">Location</string>
     <string name="homeButtonVendors">Vendors</string>
-    <string name="homeButtonMenu">Menu</string>
+    <string name="homeButtonMenu">Buy</string>
     <string name="homeButtonCodes">Codes</string>
     <string name="homeButtonFavorites">Favorites</string>
     
@@ -50,13 +50,17 @@
     <string name="settingsButtonRate">Rate App</string>
     
     <!-- Help Screen -->
-    <string name="helpText1">Select a Vendor</string>
-    <string name="helpText2">Buy Stuff</string>
-    <string name="helpText3">Review and Purchase</string>
-    <string name="helpText4">Wait for Notification or Manually Check Codes</string>
-    <string name="helpText5">Scan your QR Code to verify your order</string>
+    <string name="helpText1">First, select the vendor you want to buy from.</string>
+    <string name="helpText2">Tap on items to add them to your cart.
+        Filter items by category to help find what you\'re looking for.
+        Checkout when you\'re done.</string>
+    <string name="helpText3">Review and edit your cart, then finish your order.</string>
+    <string name="helpText4">A push notification will be sent when your order is ready.
+        You can check the status of your orders in the codes screen.
+        Tap on an order to view its QR Code.</string>
+    <string name="helpText5">Scan your QR Code to verify your order, and you\'re all done!</string>
     <string name="helpTextPage">1 / 5</string>
-    <string name="helpButtonStart">Get Started!</string>
+    <string name="helpButtonStart">Tap Here to Get Started!</string>
     <string name="helpImage1ContentDescription">Image 1</string>
     <string name="helpImage2ContentDescription">Image 2</string>
     <string name="helpImage3ContentDescription">Image 3</string>
@@ -95,12 +99,12 @@
     
     <!-- Activity Titles -->
     <string name="titleActivityHome">Flash VIP</string>
-    <string name="titleActivityMenu">Menu</string>
+    <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityCodes">Codes</string>
     <string name="titleActivityScan">Scan</string>
     <string name="titleActivityFavorites">Favorites</string>
-    <string name="titleActivityLocations">Locations</string>
+    <string name="titleActivityLocations">Vendors</string>
     <string name="titleActivityProfile">Profile</string>
     <string name="titleActivitySearchVendors">Search</string>
     <string name="titleActivitySearchItems">Search</string>

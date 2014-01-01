@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -16,15 +15,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.flashvip.bind.VendorBinder;
-import com.flashvip.main.FlashVendors.LocationItemListener;
+import com.flashvip.listeners.ListItemVendorListener;
 import com.flashvip.model.Vendor;
 import com.flashvip.sort.LocationSorter;
 import com.flashvip.system.Globals;
@@ -87,13 +84,14 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 		listMain = (ListView) viewMain.findViewById(R.id.searchVendorsListMain);
 		editTextMain = (EditText) viewMain.findViewById(R.id.searchVendorsEditTextMain);
 		editTextMain.setText("");
+		
+		// Set the Search Listener
 		editTextMain.addTextChangedListener(new TextWatcher() {
 			
 			@Override
 			public void onTextChanged(CharSequence text, int start, int before, int count) {
 				ArrayList<Vendor> vendors = LocationSorter.getBySearch(Globals.getVendors(), text);
 				Globals.setFilteredVendors(vendors);
-				System.out.println("Text changed: " + vendors.size());
 				update();
 			}
 			
@@ -107,6 +105,9 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 				
 			}
 		});
+		
+		// Set the Vendor List Item Listener
+		listMain.setOnItemClickListener(new ListItemVendorListener());
 		update();
 	}
 	
@@ -156,7 +157,6 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
     				locations, R.layout.list_item_location, from, to);
     		adapter.setViewBinder(new VendorBinder());
     		listMain.setAdapter(adapter);
-    		listMain.setOnItemClickListener(new LocationItemListener());
     		adapter.notifyDataSetChanged();
     	}
 	}
@@ -165,23 +165,5 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
 		toast.show();
-	}
-	
-	// List item listener.
-	public static class CodeItemListener implements OnItemClickListener
-	{
-		private Activity activity;
-		
-		public CodeItemListener(Activity activity)
-		{
-			this.activity = activity;
-		}
-		
-		public void onItemClick(AdapterView<?> adapter, View v, int item, long row)
-		{
-			Intent intent = new Intent(activity, FlashScan.class);
-			intent.putExtra("orderRow", "" + item);
-			activity.startActivity(intent);
-		}
 	}
 }

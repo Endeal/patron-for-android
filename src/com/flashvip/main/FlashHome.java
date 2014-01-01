@@ -1,5 +1,7 @@
 package com.flashvip.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flashvip.listeners.DialogTutorialListener;
 import com.flashvip.system.Globals;
 import com.flashvip.system.Loadable;
 
@@ -126,7 +129,7 @@ public class FlashHome extends ActionBarActivity implements Loadable
 			}
     	});
     	
-    	update();
+    	endLoading();
     }
     
     public void endLoading()
@@ -134,10 +137,16 @@ public class FlashHome extends ActionBarActivity implements Loadable
     	SharedPreferences preferences = getSharedPreferences("firstLaunch", MODE_PRIVATE);
     	if (preferences.getBoolean("firstLaunch", false) == false)
     	{
+    		DialogInterface.OnClickListener dialogClickListener =new DialogTutorialListener(this);
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    		builder.setMessage("I see this is the first time you've used this app.\n"
+    			+ "Do you want to view the tutorial?").setPositiveButton("Yes",
+    			dialogClickListener).setNegativeButton("No", dialogClickListener).show();
     		Editor editor = preferences.edit();
     		editor.putBoolean("firstLaunch", true);
     		editor.commit();
     	}
+    	update();
     }
     
     public void update()

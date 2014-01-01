@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -17,14 +16,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.flashvip.bind.ProductBinder;
+import com.flashvip.listeners.ListItemMenuAddListener;
 import com.flashvip.model.Item;
 import com.flashvip.sort.ProductSorter;
 import com.flashvip.system.Globals;
@@ -87,6 +85,8 @@ public class FlashSearchItems extends ActionBarActivity implements Loadable
 		listMain = (ListView) viewMain.findViewById(R.id.searchItemsListMain);
 		editTextMain = (EditText) viewMain.findViewById(R.id.searchItemsEditTextMain);
 		editTextMain.setText("");
+		
+		// Search Bar Listener
 		editTextMain.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -106,6 +106,10 @@ public class FlashSearchItems extends ActionBarActivity implements Loadable
 				
 			}
 		});
+		
+		// Main List Listener
+		listMain.setOnItemClickListener(new ListItemMenuAddListener());
+		
 		load();
 	}
 	
@@ -171,23 +175,5 @@ public class FlashSearchItems extends ActionBarActivity implements Loadable
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
 		toast.show();
-	}
-	
-	// List item listener.
-	public static class CodeItemListener implements OnItemClickListener
-	{
-		private Activity activity;
-		
-		public CodeItemListener(Activity activity)
-		{
-			this.activity = activity;
-		}
-		
-		public void onItemClick(AdapterView<?> adapter, View v, int item, long row)
-		{
-			Intent intent = new Intent(activity, FlashScan.class);
-			intent.putExtra("orderRow", "" + item);
-			activity.startActivity(intent);
-		}
 	}
 }

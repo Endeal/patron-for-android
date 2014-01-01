@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,14 +19,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.flashvip.bind.VendorBinder;
 import com.flashvip.db.VendorConnector;
+import com.flashvip.listeners.ListItemVendorListener;
 import com.flashvip.lists.ListLinks;
 import com.flashvip.model.Vendor;
 import com.flashvip.system.Globals;
@@ -213,7 +211,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
     				locations, R.layout.list_item_location, from, to);
     		adapter.setViewBinder(new VendorBinder());
     		listLocations.setAdapter(adapter);
-    		listLocations.setOnItemClickListener(new LocationItemListener());
+    		listLocations.setOnItemClickListener(new ListItemVendorListener());
     		adapter.notifyDataSetChanged();
     	}
 	}
@@ -222,18 +220,5 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
 		toast.show();
-	}
-	
-	public static class LocationItemListener implements OnItemClickListener
-	{
-		public void onItemClick(AdapterView<?> adapter, View v, int item,
-				long row)
-		{
-			Vendor vendor = Globals.getVendors().get(item);
-			Globals.setVendor(vendor);
-			Activity activity = (Activity)v.getContext();
-			Intent intent = new Intent(v.getContext(), FlashMenu.class);
-			activity.startActivity(intent);
-		}
 	}
 }

@@ -146,7 +146,6 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 			e.printStackTrace();
 		}
 
-		Globals.setOrder(null);
 		if (Globals.getVendor() != null)
 		{
 			Globals.getVendor().setItems(items);

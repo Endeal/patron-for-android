@@ -25,13 +25,13 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		if (action.equals(PushManager.ACTION_PUSH_RECEIVED))
 		{
 			beginLoading();
-			System.out.println("NIBBLY1");
+			System.out.println(msg + ": 1");
 		}
 		// if the notification is opened/clicked ...
 		else if (action.equals(PushManager.ACTION_NOTIFICATION_OPENED))
 		{
 			beginLoading();
-			System.out.println("NIBBLY2");
+			System.out.println(msg + ": 2");
 			
 			// here you can get the extras from the intent.   
 			// and then you can use it as you wish.   
@@ -51,7 +51,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		else if (action.equals(PushManager.ACTION_REGISTRATION_FINISHED))
 		{   
 			beginLoading();
-			System.out.println("NIBBLY3");
+			System.out.println(msg + ": 3");
 			// to log the APID ...  
 			Log.i("Log", "Registration complete. APID:"  
 					+ intent.getStringExtra(PushManager.EXTRA_APID)  
