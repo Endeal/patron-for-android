@@ -46,10 +46,16 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		{
 			Spinner spinner = spinnerAttributes.get(i);
 			int selectedOption = spinner.getSelectedItemPosition();
-			Attribute attribute = item.getAttributes().get(i);
-			Option option = attribute.getOptions().get(selectedOption);
-			Selection selection = new Selection(attribute, option);
-			selections.add(selection);
+			if (item.getAttributes() != null && !item.getAttributes().isEmpty())
+			{
+				Attribute attribute = item.getAttributes().get(i);
+				if (attribute.getOptions() != null && !attribute.getOptions().isEmpty())
+				{
+					Option option = attribute.getOptions().get(selectedOption);
+					Selection selection = new Selection(attribute, option);
+					selections.add(selection);
+				}
+			}
 		}
 		int quantity = spinnerQuantity.getSelectedItemPosition() + 1;
 		Fragment fragment = new Fragment(null, item, selections,
