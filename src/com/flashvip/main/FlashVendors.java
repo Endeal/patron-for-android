@@ -2,6 +2,7 @@ package com.flashvip.main;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,7 +41,11 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	private View viewLoading;
 	private View viewVendors;
 	private View viewNone;
-	private ArrayList<Vendor> retrievedVendors; 
+	private ArrayList<Vendor> retrievedVendors;
+	
+	// Message to be displayed.
+	private Activity activity;
+	private CharSequence message;
 	
 	// Activity methods.
 	@Override
@@ -218,7 +224,15 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	
 	public void message(String msg)
 	{
-		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-		toast.show();
+		message = msg;
+		activity = this;
+		Runnable thread = new Runnable() {
+			@Override
+			public void run() {
+				Toast toast = Toast.makeText(activity, message, Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		};
+		runOnUiThread(thread);
 	}
 }

@@ -136,7 +136,12 @@ public class FlashCodes extends ActionBarActivity implements Loadable
 		int[] to = {R.id.codeListItemTextTime,
 				R.id.codeListItemTextStatus,
 				R.id.codeListItemTextProducts};
-
+		
+		// Don't update the list if the codes are empty.
+		if (codes == null || codes.isEmpty())
+			return;
+		
+		// Map the values to the elements of the list item.
 		for (int i = 0; i < codes.size(); i++)
 		{
 			Map<String, String> mapping = new HashMap<String, String>();
@@ -146,6 +151,8 @@ public class FlashCodes extends ActionBarActivity implements Loadable
 			mapping.put("textOrders", code.getOrder().getOrderText());
 			codesMap.add(mapping);
 		}
+		
+		// Bind the values to the elements of the list item.
 		SimpleAdapter adapter = new SimpleAdapter(this,
 				codesMap, R.layout.list_item_code, from, to);
 		adapter.setViewBinder(new CodeBinder());

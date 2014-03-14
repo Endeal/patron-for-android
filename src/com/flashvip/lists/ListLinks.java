@@ -9,7 +9,7 @@ package com.flashvip.lists;
 
 public class ListLinks
 {
-	private static final String BASE_URL = "http://jameswhiteman.info/flash-core/";
+	private static final String BASE_URL = "http://jameswhiteman.info/flash-core/patron/";
 	public static final String LINK_GET_ITEMS = BASE_URL + "get/getItems.php";
 	public static final String LINK_GET_VENDORS = BASE_URL + "get/getVendors.php";
 	public static final String LINK_GET_CATEGORIES = BASE_URL + "get/getCategories.php";

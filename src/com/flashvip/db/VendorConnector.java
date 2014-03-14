@@ -73,7 +73,10 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 		}
 		catch(JSONException e)
 		{
-			activity.message(result);
+			if (result != null && result.length() > 0)
+			{
+				activity.message(result);
+			}
 			vendors = null;
 		}
 		catch (IOException e)

@@ -1,0 +1,733 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.4
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Dec 11, 2013 at 03:31 AM
+-- Server version: 5.1.57
+-- PHP Version: 5.2.17
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Database: `jamwhi13_fvip`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attribute_info`
+--
+USE jamwhi13_fvip;
+
+CREATE TABLE `attribute_info` (
+  `attribute_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`attribute_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `attribute_info`
+--
+
+INSERT INTO `attribute_info` VALUES(1, 'Vodka');
+INSERT INTO `attribute_info` VALUES(2, 'Whiskey');
+INSERT INTO `attribute_info` VALUES(3, 'Tequila');
+INSERT INTO `attribute_info` VALUES(4, 'Brandy');
+INSERT INTO `attribute_info` VALUES(5, 'Gin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attribute_options`
+--
+
+CREATE TABLE `attribute_options` (
+  `attribute_id` bigint(20) unsigned NOT NULL,
+  `option_id` bigint(20) unsigned NOT NULL,
+  KEY `attribute_id` (`attribute_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `attribute_options`
+--
+
+INSERT INTO `attribute_options` VALUES(1, 2);
+INSERT INTO `attribute_options` VALUES(1, 3);
+INSERT INTO `attribute_options` VALUES(1, 4);
+INSERT INTO `attribute_options` VALUES(1, 5);
+INSERT INTO `attribute_options` VALUES(1, 6);
+INSERT INTO `attribute_options` VALUES(1, 7);
+INSERT INTO `attribute_options` VALUES(2, 8);
+INSERT INTO `attribute_options` VALUES(2, 9);
+INSERT INTO `attribute_options` VALUES(2, 10);
+INSERT INTO `attribute_options` VALUES(3, 11);
+INSERT INTO `attribute_options` VALUES(3, 12);
+INSERT INTO `attribute_options` VALUES(3, 13);
+INSERT INTO `attribute_options` VALUES(3, 15);
+INSERT INTO `attribute_options` VALUES(3, 14);
+INSERT INTO `attribute_options` VALUES(3, 16);
+INSERT INTO `attribute_options` VALUES(3, 17);
+INSERT INTO `attribute_options` VALUES(4, 18);
+INSERT INTO `attribute_options` VALUES(4, 19);
+INSERT INTO `attribute_options` VALUES(4, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category_info`
+--
+
+CREATE TABLE `category_info` (
+  `category_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `category_info`
+--
+
+INSERT INTO `category_info` VALUES(1, 'Domestic Beer');
+INSERT INTO `category_info` VALUES(2, 'Imported Beer');
+INSERT INTO `category_info` VALUES(3, 'Cocktail');
+INSERT INTO `category_info` VALUES(4, 'Shot');
+INSERT INTO `category_info` VALUES(5, 'Martini');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_info`
+--
+
+CREATE TABLE `customer_info` (
+  `customer_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `last_name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `customer_info`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_items`
+--
+
+CREATE TABLE `customer_items` (
+  `customer_id` bigint(20) unsigned NOT NULL,
+  `item_id` bigint(20) unsigned NOT NULL,
+  KEY `customer_id` (`customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `customer_items`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_login`
+--
+
+CREATE TABLE `customer_login` (
+  `email` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `password` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `salt` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `customer_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`email`,`customer_id`),
+  UNIQUE KEY `customer_id` (`customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `customer_login`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_vendors`
+--
+
+CREATE TABLE `customer_vendors` (
+  `customer_id` bigint(20) unsigned NOT NULL,
+  `vendor_id` bigint(20) unsigned NOT NULL,
+  KEY `customer_id` (`customer_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `customer_vendors`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fragment_info`
+--
+
+CREATE TABLE `fragment_info` (
+  `fragment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `item_id` bigint(20) unsigned NOT NULL,
+  `quantity` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`fragment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `fragment_info`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fragment_options`
+--
+
+CREATE TABLE `fragment_options` (
+  `fragment_id` bigint(20) unsigned NOT NULL,
+  `attribute_id` bigint(20) unsigned NOT NULL,
+  `option_id` bigint(20) unsigned NOT NULL,
+  KEY `fragment_id` (`fragment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `fragment_options`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fragment_supplements`
+--
+
+CREATE TABLE `fragment_supplements` (
+  `fragment_id` bigint(20) unsigned NOT NULL,
+  `supplement_id` bigint(20) unsigned NOT NULL,
+  KEY `fragment_id` (`fragment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `fragment_supplements`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_attributes`
+--
+
+CREATE TABLE `item_attributes` (
+  `item_id` bigint(20) unsigned NOT NULL,
+  `attribute_id` bigint(20) unsigned NOT NULL,
+  KEY `item_id` (`item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `item_attributes`
+--
+
+INSERT INTO `item_attributes` VALUES(13, 1);
+INSERT INTO `item_attributes` VALUES(14, 1);
+INSERT INTO `item_attributes` VALUES(15, 1);
+INSERT INTO `item_attributes` VALUES(17, 1);
+INSERT INTO `item_attributes` VALUES(18, 1);
+INSERT INTO `item_attributes` VALUES(19, 1);
+INSERT INTO `item_attributes` VALUES(21, 3);
+INSERT INTO `item_attributes` VALUES(22, 1);
+INSERT INTO `item_attributes` VALUES(23, 1);
+INSERT INTO `item_attributes` VALUES(25, 1);
+INSERT INTO `item_attributes` VALUES(26, 1);
+INSERT INTO `item_attributes` VALUES(27, 4);
+INSERT INTO `item_attributes` VALUES(29, 3);
+INSERT INTO `item_attributes` VALUES(32, 2);
+INSERT INTO `item_attributes` VALUES(43, 1);
+INSERT INTO `item_attributes` VALUES(44, 1);
+INSERT INTO `item_attributes` VALUES(46, 3);
+INSERT INTO `item_attributes` VALUES(47, 1);
+INSERT INTO `item_attributes` VALUES(48, 2);
+INSERT INTO `item_attributes` VALUES(62, 5);
+INSERT INTO `item_attributes` VALUES(63, 1);
+INSERT INTO `item_attributes` VALUES(64, 5);
+INSERT INTO `item_attributes` VALUES(65, 1);
+INSERT INTO `item_attributes` VALUES(66, 2);
+INSERT INTO `item_attributes` VALUES(67, 2);
+INSERT INTO `item_attributes` VALUES(68, 4);
+INSERT INTO `item_attributes` VALUES(69, 1);
+INSERT INTO `item_attributes` VALUES(70, 1);
+INSERT INTO `item_attributes` VALUES(71, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_categories`
+--
+
+CREATE TABLE `item_categories` (
+  `item_id` bigint(20) unsigned NOT NULL,
+  `category_id` bigint(20) unsigned NOT NULL,
+  KEY `item_id` (`item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `item_categories`
+--
+
+INSERT INTO `item_categories` VALUES(1, 1);
+INSERT INTO `item_categories` VALUES(2, 1);
+INSERT INTO `item_categories` VALUES(3, 1);
+INSERT INTO `item_categories` VALUES(4, 1);
+INSERT INTO `item_categories` VALUES(5, 2);
+INSERT INTO `item_categories` VALUES(6, 2);
+INSERT INTO `item_categories` VALUES(7, 2);
+INSERT INTO `item_categories` VALUES(8, 2);
+INSERT INTO `item_categories` VALUES(9, 2);
+INSERT INTO `item_categories` VALUES(10, 2);
+INSERT INTO `item_categories` VALUES(11, 2);
+INSERT INTO `item_categories` VALUES(12, 2);
+INSERT INTO `item_categories` VALUES(13, 3);
+INSERT INTO `item_categories` VALUES(14, 3);
+INSERT INTO `item_categories` VALUES(15, 3);
+INSERT INTO `item_categories` VALUES(16, 3);
+INSERT INTO `item_categories` VALUES(17, 3);
+INSERT INTO `item_categories` VALUES(18, 3);
+INSERT INTO `item_categories` VALUES(19, 3);
+INSERT INTO `item_categories` VALUES(20, 3);
+INSERT INTO `item_categories` VALUES(21, 3);
+INSERT INTO `item_categories` VALUES(22, 3);
+INSERT INTO `item_categories` VALUES(23, 3);
+INSERT INTO `item_categories` VALUES(24, 3);
+INSERT INTO `item_categories` VALUES(25, 3);
+INSERT INTO `item_categories` VALUES(26, 3);
+INSERT INTO `item_categories` VALUES(27, 3);
+INSERT INTO `item_categories` VALUES(28, 3);
+INSERT INTO `item_categories` VALUES(29, 3);
+INSERT INTO `item_categories` VALUES(30, 3);
+INSERT INTO `item_categories` VALUES(31, 3);
+INSERT INTO `item_categories` VALUES(32, 3);
+INSERT INTO `item_categories` VALUES(33, 3);
+INSERT INTO `item_categories` VALUES(34, 3);
+INSERT INTO `item_categories` VALUES(35, 3);
+INSERT INTO `item_categories` VALUES(36, 3);
+INSERT INTO `item_categories` VALUES(37, 3);
+INSERT INTO `item_categories` VALUES(38, 3);
+INSERT INTO `item_categories` VALUES(39, 3);
+INSERT INTO `item_categories` VALUES(40, 3);
+INSERT INTO `item_categories` VALUES(41, 3);
+INSERT INTO `item_categories` VALUES(42, 3);
+INSERT INTO `item_categories` VALUES(43, 3);
+INSERT INTO `item_categories` VALUES(44, 3);
+INSERT INTO `item_categories` VALUES(45, 3);
+INSERT INTO `item_categories` VALUES(46, 4);
+INSERT INTO `item_categories` VALUES(47, 4);
+INSERT INTO `item_categories` VALUES(48, 4);
+INSERT INTO `item_categories` VALUES(49, 4);
+INSERT INTO `item_categories` VALUES(50, 4);
+INSERT INTO `item_categories` VALUES(51, 4);
+INSERT INTO `item_categories` VALUES(52, 4);
+INSERT INTO `item_categories` VALUES(53, 4);
+INSERT INTO `item_categories` VALUES(54, 4);
+INSERT INTO `item_categories` VALUES(55, 4);
+INSERT INTO `item_categories` VALUES(56, 4);
+INSERT INTO `item_categories` VALUES(57, 4);
+INSERT INTO `item_categories` VALUES(58, 4);
+INSERT INTO `item_categories` VALUES(59, 4);
+INSERT INTO `item_categories` VALUES(60, 4);
+INSERT INTO `item_categories` VALUES(61, 4);
+INSERT INTO `item_categories` VALUES(62, 5);
+INSERT INTO `item_categories` VALUES(63, 5);
+INSERT INTO `item_categories` VALUES(64, 5);
+INSERT INTO `item_categories` VALUES(65, 5);
+INSERT INTO `item_categories` VALUES(66, 5);
+INSERT INTO `item_categories` VALUES(67, 5);
+INSERT INTO `item_categories` VALUES(68, 5);
+INSERT INTO `item_categories` VALUES(69, 5);
+INSERT INTO `item_categories` VALUES(70, 5);
+INSERT INTO `item_categories` VALUES(71, 5);
+INSERT INTO `item_categories` VALUES(72, 5);
+INSERT INTO `item_categories` VALUES(73, 5);
+INSERT INTO `item_categories` VALUES(74, 5);
+INSERT INTO `item_categories` VALUES(94, 1);
+INSERT INTO `item_categories` VALUES(33, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_info`
+--
+
+CREATE TABLE `item_info` (
+  `item_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `price` decimal(6,2) unsigned NOT NULL,
+  `max_supplements` tinyint(99) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=95 ;
+
+--
+-- Dumping data for table `item_info`
+--
+
+INSERT INTO `item_info` VALUES(1, 'Coor''s Light', 4.00, 0);
+INSERT INTO `item_info` VALUES(2, 'Shock Top', 4.00, 0);
+INSERT INTO `item_info` VALUES(3, 'Bud Light', 4.00, 0);
+INSERT INTO `item_info` VALUES(4, 'Pabst Blue Ribbon', 4.00, 0);
+INSERT INTO `item_info` VALUES(5, 'Heineken', 6.00, 0);
+INSERT INTO `item_info` VALUES(6, 'Red Stripe', 6.00, 0);
+INSERT INTO `item_info` VALUES(7, 'Blue Moon', 6.00, 0);
+INSERT INTO `item_info` VALUES(8, 'Corona', 6.00, 0);
+INSERT INTO `item_info` VALUES(9, 'XX', 6.00, 0);
+INSERT INTO `item_info` VALUES(10, 'Bohemia', 6.00, 0);
+INSERT INTO `item_info` VALUES(11, 'Fat Tire', 6.00, 0);
+INSERT INTO `item_info` VALUES(12, 'Guinness', 6.00, 0);
+INSERT INTO `item_info` VALUES(13, 'Screw Driver', 6.00, 0);
+INSERT INTO `item_info` VALUES(14, 'Bay Breeze', 6.00, 0);
+INSERT INTO `item_info` VALUES(15, 'Madras', 6.00, 0);
+INSERT INTO `item_info` VALUES(16, 'Fuzzy Navel', 6.00, 0);
+INSERT INTO `item_info` VALUES(17, 'Hairy Navel', 6.00, 0);
+INSERT INTO `item_info` VALUES(18, 'Sex on the Beach', 6.00, 0);
+INSERT INTO `item_info` VALUES(19, 'Melon Ball', 6.00, 0);
+INSERT INTO `item_info` VALUES(20, 'Cuba Libre', 6.00, 0);
+INSERT INTO `item_info` VALUES(21, 'Tequila Sunrise', 6.00, 0);
+INSERT INTO `item_info` VALUES(22, 'White Russian', 6.00, 0);
+INSERT INTO `item_info` VALUES(23, 'Black Russian', 6.00, 0);
+INSERT INTO `item_info` VALUES(24, 'Orgasm', 6.00, 0);
+INSERT INTO `item_info` VALUES(25, 'Screaming Orgasm', 6.00, 0);
+INSERT INTO `item_info` VALUES(26, 'Separator', 6.00, 0);
+INSERT INTO `item_info` VALUES(27, 'Stinger', 6.00, 0);
+INSERT INTO `item_info` VALUES(28, 'Tom Collins', 6.00, 0);
+INSERT INTO `item_info` VALUES(29, 'Margarita', 6.00, 0);
+INSERT INTO `item_info` VALUES(30, 'Daiquiri', 6.00, 0);
+INSERT INTO `item_info` VALUES(31, 'Long Island Ice Tea', 6.00, 0);
+INSERT INTO `item_info` VALUES(32, 'Whiskey Sour', 6.00, 0);
+INSERT INTO `item_info` VALUES(33, 'AMF', 6.00, 0);
+INSERT INTO `item_info` VALUES(34, 'Tokyo Tea', 6.00, 0);
+INSERT INTO `item_info` VALUES(35, 'L.A. Water', 6.00, 0);
+INSERT INTO `item_info` VALUES(36, 'Mai Tai', 6.00, 0);
+INSERT INTO `item_info` VALUES(37, 'Mojito', 6.00, 0);
+INSERT INTO `item_info` VALUES(38, 'Zombie', 6.00, 0);
+INSERT INTO `item_info` VALUES(39, 'Electric Lemonade', 6.00, 0);
+INSERT INTO `item_info` VALUES(40, 'Lynchburg Lemonade', 6.00, 0);
+INSERT INTO `item_info` VALUES(41, 'Blue Hawaiian', 6.00, 0);
+INSERT INTO `item_info` VALUES(42, 'Mimosa', 6.00, 0);
+INSERT INTO `item_info` VALUES(43, 'Vodka Cranberry', 6.00, 0);
+INSERT INTO `item_info` VALUES(44, 'Vodka Redbull', 6.00, 0);
+INSERT INTO `item_info` VALUES(45, 'Jack & Coke', 6.00, 0);
+INSERT INTO `item_info` VALUES(46, 'Tequila Shot', 8.00, 0);
+INSERT INTO `item_info` VALUES(47, 'Vodka Shot', 8.00, 0);
+INSERT INTO `item_info` VALUES(48, 'Whiskey Shot', 8.00, 0);
+INSERT INTO `item_info` VALUES(49, 'Jagermeister', 8.00, 0);
+INSERT INTO `item_info` VALUES(50, 'Jager Bomb', 8.00, 0);
+INSERT INTO `item_info` VALUES(51, 'Mind Eraser', 8.00, 0);
+INSERT INTO `item_info` VALUES(52, 'F-16', 8.00, 0);
+INSERT INTO `item_info` VALUES(53, 'Slippery Nipple', 8.00, 0);
+INSERT INTO `item_info` VALUES(54, 'Buttery Nipple', 8.00, 0);
+INSERT INTO `item_info` VALUES(55, 'Blow Job', 8.00, 0);
+INSERT INTO `item_info` VALUES(56, 'Washington Apple', 8.00, 0);
+INSERT INTO `item_info` VALUES(57, 'Woo Woo', 8.00, 0);
+INSERT INTO `item_info` VALUES(58, 'Red Headed Slut', 8.00, 0);
+INSERT INTO `item_info` VALUES(59, 'Power Slide', 8.00, 0);
+INSERT INTO `item_info` VALUES(60, 'Lemon Drop', 8.00, 0);
+INSERT INTO `item_info` VALUES(61, 'Kamikazi', 8.00, 0);
+INSERT INTO `item_info` VALUES(62, 'Martini', 9.00, 0);
+INSERT INTO `item_info` VALUES(63, 'Vodka Martini', 9.00, 0);
+INSERT INTO `item_info` VALUES(64, 'Gibson', 9.00, 0);
+INSERT INTO `item_info` VALUES(65, 'Vodka Gibson', 9.00, 0);
+INSERT INTO `item_info` VALUES(66, 'Manhattan', 9.00, 0);
+INSERT INTO `item_info` VALUES(67, 'Perfect Manhattan', 9.00, 0);
+INSERT INTO `item_info` VALUES(68, 'Sidecar', 9.00, 0);
+INSERT INTO `item_info` VALUES(69, 'Cosmopolitan', 9.00, 0);
+INSERT INTO `item_info` VALUES(70, 'Lemon Drop', 9.00, 0);
+INSERT INTO `item_info` VALUES(71, 'Windex', 9.00, 0);
+INSERT INTO `item_info` VALUES(72, 'Purple Hooter', 9.00, 0);
+INSERT INTO `item_info` VALUES(73, 'Melontini', 9.00, 0);
+INSERT INTO `item_info` VALUES(74, 'Appletini', 9.00, 0);
+INSERT INTO `item_info` VALUES(94, 'Budweiser', 4.00, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_supplements`
+--
+
+CREATE TABLE `item_supplements` (
+  `item_id` bigint(20) unsigned NOT NULL,
+  `supplement_id` bigint(20) unsigned NOT NULL,
+  KEY `item_id` (`item_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `item_supplements`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `option_info`
+--
+
+CREATE TABLE `option_info` (
+  `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `price` decimal(6,2) unsigned NOT NULL,
+  PRIMARY KEY (`option_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `option_info`
+--
+
+INSERT INTO `option_info` VALUES(1, 'None', 0.00);
+INSERT INTO `option_info` VALUES(2, 'Grey Goose', 3.00);
+INSERT INTO `option_info` VALUES(3, 'Kettle One', 3.00);
+INSERT INTO `option_info` VALUES(4, 'Belvedere', 3.00);
+INSERT INTO `option_info` VALUES(5, 'Ciroc', 3.00);
+INSERT INTO `option_info` VALUES(6, 'Absolute', 3.00);
+INSERT INTO `option_info` VALUES(7, 'Skyy', 2.00);
+INSERT INTO `option_info` VALUES(8, 'Crown Royal', 3.00);
+INSERT INTO `option_info` VALUES(9, 'Johnny Walker', 3.00);
+INSERT INTO `option_info` VALUES(10, 'Jameson', 3.00);
+INSERT INTO `option_info` VALUES(11, 'Patron Silver', 4.00);
+INSERT INTO `option_info` VALUES(12, 'Patron Gold', 4.00);
+INSERT INTO `option_info` VALUES(13, '1800 Silver', 4.00);
+INSERT INTO `option_info` VALUES(14, '1800 Anejo', 4.00);
+INSERT INTO `option_info` VALUES(15, 'Don Julio Blanco', 4.00);
+INSERT INTO `option_info` VALUES(16, 'Don Julio Anejo', 4.00);
+INSERT INTO `option_info` VALUES(17, 'Jose Cuervo', 4.00);
+INSERT INTO `option_info` VALUES(18, 'Courvoisier', 4.00);
+INSERT INTO `option_info` VALUES(19, 'Remy Martin', 4.00);
+INSERT INTO `option_info` VALUES(20, 'Hennessey', 4.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_fragments`
+--
+
+CREATE TABLE `order_fragments` (
+  `order_id` bigint(20) unsigned NOT NULL,
+  `fragment_id` bigint(20) unsigned NOT NULL,
+  KEY `order_id` (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `order_fragments`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_history`
+--
+
+CREATE TABLE `order_history` (
+  `order_id` bigint(20) unsigned NOT NULL,
+  `time_received` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time_completed` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_scanned` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '3',
+  PRIMARY KEY (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='Possible statuses are: 0=Waiting, 1=Ready, 2=Scanned, 3=Comp';
+
+--
+-- Dumping data for table `order_history`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_info`
+--
+
+CREATE TABLE `order_info` (
+  `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `vendor_id` bigint(20) unsigned NOT NULL,
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '3',
+  PRIMARY KEY (`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `order_info`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplement_info`
+--
+
+CREATE TABLE `supplement_info` (
+  `supplement_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `price` decimal(6,2) unsigned NOT NULL,
+  PRIMARY KEY (`supplement_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `supplement_info`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_info`
+--
+
+CREATE TABLE `vendor_info` (
+  `vendor_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `address` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `city` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `state` varchar(2) COLLATE latin1_general_ci NOT NULL,
+  `zip` varchar(5) COLLATE latin1_general_ci NOT NULL,
+  `phone` varchar(10) COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`vendor_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `vendor_info`
+--
+
+INSERT INTO `vendor_info` VALUES(7, 'John''s', 'Simi Valley', '928 Job Street', 'CA', '94002', '8054166912');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_items`
+--
+
+CREATE TABLE `vendor_items` (
+  `vendor_id` bigint(20) unsigned NOT NULL,
+  `item_id` bigint(20) unsigned NOT NULL,
+  KEY `vendor_id` (`vendor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `vendor_items`
+--
+
+INSERT INTO `vendor_items` VALUES(7, 94);
+INSERT INTO `vendor_items` VALUES(7, 74);
+INSERT INTO `vendor_items` VALUES(7, 73);
+INSERT INTO `vendor_items` VALUES(7, 72);
+INSERT INTO `vendor_items` VALUES(7, 71);
+INSERT INTO `vendor_items` VALUES(7, 70);
+INSERT INTO `vendor_items` VALUES(7, 69);
+INSERT INTO `vendor_items` VALUES(7, 68);
+INSERT INTO `vendor_items` VALUES(7, 67);
+INSERT INTO `vendor_items` VALUES(7, 66);
+INSERT INTO `vendor_items` VALUES(7, 65);
+INSERT INTO `vendor_items` VALUES(7, 64);
+INSERT INTO `vendor_items` VALUES(7, 63);
+INSERT INTO `vendor_items` VALUES(7, 62);
+INSERT INTO `vendor_items` VALUES(7, 61);
+INSERT INTO `vendor_items` VALUES(7, 59);
+INSERT INTO `vendor_items` VALUES(7, 58);
+INSERT INTO `vendor_items` VALUES(7, 57);
+INSERT INTO `vendor_items` VALUES(7, 56);
+INSERT INTO `vendor_items` VALUES(7, 55);
+INSERT INTO `vendor_items` VALUES(7, 54);
+INSERT INTO `vendor_items` VALUES(7, 53);
+INSERT INTO `vendor_items` VALUES(7, 52);
+INSERT INTO `vendor_items` VALUES(7, 51);
+INSERT INTO `vendor_items` VALUES(7, 50);
+INSERT INTO `vendor_items` VALUES(7, 49);
+INSERT INTO `vendor_items` VALUES(7, 48);
+INSERT INTO `vendor_items` VALUES(7, 47);
+INSERT INTO `vendor_items` VALUES(7, 46);
+INSERT INTO `vendor_items` VALUES(7, 45);
+INSERT INTO `vendor_items` VALUES(7, 44);
+INSERT INTO `vendor_items` VALUES(7, 43);
+INSERT INTO `vendor_items` VALUES(7, 42);
+INSERT INTO `vendor_items` VALUES(7, 41);
+INSERT INTO `vendor_items` VALUES(7, 40);
+INSERT INTO `vendor_items` VALUES(7, 39);
+INSERT INTO `vendor_items` VALUES(7, 38);
+INSERT INTO `vendor_items` VALUES(7, 37);
+INSERT INTO `vendor_items` VALUES(7, 36);
+INSERT INTO `vendor_items` VALUES(7, 35);
+INSERT INTO `vendor_items` VALUES(7, 34);
+INSERT INTO `vendor_items` VALUES(7, 33);
+INSERT INTO `vendor_items` VALUES(7, 32);
+INSERT INTO `vendor_items` VALUES(7, 31);
+INSERT INTO `vendor_items` VALUES(7, 30);
+INSERT INTO `vendor_items` VALUES(7, 29);
+INSERT INTO `vendor_items` VALUES(7, 28);
+INSERT INTO `vendor_items` VALUES(7, 27);
+INSERT INTO `vendor_items` VALUES(7, 26);
+INSERT INTO `vendor_items` VALUES(7, 25);
+INSERT INTO `vendor_items` VALUES(7, 24);
+INSERT INTO `vendor_items` VALUES(7, 23);
+INSERT INTO `vendor_items` VALUES(7, 22);
+INSERT INTO `vendor_items` VALUES(7, 21);
+INSERT INTO `vendor_items` VALUES(7, 20);
+INSERT INTO `vendor_items` VALUES(7, 19);
+INSERT INTO `vendor_items` VALUES(7, 18);
+INSERT INTO `vendor_items` VALUES(7, 17);
+INSERT INTO `vendor_items` VALUES(7, 16);
+INSERT INTO `vendor_items` VALUES(7, 15);
+INSERT INTO `vendor_items` VALUES(7, 14);
+INSERT INTO `vendor_items` VALUES(7, 13);
+INSERT INTO `vendor_items` VALUES(7, 12);
+INSERT INTO `vendor_items` VALUES(7, 11);
+INSERT INTO `vendor_items` VALUES(7, 10);
+INSERT INTO `vendor_items` VALUES(7, 9);
+INSERT INTO `vendor_items` VALUES(7, 8);
+INSERT INTO `vendor_items` VALUES(7, 7);
+INSERT INTO `vendor_items` VALUES(7, 6);
+INSERT INTO `vendor_items` VALUES(7, 5);
+INSERT INTO `vendor_items` VALUES(7, 4);
+INSERT INTO `vendor_items` VALUES(7, 3);
+INSERT INTO `vendor_items` VALUES(7, 2);
+INSERT INTO `vendor_items` VALUES(7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_login`
+--
+
+CREATE TABLE `vendor_login` (
+  `email` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `password` varchar(255) COLLATE latin1_general_ci NOT NULL,
+  `salt` varchar(99) COLLATE latin1_general_ci NOT NULL,
+  `vendor_id` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `vendor_id` (`vendor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `vendor_login`
+--
+
+INSERT INTO `vendor_login` VALUES('jameswhiteman@outlook.com', 'eea342a57c9313484e2b73715a5cbdb1', '', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendor_orders`
+--
+
+CREATE TABLE `vendor_orders` (
+  `vendor_id` bigint(20) unsigned NOT NULL,
+  `order_id` bigint(20) unsigned NOT NULL,
+  KEY `vendor_id` (`vendor_id`,`order_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Dumping data for table `vendor_orders`
+--
+
