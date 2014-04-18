@@ -19,9 +19,6 @@ import com.flashvip.lists.ListLinks;
 import com.flashvip.model.Fragment;
 import com.flashvip.system.Globals;
 import com.flashvip.system.Loadable;
-import com.paypal.android.sdk.payments.PayPalService;
-import com.paypal.android.sdk.payments.PaymentActivity;
-import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -43,11 +40,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
      * Set to PaymentActivity.ENVIRONMENT_SANDBOX to use your test credentials from https://developer.paypal.com
      * Set to PaymentActivity.ENVIRONMENT_NO_NETWORK to kick the tires without communicating to PayPal's servers.
      * Set to PaymentActivity.ENVIRONMENT_PRODUCTION to move real money.
-     */
-    private static final String CONFIG_ENVIRONMENT = PaymentActivity.ENVIRONMENT_SANDBOX;
-    // note that these credentials will differ between live & sandbox environments.
-    private static final String CONFIG_CLIENT_ID = "AUaMXxAo8v_WKb36Necty4PXiHsZbz0im7yIIpxGm-T9XsY3r4GOs3lnJLxN";
-    // when testing in sandbox, this is likely the -facilitator email address. 
+     */ 
     
 	// The layout elements.
 	Button buttonFinish;
@@ -61,14 +54,6 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		
-        // Set up the PayPal Service
-        Intent intent = new Intent(this, PayPalService.class);
-        intent.putExtra(PaymentActivity.EXTRA_PAYPAL_ENVIRONMENT, CONFIG_ENVIRONMENT);
-        intent.putExtra(PaymentActivity.EXTRA_CLIENT_ID, CONFIG_CLIENT_ID);
-        //intent.putExtra(PaymentActivity.EXTRA_RECEIVER_EMAIL, Globals.getVendor().getPaypal());
-        startService(intent);
-		
 		LayoutInflater inflater = LayoutInflater.from(this);
 		viewLoading = inflater.inflate(R.layout.misc_loading, null);
 		viewCart = inflater.inflate(R.layout.layout_cart, null);
@@ -80,7 +65,6 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	@Override
 	public void onDestroy()
 	{
-	    stopService(new Intent(this, PayPalService.class));
 	    super.onDestroy();
 	}
 	
@@ -109,50 +93,22 @@ public class FlashCart extends ActionBarActivity implements Loadable
     	}
     }
     
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    public void finishOrder()
     {
-        if (resultCode == Activity.RESULT_OK)
-        {
-            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-            if (confirm != null)
-            {
-                try
-                {
-                    Log.i("paymentExample", confirm.toJSONObject().toString(4));
-
-                    // TODO: send 'confirm' to your server for verification.
-                    // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
-                    // for more details.
                     setContentView(viewLoading);
-        			AddOrderConnector addOrderConnector = new AddOrderConnector(this);
-        			URL url;
-        			try
-        			{
-        				url = new URL(ListLinks.LINK_ADD_ORDER);
-        				addOrderConnector.execute(url);
-        			}
-        			catch (MalformedURLException e)
-        			{
-        				Toast toast = Toast.makeText(this, "Connection error.", Toast.LENGTH_SHORT);
-        				toast.show();
-        			}
-
-                }
-                catch (JSONException e)
-                {
-                    Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
-                }
-            }
-        }
-        else if (resultCode == Activity.RESULT_CANCELED)
-        {
-            Log.i("paymentExample", "The user canceled.");
-        }
-        else if (resultCode == PaymentActivity.RESULT_PAYMENT_INVALID)
-        {
-            Log.i("paymentExample", "An invalid payment was submitted. Please see the docs.");
-        }
+		    AddOrderConnector addOrderConnector = new AddOrderConnector(this);
+		    URL url;
+		    try
+		    {
+			    url = new URL(ListLinks.LINK_ADD_ORDER);
+			    addOrderConnector.execute(url);
+		    }
+		    catch (MalformedURLException e)
+		    {
+			    Toast toast = Toast.makeText(this, "Connection error.", Toast.LENGTH_SHORT);
+			    toast.show();
+		    }
+       
     }
 	
 	// Getters & Setters

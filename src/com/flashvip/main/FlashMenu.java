@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Runnable;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.content.Context;
 
 import com.flashvip.bind.ProductBinder;
 import com.flashvip.db.ItemConnector;
@@ -191,7 +193,7 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 			for (int i = 0; i < Globals.getCategories().size(); i++)
 			{
 				Button button = new Button(linearLayout.getContext());
-				button.setBackgroundResource(R.drawable.mainbutton);
+				button.setBackgroundResource(R.drawable.button_filter_off);
 				button.setTextAppearance(this, R.style.StyleMenuButtonFavorites);
 				float width = Globals.convertDpToPixel(60, this);
 				float height = Globals.convertDpToPixel(60, this);
@@ -275,7 +277,14 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 	
 	public void message(String msg)
 	{
-		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-		toast.show();
+		final String message = msg;
+		final Context context = (Context)this;
+		runOnUiThread(new Runnable() {
+			public void run()
+			{
+				Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+				toast.show();
+			}
+		});
 	}
 }

@@ -28,13 +28,13 @@ public class ButtonCategoriesListener implements OnClickListener
 	{
 		if (v.getBackground().getConstantState() ==
 				v.getContext().getResources().getDrawable(
-						R.drawable.mainbutton).getConstantState())
+						R.drawable.button_filter_off).getConstantState())
 		{
 			// Set other backgrounds to be unselected
 			if (activity.getButtonFavorites() != null)
 			{
 				activity.getButtonFavorites().setBackgroundResource(
-						R.drawable.mainbutton);
+						R.drawable.button_filter_off);
 			}
 			if (activity.getButtonCategories() != null &&
 					!activity.getButtonCategories().isEmpty())
@@ -42,11 +42,11 @@ public class ButtonCategoriesListener implements OnClickListener
 				for (int i = 0; i < activity.getButtonCategories().size(); i++)
 				{
 					Button button = activity.getButtonCategories().get(i);
-					button.setBackgroundResource(R.drawable.mainbutton);
+					button.setBackgroundResource(R.drawable.button_filter_off);
 				}
 			}
 			
-			v.setBackgroundResource(R.drawable.mainbuttonselected);
+			v.setBackgroundResource(R.drawable.button_filter_on);
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByCategory(items, category, true);
 			Globals.getVendor().setFilteredItems(newItems);
@@ -54,7 +54,7 @@ public class ButtonCategoriesListener implements OnClickListener
 		}
 		else
 		{
-			v.setBackgroundResource(R.drawable.mainbutton);
+			v.setBackgroundResource(R.drawable.button_filter_off);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
 			activity.update();
 		}

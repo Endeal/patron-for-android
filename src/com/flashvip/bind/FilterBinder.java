@@ -18,7 +18,7 @@ public class FilterBinder implements SimpleAdapter.ViewBinder
 		if (view.getId() == R.id.menuLayoutTypes)
 		{
 			Button button = new Button(view.getContext());
-			button.setBackgroundResource(R.drawable.mainbutton);
+			button.setBackgroundResource(R.drawable.button_filter_off);
 			Typeface typeface = Typeface.createFromAsset(
 					view.getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
 			button.setTypeface(typeface);

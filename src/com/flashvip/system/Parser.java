@@ -58,9 +58,31 @@ public class Parser
 				zip, phone, null, null);
 		return vendor;
 	}
+
+	public static List<Item> getItems(JSONArray rawItems)
+	{
+		ArrayList<Item> items = new ArrayList<Item>();
+		try
+		{
+			for (int i = 0; i < rawItems.length(); i++)
+			{
+				JSONObject rawItem = rawItems.getJSONObject(i);
+				Item item = getItem(rawItem);
+				items.add(item);
+			}
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+		return items;
+	}
 	
 	public static Item getItem(JSONObject rawItem) throws JSONException
 	{
+		String supply = rawItem.getString("supply");
+		String unlimited = rawItem.getString("unlimited");
+		rawItem = rawItem.getJSONObject("item");
 		String itemId = rawItem.getString("itemId");
 		String name = rawItem.getString("name");
 		BigDecimal price = new BigDecimal(rawItem.getString("price"));

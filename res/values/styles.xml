@@ -17,28 +17,28 @@
     </style>
     
     <style name="StyleHomeButtonVendors">
-        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonVendorsText</item>
     </style>
     
     <style name="StyleHomeButtonMenu">
-        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonMenuText</item>
     </style>
     
     <style name="StyleHomeButtonCodes">
-        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonCodesText</item>
     </style>
     
     <style name="StyleHomeButtonFavorites">
-        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonFavoritesText</item>
@@ -46,7 +46,7 @@
 
     <!-- Menu Screen Styles -->
     <style name="StyleMenuButtonCheckout">
-        <item name="android:background">@drawable/checkoutbutton</item>
+        <item name="android:background">@drawable/button_checkout</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMenuButtonCheckoutText</item>
@@ -54,7 +54,7 @@
     </style>
     
     <style name="StyleMenuButtonFavorites">
-        <item name="android:background">@drawable/mainbutton</item>
+        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMenuButtonFavoritesText</item>
@@ -261,7 +261,7 @@
     </style>
     
     <style name="StyleCartListItemButtonRemove">
-        <item name="android:background">@drawable/buttonremoveproduct</item>
+        <item name="android:background">@drawable/button_remove</item>
     </style>
     
     <!-- Miscellaneous Styles -->

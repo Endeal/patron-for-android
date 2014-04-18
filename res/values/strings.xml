@@ -99,7 +99,7 @@
     <string name="tab">\u0009</string>
     
     <!-- Activity Titles -->
-    <string name="titleActivityHome">Flash VIP</string>
+    <string name="titleActivityHome">Patron</string>
     <string name="titleActivityLogin">Login</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
