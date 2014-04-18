@@ -61,7 +61,7 @@
 
             <ImageView
                 android:contentDescription="@string/helpImage1ContentDescription"
-                android:src="@drawable/help_image_1"
+                android:src="@drawable/help_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -83,7 +83,7 @@
 
             <ImageView
                 android:contentDescription="@string/helpImage2ContentDescription"
-                android:src="@drawable/help_image_2"
+                android:src="@drawable/help_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -105,7 +105,7 @@
 
             <ImageView
                 android:contentDescription="@string/helpImage3ContentDescription"
-                android:src="@drawable/help_image_3"
+                android:src="@drawable/help_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -127,7 +127,7 @@
 
             <ImageView
                 android:contentDescription="@string/helpImage4ContentDescription"
-                android:src="@drawable/help_image_4"
+                android:src="@drawable/help_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -159,7 +159,7 @@
             <ImageView
                 android:id="@+id/helpImage5"
                 android:contentDescription="@string/helpImage5ContentDescription"
-                android:src="@drawable/help_image_5"
+                android:src="@drawable/help_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"

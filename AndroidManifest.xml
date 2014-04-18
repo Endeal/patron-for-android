@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="18" />
     
     <!-- PayPal Permissions -->
         <!-- for card.io card scanning -->
@@ -33,11 +33,11 @@
     <!-- END OPTIONAL Urban Airship Settings -->
     
     <application
-        android:icon="@drawable/ic_menu_beer"
+        android:icon="@drawable/app_logo"
         android:name="com.flashvip.system.FlashApplication"
         android:allowClearUserData="true"
         android:enabled="true"
-        android:label="@string/app_title"
+        android:label="@string/appName"
         android:allowBackup="true">
         
         <!-- Intent Receivers -->
@@ -115,7 +115,7 @@
             android:parentActivityName="com.flashvip.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashHome" />
         </activity>
         
         <!-- The Codes Screen Activity -->
@@ -127,7 +127,7 @@
             android:parentActivityName="com.flashvip.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashHome" />
         </activity>
         
         <!-- The Scan Screen Activity -->
@@ -139,7 +139,7 @@
             android:parentActivityName="com.flashvip.main.FlashCodes">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashCodes" />
         </activity>
         
         <!-- The Search Vendors Activity -->
@@ -151,7 +151,7 @@
             android:parentActivityName="com.flashvip.main.FlashVendors">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashVendors" />
         </activity>
         
         <!-- The Search Items Activity -->
@@ -163,7 +163,7 @@
             android:parentActivityName="com.flashvip.main.FlashMenu">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashMenu" />
         </activity>
         
         <!-- The Settings Activity -->
@@ -175,7 +175,7 @@
             android:parentActivityName="com.flashvip.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashHome" />
         </activity>
         
         <!-- The Help Activity -->
@@ -187,7 +187,7 @@
             android:parentActivityName="com.flashvip.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.flashvip.main.FlashHome" />
         </activity>
         
         <!-- Urban Airship GCM receivers -->

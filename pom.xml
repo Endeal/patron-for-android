@@ -2,18 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fvip</groupId>
-  <artifactId>FlashVIP</artifactId>
+  <artifactId>Patron</artifactId>
   <version>1.0.0</version>
   <packaging>apk</packaging>
-  <name>Flash VIP</name>
+  <name>Patron</name>
 
   <dependencies>
-  <dependency>
-   <groupId>com.google.android</groupId>
-   <artifactId>android</artifactId>
-   <version>4.1.1.4</version>
-   <scope>provided</scope>
-  </dependency>
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+      <version>4.1.1.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v7-appcompat</artifactId>
+      <version>19.1.0</version>
+      <type>apklib</type>
+    </dependency>
+    <dependency>
+      <groupId>android.support</groupId>
+      <artifactId>compatibility-v7-appcompat</artifactId>
+      <version>19.1.0</version>
+      <type>jar</type>
+    </dependency> 
  </dependencies>
  <build>
   <finalName>${project.artifactId}</finalName>
@@ -35,7 +47,7 @@
     <configuration>
      <sdk>
       <!-- platform or api level (api level 4 = platform 1.6) -->
-      <platform>19</platform>
+      <platform>18</platform>
      </sdk>
     </configuration>
    </plugin>

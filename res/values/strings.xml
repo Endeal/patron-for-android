@@ -94,6 +94,7 @@
     <!-- Miscellaneous -->
     <string name="app_title">Patron</string>
     <string name="app_name">Patron</string>
+    <string name="appName">Patron</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
     
@@ -117,7 +118,7 @@
     <string name="menuItemHelp">Help</string>
     <string name="menuItemSearch">Search</string>
     <string name="menuItemLogout">Logout</string>
-    <string name="menuItemLoginWithFacebook">Login With Facebook</string>
+    <string name="menuItemLogin">Login</string>
     <string name="menuItemFeedback">Feedback</string>
     <string name="menuItemInvite">Invite</string>
     
