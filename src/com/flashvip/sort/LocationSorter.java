@@ -1,6 +1,7 @@
 package com.flashvip.sort;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.flashvip.model.Vendor;
 import com.flashvip.system.Globals;
@@ -8,7 +9,7 @@ import com.flashvip.system.Globals;
 public class LocationSorter
 {
 	
-	public static ArrayList<Vendor> getByFavorites(ArrayList<Vendor> vendors, boolean ascending)
+	public static List<Vendor> getByFavorites(List<Vendor> vendors, boolean ascending)
 	{
 		ArrayList<Vendor> newLocations = new ArrayList<Vendor>();
 		if (vendors != null && !vendors.isEmpty())
@@ -28,7 +29,7 @@ public class LocationSorter
 		return newLocations;
 	}
 	
-	public static ArrayList<Vendor> getBySearch(ArrayList<Vendor> vendors, CharSequence text)
+	public static List<Vendor> getBySearch(List<Vendor> vendors, CharSequence text)
 	{
 		ArrayList<Vendor> newVendors = new ArrayList<Vendor>();
 		if (vendors != null && !vendors.isEmpty())

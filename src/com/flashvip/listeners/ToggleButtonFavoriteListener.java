@@ -1,6 +1,6 @@
 package com.flashvip.listeners;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -93,7 +93,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 
 	public void addFavoriteVendor(View buttonView)
 	{
-		ArrayList<Vendor> favorites = Globals.getFavoriteVendors();
+		List<Vendor> favorites = Globals.getFavoriteVendors();
 		favorites.add(vendor);
 		Gson gson = new Gson();
 		String json = gson.toJson(favorites);
@@ -107,7 +107,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	
 	public void addFavoriteItem(View buttonView)
 	{
-		ArrayList<Item> favorites = Globals.getFavoriteItems();
+		List<Item> favorites = Globals.getFavoriteItems();
 		favorites.add(item);
 		Gson gson = new Gson();
 		String json = gson.toJson(favorites);
@@ -121,7 +121,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	
 	public void removeFavoriteVendor(View buttonView, int i)
 	{
-		ArrayList<Vendor> favorites = Globals.getFavoriteVendors();
+		List<Vendor> favorites = Globals.getFavoriteVendors();
 		favorites.remove(i);
 		Gson gson = new Gson();
 		String json = gson.toJson(favorites);
@@ -135,7 +135,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	
 	public void removeFavoriteItem(View buttonView, int i)
 	{
-		ArrayList<Item> favorites = Globals.getFavoriteItems();
+		List<Item> favorites = Globals.getFavoriteItems();
 		favorites.remove(i);
 		Gson gson = new Gson();
 		String json = gson.toJson(favorites);

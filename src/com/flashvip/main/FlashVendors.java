@@ -2,7 +2,6 @@ package com.flashvip.main;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,7 +39,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	private View viewLoading;
 	private View viewVendors;
 	private View viewNone;
-	private ArrayList<Vendor> retrievedVendors;
+	private List<Vendor> retrievedVendors;
 	
 	// Message to be displayed.
 	private Activity activity;
@@ -113,14 +111,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 		try
 		{
 			JSONArray rawVendors = new JSONArray(json);
-			ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
-			for (int i = 0; i < rawVendors.length(); i++)
-			{
-				JSONObject rawVendor = rawVendors.getJSONObject(i);
-				Vendor vendor = Parser.getVendor(rawVendor);
-				vendors.add(vendor);
-			}
-			retrievedVendors = vendors;
+			retrievedVendors = Parser.getVendors(rawVendors);
 		}
 		catch (JSONException e)
 		{

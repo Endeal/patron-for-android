@@ -1,6 +1,7 @@
 package com.flashvip.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Vendor
 {
@@ -11,23 +12,21 @@ public class Vendor
 	private String state;
 	private String zip;
 	private String phone;
-	private String paypal;
 	
-	private ArrayList<Item> items;
-	private ArrayList<Item> filteredItems;
-	private ArrayList<Item> recommendations;
+	private List<Item> items;
+	private List<Item> filteredItems;
+	private List<Item> recommendations;
 	
 	// CONSTRUCTORS
 	
 	public Vendor()
 	{
-		name = "John's";
+		name = "Jack & Jill's";
 		items = new ArrayList<Item>();
 	}
 	
 	public Vendor(String vendorId, String name, String address, String city,
-			String state, String zip, String phone, String paypal, 
-			ArrayList<Item> items, ArrayList<Item> recommendations)
+			String state, String zip, String phone, List<Item> items, List<Item> recommendations)
 	{
 		this.vendorId = vendorId;
 		this.name = name;
@@ -36,9 +35,9 @@ public class Vendor
 		this.state = state;
 		this.zip = zip;
 		this.phone = phone;
-		this.paypal = paypal;
 		this.items = items;
 		this.recommendations = recommendations;
+		this.filteredItems = items;
 	}
 	
 	// SETTER METHODS
@@ -77,22 +76,17 @@ public class Vendor
 		this.phone = phone;
 	}
 	
-	public void setPaypal(String paypal)
-	{
-		this.paypal = paypal;
-	}
-	
-	public void setItems(ArrayList<Item> items)
+	public void setItems(List<Item> items)
 	{
 		this.items = items;
 	}
 	
-	public void setFilteredItems(ArrayList<Item> filteredItems)
+	public void setFilteredItems(List<Item> filteredItems)
 	{
 		this.filteredItems = filteredItems;
 	}
 	
-	public void setRecommendations(ArrayList<Item> d)
+	public void setRecommendations(List<Item> d)
 	{
 		recommendations = d;
 	}
@@ -134,22 +128,17 @@ public class Vendor
 		return phone;
 	}
 	
-	public String getPaypal()
-	{
-		return paypal;
-	}
-	
-	public ArrayList<Item> getItems()
+	public List<Item> getItems()
 	{
 		return items;
 	}
 	
-	public ArrayList<Item> getFilteredItems()
+	public List<Item> getFilteredItems()
 	{
 		return filteredItems;
 	}
 	
-	public ArrayList<Item> getRecommendations()
+	public List<Item> getRecommendations()
 	{
 		return recommendations;
 	}

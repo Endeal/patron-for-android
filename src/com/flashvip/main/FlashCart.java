@@ -61,12 +61,12 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		
         // Set up the PayPal Service
         Intent intent = new Intent(this, PayPalService.class);
         intent.putExtra(PaymentActivity.EXTRA_PAYPAL_ENVIRONMENT, CONFIG_ENVIRONMENT);
         intent.putExtra(PaymentActivity.EXTRA_CLIENT_ID, CONFIG_CLIENT_ID);
-        intent.putExtra(PaymentActivity.EXTRA_RECEIVER_EMAIL, Globals.getVendor().getPaypal());
+        //intent.putExtra(PaymentActivity.EXTRA_RECEIVER_EMAIL, Globals.getVendor().getPaypal());
         startService(intent);
 		
 		LayoutInflater inflater = LayoutInflater.from(this);

@@ -1,6 +1,7 @@
 package com.flashvip.system;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,21 +18,21 @@ public class Globals
 {
 	// Properties
 	private static Vendor vendor;
-	private static ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-	private static ArrayList<Vendor> filteredVendors = new ArrayList<Vendor>();
-	private static ArrayList<Category> categories = new ArrayList<Category>();
-	private static ArrayList<Code> codes = new ArrayList<Code>();
+	private static List<Vendor> vendors = new ArrayList<Vendor>();
+	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
+	private static List<Category> categories = new ArrayList<Category>();
+	private static List<Code> codes = new ArrayList<Code>();
 	private static Order order;
 	private static String deviceId;
-	private static ArrayList<Vendor> favoriteVendors = new ArrayList<Vendor>();
-	private static ArrayList<Item> favoriteItems =  new ArrayList<Item>();
+	private static List<Vendor> favoriteVendors = new ArrayList<Vendor>();
+	private static List<Item> favoriteItems =  new ArrayList<Item>();
 	private static Bitmap scan;
 	
 	// MAIN METHODS
 	public static Item getItemById(String itemId)
 	{
 		Item item = null;
-		ArrayList<Item> items = vendor.getItems();
+		List<Item> items = vendor.getItems();
 		for (int j = 0; j < items.size(); j++)
 		{
 			if (items.get(j).getItemId().equals(itemId))
@@ -60,22 +61,22 @@ public class Globals
 		Globals.vendor = vendor;
 	}
 
-	public static void setVendors(ArrayList<Vendor> vendors)
+	public static void setVendors(List<Vendor> vendors)
 	{
 		Globals.vendors = vendors;
 	}
 	
-	public static void setFilteredVendors(ArrayList<Vendor> filteredVendors)
+	public static void setFilteredVendors(List<Vendor> filteredVendors)
 	{
 		Globals.filteredVendors = filteredVendors;
 	}
 	
-	public static void setCategories(ArrayList<Category> categories)
+	public static void setCategories(List<Category> categories)
 	{
 		Globals.categories = categories;
 	}
 
-	public static void setCodes(ArrayList<Code> codes)
+	public static void setCodes(List<Code> codes)
 	{
 		Globals.codes = codes;
 	}
@@ -90,12 +91,12 @@ public class Globals
 		Globals.deviceId = deviceId;
 	}
 
-	public static void setFavoriteVendors(ArrayList<Vendor> favoriteVendors)
+	public static void setFavoriteVendors(List<Vendor> favoriteVendors)
 	{
 		Globals.favoriteVendors = favoriteVendors;
 	}
 
-	public static void setFavoriteItems(ArrayList<Item> favoriteItems)
+	public static void setFavoriteItems(List<Item> favoriteItems)
 	{
 		Globals.favoriteItems = favoriteItems;
 	}
@@ -110,22 +111,22 @@ public class Globals
 	{
 		return vendor;
 	}
-	public static ArrayList<Vendor> getVendors()
+	public static List<Vendor> getVendors()
 	{
 		return vendors;
 	}
 	
-	public static ArrayList<Vendor> getFilteredVendors()
+	public static List<Vendor> getFilteredVendors()
 	{
 		return filteredVendors;
 	}
 	
-	public static ArrayList<Category> getCategories()
+	public static List<Category> getCategories()
 	{
 		return categories;
 	}
 
-	public static ArrayList<Code> getCodes()
+	public static List<Code> getCodes()
 	{
 		return codes;
 	}
@@ -140,12 +141,12 @@ public class Globals
 		return deviceId;
 	}
 
-	public static ArrayList<Vendor> getFavoriteVendors()
+	public static List<Vendor> getFavoriteVendors()
 	{
 		return favoriteVendors;
 	}
 
-	public static ArrayList<Item> getFavoriteItems()
+	public static List<Item> getFavoriteItems()
 	{
 		return favoriteItems;
 	}

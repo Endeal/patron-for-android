@@ -45,7 +45,7 @@ public class ButtonFinishListener implements View.OnClickListener
 	        Intent intent = new Intent(activity, PaymentActivity.class);
 	        intent.putExtra(PaymentActivity.EXTRA_PAYPAL_ENVIRONMENT, CONFIG_ENVIRONMENT);
 	        intent.putExtra(PaymentActivity.EXTRA_CLIENT_ID, CONFIG_CLIENT_ID);
-	        intent.putExtra(PaymentActivity.EXTRA_RECEIVER_EMAIL, Globals.getVendor().getPaypal());
+	        //intent.putExtra(PaymentActivity.EXTRA_RECEIVER_EMAIL, Globals.getVendor().getPaypal());
 	        
 	        // It's important to repeat the clientId here so that the SDK has it if Android restarts your 
 	        // app midway through the payment UI flow.

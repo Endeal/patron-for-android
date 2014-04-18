@@ -90,7 +90,7 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 			
 			@Override
 			public void onTextChanged(CharSequence text, int start, int before, int count) {
-				ArrayList<Vendor> vendors = LocationSorter.getBySearch(Globals.getVendors(), text);
+				List<Vendor> vendors = LocationSorter.getBySearch(Globals.getVendors(), text);
 				Globals.setFilteredVendors(vendors);
 				update();
 			}

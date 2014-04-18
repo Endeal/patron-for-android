@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
     
     <!-- PayPal Permissions -->
         <!-- for card.io card scanning -->
@@ -59,6 +59,19 @@
         <activity
             android:name="com.flashvip.main.FlashHome"
             android:label="@string/titleActivityHome"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+         <!-- The Login Screen Activity -->
+        <activity
+            android:name="com.flashvip.main.FlashLogin"
+            android:label="@string/titleActivityLogin"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
@@ -199,10 +212,12 @@
             android:label="Event Service"/>
         
         <!-- This is required for persisting preferences related to push and location -->
+        <!-- 
         <provider android:name="com.urbanairship.UrbanAirshipProvider"
             android:authorities="com.flashvip.main.urbanairship.provider"
             android:exported="true"
             android:multiprocess="true" />
+            -->
         
         <!-- OPTIONAL (for segments support) -->
         <service android:name="com.urbanairship.location.LocationService" android:label="Segments Service"/>

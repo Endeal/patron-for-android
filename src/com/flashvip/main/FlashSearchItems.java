@@ -91,7 +91,7 @@ public class FlashSearchItems extends ActionBarActivity implements Loadable
 			
 			@Override
 			public void onTextChanged(CharSequence text, int start, int before, int count) {
-				ArrayList<Item> items = ProductSorter.getBySearch(Globals.getVendor().getItems(), text);
+				List<Item> items = ProductSorter.getBySearch(Globals.getVendor().getItems(), text);
 				Globals.getVendor().setFilteredItems(items);
 				update();
 			}

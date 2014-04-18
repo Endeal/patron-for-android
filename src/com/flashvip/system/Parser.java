@@ -26,6 +26,25 @@ import com.flashvip.model.Vendor;
 
 public class Parser
 {
+	public static List<Vendor> getVendors(JSONArray rawVendors)
+	{
+		ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+		try
+		{
+			for (int i = 0; i < rawVendors.length(); i++)
+			{
+				JSONObject rawVendor = rawVendors.getJSONObject(i);
+				Vendor vendor = getVendor(rawVendor);
+				vendors.add(vendor);
+			}
+		}
+		catch (JSONException e)
+		{
+			e.printStackTrace();
+		}
+		return vendors;
+	}
+	
 	public static Vendor getVendor(JSONObject rawVendor) throws JSONException
 	{
 		String vendorId = rawVendor.getString("vendorId");
@@ -35,9 +54,8 @@ public class Parser
 		String state = rawVendor.getString("state");
 		String zip = rawVendor.getString("zip");
 		String phone = rawVendor.getString("phone");
-		String paypal = rawVendor.getString("paypal");
 		Vendor vendor = new Vendor(vendorId, name, address, city, state,
-				zip, phone, paypal, null, null);
+				zip, phone, null, null);
 		return vendor;
 	}
 	
@@ -67,7 +85,7 @@ public class Parser
 			}
 			if (!hasCategory)
 			{
-				ArrayList<Category> newCategories = Globals.getCategories();
+				List<Category> newCategories = Globals.getCategories();
 				newCategories.add(category);
 				Globals.setCategories(newCategories);
 			}

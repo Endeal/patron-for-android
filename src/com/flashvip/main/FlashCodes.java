@@ -126,7 +126,7 @@ public class FlashCodes extends ActionBarActivity implements Loadable
 	
 	public void update()
 	{
-		ArrayList<Code> codes = Globals.getCodes();
+		List<Code> codes = Globals.getCodes();
 		List<Map<String, String>> codesMap = new ArrayList<Map<String, String>>();
 
 		String[] from = {"textTime",

@@ -3,6 +3,7 @@ package com.flashvip.db;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -13,7 +14,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -23,7 +23,7 @@ import com.flashvip.system.Globals;
 import com.flashvip.system.Loadable;
 import com.flashvip.system.Parser;
 
-public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
+public class VendorConnector extends AsyncTask<URL, Void, List<Vendor>>
 {
 	/**
 	 * Private variables.
@@ -39,10 +39,10 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 	}
 	
 	@Override
-	protected ArrayList<Vendor> doInBackground(URL... params)
+	protected List<Vendor> doInBackground(URL... params)
 	{
 		// The list of locations.
-		ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+		List<Vendor> vendors = new ArrayList<Vendor>();
 		
 		// HTTP Post.
 		try
@@ -64,12 +64,7 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 		{
 			result = EntityUtils.toString(response.getEntity());
 			JSONArray rawVendors = new JSONArray(result);
-			for (int i = 0; i < rawVendors.length(); i++)
-			{
-				JSONObject rawVendor = rawVendors.getJSONObject(i);
-				Vendor vendor = Parser.getVendor(rawVendor);
-				vendors.add(vendor);
-			}
+			vendors = Parser.getVendors(rawVendors);
 		}
 		catch(JSONException e)
 		{
@@ -88,7 +83,7 @@ public class VendorConnector extends AsyncTask<URL, Void, ArrayList<Vendor>>
 	}
 	
 	@Override
-	protected void onPostExecute(ArrayList<Vendor> vendors)
+	protected void onPostExecute(List<Vendor> vendors)
 	{
 		Globals.setVendors(vendors);
 		Globals.setFilteredVendors(vendors);

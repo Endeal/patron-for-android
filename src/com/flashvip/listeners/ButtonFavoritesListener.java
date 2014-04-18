@@ -1,6 +1,6 @@
 package com.flashvip.listeners;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,8 +40,8 @@ public class ButtonFavoritesListener implements OnClickListener
 			}
 
 			v.setBackgroundResource(R.drawable.mainbuttonselected);
-			ArrayList<Item> items = Globals.getVendor().getItems();
-			ArrayList<Item> newItems = ProductSorter.getByFavorites(items, true);
+			List<Item> items = Globals.getVendor().getItems();
+			List<Item> newItems = ProductSorter.getByFavorites(items, true);
 			Globals.getVendor().setFilteredItems(newItems);
 			activity.update();
 		}

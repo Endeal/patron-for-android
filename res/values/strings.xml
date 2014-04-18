@@ -92,13 +92,14 @@
     <string name="codeListItemTextStatus">Waiting</string>
     
     <!-- Miscellaneous -->
-    <string name="app_title">Flash VIP</string>
-    <string name="app_name">FlashVIP v1</string>
+    <string name="app_title">Patron</string>
+    <string name="app_name">Patron</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
     
     <!-- Activity Titles -->
     <string name="titleActivityHome">Flash VIP</string>
+    <string name="titleActivityLogin">Login</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityCodes">Codes</string>

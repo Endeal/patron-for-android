@@ -1,6 +1,7 @@
 package com.flashvip.sort;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.flashvip.model.Category;
 import com.flashvip.model.Item;
@@ -8,7 +9,7 @@ import com.flashvip.system.Globals;
 
 public class ProductSorter
 {
-	public static ArrayList<Item>getByName(ArrayList<Item>items, boolean ascending)
+	public static List<Item>getByName(List<Item>items, boolean ascending)
 	{
 		int i = 1;
 		while (i < items.size())
@@ -38,9 +39,9 @@ public class ProductSorter
 		return items;
 	}
 	
-	public static ArrayList<Item> getByCategory(ArrayList<Item> items, Category category, boolean ascending)
+	public static List<Item> getByCategory(List<Item> items, Category category, boolean ascending)
 	{
-		ArrayList<Item> newItems = new ArrayList<Item>();
+		List<Item> newItems = new ArrayList<Item>();
 		if (items != null & !items.isEmpty())
 		{
 			for (int i = 0; i < items.size(); i++)
@@ -62,9 +63,9 @@ public class ProductSorter
 		return newItems;
 	}
 	
-	public static ArrayList<Item> getByFavorites(ArrayList<Item> products, boolean ascending)
+	public static List<Item> getByFavorites(List<Item> products, boolean ascending)
 	{
-		ArrayList<Item> newItems = new ArrayList<Item>();
+		List<Item> newItems = new ArrayList<Item>();
 		if (products != null && !products.isEmpty())
 		{
 			for (int i = 0; i < products.size(); i++)
@@ -89,9 +90,9 @@ public class ProductSorter
 		return newItems;
 	}
 	
-	public static ArrayList<Item> getBySearch(ArrayList<Item> items, CharSequence text)
+	public static List<Item> getBySearch(List<Item> items, CharSequence text)
 	{
-		ArrayList<Item> newItems = new ArrayList<Item>();
+		List<Item> newItems = new ArrayList<Item>();
 		if (items != null && !items.isEmpty())
 		{
 			for (int i = 0; i < items.size(); i++)

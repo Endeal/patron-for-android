@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -29,12 +30,12 @@ import com.flashvip.system.Globals;
 import com.flashvip.system.Loadable;
 import com.flashvip.system.Parser;
 
-public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
+public class ItemConnector extends AsyncTask<URL, Void, List<Item>>
 {
 	/**
 	 * Private variables.
 	 */
-	private ArrayList<Item> items;
+	private List<Item> items;
 	private String result;
 	private Loadable activity;
 	private SharedPreferences preferences;
@@ -50,7 +51,7 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 	}
 	
 	@Override
-	protected ArrayList<Item> doInBackground(URL... params)
+	protected List<Item> doInBackground(URL... params)
 	{
 		// The list of drinks.
 		HttpResponse response = null;
@@ -124,7 +125,7 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 	}
 	
 	@Override
-	protected void onPostExecute(ArrayList<Item> items)
+	protected void onPostExecute(List<Item> items)
 	{
 		// Set favorite items.
 		String json = preferences.getString("favoriteItems", "");
@@ -132,7 +133,7 @@ public class ItemConnector extends AsyncTask<URL, Void, ArrayList<Item>>
 		try
 		{
 			JSONArray rawItems = new JSONArray(json);
-			ArrayList<Item> favoriteItems = new ArrayList<Item>(); 
+			List<Item> favoriteItems = new ArrayList<Item>(); 
 			for (int i = 0; i < rawItems.length(); i++)
 			{
 				JSONObject rawItem = rawItems.getJSONObject(i);
