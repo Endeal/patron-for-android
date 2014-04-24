@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.flashvip.main</groupId>
+  <groupId>com.patron.main</groupId>
   <artifactId>Patron</artifactId>
   <version>1.0.0</version>
   <packaging>apk</packaging>
@@ -20,6 +20,18 @@
 		  <artifactId>gson</artifactId>
 		  <version>2.2.4</version>
 	  </dependency>
+
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth-android</artifactId>
+      <version>3.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth</artifactId>
+      <version>4.4</version>
+    </dependency>
 
     <dependency>
       <groupId>com.google.android</groupId>

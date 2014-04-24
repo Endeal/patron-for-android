@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flashvip.main"
+    package="com.patron.main"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,16 +8,16 @@
         android:targetSdkVersion="18" />
     
 	<!-- Urban Airship -->
-	<permission android:name="com.flashvip.main.permission.UA_DATA" android:protectionLevel="signature" />
-	<uses-permission android:name="com.flashvip.main.permission.UA_DATA" />
+	<permission android:name="com.patron.main.permission.UA_DATA" android:protectionLevel="signature" />
+	<uses-permission android:name="com.patron.main.permission.UA_DATA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:name="com.flashvip.main.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <uses-permission android:name="com.flashvip.main.permission.C2D_MESSAGE" />
+    <permission android:name="com.patron.main.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.patron.main.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     
     <!-- OPTIONAL - This permission is only necessary if your app has multiple processes -->
@@ -26,7 +26,7 @@
     
     <application
         android:icon="@drawable/app_logo"
-        android:name="com.flashvip.system.FlashApplication"
+        android:name="com.patron.system.FlashApplication"
         android:allowClearUserData="true"
         android:enabled="true"
         android:label="@string/appName"
@@ -34,11 +34,11 @@
         
         <!-- Intent Receivers -->
         <receiver android:name="com.urbanairship.CoreReceiver" />  
-        <receiver android:name="com.flashvip.system.FlashIntentReceiver" />
+        <receiver android:name="com.patron.system.FlashIntentReceiver" />
        
         <!-- The Home Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashHome"
+            android:name="com.patron.main.FlashHome"
             android:label="@string/titleActivityHome"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
@@ -51,7 +51,7 @@
         
          <!-- The Login Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashLogin"
+            android:name="com.patron.main.FlashLogin"
             android:label="@string/titleActivityLogin"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
@@ -59,117 +59,117 @@
         
         <!-- The Menu Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashMenu"
+            android:name="com.patron.main.FlashMenu"
             android:label="@string/titleActivityMenu"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashHome">
             
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashClient" />
+                android:value="com.patron.main.FlashClient" />
         </activity>
         
         <!-- The Cart Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashCart"
+            android:name="com.patron.main.FlashCart"
             android:label="@string/titleActivityCart"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashMenu">
+            android:parentActivityName="com.patron.main.FlashMenu">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashMenu" />
+                android:value="com.patron.main.FlashMenu" />
         </activity>
         
         <!-- The Vendors Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashVendors"
+            android:name="com.patron.main.FlashVendors"
             android:label="@string/titleActivityLocations"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashHome" />
+                android:value="com.patron.main.FlashHome" />
         </activity>
         
         <!-- The Codes Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashCodes"
+            android:name="com.patron.main.FlashCodes"
             android:label="@string/titleActivityCodes"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashHome" />
+                android:value="com.patron.main.FlashHome" />
         </activity>
         
         <!-- The Scan Screen Activity -->
         <activity
-            android:name="com.flashvip.main.FlashScan"
+            android:name="com.patron.main.FlashScan"
             android:label="@string/titleActivityScan"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashCodes">
+            android:parentActivityName="com.patron.main.FlashCodes">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashCodes" />
+                android:value="com.patron.main.FlashCodes" />
         </activity>
         
         <!-- The Search Vendors Activity -->
         <activity
-            android:name="com.flashvip.main.FlashSearchVendors"
+            android:name="com.patron.main.FlashSearchVendors"
             android:label="@string/titleActivitySearchVendors"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashVendors">
+            android:parentActivityName="com.patron.main.FlashVendors">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashVendors" />
+                android:value="com.patron.main.FlashVendors" />
         </activity>
         
         <!-- The Search Items Activity -->
         <activity
-            android:name="com.flashvip.main.FlashSearchItems"
+            android:name="com.patron.main.FlashSearchItems"
             android:label="@string/titleActivitySearchItems"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashMenu">
+            android:parentActivityName="com.patron.main.FlashMenu">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashMenu" />
+                android:value="com.patron.main.FlashMenu" />
         </activity>
         
         <!-- The Settings Activity -->
         <activity
-            android:name="com.flashvip.main.FlashSettings"
+            android:name="com.patron.main.FlashSettings"
             android:label="@string/titleActivitySettings"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashHome" />
+                android:value="com.patron.main.FlashHome" />
         </activity>
         
         <!-- The Help Activity -->
         <activity
-            android:name="com.flashvip.main.FlashHelp"
+            android:name="com.patron.main.FlashHelp"
             android:label="@string/titleActivityHelp"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.flashvip.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashHome">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flashvip.main.FlashHome" />
+                android:value="com.patron.main.FlashHome" />
         </activity>
         
 	<!-- Urban Airship -->
 	<provider android:name="com.urbanairship.UrbanAirshipProvider"
-		android:authorities="com.flashvip.main.urbanairship.provider"
-		android:permission="com.flashvip.main.permission.UA_DATA"
+		android:authorities="com.patron.main.urbanairship.provider"
+		android:permission="com.patron.main.permission.UA_DATA"
 		android:exported="true"
 		android:multiprocess="true" />
 	<service android:name="com.urbanairship.push.PushService" />
@@ -178,7 +178,7 @@
 		<intent-filter>
 			<action android:name="com.google.android.c2dm.intent.RECEIVE" />
 			<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-			<category android:name="com.flashvip.main" />
+			<category android:name="com.patron.main" />
 		</intent-filter>
 		<intent-filter>
 			<action android:name="android.intent.action.PACKAGE_REPLACED" />
@@ -191,12 +191,12 @@
 	<service android:name="com.urbanairship.actions.ActionService" />
 	<activity
 		android:name="com.urbanairship.actions.LandingPageActivity"
-		android:parentActivityName="com.flashvip.main.MainActivity"
+		android:parentActivityName="com.patron.main.MainActivity"
 		android:exported="false">
 		<!-- MODIFICATION REQUIRED set or remove the parent activity -->
 		<meta-data
 			android:name="android.support.PARENT_ACTIVITY"
-			android:value="com.flashvip.main.FlashHome" />
+			android:value="com.patron.main.FlashHome" />
 		<intent-filter>
 			<action android:name="com.urbanairship.actions.SHOW_LANDING_PAGE_INTENT_ACTION" />
 			<data android:scheme="http" />
