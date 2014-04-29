@@ -37,7 +37,6 @@ public class FlashHome extends ActionBarActivity implements Loadable
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setTitle("Flash VIP");
         LayoutInflater inflater = LayoutInflater.from(this);
         viewMain = inflater.inflate(R.layout.layout_home, null);
         setContentView(viewMain);

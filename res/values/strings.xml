@@ -17,7 +17,11 @@
     <string name="homeImageButtonDescriptionCart">Cart</string>
     <string name="homeImageButtonDescriptionCodes">Codes</string>
     <string name="homeImageButtonDescriptionFavorites">Favorites</string>
-    
+
+    <!-- Login Screen -->
+    <string name="loginTextInstruction">Select an account to login with. Don\'t want to login with any of these services?</string>
+    <string name="loginButtonCreateAccount">Tap here to create a Patron account</string>
+
     <!-- Menu Screen -->
     <string name="menuButtonCheckout">Checkout</string>
     <string name="menuButtonFavorites">Favorites</string>
