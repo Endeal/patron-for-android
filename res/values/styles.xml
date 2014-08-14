@@ -44,6 +44,57 @@
         <item name="android:textSize">@dimen/dimHomeButtonFavoritesText</item>
     </style>
 
+    <!-- Login Screen Styles -->
+
+    <!-- Create Account Screen Styles -->
+    <style name="StyleCreateAccountTextFirst">
+        <item name="android:text">@string/createAccountTextFirst</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextFirst</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountTextLast">
+        <item name="android:text">@string/createAccountTextLast</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextLast</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountTextEmail">
+        <item name="android:text">@string/createAccountTextEmail</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextEmail</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountTextPassword">
+        <item name="android:text">@string/createAccountTextPassword</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextPassword</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountTextConfirm">
+        <item name="android:text">@string/createAccountTextConfirm</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextConfirm</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountTextBirthday">
+        <item name="android:text">@string/createAccountTextBirthday</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextBirthday</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleCreateAccountButtonCancel">
+        <item name="android:text">@string/createAccountButtonCancel</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimCreateAccountButtonCancelText</item>
+    </style>
+
+    <style name="StyleCreateAccountButtonSubmit">
+        <item name="android:text">@string/createAccountButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimCreateAccountButtonSubmitText</item>
+    </style>
+
     <!-- Menu Screen Styles -->
     <style name="StyleMenuButtonCheckout">
         <item name="android:background">@drawable/button_checkout</item>

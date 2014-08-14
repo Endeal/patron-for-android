@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/createAccountLayoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/createAccountTextFirst"
+        style="@style/StyleCreateAccountTextFirst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/createAccountTextLast"
+        style="@style/StyleCreateAccountTextLast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextFirst" />
+
+    <TextView
+        android:id="@+id/createAccountTextEmail"
+        style="@style/StyleCreateAccountTextEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextLast" />
+
+    <TextView
+        android:id="@+id/createAccountTextPassword"
+        style="@style/StyleCreateAccountTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextEmail" />
+
+    <TextView
+        android:id="@+id/createAccountTextConfirm"
+        style="@style/StyleCreateAccountTextConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextPassword" />
+
+    <TextView
+        android:id="@+id/createAccountTextBirthday"
+        style="@style/StyleCreateAccountTextBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextConfirm" />
+
+    <Button
+        android:id="@+id/createAccountButtonCancel"
+        style="@style/StyleCreateAccountButtonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/createAccountTextBirthday" />
+
+    <Button
+        android:id="@+id/createAccountButtonSubmit"
+        style="@style/StyleCreateAccountButtonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/createAccountTextBirthday" />
+
+</RelativeLayout>

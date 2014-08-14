@@ -49,13 +49,31 @@
             </intent-filter>
         </activity>
         
-         <!-- The Login Screen Activity -->
+        <!-- The Login Screen Activity -->
         <activity
             android:name="com.patron.main.FlashLogin"
             android:label="@string/titleActivityLogin"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-	    android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="com.patron.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashHome" />
+        </activity>
+
+        <!-- The Create Account Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashCreateAccount"
+            android:label="@string/titleActivityCreateAccount"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="com.patron.main.FlashLogin">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashLogin" />
+        </activity>
         
         <!-- The Menu Screen Activity -->
         <activity
@@ -64,10 +82,9 @@
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
-            
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.patron.main.FlashClient" />
+                android:value="com.patron.main.FlashHome" />
         </activity>
         
         <!-- The Cart Screen Activity -->

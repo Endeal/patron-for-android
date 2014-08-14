@@ -3,6 +3,7 @@ package com.patron.main;
 import java.lang.Exception;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.Button;
@@ -61,6 +62,7 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
+		Button buttonCreateAccount = (Button)findViewById(R.id.loginButtonCreateAccount);
 		ImageButton buttonPatron = (ImageButton)findViewById(R.id.loginButtonPatron);
 		ImageButton buttonFacebook = (ImageButton)findViewById(R.id.loginButtonFacebook);
 		ImageButton buttonTwitter = (ImageButton)findViewById(R.id.loginButtonTwitter);
@@ -85,6 +87,14 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		}
 
 		// Set the actions for each button.
+		buttonCreateAccount.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view)
+			{
+				Intent intent = new Intent(view.getContext(), FlashCreateAccount.class);
+				startActivity(intent);
+			}
+		});
 		buttonPatron.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view)

@@ -11,6 +11,18 @@
     <dimen name="dimHomeButtonMenuText">12sp</dimen>
     <dimen name="dimHomeButtonCodesText">12sp</dimen>
     <dimen name="dimHomeButtonFavoritesText">12sp</dimen>
+
+    <!-- Login Screen -->
+
+    <!-- Create Account Screen -->
+    <dimen name="dimCreateAccountTextFirst">16sp</dimen>
+    <dimen name="dimCreateAccountTextLast">16sp</dimen>
+    <dimen name="dimCreateAccountTextEmail">16sp</dimen>
+    <dimen name="dimCreateAccountTextPassword">16sp</dimen>
+    <dimen name="dimCreateAccountTextConfirm">16sp</dimen>
+    <dimen name="dimCreateAccountTextBirthday">16sp</dimen>
+    <dimen name="dimCreateAccountButtonCancelText">16sp</dimen>
+    <dimen name="dimCreateAccountButtonSubmitText">16sp</dimen>
     
     <!-- Menu Screen -->
     <dimen name="dimMenuButtonCheckoutText">16sp</dimen>

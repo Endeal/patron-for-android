@@ -15,6 +15,12 @@
 		  <version>4.0.1</version>
 	  </dependency>
 
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>balancedpayments</artifactId>
+      <version>1.2</version>
+    </dependency>
+
 	  <dependency>
 		  <groupId>com.patron</groupId>
 		  <artifactId>gson</artifactId>

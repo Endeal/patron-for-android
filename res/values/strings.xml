@@ -22,6 +22,16 @@
     <string name="loginTextInstruction">Select an account to login with. Don\'t want to login with any of these services?</string>
     <string name="loginButtonCreateAccount">Tap here to create a Patron account</string>
 
+    <!-- Create Account Screen -->
+    <string name="createAccountTextFirst">First:</string>
+    <string name="createAccountTextLast">Last:</string>
+    <string name="createAccountTextEmail">Email:</string>
+    <string name="createAccountTextPassword">Password:</string>
+    <string name="createAccountTextConfirm">Confirm:</string>
+    <string name="createAccountTextBirthday">Birthday:</string>
+    <string name="createAccountButtonCancel">Cancel</string>
+    <string name="createAccountButtonSubmit">Submit</string>
+
     <!-- Menu Screen -->
     <string name="menuButtonCheckout">Checkout</string>
     <string name="menuButtonFavorites">Favorites</string>
@@ -105,6 +115,7 @@
     <!-- Activity Titles -->
     <string name="titleActivityHome">Patron</string>
     <string name="titleActivityLogin">Login</string>
+    <string name="titleActivityCreateAccount">Create Account</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityCodes">Codes</string>
