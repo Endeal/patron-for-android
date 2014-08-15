@@ -74,6 +74,32 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.patron.main.FlashLogin" />
         </activity>
+
+        <!-- The Payment Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashPayment"
+            android:label="@string/titleActivityPayment"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="com.patron.main.FlashHome">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashHome" />
+        </activity>
+
+        <!-- The Add Card Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashAddCard"
+            android:label="@string/titleActivityAddCard"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="com.patron.main.FlashPayment">
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashPayment" />
+        </activity>
         
         <!-- The Menu Screen Activity -->
         <activity

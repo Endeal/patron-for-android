@@ -23,6 +23,16 @@
     <dimen name="dimCreateAccountTextBirthday">16sp</dimen>
     <dimen name="dimCreateAccountButtonCancelText">16sp</dimen>
     <dimen name="dimCreateAccountButtonSubmitText">16sp</dimen>
+
+    <!-- Payment Screen -->
+
+    <!-- Add Card Screen -->
+    <dimen name="dimAddCardTextName">16sp</dimen>
+    <dimen name="dimAddCardTextNumber">16sp</dimen>
+    <dimen name="dimAddCardTextCode">16sp</dimen>
+    <dimen name="dimAddCardTextExpirationMonth">16sp</dimen>
+    <dimen name="dimAddCardTextExpirationYear">16sp</dimen>
+    <dimen name="dimAddCardButtonSubmitText">16sp</dimen>
     
     <!-- Menu Screen -->
     <dimen name="dimMenuButtonCheckoutText">16sp</dimen>

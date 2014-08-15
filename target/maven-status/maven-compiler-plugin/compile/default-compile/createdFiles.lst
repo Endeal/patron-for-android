@@ -22,6 +22,7 @@ com\patron\main\BuildConfig.class
 com\patron\main\FlashHome$1.class
 com\patron\model\Supplement.class
 com\patron\lists\ListLinks.class
+com\patron\main\FlashCreateAccount$1$1.class
 com\patron\main\FlashSearchItems$1.class
 com\patron\sort\LocationSorter.class
 com\patron\main\R$style.class
@@ -45,6 +46,7 @@ android\support\v7\appcompat\R$style.class
 android\support\v7\appcompat\BuildConfig.class
 com\patron\main\R$string.class
 com\patron\main\R$bool.class
+com\patron\main\FlashCreateAccount$3.class
 com\patron\main\R$drawable.class
 com\patron\main\FlashHome.class
 com\patron\lists\ListScreens.class
@@ -54,8 +56,8 @@ com\patron\db\ItemConnector.class
 com\patron\listeners\SpinnerQuantityListener.class
 com\patron\main\FlashMenu$1.class
 com\patron\model\Selection.class
-com\patron\bind\ProductBinder.class
 com\patron\main\R$styleable.class
+com\patron\bind\ProductBinder.class
 com\patron\model\Vendor.class
 com\patron\db\VendorConnector.class
 com\patron\listeners\SpinnerAttributeListener.class
@@ -64,6 +66,7 @@ com\patron\listeners\ButtonSearchListener.class
 com\patron\main\FlashHelp.class
 com\patron\main\R$dimen.class
 com\patron\model\Category.class
+com\patron\main\FlashPayment.class
 com\patron\bind\VendorBinder.class
 com\patron\main\FlashSettings.class
 com\patron\main\FlashLogin$ResponseListener.class
@@ -91,8 +94,10 @@ com\patron\main\FlashVendors$1.class
 android\support\v7\appcompat\R$bool.class
 android\support\v7\appcompat\R$id.class
 com\patron\bind\CartProductBinder.class
+com\patron\main\FlashAddCard.class
 android\support\v7\appcompat\R.class
 com\patron\main\Manifest.class
+com\patron\main\FlashPayment$1.class
 com\patron\db\CodeConnector.class
 com\patron\db\AddOrderConnector.class
 com\patron\lists\ListSort.class

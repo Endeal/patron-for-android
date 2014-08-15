@@ -42,6 +42,7 @@ C:\Users\James\Development\Mobile\Patron\src\com\patron\bind\FilterBinder.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\lists\ListFonts.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\model\Order.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\listeners\SpinnerAttributeListener.java
+C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashAddCard.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\bind\CodeBinder.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\listeners\ToggleButtonFavoriteListener.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\system\Loadable.java
@@ -54,6 +55,7 @@ C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashHelp.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\lists\ListSort.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\system\Parser.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\db\ScanConnector.java
+C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashPayment.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\listeners\ButtonSearchListener.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\listeners\ButtonCheckoutListener.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\sort\ProductSorter.java

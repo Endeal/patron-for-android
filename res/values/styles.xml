@@ -103,6 +103,51 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <!-- Payment Screen Styles -->
+
+    <!-- Add Card Screen Styles -->
+    <style name="StyleAddCardTextName">
+        <item name="android:text">@string/addCardTextName</item>
+        <item name="android:textSize">@dimen/dimAddCardTextName</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextNumber">
+        <item name="android:text">@string/addCardTextNumber</item>
+        <item name="android:textSize">@dimen/dimAddCardTextNumber</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextCode">
+        <item name="android:text">@string/addCardTextCode</item>
+        <item name="android:textSize">@dimen/dimAddCardTextCode</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextExpirationMonth">
+        <item name="android:text">@string/addCardTextExpirationMonth</item>
+        <item name="android:textSize">@dimen/dimAddCardTextExpirationMonth</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextExpirationYear">
+        <item name="android:text">@string/addCardTextExpirationYear</item>
+        <item name="android:textSize">@dimen/dimAddCardTextExpirationYear</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardButtonSubmit">
+        <item name="android:text">@string/addCardButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimAddCardButtonSubmitText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
     <!-- Menu Screen Styles -->
     <style name="StyleMenuButtonCheckout">
         <item name="android:background">@drawable/button_checkout</item>
