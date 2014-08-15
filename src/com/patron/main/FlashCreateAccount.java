@@ -23,6 +23,8 @@ import org.brickred.socialauth.android.SocialAuthError;
 
 public class FlashCreateAccount extends ActionBarActivity implements Loadable
 {
+	private boolean submitting = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -77,8 +79,15 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 			@Override
 			public void onClick(View view)
 			{
-				ProgressBar progressIndicator = new ProgressBar(view.getContext());
-				layout.addView(progressIndicator);
+				if (!submitting)
+				{
+					ProgressBar progressIndicator = new ProgressBar(view.getContext());
+					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					layout.addView(progressIndicator, params);
+					submitting = true;
+				}
 			}
 		});
 	}
