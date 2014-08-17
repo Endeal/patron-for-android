@@ -70,7 +70,6 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 		// Get the layout elements.
 		final RelativeLayout layout = (RelativeLayout)findViewById(R.id.createAccountLayoutMain);
 		final Button buttonBirthday = (Button)findViewById(R.id.createAccountButtonBirthday);
-		Button buttonCancel = (Button)findViewById(R.id.createAccountButtonCancel);
 		Button buttonSubmit = (Button)findViewById(R.id.createAccountButtonSubmit);
 
 		// Set the default birthday text.
@@ -98,14 +97,6 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 				DatePickerDialog dialog = new DatePickerDialog(view.getContext(), listener,
 					FlashCreateAccount.year, FlashCreateAccount.month, FlashCreateAccount.day);
 				dialog.show();
-			}
-		});
-		buttonCancel.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view)
-			{
-				Intent intent = new Intent(view.getContext(), FlashLogin.class);
-				startActivity(intent);
 			}
 		});
 		buttonSubmit.setOnClickListener(new OnClickListener() {

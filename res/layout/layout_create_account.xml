@@ -111,20 +111,11 @@
     <!-- Action buttons -->
 
     <Button
-        android:id="@+id/createAccountButtonCancel"
-        style="@style/StyleCreateAccountButtonCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextBirthday"
-        android:layout_margin="10dp" />
-
-    <Button
         android:id="@+id/createAccountButtonSubmit"
         style="@style/StyleCreateAccountButtonSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/createAccountTextBirthday"
         android:layout_margin="10dp" />
 

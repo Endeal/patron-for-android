@@ -42,6 +42,13 @@
     <string name="addCardTextExpirationYear">Expiration Year:</string>
     <string name="addCardButtonSubmit">Submit</string>
 
+    <!-- Add Bank Screen -->
+    <string name="addBankTextName">Account Holder Name:</string>
+    <string name="addBankTextNumber">Account Number:</string>
+    <string name="addBankTextRouting">Routing Number:</string>
+    <string name="addBankTextType">Account Type:</string>
+    <string name="addBankButtonSubmit">Submit</string>
+
     <!-- Menu Screen -->
     <string name="menuButtonCheckout">Checkout</string>
     <string name="menuButtonFavorites">Favorites</string>
@@ -128,6 +135,7 @@
     <string name="titleActivityCreateAccount">Create Account</string>
     <string name="titleActivityPayment">Payment</string>
     <string name="titleActivityAddCard">Add Card</string>
+    <string name="titleActivityAddBank">Add Bank</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityCodes">Codes</string>
@@ -181,6 +189,11 @@
         <item>10</item>
         <item>11</item>
         <item>12</item>
+    </string-array>
+
+    <string-array name="array_bank_types">
+        <item>Checking</item>
+        <item>Savings</item>
     </string-array>
 
     <string-array name="array_card_expiration_years">

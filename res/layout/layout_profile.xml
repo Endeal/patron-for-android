@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <!-- User Information -->
+   <ImageView
+      android:id="@+id/profileImageAvatar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+
+   <TextView
+      android:id="@+id/profileTextUser"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="First Last" />
+
+   <!-- Network Connections -->
+   <TextView
+      android:id="@+id/profileTextFacebook"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Facebook: Not Connected" />
+
+   <TextView
+      android:id="@+id/profileTextTwitter"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Twitter: Not Connected" />
+
+   <TextView
+      android:id="@+id/profileTextGooglePlus"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Google+: Not Connected" />
+
+   <!-- Account Controls -->
+   <Button
+      android:id="@+id/profileButtonPassword"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Reset Password" />
+
+   <Button
+      android:id="@+id/profileButtonEmail"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Change E-mail" />
+
+   <Button
+      android:id="@+id/profileButtonLogout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Logout" />
+
+</RelativeLayout>

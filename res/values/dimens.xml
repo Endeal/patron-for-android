@@ -33,6 +33,13 @@
     <dimen name="dimAddCardTextExpirationMonth">16sp</dimen>
     <dimen name="dimAddCardTextExpirationYear">16sp</dimen>
     <dimen name="dimAddCardButtonSubmitText">16sp</dimen>
+
+    <!-- Add Bank Screen -->
+    <dimen name="dimAddBankTextName">16sp</dimen>
+    <dimen name="dimAddBankTextNumber">16sp</dimen>
+    <dimen name="dimAddBankTextRouting">16sp</dimen>
+    <dimen name="dimAddBankTextType">16sp</dimen>
+    <dimen name="dimAddBankButtonSubmitText">16sp</dimen>
     
     <!-- Menu Screen -->
     <dimen name="dimMenuButtonCheckoutText">16sp</dimen>

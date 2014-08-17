@@ -25,6 +25,7 @@ com\patron\lists\ListLinks.class
 com\patron\main\FlashCreateAccount$1$1.class
 com\patron\main\FlashSearchItems$1.class
 com\patron\sort\LocationSorter.class
+com\patron\main\FlashAddBank.class
 com\patron\main\R$style.class
 com\patron\listeners\ListItemCodeListener$1.class
 android\support\v7\appcompat\R$drawable.class
@@ -46,7 +47,6 @@ android\support\v7\appcompat\R$style.class
 android\support\v7\appcompat\BuildConfig.class
 com\patron\main\R$string.class
 com\patron\main\R$bool.class
-com\patron\main\FlashCreateAccount$3.class
 com\patron\main\R$drawable.class
 com\patron\main\FlashHome.class
 com\patron\lists\ListScreens.class

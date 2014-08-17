@@ -9,7 +9,7 @@ package com.patron.lists;
 
 public class ListLinks
 {
-	private static final String BASE_URL = "http://ec2-54-215-230-45.us-west-1.compute.amazonaws.com/patron/";
+	private static final String BASE_URL = "http://flashenv-uscd33pegm.elasticbeanstalk.com/patron/";
 	public static final String LINK_ACCOUNT_ADD = BASE_URL + "account/addPatron.php";
 	public static final String LINK_ACCOUNT_REMOVE = BASE_URL + "account/removePatron.php";
 	public static final String LINK_ACCOUNT_UPDATE = BASE_URL + "account/updatePatron.php";

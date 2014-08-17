@@ -148,6 +148,38 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <!-- Add Bank Screen Styles -->
+    <style name="StyleAddBankTextName">
+        <item name="android:text">@string/addBankTextName</item>
+        <item name="android:textSize">@dimen/dimAddBankTextName</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextNumber">
+        <item name="android:text">@string/addBankTextNumber</item>
+        <item name="android:textSize">@dimen/dimAddBankTextNumber</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextRouting">
+        <item name="android:text">@string/addBankTextRouting</item>
+        <item name="android:textSize">@dimen/dimAddBankTextRouting</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextType">
+        <item name="android:text">@string/addBankTextType</item>
+        <item name="android:textSize">@dimen/dimAddBankTextType</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankButtonSubmit">
+        <item name="android:text">@string/addBankButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimAddBankButtonSubmitText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
     <!-- Menu Screen Styles -->
     <style name="StyleMenuButtonCheckout">
         <item name="android:background">@drawable/button_checkout</item>

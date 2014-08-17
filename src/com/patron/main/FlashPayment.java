@@ -81,15 +81,16 @@ public class FlashPayment extends ActionBarActivity implements Loadable
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int pos, long id)
             {
+            	Intent intent;
             	switch (pos)
             	{
             		case 0:
-            			Intent intent = new Intent(view.getContext(), FlashAddCard.class);
+            			intent = new Intent(view.getContext(), FlashAddCard.class);
             			startActivity(intent);
             			break;
             		case 1:
-            			//Intent intent = new Intent(view.getContext(), FlashAddBank.class);
-            			//startActivity(intent);
+            			intent = new Intent(view.getContext(), FlashAddBank.class);
+            			startActivity(intent);
             			break;
             		default:
             			break;
