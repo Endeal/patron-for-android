@@ -17,6 +17,8 @@ import com.patron.model.Vendor;
 public class Globals
 {
 	// Properties
+	private static String email;
+	private static String password;
 	private static Vendor vendor;
 	private static List<Vendor> vendors = new ArrayList<Vendor>();
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
@@ -56,6 +58,14 @@ public class Globals
 	}
 
 	// Setters
+	public static void setEmail(String email)
+	{
+		Globals.email = email;
+	}
+	public static void setPassword(String password)
+	{
+		Globals.password = password;
+	}
 	public static void setVendor(Vendor vendor)
 	{
 		Globals.vendor = vendor;
@@ -107,6 +117,16 @@ public class Globals
 	}
 
 	// Getters
+	public static String getEmail()
+	{
+		return email;
+	}
+
+	public static String getPassword()
+	{
+		return password;
+	}
+
 	public static Vendor getVendor()
 	{
 		return vendor;

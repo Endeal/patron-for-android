@@ -56,6 +56,36 @@
     
     <!-- Favorites Screen -->
     <dimen name="dimFavoritesListItemsDividerHeight">3px</dimen>
+
+    <!-- Profile Screen -->
+    <dimen name="dimProfileTextUser">15sp</dimen>
+    <dimen name="dimProfileTextFacebook">15sp</dimen>
+    <dimen name="dimProfileTextTwitter">15sp</dimen>
+    <dimen name="dimProfileTextGooglePlus">15sp</dimen>
+
+    <dimen name="dimProfileButtonLogoutText">15sp</dimen>
+    <dimen name="dimProfileButtonLogoutMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonLogoutPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonAddPaymentText">15sp</dimen>
+    <dimen name="dimProfileButtonAddPaymentMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonAddPaymentPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonRemovePaymentText">15sp</dimen>
+    <dimen name="dimProfileButtonRemovePaymentMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonRemovePaymentPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonFacebookText">15sp</dimen>
+    <dimen name="dimProfileButtonFacebookMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonFacebookPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonTwitterText">15sp</dimen>
+    <dimen name="dimProfileButtonTwitterMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonTwitterPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonGooglePlusText">15sp</dimen>
+    <dimen name="dimProfileButtonGooglePlusMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonGooglePlusPadding">10dp</dimen>
     
     <!-- Help Screen -->
     <dimen name="dimHelpText">18sp</dimen>

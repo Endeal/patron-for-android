@@ -55,12 +55,7 @@
             android:label="@string/titleActivityLogin"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.patron.main.FlashHome">
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.patron.main.FlashHome" />
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- The Create Account Screen Activity -->
         <activity
@@ -112,6 +107,18 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.patron.main.FlashPayment" />
+        </activity>
+
+        <!-- The Remove Payment Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashRemovePayment"
+            android:label="@string/titleActivityRemovePayment"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashProfile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashProfile" />
         </activity>
         
         <!-- The Menu Screen Activity -->
@@ -172,6 +179,18 @@
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.patron.main.FlashCodes" />
+        </activity>
+
+        <!-- Profile Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashProfile"
+            android:label="@string/titleActivityProfile"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashProfile">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashProfile" />
         </activity>
         
         <!-- The Search Vendors Activity -->

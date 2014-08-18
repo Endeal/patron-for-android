@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
@@ -22,6 +24,8 @@ import com.patron.system.Loadable;
 
 public class FlashAddCard extends ActionBarActivity implements Loadable
 {
+	private boolean submitting = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -59,6 +63,25 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
-		//ListView listOptions = (ListView)findViewById(R.id.paymentListOptions);
+		Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
+		final RelativeLayout layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
+		buttonSubmit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view)
+			{
+				if (!submitting)
+				{
+					ProgressBar progressIndicator = new ProgressBar(view.getContext());
+					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					layout.addView(progressIndicator, params);
+					submitting = true;
+
+					Intent intent = new Intent(view.getContext(), FlashHome.class);
+					startActivity(intent);
+				}
+			}
+		});
 	}
 }

@@ -66,6 +66,19 @@
     <string name="codeImageImageViewDescription">QR Code</string>
     <string name="scanTextOrder">Order</string>
     
+    <!-- Profile Screen -->
+    <string name="profileImageAvatar">Image</string>
+    <string name="profileTextUser">First Last</string>
+    <string name="profileTextFacebook">Facebook: Not Connected</string>
+    <string name="profileTextTwitter">Twitter: Not Connected</string>
+    <string name="profileTextGooglePlus">Google+: Not Connected</string>
+    <string name="profileButtonLogout">Logout</string>
+    <string name="profileButtonAddPayment">Add Payment</string>
+    <string name="profileButtonRemovePayment">Remove Payment</string>
+    <string name="profileButtonFacebook">Connect</string>
+    <string name="profileButtonTwitter">Connect</string>
+    <string name="profileButtonGooglePlus">Connect</string>
+
     <!-- Search Vendors Screen -->
     <string name="searchVendorsTextMain">Search:</string>
     
@@ -136,6 +149,7 @@
     <string name="titleActivityPayment">Payment</string>
     <string name="titleActivityAddCard">Add Card</string>
     <string name="titleActivityAddBank">Add Bank</string>
+    <string name="titleActivityRemovePayment">Remove Payment</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityCodes">Codes</string>

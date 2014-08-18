@@ -331,6 +331,84 @@
         <item name="android:textOff"></item>
         <item name="android:textOn"></item>
     </style>
+
+    <!-- Profile Screen -->
+    <style name="StyleProfileImageAvatar">
+        <item name="android:src">@drawable/user_default_off</item>
+        <item name="android:contentDescription">@string/profileImageAvatar</item>
+    </style>
+    <style name="StyleProfileTextUser">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextUser</item>
+        <item name="android:text">@string/profileTextUser</item>
+    </style>
+    <style name="StyleProfileTextFacebook">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextFacebook</item>
+        <item name="android:text">@string/profileTextFacebook</item>
+    </style>
+    <style name="StyleProfileTextTwitter">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextTwitter</item>
+        <item name="android:text">@string/profileTextTwitter</item>
+    </style>
+    <style name="StyleProfileTextGooglePlus">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextGooglePlus</item>
+        <item name="android:text">@string/profileTextGooglePlus</item>
+    </style>
+    <style name="StyleProfileButtonLogout">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonLogoutText</item>
+        <item name="android:text">@string/profileButtonLogout</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonLogoutMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonLogoutPadding</item>
+    </style>
+    <style name="StyleProfileButtonAddPayment">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonAddPaymentText</item>
+        <item name="android:text">@string/profileButtonAddPayment</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonAddPaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonAddPaymentPadding</item>
+    </style>
+    <style name="StyleProfileButtonRemovePayment">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonRemovePaymentText</item>
+        <item name="android:text">@string/profileButtonRemovePayment</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonRemovePaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonRemovePaymentPadding</item>
+    </style>
+    <style name="StyleProfileButtonFacebook">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonFacebookText</item>
+        <item name="android:text">@string/profileButtonFacebook</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonFacebookMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonTwitterPadding</item>
+    </style>
+    <style name="StyleProfileButtonTwitter">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonTwitterText</item>
+        <item name="android:text">@string/profileButtonTwitter</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonTwitterMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonTwitterPadding</item>
+    </style>
+    <style name="StyleProfileButtonGooglePlus">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonGooglePlusText</item>
+        <item name="android:text">@string/profileButtonGooglePlus</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonGooglePlusMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonGooglePlusPadding</item>
+    </style>
     
     <!-- Product List Item -->
     <style name="StyleProductListItemTextName">

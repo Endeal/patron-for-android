@@ -129,6 +129,22 @@ public class FlashHome extends ActionBarActivity implements Loadable
 				view.getContext().startActivity(intent);
 			}
     	});
+        // Go to profile/login
+        buttonHomeFavorites.setOnClickListener(new OnClickListener() {
+            public void onClick(View view)
+            {
+                Intent intent;
+                if (Globals.getEmail() == null || Globals.getPassword() == null)
+                {
+                    intent = new Intent(view.getContext(), FlashLogin.class);
+                }
+                else
+                {
+                    intent = new Intent(view.getContext(), FlashProfile.class);
+                }
+                view.getContext().startActivity(intent);
+            }
+        });
     	
     	endLoading();
     }

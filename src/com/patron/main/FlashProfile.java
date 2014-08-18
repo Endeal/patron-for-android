@@ -9,8 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
@@ -22,15 +20,13 @@ import android.widget.EditText;
 
 import com.patron.system.Loadable;
 
-public class FlashAddBank extends ActionBarActivity implements Loadable
+public class FlashProfile extends ActionBarActivity implements Loadable
 {
-	private boolean submitting = false;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_add_bank);
+		setContentView(R.layout.layout_profile);
 		init();
 	}
 	
@@ -63,24 +59,14 @@ public class FlashAddBank extends ActionBarActivity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
-		Button buttonSubmit = (Button)findViewById(R.id.addBankButtonSubmit);
-		final RelativeLayout layout = (RelativeLayout)findViewById(R.id.addBankLayoutMain);
-		buttonSubmit.setOnClickListener(new OnClickListener() {
+		//ListView listOptions = (ListView)findViewById(R.id.paymentListOptions);
+		Button buttonRemovePayment = (Button)findViewById(R.id.profileButtonRemovePayment);
+		buttonRemovePayment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view)
 			{
-				if (!submitting)
-				{
-					ProgressBar progressIndicator = new ProgressBar(view.getContext());
-					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-					layout.addView(progressIndicator, params);
-					submitting = true;
-
-					Intent intent = new Intent(view.getContext(), FlashHome.class);
-					startActivity(intent);
-				}
+				Intent intent = new Intent(view.getContext(), FlashRemovePayment.class);
+				view.getContext().startActivity(intent);
 			}
 		});
 	}

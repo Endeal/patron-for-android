@@ -3,6 +3,7 @@ C:\Users\James\Development\Mobile\Patron\src\com\patron\model\Code.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\system\FlashIntentReceiver.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\lists\ListScreens.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashVendors.java
+C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashProfile.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\model\Selection.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\listeners\ListItemMenuAddListener.java
 C:\Users\James\Development\Mobile\Patron\target\generated-sources\r\com\patron\main\Manifest.java
@@ -31,6 +32,7 @@ C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashSearchVendors.
 C:\Users\James\Development\Mobile\Patron\src\com\patron\system\FlashApplication.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\bind\ProductBinder.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\lists\ListLinks.java
+C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashRemovePayment.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\bind\CartProductBinder.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\main\FlashSettings.java
 C:\Users\James\Development\Mobile\Patron\src\com\patron\db\ItemConnector.java
