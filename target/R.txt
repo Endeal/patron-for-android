@@ -205,8 +205,8 @@ int dimen dimHelpButtonStart 0x7f080052
 int dimen dimHelpText 0x7f080050
 int dimen dimHelpTextPage 0x7f080051
 int dimen dimHomeButtonCodesText 0x7f08001b
-int dimen dimHomeButtonFavoritesText 0x7f08001c
 int dimen dimHomeButtonMenuText 0x7f08001a
+int dimen dimHomeButtonProfileText 0x7f08001c
 int dimen dimHomeButtonVendorsText 0x7f080019
 int dimen dimHomeTextLocation 0x7f080018
 int dimen dimHomeTextUser 0x7f080017
@@ -470,8 +470,8 @@ int id helpViewAnimatorMain 0x7f05006b
 int id home 0x7f050014
 int id homeAsUp 0x7f050005
 int id homeButtonCodes 0x7f05007c
-int id homeButtonFavorites 0x7f05007d
 int id homeButtonMenu 0x7f05007b
+int id homeButtonProfile 0x7f05007d
 int id homeButtonVendors 0x7f05007a
 int id homeImageProfileServer 0x7f050075
 int id homeImageProfileUser 0x7f050074
@@ -713,13 +713,13 @@ int string helpText4 0x7f0a004f
 int string helpText5 0x7f0a0050
 int string helpTextPage 0x7f0a0051
 int string homeButtonCodes 0x7f0a0011
-int string homeButtonFavorites 0x7f0a0012
 int string homeButtonMenu 0x7f0a0010
+int string homeButtonProfile 0x7f0a0012
 int string homeButtonVendors 0x7f0a000f
 int string homeImageButtonDescriptionCart 0x7f0a0016
 int string homeImageButtonDescriptionCodes 0x7f0a0017
-int string homeImageButtonDescriptionFavorites 0x7f0a0018
 int string homeImageButtonDescriptionMenu 0x7f0a0015
+int string homeImageButtonDescriptionProfile 0x7f0a0018
 int string homeImageDescriptionServer 0x7f0a0014
 int string homeImageDescriptionUser 0x7f0a0013
 int string homeTextLocation 0x7f0a000e
@@ -835,8 +835,8 @@ int style StyleHelpText4 0x7f0b00b3
 int style StyleHelpText5 0x7f0b00b4
 int style StyleHelpTextPage 0x7f0b00b5
 int style StyleHomeButtonCodes 0x7f0b0091
-int style StyleHomeButtonFavorites 0x7f0b0092
 int style StyleHomeButtonMenu 0x7f0b0090
+int style StyleHomeButtonProfile 0x7f0b0092
 int style StyleHomeButtonVendors 0x7f0b008f
 int style StyleHomeTextLocation 0x7f0b008e
 int style StyleHomeTextUser 0x7f0b008d

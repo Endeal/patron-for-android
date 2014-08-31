@@ -10,7 +10,7 @@
     <dimen name="dimHomeButtonVendorsText">12sp</dimen>
     <dimen name="dimHomeButtonMenuText">12sp</dimen>
     <dimen name="dimHomeButtonCodesText">12sp</dimen>
-    <dimen name="dimHomeButtonFavoritesText">12sp</dimen>
+    <dimen name="dimHomeButtonProfileText">12sp</dimen>
 
     <!-- Login Screen -->
 

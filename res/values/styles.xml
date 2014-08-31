@@ -37,11 +37,11 @@
         <item name="android:textSize">@dimen/dimHomeButtonCodesText</item>
     </style>
     
-    <style name="StyleHomeButtonFavorites">
+    <style name="StyleHomeButtonProfile">
         <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/dimHomeButtonFavoritesText</item>
+        <item name="android:textSize">@dimen/dimHomeButtonProfileText</item>
     </style>
 
     <!-- Login Screen Styles -->

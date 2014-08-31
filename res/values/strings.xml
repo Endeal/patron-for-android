@@ -20,7 +20,7 @@
 
     <!-- Login Screen -->
     <string name="loginTextInstruction">Select an account to login with. Don\'t want to login with any of these services?</string>
-    <string name="loginButtonCreateAccount">Tap here to create a Patron account</string>
+    <string name="loginButtonCreateAccount">Tap here to create a Flash VIP account</string>
 
     <!-- Create Account Screen -->
     <string name="createAccountTextFirst">First:</string>
@@ -136,14 +136,14 @@
     <string name="codeListItemTextStatus">Waiting</string>
     
     <!-- Miscellaneous -->
-    <string name="app_title">Patron</string>
-    <string name="app_name">Patron</string>
-    <string name="appName">Patron</string>
+    <string name="app_title">Flash VIP</string>
+    <string name="app_name">Flash VIP</string>
+    <string name="appName">Flash VIP</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
     
     <!-- Activity Titles -->
-    <string name="titleActivityHome">Patron</string>
+    <string name="titleActivityHome">Flash VIP</string>
     <string name="titleActivityLogin">Login</string>
     <string name="titleActivityCreateAccount">Create Account</string>
     <string name="titleActivityPayment">Payment</string>

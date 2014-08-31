@@ -1061,8 +1061,8 @@ containing a value of this type.
         public static final int dimHelpText=0x7f080050;
         public static final int dimHelpTextPage=0x7f080051;
         public static final int dimHomeButtonCodesText=0x7f08001b;
-        public static final int dimHomeButtonFavoritesText=0x7f08001c;
         public static final int dimHomeButtonMenuText=0x7f08001a;
+        public static final int dimHomeButtonProfileText=0x7f08001c;
         public static final int dimHomeButtonVendorsText=0x7f080019;
         public static final int dimHomeTextLocation=0x7f080018;
         /**  Home Screen 
@@ -1344,8 +1344,8 @@ containing a value of this type.
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int homeButtonCodes=0x7f05007c;
-        public static final int homeButtonFavorites=0x7f05007d;
         public static final int homeButtonMenu=0x7f05007b;
+        public static final int homeButtonProfile=0x7f05007d;
         public static final int homeButtonVendors=0x7f05007a;
         public static final int homeImageProfileServer=0x7f050075;
         public static final int homeImageProfileUser=0x7f050074;
@@ -1663,13 +1663,13 @@ containing a value of this type.
         public static final int helpText5=0x7f0a0050;
         public static final int helpTextPage=0x7f0a0051;
         public static final int homeButtonCodes=0x7f0a0011;
-        public static final int homeButtonFavorites=0x7f0a0012;
         public static final int homeButtonMenu=0x7f0a0010;
+        public static final int homeButtonProfile=0x7f0a0012;
         public static final int homeButtonVendors=0x7f0a000f;
         public static final int homeImageButtonDescriptionCart=0x7f0a0016;
         public static final int homeImageButtonDescriptionCodes=0x7f0a0017;
-        public static final int homeImageButtonDescriptionFavorites=0x7f0a0018;
         public static final int homeImageButtonDescriptionMenu=0x7f0a0015;
+        public static final int homeImageButtonDescriptionProfile=0x7f0a0018;
         public static final int homeImageDescriptionServer=0x7f0a0014;
         public static final int homeImageDescriptionUser=0x7f0a0013;
         public static final int homeTextLocation=0x7f0a000e;
@@ -1830,8 +1830,8 @@ containing a value of this type.
         public static final int StyleHelpText5=0x7f0b00b4;
         public static final int StyleHelpTextPage=0x7f0b00b5;
         public static final int StyleHomeButtonCodes=0x7f0b0091;
-        public static final int StyleHomeButtonFavorites=0x7f0b0092;
         public static final int StyleHomeButtonMenu=0x7f0b0090;
+        public static final int StyleHomeButtonProfile=0x7f0b0092;
         public static final int StyleHomeButtonVendors=0x7f0b008f;
         public static final int StyleHomeTextLocation=0x7f0b008e;
         /**  Home Screen Styles 

@@ -42,12 +42,7 @@
             android:label="@string/titleActivityHome"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustPan" />
         
         <!-- The Login Screen Activity -->
         <activity
@@ -55,7 +50,24 @@
             android:label="@string/titleActivityLogin"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Profile Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashProfile"
+            android:label="@string/titleActivityProfile"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashHome">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashHome" />
+        </activity>
 
         <!-- The Create Account Screen Activity -->
         <activity
@@ -77,10 +89,10 @@
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="com.patron.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashProfile">
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.patron.main.FlashHome" />
+                android:value="com.patron.main.FlashProfile" />
         </activity>
 
         <!-- The Add Card Screen Activity -->
@@ -179,18 +191,6 @@
             <meta-data 
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.patron.main.FlashCodes" />
-        </activity>
-
-        <!-- Profile Screen Activity -->
-        <activity
-            android:name="com.patron.main.FlashProfile"
-            android:label="@string/titleActivityProfile"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.patron.main.FlashProfile">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.patron.main.FlashProfile" />
         </activity>
         
         <!-- The Search Vendors Activity -->

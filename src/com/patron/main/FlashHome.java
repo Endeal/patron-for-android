@@ -29,7 +29,7 @@ public class FlashHome extends ActionBarActivity implements Loadable
 	public static Button buttonHomeVendors; // Go to Vendors
 	public static Button buttonHomeMenu; // Go to Menu
 	public static Button buttonHomeCodes; // Go to Codes
-	public static Button buttonHomeFavorites; // Go to Favorite Orders
+	public static Button buttonHomeProfile; // Go to Profile
 	public static View viewMain;
 	
 	// Activity methods.
@@ -90,12 +90,12 @@ public class FlashHome extends ActionBarActivity implements Loadable
     	buttonHomeVendors = (Button) viewMain.findViewById(R.id.homeButtonVendors);
     	buttonHomeMenu = (Button) viewMain.findViewById(R.id.homeButtonMenu);
     	buttonHomeCodes = (Button) viewMain.findViewById(R.id.homeButtonCodes);
-    	buttonHomeFavorites = (Button) viewMain.findViewById(R.id.homeButtonProfile);
+    	buttonHomeProfile = (Button) viewMain.findViewById(R.id.homeButtonProfile);
     	
     	buttonHomeVendors.getLayoutParams().height = buttonHomeVendors.getWidth();
     	buttonHomeMenu.getLayoutParams().height = buttonHomeMenu.getWidth();
     	buttonHomeCodes.getLayoutParams().height = buttonHomeCodes.getWidth();
-    	buttonHomeFavorites.getLayoutParams().height = buttonHomeFavorites.getWidth();
+    	buttonHomeProfile.getLayoutParams().height = buttonHomeProfile.getWidth();
     	
     	load();
     }
@@ -130,18 +130,18 @@ public class FlashHome extends ActionBarActivity implements Loadable
 			}
     	});
         // Go to profile/login
-        buttonHomeFavorites.setOnClickListener(new OnClickListener() {
+        buttonHomeProfile.setOnClickListener(new OnClickListener() {
             public void onClick(View view)
             {
-                Intent intent;
+                Intent intent;/*
                 if (Globals.getEmail() == null || Globals.getPassword() == null)
                 {
                     intent = new Intent(view.getContext(), FlashLogin.class);
                 }
                 else
-                {
+                {*/
                     intent = new Intent(view.getContext(), FlashProfile.class);
-                }
+                //}
                 view.getContext().startActivity(intent);
             }
         });
