@@ -8,7 +8,7 @@
     <string name="homeButtonVendors">Vendors</string>
     <string name="homeButtonMenu">Buy</string>
     <string name="homeButtonCodes">Codes</string>
-    <string name="homeButtonFavorites">Favorites</string>
+    <string name="homeButtonProfile">Profile</string>
     
     <string name="homeImageDescriptionUser">User Image</string>
     <string name="homeImageDescriptionServer">Server Image</string>
@@ -16,7 +16,7 @@
     <string name="homeImageButtonDescriptionMenu">Menu</string>
     <string name="homeImageButtonDescriptionCart">Cart</string>
     <string name="homeImageButtonDescriptionCodes">Codes</string>
-    <string name="homeImageButtonDescriptionFavorites">Favorites</string>
+    <string name="homeImageButtonDescriptionProfile">Profile</string>
 
     <!-- Login Screen -->
     <string name="loginTextInstruction">Select an account to login with. Don\'t want to login with any of these services?</string>
