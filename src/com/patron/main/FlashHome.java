@@ -90,7 +90,7 @@ public class FlashHome extends ActionBarActivity implements Loadable
     	buttonHomeVendors = (Button) viewMain.findViewById(R.id.homeButtonVendors);
     	buttonHomeMenu = (Button) viewMain.findViewById(R.id.homeButtonMenu);
     	buttonHomeCodes = (Button) viewMain.findViewById(R.id.homeButtonCodes);
-    	buttonHomeFavorites = (Button) viewMain.findViewById(R.id.homeButtonFavorites);
+    	buttonHomeFavorites = (Button) viewMain.findViewById(R.id.homeButtonProfile);
     	
     	buttonHomeVendors.getLayoutParams().height = buttonHomeVendors.getWidth();
     	buttonHomeMenu.getLayoutParams().height = buttonHomeMenu.getWidth();
