@@ -60,12 +60,21 @@ public class FlashProfile extends ActionBarActivity implements Loadable
 	{
 		// Get the layout elements.
 		//ListView listOptions = (ListView)findViewById(R.id.paymentListOptions);
+		Button buttonAddPayment = (Button)findViewById(R.id.profileButtonAddPayment);
 		Button buttonRemovePayment = (Button)findViewById(R.id.profileButtonRemovePayment);
 		buttonRemovePayment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view)
 			{
 				Intent intent = new Intent(view.getContext(), FlashRemovePayment.class);
+				view.getContext().startActivity(intent);
+			}
+		});
+		buttonAddPayment.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view)
+			{
+				Intent intent = new Intent(view.getContext(), FlashPayment.class);
 				view.getContext().startActivity(intent);
 			}
 		});
