@@ -1,6 +1,8 @@
 package com.patron.main;
 
 import java.lang.Exception;
+import java.net.URL;
+import java.net.MalformedURLException;
 
 import android.os.Bundle;
 import android.content.Intent;
@@ -13,8 +15,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.patron.system.Loadable;
+import com.patron.lists.ListLinks;
+import com.patron.db.LoginConnector;
 
 import org.brickred.socialauth.android.SocialAuthAdapter;
 import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
@@ -23,6 +29,8 @@ import org.brickred.socialauth.android.SocialAuthError;
 
 public class FlashLogin extends ActionBarActivity implements Loadable
 {
+	private boolean submitting;
+	private ProgressBar progressBar;
 	private SocialAuthAdapter socialAuthAdapter;
 
 	@Override
@@ -46,16 +54,22 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 	@Override
 	public void endLoading()
 	{
+		submitting = false;
 	}
 
 	@Override
 	public void update()
 	{
+		Intent intent = new Intent(this, FlashHome.class);
+		this.finish();
+		startActivity(intent);
 	}
 
 	@Override
 	public void message(String msg)
 	{
+		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		toast.show();
 	}
 
 	// Button actions
@@ -68,6 +82,7 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		ImageButton buttonTwitter = (ImageButton)findViewById(R.id.loginButtonTwitter);
 		ImageButton buttonGooglePlus = (ImageButton)findViewById(R.id.loginButtonGooglePlus);
 		socialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
+		final ButtonLoginPatronDoneListener listener = new ButtonLoginPatronDoneListener(this);
 
 		// Configure the adapter with the API keys & secrets.
 		// String permissions = "{\"data\": [{\"installed\": 1,\"read_stream\": 1,\"read_mailbox\": 1,\"publish_actions\": 1,\"user_groups\": 1,\"user_events\": 1}]}";
@@ -105,9 +120,13 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 				builder.setView(dialogView);
 				Button buttonCancel = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonCancel);
 				Button buttonDone = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonDone);
-				// EditText fieldEmail = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldEmail);
+				final EditText fieldEmail = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldEmail);
+				final EditText fieldPassword = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldPassword);
 				final AlertDialog dialog = builder.create();
 
+				listener.setDialog(dialog);
+				listener.setFieldEmail(fieldEmail);
+				listener.setFieldPassword(fieldPassword);
 
 				// Set the cancel and done listeners.
 				buttonCancel.setOnClickListener(new OnClickListener() {
@@ -117,6 +136,8 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 						dialog.dismiss();
 					}
 				});
+
+				buttonDone.setOnClickListener(listener);
 
 				// Show the dialog.
 				dialog.show();
@@ -171,6 +192,57 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		public void onBack()
 		{
 
+		}
+	}
+
+	private class ButtonLoginPatronDoneListener implements OnClickListener
+	{
+		private AlertDialog dialog;
+		private EditText fieldEmail;
+		private EditText fieldPassword;
+		private Loadable activity;
+
+		public ButtonLoginPatronDoneListener(Loadable activity)
+		{
+			this.activity = activity;
+		}
+
+		public void setDialog(AlertDialog dialog)
+		{
+			this.dialog = dialog;
+		}
+
+		public void setFieldEmail(EditText fieldEmail)
+		{
+			this.fieldEmail = fieldEmail;
+		}
+
+		public void setFieldPassword(EditText fieldPassword)
+		{
+			this.fieldPassword = fieldPassword;
+		}
+
+		@Override
+		public void onClick(View view)
+		{
+			if (!submitting)
+			{
+				submitting = true;
+				String email = fieldEmail.getText().toString();
+				String password = fieldPassword.getText().toString();
+
+				System.out.println("POOP2EMAIL:" + email + "\nPOOP2PASS:" + password);
+				LoginConnector loginConnector = new LoginConnector(activity, email, password);
+				try
+				{
+					loginConnector.execute(new URL(ListLinks.LINK_ACCOUNT_LOGIN));
+				}
+				catch (MalformedURLException e)
+				{
+					e.printStackTrace();
+				}
+				dialog.dismiss();
+			}
 		}
 	}
 }

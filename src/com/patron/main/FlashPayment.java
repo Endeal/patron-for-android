@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.app.AlertDialog;
 import android.widget.EditText;
 
@@ -36,6 +37,19 @@ public class FlashPayment extends ActionBarActivity implements Loadable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_payment);
 		init();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+    	if (item.getItemId() == android.R.id.home)
+    	{
+        	Intent intent = new Intent(this, FlashProfile.class);
+        	this.finish();
+        	startActivity(intent);
+        	return true;
+    	}
+    	return super.onOptionsItemSelected(item);
 	}
 	
 	@Override

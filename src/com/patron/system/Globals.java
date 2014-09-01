@@ -13,12 +13,12 @@ import com.patron.model.Code;
 import com.patron.model.Item;
 import com.patron.model.Order;
 import com.patron.model.Vendor;
+import com.patron.model.User;
 
 public class Globals
 {
 	// Properties
-	private static String email;
-	private static String password;
+	private static User user;
 	private static Vendor vendor;
 	private static List<Vendor> vendors = new ArrayList<Vendor>();
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
@@ -58,14 +58,11 @@ public class Globals
 	}
 
 	// Setters
-	public static void setEmail(String email)
+	public static void setUser(User user)
 	{
-		Globals.email = email;
+		Globals.user = user;
 	}
-	public static void setPassword(String password)
-	{
-		Globals.password = password;
-	}
+
 	public static void setVendor(Vendor vendor)
 	{
 		Globals.vendor = vendor;
@@ -117,14 +114,9 @@ public class Globals
 	}
 
 	// Getters
-	public static String getEmail()
+	public static User getUser()
 	{
-		return email;
-	}
-
-	public static String getPassword()
-	{
-		return password;
+		return user;
 	}
 
 	public static Vendor getVendor()

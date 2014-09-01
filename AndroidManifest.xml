@@ -35,15 +35,7 @@
         <!-- Intent Receivers -->
         <receiver android:name="com.urbanairship.CoreReceiver" />  
         <receiver android:name="com.patron.system.FlashIntentReceiver" />
-       
-        <!-- The Home Screen Activity -->
-        <activity
-            android:name="com.patron.main.FlashHome"
-            android:label="@string/titleActivityHome"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        
+
         <!-- The Login Screen Activity -->
         <activity
             android:name="com.patron.main.FlashLogin"
@@ -56,6 +48,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       
+        <!-- The Home Screen Activity -->
+        <activity
+            android:name="com.patron.main.FlashHome"
+            android:label="@string/titleActivityHome"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- Profile Screen Activity -->
         <activity

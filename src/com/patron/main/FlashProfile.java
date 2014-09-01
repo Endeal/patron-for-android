@@ -17,8 +17,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
+import android.view.MenuItem;
 
 import com.patron.system.Loadable;
+import com.patron.system.Globals;
 
 public class FlashProfile extends ActionBarActivity implements Loadable
 {
@@ -28,6 +30,18 @@ public class FlashProfile extends ActionBarActivity implements Loadable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_profile);
 		init();
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+    	if (item.getItemId() == android.R.id.home)
+    	{
+        	Intent intent = new Intent(this, FlashHome.class);
+        	this.finish();
+        	startActivity(intent);
+        	return true;
+    	}
+    	return super.onOptionsItemSelected(item);
 	}
 	
 	@Override
@@ -60,8 +74,10 @@ public class FlashProfile extends ActionBarActivity implements Loadable
 	{
 		// Get the layout elements.
 		//ListView listOptions = (ListView)findViewById(R.id.paymentListOptions);
+		Button buttonLogout = (Button)findViewById(R.id.profileButtonLogout);
 		Button buttonAddPayment = (Button)findViewById(R.id.profileButtonAddPayment);
 		Button buttonRemovePayment = (Button)findViewById(R.id.profileButtonRemovePayment);
+		buttonLogout.setOnClickListener(new ButtonProfileLogoutListener(this));
 		buttonRemovePayment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view)
@@ -78,5 +94,24 @@ public class FlashProfile extends ActionBarActivity implements Loadable
 				view.getContext().startActivity(intent);
 			}
 		});
+	}
+
+	private class ButtonProfileLogoutListener implements OnClickListener
+	{
+		private FlashProfile activity;
+
+		public ButtonProfileLogoutListener(FlashProfile activity)
+		{
+			this.activity = activity;
+		}
+
+		@Override
+		public void onClick(View view)
+		{
+			Intent intent = new Intent(view.getContext(), FlashLogin.class);
+			activity.finish();
+			view.getContext().startActivity(intent);
+			Globals.setUser(null);
+		}
 	}
 }
