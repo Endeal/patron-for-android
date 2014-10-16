@@ -45,6 +45,23 @@
     </style>
 
     <!-- Login Screen Styles -->
+    <style name="StyleDialogLoginPatronButtonRequestPassword">
+        <item name="android:text">@string/dialogLoginPatronButtonRequestPassword</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonRequestPasswordText</item>
+        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonRequestPasswordMinHeight</item>
+        <item name="android:padding">@dimen/dimDialogLoginPatronButtonRequestPasswordPadding</item>
+    </style>
+
+    <style name="StyleDialogLoginPatronButtonCreateAccount">
+        <item name="android:text">@string/dialogLoginPatronButtonCreateAccount</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonCreateAccountText</item>
+        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonCreateAccountMinHeight</item>
+        <item name="android:padding">@dimen/dimDialogLoginPatronButtonCreateAccountPadding</item>
+    </style>
 
     <!-- Create Account Screen Styles -->
     <style name="StyleCreateAccountTextFirst">
@@ -137,6 +154,34 @@
     <style name="StyleAddCardTextExpirationYear">
         <item name="android:text">@string/addCardTextExpirationYear</item>
         <item name="android:textSize">@dimen/dimAddCardTextExpirationYear</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextAddress">
+        <item name="android:text">@string/addCardTextAddress</item>
+        <item name="android:textSize">@dimen/dimAddCardTextAddress</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextState">
+        <item name="android:text">@string/addCardTextState</item>
+        <item name="android:textSize">@dimen/dimAddCardTextState</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextCity">
+        <item name="android:text">@string/addCardTextCity</item>
+        <item name="android:textSize">@dimen/dimAddCardTextCity</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextPostalCode">
+        <item name="android:text">@string/addCardTextPostalCode</item>
+        <item name="android:textSize">@dimen/dimAddCardTextPostalCode</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>

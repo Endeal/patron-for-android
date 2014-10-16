@@ -19,13 +19,6 @@
     android:padding="10dp"
     android:text="@string/loginTextInstruction" />
 
-    <Button
-      android:id="@+id/loginButtonCreateAccount"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:padding="10dp"
-      android:text="@string/loginButtonCreateAccount" />
-
       <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

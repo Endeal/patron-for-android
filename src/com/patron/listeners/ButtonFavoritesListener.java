@@ -39,7 +39,7 @@ public class ButtonFavoritesListener implements OnClickListener
 				}
 			}
 
-			v.setBackgroundResource(R.drawable.button_filter_off);
+			v.setBackgroundResource(R.drawable.button_filter_on);
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByFavorites(items, true);
 			Globals.getVendor().setFilteredItems(newItems);
@@ -47,7 +47,7 @@ public class ButtonFavoritesListener implements OnClickListener
 		}
 		else
 		{
-			v.setBackgroundResource(R.drawable.button_filter_on);
+			v.setBackgroundResource(R.drawable.button_filter_off);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
 			activity.update();
 		}

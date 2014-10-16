@@ -8,7 +8,4 @@
     <item android:id="@+id/menuItemHelp"
         android:title="@string/menuItemHelp" />
     
-    <item android:id="@+id/menuItemLogin"
-        android:title="@string/menuItemLogin" />
-    
 </menu>

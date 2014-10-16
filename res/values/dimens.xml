@@ -13,6 +13,13 @@
     <dimen name="dimHomeButtonProfileText">12sp</dimen>
 
     <!-- Login Screen -->
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordText">9sp</dimen>
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordMinHeight">10dp</dimen>
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordPadding">5dp</dimen>
+
+    <dimen name="dimDialogLoginPatronButtonCreateAccountText">9sp</dimen>
+    <dimen name="dimDialogLoginPatronButtonCreateAccountMinHeight">10dp</dimen>
+    <dimen name="dimDialogLoginPatronButtonCreateAccountPadding">5dp</dimen>
 
     <!-- Create Account Screen -->
     <dimen name="dimCreateAccountTextFirst">16sp</dimen>
@@ -32,6 +39,10 @@
     <dimen name="dimAddCardTextCode">16sp</dimen>
     <dimen name="dimAddCardTextExpirationMonth">16sp</dimen>
     <dimen name="dimAddCardTextExpirationYear">16sp</dimen>
+    <dimen name="dimAddCardTextAddress">16sp</dimen>
+    <dimen name="dimAddCardTextState">16sp</dimen>
+    <dimen name="dimAddCardTextCity">16sp</dimen>
+    <dimen name="dimAddCardTextPostalCode">16sp</dimen>
     <dimen name="dimAddCardButtonSubmitText">16sp</dimen>
 
     <!-- Add Bank Screen -->

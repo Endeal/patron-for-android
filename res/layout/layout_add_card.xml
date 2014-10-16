@@ -7,12 +7,12 @@
     <!-- Text labels corresponding to fields -->
 
     <TextView
-    	android:id="@+id/addCardTextName"
-      style="@style/StyleAddCardTextName"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentLeft="true"
-    	android:layout_alignParentTop="true" />
+    	  android:id="@+id/addCardTextName"
+        style="@style/StyleAddCardTextName"
+    	  android:layout_width="wrap_content"
+    	  android:layout_height="wrap_content"
+    	  android:layout_alignParentLeft="true"
+    	  android:layout_alignParentTop="true" />
 
     <TextView
    	    android:id="@+id/addCardTextNumber"
@@ -23,86 +23,163 @@
    	    android:layout_below="@+id/addCardTextName" />
 
    	<TextView
-   		android:id="@+id/addCardTextCode"
+   		  android:id="@+id/addCardTextCode"
         style="@style/StyleAddCardTextCode"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   	    android:layout_alignParentLeft="true"
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
    	    android:layout_below="@+id/addCardTextNumber" />
 
    	<TextView
-   		android:id="@+id/addCardTextExpirationMonth"
+   		  android:id="@+id/addCardTextExpirationMonth"
         style="@style/StyleAddCardTextExpirationMonth"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
    	    android:layout_alignParentLeft="true"
    	    android:layout_below="@+id/addCardTextCode" />
 
    	<TextView
-   		android:id="@+id/addCardTextExpirationYear"
+   		  android:id="@+id/addCardTextExpirationYear"
         style="@style/StyleAddCardTextExpirationYear"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
    	    android:layout_alignParentLeft="true"
    	    android:layout_below="@+id/addCardTextExpirationMonth" />
+
+    <TextView
+        android:id="@+id/addCardTextAddress"
+        style="@style/StyleAddCardTextAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/addCardTextExpirationYear" />
+
+    <TextView
+        android:id="@+id/addCardTextState"
+        style="@style/StyleAddCardTextState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/addCardTextAddress" />
+
+    <TextView
+        android:id="@+id/addCardTextCity"
+        style="@style/StyleAddCardTextCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/addCardTextState" />
+
+    <TextView
+        android:id="@+id/addCardTextPostalCode"
+        style="@style/StyleAddCardTextPostalCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/addCardTextCity" />
 
    	<!-- Input fields -->
 
    	<EditText
-   		android:id="@+id/addCardFieldName"
-   		android:inputType="textCapWords"
-   		android:layout_width="match_parent"
-   		android:layout_height="wrap_content"
-   		android:layout_alignParentRight="true"
-   		android:layout_alignBaseline="@+id/addCardTextName"
-   		android:layout_toRightOf="@+id/addCardTextName" />
+   		  android:id="@+id/addCardFieldName"
+   		  android:inputType="textCapWords"
+   		  android:layout_width="match_parent"
+   		  android:layout_height="wrap_content"
+   		  android:layout_alignParentRight="true"
+   		  android:layout_alignBaseline="@+id/addCardTextName"
+   		  android:layout_toRightOf="@+id/addCardTextName" />
 
    	<EditText
-   		android:id="@+id/addCardFieldNumber"
-   		android:inputType="number"
-   		android:layout_width="match_parent"
-   		android:layout_height="wrap_content"
-   		android:layout_alignParentRight="true"
-   		android:layout_alignBaseline="@+id/addCardTextNumber"
-   		android:layout_toRightOf="@+id/addCardTextNumber" />
+   		  android:id="@+id/addCardFieldNumber"
+   		  android:inputType="number"
+   		  android:layout_width="match_parent"
+   		  android:layout_height="wrap_content"
+   		  android:layout_alignParentRight="true"
+   		  android:layout_alignBaseline="@+id/addCardTextNumber"
+   		  android:layout_toRightOf="@+id/addCardTextNumber" />
 
    	<EditText
-   		android:id="@+id/addCardFieldCode"
-   		android:inputType="number"
-   		android:layout_width="match_parent"
-   		android:layout_height="wrap_content"
-   		android:layout_alignParentRight="true"
-   		android:layout_alignBaseline="@+id/addCardTextCode"
-   		android:layout_toRightOf="@+id/addCardTextCode" />
+   		  android:id="@+id/addCardFieldCode"
+   		  android:inputType="number"
+   		  android:layout_width="match_parent"
+   		  android:layout_height="wrap_content"
+   		  android:layout_alignParentRight="true"
+   		  android:layout_alignBaseline="@+id/addCardTextCode"
+   		  android:layout_toRightOf="@+id/addCardTextCode" />
 
    	<Spinner
-   		android:id="@+id/addCardFieldExpirationMonth"
-   		android:entries="@array/array_card_expiration_months"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:layout_alignParentRight="true"
-   		android:layout_toRightOf="@+id/addCardTextExpirationMonth"
-   		android:layout_below="@+id/addCardTextCode" />
+   		  android:id="@+id/addCardFieldExpirationMonth"
+   		  android:entries="@array/array_card_expiration_months"
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
+   		  android:layout_alignParentRight="true"
+   		  android:layout_toRightOf="@+id/addCardTextExpirationMonth"
+   		  android:layout_below="@+id/addCardTextCode" />
 
    	<Spinner
-   		android:id="@+id/addCardFieldExpirationYear"
-   		android:entries="@array/array_card_expiration_years"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:layout_alignParentRight="true"
-   		android:layout_toRightOf="@+id/addCardTextExpirationYear"
-   		android:layout_below="@+id/addCardTextExpirationMonth" />
+   		  android:id="@+id/addCardFieldExpirationYear"
+   		  android:entries="@array/array_card_expiration_years"
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
+   		  android:layout_alignParentRight="true"
+   		  android:layout_toRightOf="@+id/addCardTextExpirationYear"
+   		  android:layout_below="@+id/addCardTextExpirationMonth" />
+
+    <EditText
+        android:id="@+id/addCardFieldAddress"
+        android:inputType="textCapWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextAddress"
+        android:layout_toRightOf="@+id/addCardTextAddress" />
+
+    <EditText
+        android:id="@+id/addCardFieldState"
+        android:inputType="textCapCharacters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextState"
+        android:layout_toRightOf="@+id/addCardTextState" />
+
+    <EditText
+        android:id="@+id/addCardFieldState"
+        android:inputType="textCapCharacters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextState"
+        android:layout_toRightOf="@+id/addCardTextState" />
+
+    <EditText
+        android:id="@+id/addCardFieldCity"
+        android:inputType="textCapWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextCity"
+        android:layout_toRightOf="@+id/addCardTextCity" />
+
+    <EditText
+        android:id="@+id/addCardFieldPostalCode"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextPostalCode"
+        android:layout_toRightOf="@+id/addCardTextPostalCode" />
 
    	<!-- Submission buttons -->
 
    	<Button
-   		android:id="@+id/addCardButtonSubmit"
+   		  android:id="@+id/addCardButtonSubmit"
         style="@style/StyleAddCardButtonSubmit"
-   		android:layout_width="wrap_content"
-   		android:layout_height="wrap_content"
-   		android:layout_centerHorizontal="true"
-   		android:layout_below="@+id/addCardTextExpirationYear"
-   		android:layout_margin="10dp"
-   		android:padding="10dp" />
+   		  android:layout_width="wrap_content"
+   		  android:layout_height="wrap_content"
+   		  android:layout_centerHorizontal="true"
+   		  android:layout_below="@+id/addCardTextPostalCode"
+   		  android:layout_margin="10dp"
+   		  android:padding="10dp" />
 
 </RelativeLayout>

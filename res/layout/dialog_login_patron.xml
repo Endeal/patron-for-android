@@ -2,12 +2,14 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/dialogLoginPatronTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Patron Login" />
+        
     <EditText
         android:id="@+id/dialogLoginPatronFieldEmail"
         android:inputType="textEmailAddress"
@@ -30,6 +32,13 @@
         android:fontFamily="sans-serif"
         android:hint="Password"/>
 
+    <Button
+        android:id="@+id/dialogLoginPatronButtonDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Submit" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,18 +46,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dialogLoginPatronButtonCancel"
+            android:id="@+id/dialogLoginPatronButtonRequestPassword"
+            style="@style/StyleDialogLoginPatronButtonRequestPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:layout_margin="5dp" />
 
         <Button
-            android:id="@+id/dialogLoginPatronButtonDone"
+            android:id="@+id/dialogLoginPatronButtonCreateAccount"
+            style="@style/StyleDialogLoginPatronButtonCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Done" />
+            android:layout_margin="5dp" />
 
     </LinearLayout>
 

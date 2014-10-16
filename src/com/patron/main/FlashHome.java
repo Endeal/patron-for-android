@@ -73,11 +73,8 @@ public class FlashHome extends ActionBarActivity implements Loadable
     		Intent intentHelp = new Intent(this, FlashHelp.class);
     		startActivity(intentHelp);
     		return true;
-    	default:
-    		Intent intentLogin = new Intent(this, FlashLogin.class);
-    		startActivity(intentLogin);
-    		return false;
     	}
+        return true;
     }
     
     // Loadable methods

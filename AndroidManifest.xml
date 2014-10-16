@@ -4,8 +4,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="10"
+        android:targetSdkVersion="19" />
     
 	<!-- Urban Airship -->
 	<permission android:name="com.patron.main.permission.UA_DATA" android:protectionLevel="signature" />
@@ -43,7 +43,7 @@
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
+            <intent-filter android:label="@string/appName">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

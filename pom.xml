@@ -18,6 +18,25 @@
 
     <dependency>
       <groupId>com.patron</groupId>
+      <artifactId>socialauth-android</artifactId>
+      <version>3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth</artifactId>
+      <version>4.4</version>
+    </dependency>
+
+<!--
+
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth</artifactId>
+      <version>4.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.patron</groupId>
       <artifactId>balancedpayments</artifactId>
       <version>1.2</version>
     </dependency>
@@ -27,18 +46,21 @@
 		  <artifactId>gson</artifactId>
 		  <version>2.2.4</version>
 	  </dependency>
+  -->
 
     <dependency>
-      <groupId>com.patron</groupId>
-      <artifactId>socialauth-android</artifactId>
-      <version>3.2</version>
+      <groupId>com.balancedpayments.android</groupId>
+      <artifactId>balanced-android-parent</artifactId>
+      <version>1.1-SNAPSHOT</version>
+        <type>apklib</type>
     </dependency>
 
     <dependency>
-      <groupId>com.patron</groupId>
-      <artifactId>socialauth</artifactId>
-      <version>4.4</version>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.3</version>
     </dependency>
+
 
     <dependency>
       <groupId>com.google.android</groupId>
@@ -51,13 +73,25 @@
 	    <groupId>android.support</groupId>
 	    <artifactId>compatibility-v4</artifactId>
 	    <version>19.1.0</version>
+      <exclusions>
+        <exclusion>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    
+ 
     <dependency>
       <groupId>android.support</groupId>
       <artifactId>compatibility-v7-appcompat</artifactId>
       <version>19.1.0</version>
       <type>apklib</type>
+      <exclusions>
+        <exclusion>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     
     <dependency>
@@ -65,7 +99,32 @@
       <artifactId>compatibility-v7-appcompat</artifactId>
       <version>19.1.0</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
+<!--
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
+    </dependency>
+-->
 
  </dependencies>
 
@@ -78,7 +137,7 @@
     <plugin>
      <groupId>com.jayway.maven.plugins.android.generation2</groupId>
      <artifactId>android-maven-plugin</artifactId>
-     <version>3.8.2</version>
+     <version>3.9.0-rc.2</version>
      <extensions>true</extensions>
     </plugin>
 
@@ -91,38 +150,20 @@
     <configuration>
      <sdk>
       <!-- platform or api level (api level 4 = platform 1.6) -->
-      <platform>18</platform>
+      <platform>19</platform>
      </sdk>
     </configuration>
    </plugin>
   </plugins>
  </build>
-</project> 
-<!--
-    <build>
-      <finalName>${project.artifactId}</finalName>
-      <sourceDirectory>src</sourceDirectory>
-      <pluginManagement>
-         <plugins>
-            <plugin>
-               <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-               <artifactId>android-maven-plugin</artifactId>
-               <version>3.1.1</version>
-               <extensions>true</extensions>
-           </plugin>
-       </plugins>
-   </pluginManagement>
-   <plugins>
-     <plugin>
-        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-        <artifactId>android-maven-plugin</artifactId>
-        <configuration>
-           <sdk>
-              <platform>8</platform>
-          </sdk>
-      </configuration>
-  </plugin>
-</plugins>
-</build>
+
+ <profiles>
+    <profile>
+        <id>bin</id>
+        <build>
+            <directory>bin\classes</directory>
+        </build>
+    </profile>
+</profiles>
+
 </project>
--->

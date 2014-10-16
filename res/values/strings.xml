@@ -19,8 +19,9 @@
     <string name="homeImageButtonDescriptionProfile">Profile</string>
 
     <!-- Login Screen -->
-    <string name="loginTextInstruction">Select an account to login with. Don\'t want to login with any of these services?</string>
-    <string name="loginButtonCreateAccount">Tap here to create a Flash VIP account</string>
+    <string name="loginTextInstruction">Select a service to login:</string>
+    <string name="dialogLoginPatronButtonRequestPassword">Forgot Password</string>
+    <string name="dialogLoginPatronButtonCreateAccount">Create New Account</string>
 
     <!-- Create Account Screen -->
     <string name="createAccountTextFirst">First:</string>
@@ -40,6 +41,10 @@
     <string name="addCardTextCode">CVV Security Code:</string>
     <string name="addCardTextExpirationMonth">Expiration Month:</string>
     <string name="addCardTextExpirationYear">Expiration Year:</string>
+    <string name="addCardTextAddress">Address:</string>
+    <string name="addCardTextState">State:</string>
+    <string name="addCardTextCity">City:</string>
+    <string name="addCardTextPostalCode">Postal Code:</string>
     <string name="addCardButtonSubmit">Submit</string>
 
     <!-- Add Bank Screen -->

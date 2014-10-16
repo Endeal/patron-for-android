@@ -1,10 +1,12 @@
 package com.patron.main;
 
 import java.lang.Exception;
+import java.lang.Runnable;
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import android.os.Bundle;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
@@ -21,11 +23,14 @@ import android.widget.Toast;
 import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
 import com.patron.db.LoginConnector;
+import com.patron.db.ServiceConnector;
 
 import org.brickred.socialauth.android.SocialAuthAdapter;
 import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
 import org.brickred.socialauth.android.DialogListener;
 import org.brickred.socialauth.android.SocialAuthError;
+import org.brickred.socialauth.android.SocialAuthListener;
+import org.brickred.socialauth.Profile;
 
 public class FlashLogin extends ActionBarActivity implements Loadable
 {
@@ -76,122 +81,120 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
-		Button buttonCreateAccount = (Button)findViewById(R.id.loginButtonCreateAccount);
 		ImageButton buttonPatron = (ImageButton)findViewById(R.id.loginButtonPatron);
 		ImageButton buttonFacebook = (ImageButton)findViewById(R.id.loginButtonFacebook);
 		ImageButton buttonTwitter = (ImageButton)findViewById(R.id.loginButtonTwitter);
 		ImageButton buttonGooglePlus = (ImageButton)findViewById(R.id.loginButtonGooglePlus);
-		socialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
 		final ButtonLoginPatronDoneListener listener = new ButtonLoginPatronDoneListener(this);
 
 		// Configure the adapter with the API keys & secrets.
 		// String permissions = "{\"data\": [{\"installed\": 1,\"read_stream\": 1,\"read_mailbox\": 1,\"publish_actions\": 1,\"user_groups\": 1,\"user_events\": 1}]}";
-		String secretGooglePlus = "1lfGaHWYDN7SF7__Z9mDvbdZ";
-		try
-		{
-			socialAuthAdapter.addConfig(Provider.FACEBOOK, "648356855200728", "261824005ee0bc926a82070e7bc9c575", "");
-			socialAuthAdapter.addConfig(Provider.TWITTER, "zzj56RtJAssnuE9sSUl1NoeeT", "4QOqpgbwzZ15SLGINwUI8RNLyT98c7pZRbW3K7xt96aPx6mRdE", "");
-			socialAuthAdapter.addConfig(Provider.GOOGLEPLUS, "342319301171-llpu8ildros0smcdmtdbpgg9ccsck6pl.apps.googleusercontent.com",
-				secretGooglePlus, "openid");
 
-			socialAuthAdapter.addCallBack(Provider.GOOGLEPLUS, "http://localhost");
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		// Set the actions for each button.
-		buttonCreateAccount.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view)
-			{
-				Intent intent = new Intent(view.getContext(), FlashCreateAccount.class);
-				startActivity(intent);
-			}
-		});
 		buttonPatron.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view)
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-				LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				if (submitting)
+				{
+					message("Submitting login, please wait for response...");
+					return;
+				}
+				final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+				final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				View dialogView = inflater.inflate(R.layout.dialog_login_patron, null);
 				builder.setView(dialogView);
-				Button buttonCancel = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonCancel);
 				Button buttonDone = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonDone);
+				Button buttonRequestPassword = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonRequestPassword);
+				Button buttonCreateAccount = (Button)dialogView.findViewById(R.id.dialogLoginPatronButtonCreateAccount);
 				final EditText fieldEmail = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldEmail);
 				final EditText fieldPassword = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldPassword);
+
+				// Prepopulate Login info
+				fieldEmail.setText("johnmiller6@gmail.com");
+				fieldPassword.setText("batman");
+				
 				final AlertDialog dialog = builder.create();
 
 				listener.setDialog(dialog);
 				listener.setFieldEmail(fieldEmail);
 				listener.setFieldPassword(fieldPassword);
 
-				// Set the cancel and done listeners.
-				buttonCancel.setOnClickListener(new OnClickListener() {
+				buttonDone.setOnClickListener(listener);
+
+				buttonRequestPassword.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view)
+					{
+						View dialogRequestPasswordView = inflater.inflate(R.layout.dialog_request_password, null);
+						builder.setView(dialogRequestPasswordView);
+						final AlertDialog dialogRequestPassword = builder.create();
+						dialogRequestPassword.show();
+					}
+				});
+
+				buttonCreateAccount.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View view)
 					{
 						dialog.dismiss();
+						Intent intent = new Intent(view.getContext(), FlashCreateAccount.class);
+						startActivity(intent);
 					}
 				});
 
-				buttonDone.setOnClickListener(listener);
-
 				// Show the dialog.
 				dialog.show();
-				// fieldEmail.requestFocus();
-				// view.getContext().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 			}
 		});
-		buttonFacebook.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view)
-			{
-				socialAuthAdapter.authorize(view.getContext(), Provider.FACEBOOK);
-			}
-		});
-		buttonTwitter.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view)
-			{
-				socialAuthAdapter.authorize(view.getContext(), Provider.TWITTER);
-			}
-		});
-		buttonGooglePlus.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view)
-			{
-				socialAuthAdapter.authorize(view.getContext(), Provider.GOOGLEPLUS);
-			}
-		});
+		buttonFacebook.setOnClickListener(new ButtonServiceListener(this, Provider.FACEBOOK));
+		buttonTwitter.setOnClickListener(new ButtonServiceListener(this, Provider.TWITTER));
+		buttonGooglePlus.setOnClickListener(new ButtonServiceListener(this, Provider.GOOGLEPLUS));
 	}
 	
-	private final class ResponseListener implements DialogListener
+	private class ButtonServiceListener implements OnClickListener
 	{
-		@Override
-		public void onComplete(Bundle bundle)
+		private Loadable activity;
+		private Provider provider;
+
+		public ButtonServiceListener(Loadable activity, Provider provider)
 		{
-			System.out.println("Success FROGS!");
+			this.activity = activity;
+			this.provider = provider;
 		}
 
 		@Override
-		public void onError(SocialAuthError error)
+		public void onClick(View view)
 		{
+			if (submitting)
+			{
+				message("Submitting login, please wait for response...");
+				return;
+			}
+			submitting = true;
 
-		}
+			// Authorize the user.
+			try
+			{
+				socialAuthAdapter = new SocialAuthAdapter(new ResponseListener(activity));
+				socialAuthAdapter.addConfig(Provider.FACEBOOK, "648356855200728", "261824005ee0bc926a82070e7bc9c575", "");
+				socialAuthAdapter.addConfig(Provider.TWITTER, "zzj56RtJAssnuE9sSUl1NoeeT", "4QOqpgbwzZ15SLGINwUI8RNLyT98c7pZRbW3K7xt96aPx6mRdE", "");
+				socialAuthAdapter.addConfig(Provider.GOOGLEPLUS, "342319301171-llpu8ildros0smcdmtdbpgg9ccsck6pl.apps.googleusercontent.com",
+					"1lfGaHWYDN7SF7__Z9mDvbdZ", "openid");
+				socialAuthAdapter.addCallBack(Provider.GOOGLEPLUS, "http://localhost");
+				socialAuthAdapter.authorize(view.getContext(), provider);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 
-		@Override
-		public void onCancel()
-		{
-
-		}
-
-		@Override
-		public void onBack()
-		{
-
+			/*final Activity host = (Activity)view.getContext();
+			host.runOnUiThread(new Runnable() {
+				public void run() {
+					ServiceConnector serviceConnector = new ServiceConnector(activity, host);
+					serviceConnector.execute(provider);
+				}
+			});*/
 		}
 	}
 
@@ -243,6 +246,46 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 				}
 				dialog.dismiss();
 			}
+		}
+	}
+
+	private final class ResponseListener implements DialogListener
+	{
+		private Loadable activity;
+
+		public ResponseListener(Loadable activity)
+		{
+			this.activity = activity;
+		}
+
+		@Override
+		public void onComplete(Bundle bundle)
+		{
+			System.out.println("Success FROGS!");
+			try
+			{
+				ServiceConnector serviceConnector = new ServiceConnector(activity, socialAuthAdapter);
+				serviceConnector.execute(new URL(ListLinks.LINK_ACCOUNT_LOGIN));
+			}
+			catch (MalformedURLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void onError(SocialAuthError error)
+		{
+		}
+
+		@Override
+		public void onCancel()
+		{
+		}
+
+		@Override
+		public void onBack()
+		{
 		}
 	}
 }
