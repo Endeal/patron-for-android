@@ -3,6 +3,9 @@ package com.patron.db;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import android.os.AsyncTask;
 import android.content.Context;
@@ -14,12 +17,24 @@ import com.balancedpayments.android.exception.*;
 
 import com.google.gson.Gson;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.util.EntityUtils;
+
 import com.patron.main.FlashCart;
 import com.patron.system.Globals;
+import com.patron.system.Loadable;
+import com.patron.lists.ListLinks;
 
 public class AddCardConnector extends AsyncTask<Context, Void, String>
 {
-	private Context context;
+	private Loadable activity;
 	private String name;
 	private String number;
 	private String code;
@@ -30,10 +45,10 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 	private String city;
 	private String postalCode;
 
-	public AddCardConnector(Context context, String name, String number, String code, int month,
+	public AddCardConnector(Loadable activity, String name, String number, String code, int month,
 		int year, String address, String state, String city, String postalCode)
 	{
-		this.context = context;
+		this.activity = activity;
 		this.name = name;
 		this.number = number;
 		this.code = code;
@@ -62,28 +77,54 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 		optionalFields.put("address", addressMap);
 		try
 		{
-			System.out.println("THIS TOTES HAPPENED!");
+			// Create the card in the Balanced API.
 			response = balanced.createCard(number, month, year, optionalFields);
 			if (response == null)
-			System.out.println("IT'S SO DAMN NULL!");
-			else
-			{
-				Gson gson = new Gson();
-				String json = gson.toJson(response);
-				System.out.println("NOT NULL!\n" + json + "\nSee? It's all there...");
-			}
+				return null;
+			Gson gson = new Gson();
+			String json = gson.toJson(response);
 			Map<String, Object> cardResponse = (Map<String, Object>) ((ArrayList)response.get("cards")).get(0);
 			cardHref = cardResponse.get("href").toString();
-			return cardHref;
+        		System.out.println(cardHref);
+
+			// Associate the card to the customer.
+			HttpClient client = new DefaultHttpClient();
+        	HttpPost post = new HttpPost(ListLinks.LINK_ADD_CARD);
+        	ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        	pairs.add(new BasicNameValuePair("email", Globals.getUser().getEmail()));
+        	pairs.add(new BasicNameValuePair("password", Globals.getUser().getPassword()));
+        	pairs.add(new BasicNameValuePair("href", cardHref));
+        	post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+        	HttpResponse httpResponse = client.execute(post);
+        	StatusLine statusLine = httpResponse.getStatusLine();
+        	String result = null;
+        	if (statusLine.getStatusCode() == HttpURLConnection.HTTP_OK)
+        	{
+        		result = EntityUtils.toString(httpResponse.getEntity());
+        	}
+        	else
+        	{
+        		System.out.println("HTTP Error:" + statusLine.getStatusCode());
+        	}
+
+			return result;
 		}
 		catch (CreationFailureException e)
 		{
-			System.out.println("CREATION FAILURE EXCEPTION!");
+			activity.message("Failed to create card information.");
 			return null;
 		}
 		catch (FundingInstrumentNotValidException e)
 		{
-			System.out.println("FUNDING INSTRUMENT NOT VALID EXCEPTION!");
+			activity.message("Invalid credit/debit card.");
+			return null;
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			return null;
+		}
+		catch (IOException e)
+		{
 			return null;
 		}
 	}
@@ -91,7 +132,16 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 	@Override
 	protected void onPostExecute(String result)
 	{
-		System.out.println("POOOOOOP!");
-		System.out.println("HREF:" + result + ";");
+		activity.endLoading();
+		if (result != null)
+		{
+			activity.message("Added card.");
+			activity.update();
+			System.out.println(result);
+		}
+		else
+		{
+			activity.message("Failed to add card.");
+		}
 	}
 }

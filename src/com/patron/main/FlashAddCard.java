@@ -1,6 +1,7 @@
 package com.patron.main;
 
 import java.lang.Exception;
+import java.lang.Runnable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.app.AlertDialog;
@@ -30,6 +32,8 @@ import com.patron.db.AddCardConnector;
 public class FlashAddCard extends ActionBarActivity implements Loadable
 {
 	private boolean submitting = false;
+	private RelativeLayout layout;
+	private ProgressBar progressIndicator;
 	public static int expirationMonth = 1;
 	public static int expirationYear = 1970;
 
@@ -38,12 +42,19 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_add_card);
+		layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
 		init();
 	}
 	
 	@Override
 	public void beginLoading()
 	{
+		progressIndicator = new ProgressBar(this);
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		layout.addView(progressIndicator, params);
+		submitting = true;
 	}
 
 	@Override
@@ -54,16 +65,27 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 	@Override
 	public void endLoading()
 	{
+		layout.removeView(progressIndicator);
+		submitting = false;
 	}
 
 	@Override
 	public void update()
 	{
+		Intent intent = new Intent(this, FlashHome.class);
+		startActivity(intent);
 	}
 
 	@Override
 	public void message(String msg)
 	{
+		final String message = msg;
+		runOnUiThread(new Runnable() {
+  			public void run()
+  			{
+    			Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+  			}
+		});
 	}
 
 	// Button actions
@@ -80,7 +102,6 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 		final EditText fieldCity = (EditText)findViewById(R.id.addCardFieldCity);
 		final EditText fieldPostalCode = (EditText)findViewById(R.id.addCardFieldPostalCode);
 		final Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
-		final RelativeLayout layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
 
 		// Set field's to mock data.
 		fieldName.setText("Carlos Spacey");
@@ -125,12 +146,14 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 				if (!submitting)
 				{
 					// Create a loading indicator.
+					/*
 					ProgressBar progressIndicator = new ProgressBar(view.getContext());
 					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
 					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 					layout.addView(progressIndicator, params);
-					submitting = true;
+					*/
+					beginLoading();
 
 					// Get the data from the form.
 					String name = fieldName.getText().toString();
@@ -144,7 +167,7 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 					String postalCode = fieldPostalCode.getText().toString();
 
 					// Add the card to the user.
-					AddCardConnector connector = new AddCardConnector(view.getContext(), name, number, code, month,
+					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month,
 						year, address, state, city, postalCode);
 					connector.execute(view.getContext());
 
@@ -158,12 +181,13 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 					System.out.println("State:" + state);
 					System.out.println("City:" + city);
 					System.out.println("Postal Code:" + postalCode);
-
-					// Go back to the home screen.
-					Intent intent = new Intent(view.getContext(), FlashHome.class);
-					startActivity(intent);
 				}
 			}
 		});
+	}
+
+	public FlashAddCard getActivity()
+	{
+		return this;
 	}
 }

@@ -18,10 +18,15 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.AsyncTask;
 
 import com.patron.system.Loadable;
 import com.patron.system.Globals;
+import com.patron.system.Parser;
+import com.patron.model.User;
 import com.google.gson.Gson;
 
 public class LoginConnector extends AsyncTask<URL, Void, String>
@@ -57,9 +62,6 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 			NameValuePair pairEmail = new BasicNameValuePair("email", email);
 			NameValuePair pairPassword = new BasicNameValuePair("password", password);
 
-			System.out.println("POOP EMAIL:" + email + ";");
-			System.out.println("POOP PASS:" + password + ";");
-
 			postData.add(pairEmail);
 			postData.add(pairPassword);
 
@@ -94,13 +96,23 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 		activity.endLoading();
 		try
 		{
-			int id = Integer.parseInt(result);
+			JSONObject patron = new JSONObject(result);
+			User user = Parser.getUser(patron, password);
+			System.out.println("logged in");
+			System.out.println(user.getEmail());
+			System.out.println(user.getPassword());
+			Globals.setUser(user);
 			activity.message("Successfully logged in.");
 			activity.update();
 		}
 		catch (NumberFormatException e)
 		{
 			activity.message("Error logging in:\n" + result);
+		}
+		catch (JSONException e)
+		{
+			activity.message("Invalid response received.");
+			System.out.println(result);
 		}
 	}
 }

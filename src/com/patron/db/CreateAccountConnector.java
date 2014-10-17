@@ -22,7 +22,13 @@ import android.os.AsyncTask;
 
 import com.patron.system.Loadable;
 import com.patron.system.Globals;
+import com.patron.system.Parser;
+import com.patron.model.User;
+
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class CreateAccountConnector extends AsyncTask<URL, Void, String>
 {
@@ -103,11 +109,17 @@ public class CreateAccountConnector extends AsyncTask<URL, Void, String>
 		activity.endLoading();
 		try
 		{
-			int id = Integer.parseInt(result);
+			JSONObject patron = new JSONObject(result);
+			User user = Parser.getUser(patron, password);
+			Globals.setUser(user);
 			activity.message("Successfully created account.");
 			activity.update();
 		}
 		catch (NumberFormatException e)
+		{
+			activity.message("Error creating account:\n" + result);
+		}
+		catch (JSONException e)
 		{
 			activity.message("Error creating account:\n" + result);
 		}

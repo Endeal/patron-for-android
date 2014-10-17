@@ -234,7 +234,6 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 				String email = fieldEmail.getText().toString();
 				String password = fieldPassword.getText().toString();
 
-				System.out.println("POOP2EMAIL:" + email + "\nPOOP2PASS:" + password);
 				LoginConnector loginConnector = new LoginConnector(activity, email, password);
 				try
 				{
@@ -261,7 +260,6 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		@Override
 		public void onComplete(Bundle bundle)
 		{
-			System.out.println("Success FROGS!");
 			try
 			{
 				ServiceConnector serviceConnector = new ServiceConnector(activity, socialAuthAdapter);

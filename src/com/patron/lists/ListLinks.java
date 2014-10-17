@@ -21,5 +21,6 @@ public class ListLinks
 	public static final String LINK_GET_CODES = BASE_URL + "get/getCodes.php";
 	public static final String LINK_GET_SCAN = BASE_URL + "get/getCodeImage.php";
 	public static final String LINK_ADD_ORDER = BASE_URL + "add/addOrder.php";
+	public static final String LINK_ADD_CARD = BASE_URL + "add/addCard.php";
 	public static final String LINK_DIRECTORY_CODES = "http://jameswhiteman.info/";
 }

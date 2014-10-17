@@ -2,22 +2,38 @@ package com.patron.model;
 
 public class User
 {
+	private String patronId;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 	private String birthday;
+	private String balancedId;
+	private String facebookId;
+	private String twitterId;
+	private String googlePlusId;
 
-	public User(String firstName, String lastName, String email, String password, String birthday)
+	public User(String patronId, String firstName, String lastName, String email, String password, String birthday,
+		String balancedId, String facebookId, String twitterId, String googlePlusId)
 	{
+		this.patronId = patronId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.birthday = birthday;
+		this.balancedId = balancedId;
+		this.facebookId = facebookId;
+		this.twitterId = twitterId;
+		this.googlePlusId = googlePlusId;
 	}
 
 	// Setters
+
+	public void setPatronId(String patronId)
+	{
+		this.patronId = patronId;
+	}
 
 	public void setFirstName(String firstName)
 	{
@@ -44,7 +60,32 @@ public class User
 		this.birthday = birthday;
 	}
 
+	public void setBalancedId(String balancedId)
+	{
+		this.balancedId = balancedId;
+	}
+
+	public void setFacebookId(String facebookId)
+	{
+		this.facebookId = facebookId;
+	}
+
+	public void setTwitterId(String twitterId)
+	{
+		this.twitterId = twitterId;
+	}
+
+	public void setGooglePlusId(String googlePlusId)
+	{
+		this.googlePlusId = googlePlusId;
+	}
+
 	// Getters
+
+	public String getPatronId()
+	{
+		return patronId;
+	}
 
 	public String getFirstName()
 	{
@@ -69,5 +110,25 @@ public class User
 	public String getBirthday()
 	{
 		return birthday;
+	}
+
+	public String getBalancedId()
+	{
+		return balancedId;
+	}
+
+	public String getFacebookId()
+	{
+		return facebookId;
+	}
+
+	public String getTwitterId()
+	{
+		return twitterId;
+	}
+
+	public String getGooglePlusId()
+	{
+		return googlePlusId;
 	}
 }

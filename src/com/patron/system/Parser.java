@@ -22,10 +22,36 @@ import com.patron.model.Option;
 import com.patron.model.Order;
 import com.patron.model.Selection;
 import com.patron.model.Supplement;
+import com.patron.model.User;
 import com.patron.model.Vendor;
 
 public class Parser
 {
+	public static User getUser(JSONObject rawUser, String password) throws JSONException
+	{
+		System.out.println("poop1");
+		String patronId = rawUser.getString("patronId");
+		System.out.println("poop2");
+		String email = rawUser.getString("email");
+		System.out.println("poop3");
+		String firstName = rawUser.getString("firstName");
+		System.out.println("poop4");
+		String lastName = rawUser.getString("lastName");
+		System.out.println("poop5");
+		String birthday = rawUser.getString("birthday");
+		System.out.println("poop6");
+		String balancedId = rawUser.getString("balancedId");
+		System.out.println("poop7");
+		String facebookId = rawUser.getString("facebookId");
+		System.out.println("poop8");
+		String twitterId = rawUser.getString("twitterId");
+		System.out.println("poop9");
+		String googlePlusId = rawUser.getString("googlePlusId");
+		System.out.println("poop10");
+		return new User(patronId, firstName, lastName, email, password, birthday, balancedId,
+			facebookId, twitterId, googlePlusId);
+	}
+
 	public static List<Vendor> getVendors(JSONArray rawVendors)
 	{
 		ArrayList<Vendor> vendors = new ArrayList<Vendor>();
