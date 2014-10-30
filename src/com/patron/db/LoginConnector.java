@@ -98,11 +98,11 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 		{
 			JSONObject patron = new JSONObject(result);
 			User user = Parser.getUser(patron, password);
-			System.out.println("logged in");
-			System.out.println(user.getEmail());
-			System.out.println(user.getPassword());
 			Globals.setUser(user);
-			activity.message("Successfully logged in.");
+			System.out.println(user.getCards().size());
+			System.out.println(user.getCards().get(0).getBankName());
+			System.out.println(user.getCards().get(0).getNumber());
+			System.out.println(user.getCards().get(0).getType());
 			activity.update();
 		}
 		catch (NumberFormatException e)

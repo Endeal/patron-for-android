@@ -104,9 +104,9 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 		final Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
 
 		// Set field's to mock data.
-		fieldName.setText("Carlos Spacey");
-		fieldNumber.setText("4111111111111111");
-		fieldCode.setText("123");
+		fieldName.setText("James Whiteman");
+		fieldNumber.setText("4833160029475107");
+		fieldCode.setText("768");
 		fieldAddress.setText("1500 Ralston Avenue");
 		fieldState.setText("CA");
 		fieldCity.setText("Belmont");
@@ -145,14 +145,6 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 			{
 				if (!submitting)
 				{
-					// Create a loading indicator.
-					/*
-					ProgressBar progressIndicator = new ProgressBar(view.getContext());
-					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-					layout.addView(progressIndicator, params);
-					*/
 					beginLoading();
 
 					// Get the data from the form.
@@ -170,17 +162,6 @@ public class FlashAddCard extends ActionBarActivity implements Loadable
 					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month,
 						year, address, state, city, postalCode);
 					connector.execute(view.getContext());
-
-					// Print out data for test's sake
-					System.out.println("Name:" + name);
-					System.out.println("Card Number:" + number);
-					System.out.println("Security Code:" + code);
-					System.out.println("Expiration Month:" + month);
-					System.out.println("Expiration Year:" + year);
-					System.out.println("Address:" + address);
-					System.out.println("State:" + state);
-					System.out.println("City:" + city);
-					System.out.println("Postal Code:" + postalCode);
 				}
 			}
 		});

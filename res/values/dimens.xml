@@ -63,7 +63,24 @@
     <dimen name="dimMenuListItemsDividerHeight">3px</dimen>
     
     <!-- Cart Screen -->
+    <dimen name="dimCartButtonStationText">10sp</dimen>
+    <dimen name="dimCartButtonStationMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonStationPadding">10dp</dimen>
+    <dimen name="dimCartButtonPaymentText">10sp</dimen>
+    <dimen name="dimCartButtonPaymentMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonPaymentPadding">10dp</dimen>
+    <dimen name="dimCartButtonTipText">10sp</dimen>
+    <dimen name="dimCartButtonTipMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonTipPadding">10dp</dimen>
+    <dimen name="dimCartButtonCouponText">10sp</dimen>
+    <dimen name="dimCartButtonCouponMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonCouponPadding">10dp</dimen>
+    <dimen name="dimCartButtonCommentText">10sp</dimen>
+    <dimen name="dimCartButtonCommentMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonCommentPadding">10dp</dimen>
     <dimen name="dimCartButtonFinishText">20sp</dimen>
+    <dimen name="dimCartButtonFinishMinHeight">20dp</dimen>
+    <dimen name="dimCartButtonFinishPadding">10dp</dimen>
     
     <!-- Favorites Screen -->
     <dimen name="dimFavoritesListItemsDividerHeight">3px</dimen>
@@ -137,6 +154,12 @@
     <dimen name="dimCodeListItemTextProducts">12sp</dimen>
     <dimen name="dimCodeListItemTextTime">16sp</dimen>
     <dimen name="dimCodeListItemTextStatus">16sp</dimen>
+
+    <!-- Remove Payment List Item -->
+    <dimen name="dimRemovePaymentListItemTextNumber">20sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextBankName">12sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextType">20sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextAddress">12sp</dimen>
     
     <!-- Miscellaneous UI Elements -->
     <dimen name="dimMiscTextNoLocations">18sp</dimen>

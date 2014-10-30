@@ -24,32 +24,86 @@ import com.patron.model.Selection;
 import com.patron.model.Supplement;
 import com.patron.model.User;
 import com.patron.model.Vendor;
+import com.patron.model.Card;
+import com.patron.model.BankAccount;
 
 public class Parser
 {
 	public static User getUser(JSONObject rawUser, String password) throws JSONException
 	{
-		System.out.println("poop1");
 		String patronId = rawUser.getString("patronId");
-		System.out.println("poop2");
 		String email = rawUser.getString("email");
-		System.out.println("poop3");
 		String firstName = rawUser.getString("firstName");
-		System.out.println("poop4");
 		String lastName = rawUser.getString("lastName");
-		System.out.println("poop5");
 		String birthday = rawUser.getString("birthday");
-		System.out.println("poop6");
 		String balancedId = rawUser.getString("balancedId");
-		System.out.println("poop7");
 		String facebookId = rawUser.getString("facebookId");
-		System.out.println("poop8");
 		String twitterId = rawUser.getString("twitterId");
-		System.out.println("poop9");
 		String googlePlusId = rawUser.getString("googlePlusId");
-		System.out.println("poop10");
+		JSONObject cardsObject = rawUser.getJSONObject("cards");
+		JSONArray rawCards = cardsObject.getJSONArray("cards");
+		JSONObject bankAccountsObject = rawUser.getJSONObject("bankAccounts");
+		JSONArray rawBankAccounts = bankAccountsObject.getJSONArray("bank_accounts");
+		List<Card> cards = getCards(rawCards);
+		List<BankAccount> bankAccounts = getBankAccounts(rawBankAccounts);
 		return new User(patronId, firstName, lastName, email, password, birthday, balancedId,
-			facebookId, twitterId, googlePlusId);
+			facebookId, twitterId, googlePlusId, cards, bankAccounts);
+	}
+
+	public static List<Card> getCards(JSONArray rawCards) throws JSONException
+	{
+		List<Card> cards = new ArrayList<Card>();
+		for (int i = 0; i < rawCards.length(); i++)
+		{
+			JSONObject rawCard = rawCards.getJSONObject(i);
+			JSONObject rawLinks = rawCard.getJSONObject("links");
+			JSONObject rawAddress = rawCard.getJSONObject("address");
+			String name = rawCard.getString("name");
+			String number = rawCard.getString("number");
+			String expirationMonth = rawCard.getString("expiration_month");
+			String expirationYear = rawCard.getString("expiration_year");
+			String type = rawCard.getString("type");
+			String bankName = rawCard.getString("bank_name");
+			String address = rawAddress.getString("line1");
+			String city = rawAddress.getString("city");
+			String state = rawAddress.getString("state");
+			String postalCode = rawAddress.getString("postal_code");
+			String href = rawCard.getString("href");
+			String createdAt = rawCard.getString("created_at");
+			boolean verified = rawCard.getBoolean("is_verified");
+			Card card = new Card(name, number, expirationMonth, expirationYear, type, bankName,
+				address, city, state, postalCode, href, createdAt, verified);
+			cards.add(card);
+		}
+		return cards;
+	}
+
+	public static List<BankAccount> getBankAccounts(JSONArray rawBankAccounts) throws JSONException
+	{
+		List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
+		for (int i = 0; i < rawBankAccounts.length(); i++)
+		{
+			JSONObject rawBankAccount = rawBankAccounts.getJSONObject(i);
+			JSONObject rawLinks = rawBankAccount.getJSONObject("links");
+			JSONObject rawAddress = rawBankAccount.getJSONObject("address");
+			String name = rawBankAccount.getString("name");
+			String bankName = rawBankAccount.getString("bank_name");
+			String number = rawBankAccount.getString("account_number");
+			String type = rawBankAccount.getString("account_type");
+			String routing = rawBankAccount.getString("routing_number");
+			String address = rawAddress.getString("line1");
+			String city = rawAddress.getString("city");
+			String state = rawAddress.getString("state");
+			String postalCode = rawAddress.getString("postal_code");
+			String href = rawBankAccount.getString("href");
+			String createdAt = rawBankAccount.getString("created_at");
+			boolean creditable = rawBankAccount.getBoolean("can_credit");
+			boolean debitable = rawBankAccount.getBoolean("can_debit");
+			BankAccount bankAccount = new BankAccount(name, bankName, number, type, routing,
+				address, city, state, postalCode, href, createdAt, creditable, debitable);
+			bankAccounts.add(bankAccount);
+		}
+		return bankAccounts;
 	}
 
 	public static List<Vendor> getVendors(JSONArray rawVendors)

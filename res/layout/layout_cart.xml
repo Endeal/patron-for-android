@@ -11,6 +11,56 @@
         android:layout_above="@+id/cartButtonFinish" >
     </ListView>
 
+    <LinearLayout
+        android:id="@+id/cartLayoutControls"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cartButtonFinish"
+        android:weightSum="5" >
+
+        <Button
+            android:id="@+id/cartButtonStation"
+            style="@style/StyleCartButtonStation"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="0dp" />
+
+        <Button
+            android:id="@+id/cartButtonPayment"
+            style="@style/StyleCartButtonPayment"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="0dp" />
+
+        <Button
+            android:id="@+id/cartButtonTip"
+            style="@style/StyleCartButtonTip"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="0dp" />
+
+        <Button
+            android:id="@+id/cartButtonCoupon"
+            style="@style/StyleCartButtonCoupon"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="0dp" />
+
+        <Button
+            android:id="@+id/cartButtonComment"
+            style="@style/StyleCartButtonComment"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="0dp" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/cartButtonFinish"
         style="@style/StyleCartButtonFinish"

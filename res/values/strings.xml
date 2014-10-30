@@ -65,7 +65,12 @@
     <string name="menuImageButtonDescriptionDelete">Delete from Tab</string>
     
     <!-- Cart Screen -->
-    <string name="cartButtonFinish">Close Tab</string>
+    <string name="cartButtonStation">Station</string>
+    <string name="cartButtonPayment">Payment</string>
+    <string name="cartButtonTip">Tip</string>
+    <string name="cartButtonCoupon">Coupon</string>
+    <string name="cartButtonComment">Comment</string>
+    <string name="cartButtonFinish">Pay Now</string>
     
     <!-- Scan Screen -->
     <string name="codeImageImageViewDescription">QR Code</string>
@@ -139,6 +144,12 @@
     <string name="codeListItemTextProducts">1 Budweiser</string>
     <string name="codeListItemTextTime">1/1/10, 12:00 PM</string>
     <string name="codeListItemTextStatus">Waiting</string>
+
+    <!-- Remove Payment Screen -->
+    <string name="removePaymentListItemTextNumber">xxxxxxxxx0000</string>
+    <string name="removePaymentListItemTextType">Debit</string>
+    <string name="removePaymentListItemTextBankName">Chase</string>
+    <string name="removePaymentListItemTextAddress"></string>
     
     <!-- Miscellaneous -->
     <string name="app_title">Flash VIP</string>

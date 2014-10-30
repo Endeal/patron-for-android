@@ -103,7 +103,7 @@ public class FlashPayment extends ActionBarActivity implements Loadable
             			startActivity(intent);
             			break;
             		case 1:
-            			intent = new Intent(view.getContext(), FlashAddBank.class);
+            			intent = new Intent(view.getContext(), FlashAddBankAccount.class);
             			startActivity(intent);
             			break;
             		default:

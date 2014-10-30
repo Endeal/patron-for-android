@@ -1,5 +1,8 @@
 package com.patron.model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class User
 {
 	private String patronId;
@@ -12,9 +15,12 @@ public class User
 	private String facebookId;
 	private String twitterId;
 	private String googlePlusId;
+	private List<Card> cards;
+	private List<BankAccount> bankAccounts;
 
 	public User(String patronId, String firstName, String lastName, String email, String password, String birthday,
-		String balancedId, String facebookId, String twitterId, String googlePlusId)
+		String balancedId, String facebookId, String twitterId, String googlePlusId,
+		List<Card> cards, List<BankAccount> bankAccounts)
 	{
 		this.patronId = patronId;
 		this.firstName = firstName;
@@ -26,6 +32,8 @@ public class User
 		this.facebookId = facebookId;
 		this.twitterId = twitterId;
 		this.googlePlusId = googlePlusId;
+		this.cards = cards;
+		this.bankAccounts = bankAccounts;
 	}
 
 	// Setters
@@ -80,6 +88,16 @@ public class User
 		this.googlePlusId = googlePlusId;
 	}
 
+	public void setCards(List<Card> cards)
+	{
+		this.cards = cards;
+	}
+
+	public void setBankAccounts(List<BankAccount> bankAccounts)
+	{
+		this.bankAccounts = bankAccounts;
+	}
+
 	// Getters
 
 	public String getPatronId()
@@ -130,5 +148,15 @@ public class User
 	public String getGooglePlusId()
 	{
 		return googlePlusId;
+	}
+
+	public List<Card> getCards()
+	{
+		return cards;
+	}
+
+	public List<BankAccount> getBankAccounts()
+	{
+		return bankAccounts;
 	}
 }

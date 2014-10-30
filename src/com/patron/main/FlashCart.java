@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.json.JSONException;
 
@@ -17,11 +19,15 @@ import com.patron.db.AddOrderConnector;
 import com.patron.listeners.ButtonFinishListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Fragment;
+import com.patron.model.Card;
 import com.patron.system.Globals;
+import com.patron.lists.ListFonts;
 import com.patron.system.Loadable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -29,25 +35,33 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.graphics.Typeface;
 
 public class FlashCart extends ActionBarActivity implements Loadable
 {
-    /*
-     * Set to PaymentActivity.ENVIRONMENT_SANDBOX to use your test credentials from https://developer.paypal.com
-     * Set to PaymentActivity.ENVIRONMENT_NO_NETWORK to kick the tires without communicating to PayPal's servers.
-     * Set to PaymentActivity.ENVIRONMENT_PRODUCTION to move real money.
-     */ 
-    
 	// The layout elements.
 	Button buttonFinish;
 	ListView listCart;
 	View viewLoading;
 	View viewCart;
 	View viewNone;
+
+	// The comment for the order.
+	public static int station = 0;
+	public static Card payment = null;
+	public static String tip = "";
+	public static String coupons = "";
+	public static String comment = "";
 	
 	// Activity Methods
 	@Override
@@ -184,10 +198,86 @@ public class FlashCart extends ActionBarActivity implements Loadable
     				products, R.layout.list_item_cart, from, to);
     		adapter.setViewBinder(new CartProductBinder(this));
     		listCart.setAdapter(adapter);
+
+    		// Set up the cart controls.
+			Typeface typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_LIGHT);
+    		Button buttonStation = (Button)findViewById(R.id.cartButtonStation);
+    		Button buttonPayment = (Button)findViewById(R.id.cartButtonPayment);
+    		Button buttonTip = (Button)findViewById(R.id.cartButtonTip);
+    		Button buttonCoupon = (Button)findViewById(R.id.cartButtonCoupon);
+    		Button buttonComment = (Button)findViewById(R.id.cartButtonComment);
+			buttonStation.setTypeface(typeface);
+			buttonPayment.setTypeface(typeface);
+			buttonTip.setTypeface(typeface);
+			buttonCoupon.setTypeface(typeface);
+			buttonComment.setTypeface(typeface);
+			buttonStation.setText("Station:\nLounge");
+			buttonPayment.setText("Payment:\nVISA 5107");
+			buttonTip.setText("Tip:\n$3.42");
+			buttonCoupon.setText("Coupons:\n1");
+
+			// Set up tip button
+			buttonTip.setOnClickListener(new OnClickListener() {
+				public void onClick(View view)
+				{
+					final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+					final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View dialogView = inflater.inflate(R.layout.dialog_tip, null);
+					builder.setView(dialogView);
+					Button buttonDone = (Button)dialogView.findViewById(R.id.dialogTipButtonDone);
+					final EditText fieldCustom = (EditText)dialogView.findViewById(R.id.dialogTipFieldCustom);
+					final SeekBar seekBarPercent = (SeekBar)dialogView.findViewById(R.id.dialogTipSeekBarPercent);
+					final TextView textPercent = (TextView)dialogView.findViewById(R.id.dialogTipTextPercent);
+					final AlertDialog dialog = builder.create();
+					seekBarPercent.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+						public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+						{
+							BigDecimal value = Globals.getOrder().getPrice().multiply(new BigDecimal((progress / 100.0) + ""));
+							value = value.setScale(2, RoundingMode.CEILING);
+							fieldCustom.setText(value.toString());
+							textPercent.setText(progress + "%");
+						}
+						public void onStartTrackingTouch(SeekBar seekBar) {}
+						public void onStopTrackingTouch(SeekBar seekBar) {}
+					});
+					buttonDone.setOnClickListener(new OnClickListener() {
+						public void onClick(View view)
+						{
+							FlashCart.tip = fieldCustom.getText().toString();
+							dialog.dismiss();
+						}
+					});
+					dialog.show();
+				}
+			});
+
+			// Set up comment button
+			buttonComment.setOnClickListener(new OnClickListener() {
+				public void onClick(View view)
+				{
+					final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+					final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View dialogView = inflater.inflate(R.layout.dialog_comment, null);
+					builder.setView(dialogView);
+					Button buttonDone = (Button)dialogView.findViewById(R.id.dialogCommentButtonDone);
+					final EditText fieldComment = (EditText)dialogView.findViewById(R.id.dialogCommentFieldComment);
+					final AlertDialog dialog = builder.create();
+					buttonDone.setOnClickListener(new OnClickListener() {
+						public void onClick(View view)
+						{
+							FlashCart.comment = fieldComment.getText().toString();
+							dialog.dismiss();
+						}
+					});
+					dialog.show();
+				}
+			});
     		
     		// Set the total price text view.
+			typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
     		String text = (String) buttonFinish.getText();
-    		text = "Close Tab: $" + Globals.getOrder().getPrice().toString();
+    		text = "Pay Now: $" + Globals.getOrder().getPrice().toString();
+    		buttonFinish.setTypeface(typeface);
     		buttonFinish.setText(text);
     	}
     	else

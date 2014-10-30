@@ -22,5 +22,8 @@ public class ListLinks
 	public static final String LINK_GET_SCAN = BASE_URL + "get/getCodeImage.php";
 	public static final String LINK_ADD_ORDER = BASE_URL + "add/addOrder.php";
 	public static final String LINK_ADD_CARD = BASE_URL + "add/addCard.php";
+	public static final String LINK_ADD_BANK_ACCOUNT = BASE_URL + "add/addBankAccount.php";
+	public static final String LINK_REMOVE_CARD = BASE_URL + "remove/removeCard.php";
+	public static final String LINK_REMOVE_BANK_ACCOUNT = BASE_URL + "remove/removeBankAccount.php";
 	public static final String LINK_DIRECTORY_CODES = "http://jameswhiteman.info/";
 }

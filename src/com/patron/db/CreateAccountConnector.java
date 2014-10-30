@@ -114,6 +114,7 @@ public class CreateAccountConnector extends AsyncTask<URL, Void, String>
 			Globals.setUser(user);
 			activity.message("Successfully created account.");
 			activity.update();
+			System.out.println("User:\n" + result);
 		}
 		catch (NumberFormatException e)
 		{

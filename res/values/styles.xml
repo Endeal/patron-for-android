@@ -255,11 +255,58 @@
     </style>
     
     <!-- Cart Screen Styles -->
+    <style name="StyleCartButtonStation">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonStationText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonStationMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonStationPadding</item>
+        <item name="android:text">@string/cartButtonStation</item>
+    </style>
+
+    <style name="StyleCartButtonPayment">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonPaymentText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonPaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonPaymentPadding</item>
+        <item name="android:text">@string/cartButtonPayment</item>
+    </style>
+
+    <style name="StyleCartButtonTip">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonTipText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonTipMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonTipPadding</item>
+        <item name="android:text">@string/cartButtonTip</item>
+    </style>
+
+    <style name="StyleCartButtonCoupon">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonCouponText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonCouponMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonCouponPadding</item>
+        <item name="android:text">@string/cartButtonCoupon</item>
+    </style>
+
+    <style name="StyleCartButtonComment">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonCommentText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonCommentMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonCommentPadding</item>
+        <item name="android:text">@string/cartButtonComment</item>
+    </style>
+
     <style name="StyleCartButtonFinish">
-        <item name="android:background">#BBBBBB</item>
+        <item name="android:background">#AAAAAA</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimCartButtonFinishText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonFinishMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonFinishPadding</item>
         <item name="android:text">@string/cartButtonFinish</item>
     </style>
     
@@ -521,6 +568,35 @@
     
     <style name="StyleCartListItemButtonRemove">
         <item name="android:background">@drawable/button_remove</item>
+    </style>
+
+    <!-- Remove Payment List Item -->
+    <style name="StyleRemovePaymentListItemTextNumber">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextNumber</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextNumber</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="StyleRemovePaymentListItemTextType">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextType</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextType</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleRemovePaymentListItemTextBankName">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextBankName</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextBankName</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleRemovePaymentListItemTextAddress">
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:text">@string/removePaymentListItemTextAddress</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextAddress</item>
+        <item name="android:textStyle">bold</item>
     </style>
     
     <!-- Miscellaneous Styles -->

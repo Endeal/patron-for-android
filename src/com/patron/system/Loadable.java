@@ -4,7 +4,7 @@ public interface Loadable
 {
 	void beginLoading();
 	void load();
-	void endLoading();
+	void endLoading(List<String> results);
 	void update();
 	void message(String msg);
 }

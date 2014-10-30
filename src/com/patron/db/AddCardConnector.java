@@ -74,6 +74,8 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 		HashMap<String, Object> optionalFields = new HashMap<String, Object>();
 		optionalFields.put("name", name);
 		optionalFields.put("cvv", code);
+		optionalFields.put("expiration_month", month);
+		optionalFields.put("expiration_year", year);
 		optionalFields.put("address", addressMap);
 		try
 		{
@@ -85,7 +87,8 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 			String json = gson.toJson(response);
 			Map<String, Object> cardResponse = (Map<String, Object>) ((ArrayList)response.get("cards")).get(0);
 			cardHref = cardResponse.get("href").toString();
-        		System.out.println(cardHref);
+        	System.out.println("Card:" + cardHref);
+        	System.out.println("URL:" + ListLinks.LINK_ADD_CARD);
 
 			// Associate the card to the customer.
 			HttpClient client = new DefaultHttpClient();
@@ -93,7 +96,7 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
         	ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
         	pairs.add(new BasicNameValuePair("email", Globals.getUser().getEmail()));
         	pairs.add(new BasicNameValuePair("password", Globals.getUser().getPassword()));
-        	pairs.add(new BasicNameValuePair("href", cardHref));
+        	pairs.add(new BasicNameValuePair("card", cardHref));
         	post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
         	HttpResponse httpResponse = client.execute(post);
         	StatusLine statusLine = httpResponse.getStatusLine();

@@ -108,9 +108,9 @@
                 android:value="com.patron.main.FlashPayment" />
         </activity>
 
-        <!-- The Add Bank Screen Activity -->
+        <!-- The Add Bank Account Screen Activity -->
         <activity
-            android:name="com.patron.main.FlashAddBank"
+            android:name="com.patron.main.FlashAddBankAccount"
             android:label="@string/titleActivityAddBank"
             android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait"

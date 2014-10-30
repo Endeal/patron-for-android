@@ -110,7 +110,7 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 				final EditText fieldPassword = (EditText)dialogView.findViewById(R.id.dialogLoginPatronFieldPassword);
 
 				// Prepopulate Login info
-				fieldEmail.setText("johnmiller6@gmail.com");
+				fieldEmail.setText("mpacquiao@gmail.com");
 				fieldPassword.setText("batman");
 				
 				final AlertDialog dialog = builder.create();
