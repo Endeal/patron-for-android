@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+    	android:id="@+id/dialogTipTextTitle"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal"
+    	android:text="Enter the amount to tip with your order." />
+
+    <EditText
+    	android:id="@+id/dialogTipFieldCustom"
+        android:inputType="numberDecimal"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:maxLength="300"
+    	android:hint="Enter custom amount" />
+
+    <SeekBar
+        android:id="@+id/dialogTipSeekBarPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/dialogTipTextPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="0%" />
+
+    <Button
+    	android:id="@+id/dialogTipButtonDone"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_margin="5dp"
+    	android:text="Done" />
+
+</LinearLayout>

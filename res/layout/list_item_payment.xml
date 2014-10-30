@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Defining a container for List Item-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!-- Address, city, state, zip; bank name; number; type  -->
+
+    <TextView
+        android:id="@+id/removePaymentListItemTextNumber"
+        style="@style/StyleRemovePaymentListItemTextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp" />
+
+    <TextView
+        android:id="@+id/removePaymentListItemTextType"
+        style="@style/StyleRemovePaymentListItemTextType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp" />
+    
+    <!-- Bank Name Text -->
+    <TextView
+        android:id="@+id/removePaymentListItemTextBankName"
+        style="@style/StyleRemovePaymentListItemTextBankName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/removePaymentListItemTextNumber"
+        android:layout_marginLeft="5dp" />
+
+    <!-- Address -->
+    <TextView
+        android:id="@+id/removePaymentListItemTextAddress"
+        style="@style/StyleRemovePaymentListItemTextAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/removePaymentListItemTextBankName"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp" />
+    
+</RelativeLayout>

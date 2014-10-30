@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/addBankAccountLayoutMain"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent">
+
+    <!-- Text labels corresponding to fields -->
+
+    <TextView
+      android:id="@+id/addBankAccountTextName"
+      style="@style/StyleAddBankTextName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true" />
+
+    <TextView
+      android:id="@+id/addBankAccountTextNumber"
+      style="@style/StyleAddBankTextNumber"
+   	  android:layout_width="wrap_content"
+   	  android:layout_height="wrap_content"
+   	  android:layout_alignParentLeft="true"
+   	  android:layout_below="@+id/addBankAccountTextName" />
+
+   	<TextView
+      android:id="@+id/addBankAccountTextRouting"
+      style="@style/StyleAddBankTextRouting"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+   	  android:layout_alignParentLeft="true"
+   	  android:layout_below="@+id/addBankAccountTextNumber" />
+
+   	<TextView
+      android:id="@+id/addBankAccountTextType"
+      style="@style/StyleAddBankTextType"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@+id/addBankAccountTextRouting" />
+
+   	<!-- Input fields -->
+
+   	<EditText
+      android:id="@+id/addBankAccountFieldName"
+   	  android:inputType="textCapWords"
+   	  android:layout_width="match_parent"
+   	  android:layout_height="wrap_content"
+   	  android:layout_alignParentRight="true"
+   	  android:layout_alignBaseline="@+id/addBankAccountTextName"
+   	  android:layout_toRightOf="@+id/addBankAccountTextName" />
+
+   	<EditText
+   	  android:id="@+id/addBankAccountFieldNumber"
+   	  android:inputType="number"
+   	  android:layout_width="match_parent"
+   	  android:layout_height="wrap_content"
+   	  android:layout_alignParentRight="true"
+   	  android:layout_alignBaseline="@+id/addBankAccountTextNumber"
+   	  android:layout_toRightOf="@+id/addBankAccountTextNumber" />
+
+   	<EditText
+   	  android:id="@+id/addBankAccountFieldRouting"
+   	  android:inputType="number"
+   	  android:layout_width="match_parent"
+   	  android:layout_height="wrap_content"
+   	  android:layout_alignParentRight="true"
+   	  android:layout_alignBaseline="@+id/addBankAccountTextRouting"
+   	  android:layout_toRightOf="@+id/addBankAccountTextRouting" />
+
+   	<Spinner
+   	  android:id="@+id/addBankAccountSpinnerType"
+   	  android:entries="@array/array_bank_types"
+   	  android:layout_width="wrap_content"
+   	  android:layout_height="wrap_content"
+   	  android:layout_alignParentRight="true"
+   	  android:layout_toRightOf="@+id/addBankAccountTextType"
+   	  android:layout_below="@+id/addBankAccountTextRouting" />
+
+   	<!-- Submission buttons -->
+
+   	<Button
+   	  android:id="@+id/addBankAccountButtonSubmit"
+      style="@style/StyleAddBankButtonSubmit"
+   	  android:layout_width="wrap_content"
+   	  android:layout_height="wrap_content"
+   	  android:layout_centerHorizontal="true"
+   	  android:layout_below="@+id/addBankAccountTextType"
+   	  android:layout_margin="10dp"
+   	  android:padding="10dp" />
+
+</RelativeLayout>
