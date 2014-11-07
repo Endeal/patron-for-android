@@ -15,12 +15,11 @@ public class User
 	private String facebookId;
 	private String twitterId;
 	private String googlePlusId;
-	private List<Card> cards;
-	private List<BankAccount> bankAccounts;
+	private List<Funder> funders;
 
 	public User(String patronId, String firstName, String lastName, String email, String password, String birthday,
 		String balancedId, String facebookId, String twitterId, String googlePlusId,
-		List<Card> cards, List<BankAccount> bankAccounts)
+		List<Funder> funders)
 	{
 		this.patronId = patronId;
 		this.firstName = firstName;
@@ -32,8 +31,7 @@ public class User
 		this.facebookId = facebookId;
 		this.twitterId = twitterId;
 		this.googlePlusId = googlePlusId;
-		this.cards = cards;
-		this.bankAccounts = bankAccounts;
+		this.funders = funders;
 	}
 
 	// Setters
@@ -88,14 +86,9 @@ public class User
 		this.googlePlusId = googlePlusId;
 	}
 
-	public void setCards(List<Card> cards)
+	public void setFunders(List<Funder> funders)
 	{
-		this.cards = cards;
-	}
-
-	public void setBankAccounts(List<BankAccount> bankAccounts)
-	{
-		this.bankAccounts = bankAccounts;
+		this.funders = funders;
 	}
 
 	// Getters
@@ -150,13 +143,8 @@ public class User
 		return googlePlusId;
 	}
 
-	public List<Card> getCards()
+	public List<Funder> getFunders()
 	{
-		return cards;
-	}
-
-	public List<BankAccount> getBankAccounts()
-	{
-		return bankAccounts;
+		return funders;
 	}
 }

@@ -19,7 +19,8 @@ import com.patron.db.AddOrderConnector;
 import com.patron.listeners.ButtonFinishListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Fragment;
-import com.patron.model.Card;
+import com.patron.model.Funder;
+import com.patron.model.Station;
 import com.patron.system.Globals;
 import com.patron.lists.ListFonts;
 import com.patron.system.Loadable;
@@ -57,10 +58,10 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	View viewNone;
 
 	// The comment for the order.
-	public static int station = 0;
-	public static Card payment = null;
-	public static String tip = "";
-	public static String coupons = "";
+	public static Station station = null;
+	public static Funder funder = null;
+	public static BigDecimal tip = null;
+	public static List<Object> coupons = null;
 	public static String comment = "";
 	
 	// Activity Methods
@@ -137,6 +138,27 @@ public class FlashCart extends ActionBarActivity implements Loadable
 		listCart = (ListView) viewCart.findViewById(R.id.cartListItems);
 		buttonFinish = (Button) viewCart.findViewById(R.id.cartButtonFinish);
 		buttonFinish.setOnClickListener(new ButtonFinishListener(this));
+
+		// Set default cart values.
+		Station station = new Station("-1", "(none)");
+		Funder funder = null;
+		BigDecimal tip = new BigDecimal("0.00");
+		List<Object> coupons = new ArrayList<Object>();
+		String comment = "";
+		if (Globals.getVendor().getStations() != null && Globals.getVendor().getStations().size() > 0)
+		{
+			station = Globals.getVendor().getStations().get(0);
+		}
+		if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
+		{
+			funder = Globals.getUser(). getFunders().get(0);
+		}
+		FlashCart.station = station;
+		FlashCart.funder  = funder;
+		FlashCart.tip = tip;
+		FlashCart.coupons = coupons;
+		FlashCart.comment = comment;
+
 		load();
 	}
 	
@@ -211,10 +233,10 @@ public class FlashCart extends ActionBarActivity implements Loadable
 			buttonTip.setTypeface(typeface);
 			buttonCoupon.setTypeface(typeface);
 			buttonComment.setTypeface(typeface);
-			buttonStation.setText("Station:\nLounge");
-			buttonPayment.setText("Payment:\nVISA 5107");
-			buttonTip.setText("Tip:\n$3.42");
-			buttonCoupon.setText("Coupons:\n1");
+			buttonStation.setText("Station:\n" + FlashCart.station.getName());
+			buttonPayment.setText("Payment:\n" + FlashCart.funder.getNumber());
+			buttonTip.setText("Tip:\n$" + FlashCart.tip.toString());
+			buttonCoupon.setText("Coupons:\n" + FlashCart.coupons.size());
 
 			// Set up tip button
 			buttonTip.setOnClickListener(new OnClickListener() {
@@ -243,8 +265,9 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					buttonDone.setOnClickListener(new OnClickListener() {
 						public void onClick(View view)
 						{
-							FlashCart.tip = fieldCustom.getText().toString();
+							FlashCart.tip = new BigDecimal(fieldCustom.getText().toString());
 							dialog.dismiss();
+							update();
 						}
 					});
 					dialog.show();
@@ -267,6 +290,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
 						{
 							FlashCart.comment = fieldComment.getText().toString();
 							dialog.dismiss();
+							update();
 						}
 					});
 					dialog.show();

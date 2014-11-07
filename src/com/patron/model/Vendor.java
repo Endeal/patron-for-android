@@ -3,6 +3,8 @@ package com.patron.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.patron.model.Station;
+
 public class Vendor
 {
 	private String vendorId;
@@ -16,6 +18,7 @@ public class Vendor
 	private List<Item> items;
 	private List<Item> filteredItems;
 	private List<Item> recommendations;
+	private List<Station> stations;
 	
 	// CONSTRUCTORS
 	
@@ -26,7 +29,8 @@ public class Vendor
 	}
 	
 	public Vendor(String vendorId, String name, String address, String city,
-			String state, String zip, String phone, List<Item> items, List<Item> recommendations)
+			String state, String zip, String phone, List<Item> items,
+			List<Item> recommendations, List<Station> stations)
 	{
 		this.vendorId = vendorId;
 		this.name = name;
@@ -38,6 +42,7 @@ public class Vendor
 		this.items = items;
 		this.recommendations = recommendations;
 		this.filteredItems = items;
+		this.stations = stations;
 	}
 	
 	// SETTER METHODS
@@ -86,9 +91,14 @@ public class Vendor
 		this.filteredItems = filteredItems;
 	}
 	
-	public void setRecommendations(List<Item> d)
+	public void setRecommendations(List<Item> recommendations)
 	{
-		recommendations = d;
+		this.recommendations = recommendations;
+	}
+
+	public void setStations(List<Station> stations)
+	{
+		this.stations = stations;
 	}
 	
 	// ACCESSOR METHODS
@@ -141,5 +151,10 @@ public class Vendor
 	public List<Item> getRecommendations()
 	{
 		return recommendations;
+	}
+
+	public List<Station> getStations()
+	{
+		return stations;
 	}
 }

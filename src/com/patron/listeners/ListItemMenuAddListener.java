@@ -2,6 +2,7 @@ package com.patron.listeners;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,9 @@ import com.patron.model.Item;
 import com.patron.model.Option;
 import com.patron.model.Order;
 import com.patron.model.Selection;
+import com.patron.model.Station;
+import com.patron.model.Funder;
+import com.patron.model.Vendor;
 import com.patron.system.Globals;
 
 public class ListItemMenuAddListener implements OnItemClickListener
@@ -66,8 +70,23 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		List<Fragment> fragments = null;
 		if (order == null)
 		{
-			order = new Order(null, Globals.getVendor().getVendorId(),
-					fragments, Order.Status.WAITING);
+			// Create default order info
+			Station station = null;
+			Funder funder = null;
+			BigDecimal tip = new BigDecimal("0.00");
+			List<Object> coupons = new ArrayList<Object>();
+			String comment = "";
+			if (Globals.getVendor().getStations() != null && Globals.getVendor().getStations().size() > 0)
+			{
+				station = Globals.getVendor().getStations().get(0);
+			}
+			if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
+			{
+				funder = Globals.getUser().getFunders().get(0);
+			}
+
+			order = new Order(null, Globals.getVendor().getVendorId(), fragments, Order.Status.WAITING,
+				station, funder, tip, coupons, comment);
 		}
 		if (order.getFragments() != null &&
 				!order.getFragments().isEmpty())

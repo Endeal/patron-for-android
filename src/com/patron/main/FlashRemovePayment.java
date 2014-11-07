@@ -29,8 +29,7 @@ import com.patron.system.Globals;
 import com.patron.db.RemoveCardConnector;
 import com.patron.db.RemoveBankAccountConnector;
 import com.patron.model.User;
-import com.patron.model.Card;
-import com.patron.model.BankAccount;
+import com.patron.model.Funder;
 import com.patron.bind.PaymentBinder;
 
 public class FlashRemovePayment extends ActionBarActivity implements Loadable
@@ -84,30 +83,17 @@ public class FlashRemovePayment extends ActionBarActivity implements Loadable
 			R.id.removePaymentListItemTextBankName,
 			R.id.removePaymentListItemTextType,
 			R.id.removePaymentListItemTextAddress};
-		for (int i = 0; i < Globals.getUser().getCards().size(); i++)
+		for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
 		{	
 			Map<String, String> mapping = new HashMap<String, String>();
-			Card card = Globals.getUser().getCards().get(i);
-			mapping.put("number", card.getNumber());
-			mapping.put("bankName", card.getBankName());
-			mapping.put("type", card.getType().substring(0, 1).toUpperCase() + card.getType().substring(1));
-			if (card.getAddress() == null || card.getCity() == null || card.getState() == null)
+			Funder funder = Globals.getUser().getFunders().get(i);
+			mapping.put("number", funder.getNumber());
+			mapping.put("bankName", funder.getBankName());
+			mapping.put("type", funder.getType().substring(0, 1).toUpperCase() + funder.getType().substring(1));
+			if (funder.getAddress() == null || funder.getCity() == null || funder.getState() == null)
 				mapping.put("address", "");
 			else
-				mapping.put("address", card.getAddress() + ", " + card.getCity() + " " + card.getState());
-			payments.add(mapping);
-		}
-		for (int i = 0; i < Globals.getUser().getBankAccounts().size(); i++)
-		{	
-			Map<String, String> mapping = new HashMap<String, String>();
-			BankAccount bankAccount = Globals.getUser().getBankAccounts().get(i);
-			mapping.put("number", bankAccount.getNumber());
-			mapping.put("bankName", bankAccount.getBankName());
-			mapping.put("type", bankAccount.getType().substring(0, 1).toUpperCase() + bankAccount.getType().substring(1));
-			if (bankAccount.getAddress() == null || bankAccount.getCity() == null || bankAccount.getState() == null)
-				mapping.put("address", "");
-			else
-				mapping.put("address", bankAccount.getAddress() + ", " + bankAccount.getCity() + " " + bankAccount.getState());
+				mapping.put("address", funder.getAddress() + ", " + funder.getCity() + " " + funder.getState());
 			payments.add(mapping);
 		}
 		SimpleAdapter adapter = new SimpleAdapter(this, payments, R.layout.list_item_payment, from, to);
@@ -124,18 +110,16 @@ public class FlashRemovePayment extends ActionBarActivity implements Loadable
     				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
         				public void onClick(DialogInterface dialog, int which)
         				{
-        					if (pos <= Globals.getUser().getCards().size() - 1)
+        					Funder funder = Globals.getUser().getFunders().get(pos);
+        					if (funder.getType().equals("checking") || funder.getType().equals("savings"))
         					{
-        						Card card = Globals.getUser().getCards().get(pos);
-        						RemoveCardConnector removeCardConnector = new RemoveCardConnector(getActivity(), card);
-        						removeCardConnector.execute(v.getContext());
+        						RemoveBankAccountConnector removeBankAccountConnector = new RemoveBankAccountConnector(getActivity(), funder);
+        						removeBankAccountConnector.execute(v.getContext());
         					}
         					else
         					{
-        						int num = pos - Globals.getUser().getBankAccounts().size();
-        						BankAccount bankAccount = Globals.getUser().getBankAccounts().get(num);
-        						RemoveBankAccountConnector removeBankAccountConnector = new RemoveBankAccountConnector(getActivity(), bankAccount);
-        						removeBankAccountConnector.execute(v.getContext());
+        						RemoveCardConnector removeCardConnector = new RemoveCardConnector(getActivity(), funder);
+        						removeCardConnector.execute(v.getContext());
         					}
         				}
      				})

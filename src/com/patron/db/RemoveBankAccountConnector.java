@@ -26,23 +26,23 @@ import com.patron.main.FlashCart;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
-import com.patron.model.BankAccount;
+import com.patron.model.Funder;
 
 public class RemoveBankAccountConnector extends AsyncTask<Context, Void, String>
 {
 	private Loadable activity;
-	private BankAccount bankAccount;
+	private Funder funder;
 
-	public RemoveBankAccountConnector(Loadable activity, BankAccount bankAccount)
+	public RemoveBankAccountConnector(Loadable activity, Funder funder)
 	{
 		this.activity = activity;
-		this.bankAccount = bankAccount;
+		this.funder = funder;
 	}
 
 	@Override
 	protected String doInBackground(Context... contexts)
 	{
-		String bankAccountHref = bankAccount.getHref();
+		String bankAccountHref = funder.getHref();
 		Map<String, Object> response = null;
 		try
 		{

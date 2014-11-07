@@ -22,6 +22,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.patron.system.Globals;
+import com.patron.model.Station;
+import com.patron.model.Card;
+import com.patron.model.Funder;
 
 public class Order
 {	
@@ -38,9 +41,15 @@ public class Order
 	private int deviceType;
 	private List<Fragment> fragments;
 	private Status status;
+	private Station station;
+	private Funder funder;
+	private BigDecimal tip;
+	private List<Object> coupons;
+	private String comment;
 	
 	// Constructor
-	public Order(String orderId, String vendorId, List<Fragment> fragments, Status status)
+	public Order(String orderId, String vendorId, List<Fragment> fragments, Status status, Station station,
+		Funder funder, BigDecimal tip, List<Object> coupons, String comment)
 	{
 		this.orderId = orderId;
 		this.vendorId = vendorId;
@@ -48,6 +57,11 @@ public class Order
 		this.deviceType = 1;
 		this.fragments = fragments;
 		this.status = status;
+		this.station = station;
+		this.funder = funder;
+		this.tip = tip;
+		this.coupons = coupons;
+		this.comment = comment;
 	}
 	
 	// Main Methods
