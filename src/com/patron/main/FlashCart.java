@@ -41,7 +41,10 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ArrayAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -237,6 +240,37 @@ public class FlashCart extends ActionBarActivity implements Loadable
 			buttonPayment.setText("Payment:\n" + FlashCart.funder.getNumber());
 			buttonTip.setText("Tip:\n$" + FlashCart.tip.toString());
 			buttonCoupon.setText("Coupons:\n" + FlashCart.coupons.size());
+
+			// Set up station button
+			buttonStation.setOnClickListener(new OnClickListener() {
+				public void onClick(View view)
+				{
+					final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+					final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View dialogView = inflater.inflate(R.layout.dialog_stations, null);
+					builder.setView(dialogView);
+					ListView listStations = (ListView)findViewById(R.id.dialogStationsListMain);
+					final AlertDialog dialog = builder.create();
+					List<String> stations = new ArrayList<String>();
+					for (Station station : Globals.getVendor().getStations())
+					{
+						String name = station.getName();
+						stations.add(name);
+					}
+					ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, stations);
+					listStations.setAdapter(adapter);
+					dialog.show();
+
+					// Set the station when an item is clicked.
+					listStations.setOnItemClickListener(new OnItemClickListener() {
+						public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+						{
+							FlashCart.station = Globals.getVendor().getStations().get(position);
+							dialog.dismiss();
+						}
+					});
+				}
+			});
 
 			// Set up tip button
 			buttonTip.setOnClickListener(new OnClickListener() {
