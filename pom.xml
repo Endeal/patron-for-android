@@ -8,6 +8,20 @@
   <packaging>apk</packaging>
   <name>Patron</name>
 
+   <repositories>
+        <repository>
+            <id>fabric-repo</id>
+            <url>https://maven.fabric.io/repo</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>crashlytics-plugin-repo</id>
+            <url>http://download.crashlytics.com/maven</url>
+        </pluginRepository>
+    </pluginRepositories>
+
   <dependencies>
 
 	  <dependency>
@@ -27,26 +41,7 @@
       <version>4.4</version>
     </dependency>
 
-<!--
-
-    <dependency>
-      <groupId>com.patron</groupId>
-      <artifactId>socialauth</artifactId>
-      <version>4.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.patron</groupId>
-      <artifactId>balancedpayments</artifactId>
-      <version>1.2</version>
-    </dependency>
-
-	  <dependency>
-		  <groupId>com.patron</groupId>
-		  <artifactId>gson</artifactId>
-		  <version>2.2.4</version>
-	  </dependency>
-  -->
+    <!-- Balanced Payments SDK -->
 
     <dependency>
       <groupId>com.balancedpayments.android</groupId>
@@ -65,6 +60,49 @@
       <groupId>com.nostra13.universalimageloader</groupId>
       <artifactId>universal-image-loader</artifactId>
       <version>1.9.3</version>
+    </dependency>
+
+    <!-- Crashlytics Kit -->
+    <dependency>
+      <groupId>com.crashlytics.sdk.android</groupId>
+      <artifactId>crashlytics</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+      <type>aar</type>
+    </dependency>
+
+    <!-- Twitter Kit -->
+    <dependency>
+      <groupId>com.twitter.sdk.android</groupId>
+      <artifactId>twitter</artifactId>
+      <version>1.0.1</version>
+      <scope>compile</scope>
+      <type>aar</type>
+      <!-- We recommend providing your own support library using: -->
+      <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
+      <exclusions>
+        <exclusion>
+          <groupId>com.android.support</groupId>
+          <artifactId>support-v4</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- MoPub Kit -->
+    <dependency>
+      <groupId>com.mopub.sdk.android</groupId>
+      <artifactId>mopub</artifactId>
+      <version>3.2.2</version>
+      <scope>compile</scope>
+      <type>aar</type>
+      <!-- We recommend providing your own support library using: -->
+      <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
+      <exclusions>
+        <exclusion>
+          <groupId>com.android.support</groupId>
+          <artifactId>support-v4</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
