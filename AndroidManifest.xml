@@ -31,6 +31,10 @@
         android:enabled="true"
         android:label="@string/appName"
         android:allowBackup="true">
+
+        <!-- API Keys -->
+        <meta-data android:name="com.crashlytics.ApiKey" 
+                       android:value="zzj56RtJAssnuE9sSUl1NoeeT "/>
         
         <!-- Intent Receivers -->
         <receiver android:name="com.urbanairship.CoreReceiver" />  
