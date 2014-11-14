@@ -5,22 +5,22 @@ import java.util.List;
 public class Attribute
 {
 	// Properties
-	private String attributeId;
+	private String id;
 	private String name;
 	private List<Option> options;
 	
 	// Constructor
-	public Attribute(String attributeId, String name, List<Option> options)
+	public Attribute(String id, String name, List<Option> options)
 	{
-		this.attributeId = attributeId;
-		this.name = name;
-		this.options = options;
+		setId(id);
+		setName(name);
+		setOptions(options);
 	}
 	
 	// Setters
-	public void setAttributeId(String attributeId)
+	public void setId(String id)
 	{
-		this.attributeId = attributeId;
+		this.id = id;
 	}
 	public void setName(String name)
 	{
@@ -32,9 +32,9 @@ public class Attribute
 	}
 	
 	// Getters
-	public String getAttributeId()
+	public String getId()
 	{
-		return attributeId;
+		return id;
 	}
 	public String getName()
 	{

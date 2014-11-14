@@ -21,9 +21,9 @@ public class BankAccount extends Funder
 		setPostalCode(postalCode);
 		setHref(href);
 		setCreatedAt(createdAt);
-		this.routing = routing;
-		this.creditable = creditable;
-		this.debitable = debitable;
+		setRouting(routing);
+		setCreditable(creditable);
+		setDebitable(debitable);
 	}
 
 	// Setters

@@ -570,29 +570,29 @@
         <item name="android:background">@drawable/button_remove</item>
     </style>
 
-    <!-- Remove Payment List Item -->
-    <style name="StyleRemovePaymentListItemTextNumber">
+    <!-- Payment List Item -->
+    <style name="StylePaymentListItemTextNumber">
         <item name="android:textColor">#555555</item>
         <item name="android:text">@string/removePaymentListItemTextNumber</item>
         <item name="android:textSize">@dimen/dimRemovePaymentListItemTextNumber</item>
         <item name="android:textStyle">bold</item>
     </style>
     
-    <style name="StyleRemovePaymentListItemTextType">
+    <style name="StylePaymentListItemTextType">
         <item name="android:textColor">#555555</item>
         <item name="android:text">@string/removePaymentListItemTextType</item>
         <item name="android:textSize">@dimen/dimRemovePaymentListItemTextType</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="StyleRemovePaymentListItemTextBankName">
+    <style name="StylePaymentListItemTextBankName">
         <item name="android:textColor">#555555</item>
         <item name="android:text">@string/removePaymentListItemTextBankName</item>
         <item name="android:textSize">@dimen/dimRemovePaymentListItemTextBankName</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="StyleRemovePaymentListItemTextAddress">
+    <style name="StylePaymentListItemTextAddress">
         <item name="android:textColor">#CCCCCC</item>
         <item name="android:text">@string/removePaymentListItemTextAddress</item>
         <item name="android:textSize">@dimen/dimRemovePaymentListItemTextAddress</item>

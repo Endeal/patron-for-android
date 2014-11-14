@@ -20,6 +20,7 @@ package com.patron.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.math.RoundingMode;
 
 import com.patron.system.Globals;
 import com.patron.model.Station;
@@ -28,14 +29,14 @@ import com.patron.model.Funder;
 
 public class Order
 {	
-	// Enumeration
+	// Constants
 	public enum Status
 	{
 		WAITING, READY, SCANNED, COMPLETED, REJECTED
 	}
 	
 	// Properties
-	private String orderId;
+	private String id;
 	private String vendorId;
 	private String deviceId;
 	private int deviceType;
@@ -48,20 +49,20 @@ public class Order
 	private String comment;
 	
 	// Constructor
-	public Order(String orderId, String vendorId, List<Fragment> fragments, Status status, Station station,
+	public Order(String id, String vendorId, List<Fragment> fragments, Status status, Station station,
 		Funder funder, BigDecimal tip, List<Object> coupons, String comment)
 	{
-		this.orderId = orderId;
-		this.vendorId = vendorId;
-		this.deviceId = Globals.getDeviceId();
-		this.deviceType = 1;
-		this.fragments = fragments;
-		this.status = status;
-		this.station = station;
-		this.funder = funder;
-		this.tip = tip;
-		this.coupons = coupons;
-		this.comment = comment;
+		setId(id);
+		setVendorId(vendorId);
+		setDeviceId(Globals.getDeviceId());
+		setDeviceType(1);
+		setFragments(fragments);
+		setStatus(status);
+		setStation(station);
+		setFunder(funder);
+		setTip(tip);
+		setCoupons(coupons);
+		setComment(comment);
 	}
 	
 	// Main Methods
@@ -72,6 +73,9 @@ public class Order
 		{
 			total = total.add(fragments.get(i).getPrice());
 		}
+		total = total.add(total.multiply(new BigDecimal(Globals.getVendor().getTaxRate())));
+		total = total.add(getTip());
+		total = total.setScale(2, RoundingMode.FLOOR);
 		return total;
 	}
 
@@ -168,14 +172,24 @@ public class Order
 	}
 	
 	// Setters
-	public void setOrderId(String orderId)
+	public void setId(String id)
 	{
-		this.orderId = orderId;
+		this.id = id;
 	}
 	
 	public void setVendorId(String vendorId)
 	{
 		this.vendorId = vendorId;
+	}
+
+	private void setDeviceId(String deviceId)
+	{
+		this.deviceId = deviceId;
+	}
+
+	private void setDeviceType(int deviceType)
+	{
+		this.deviceType = deviceType;
 	}
 	
 	public void setFragments(List<Fragment> fragments)
@@ -187,11 +201,36 @@ public class Order
 	{
 		this.status = status;
 	}
+
+	public void setStation(Station station)
+	{
+		this.station = station;
+	}
+
+	public void setFunder(Funder funder)
+	{
+		this.funder = funder;
+	}
+
+	public void setTip(BigDecimal tip)
+	{
+		this.tip = tip;
+	}
+
+	public void setCoupons(List<Object> coupons)
+	{
+		this.coupons = coupons;
+	}
+
+	public void setComment(String comment)
+	{
+		this.comment = comment;
+	}
 	
 	// Getters
-	public String getOrderId()
+	public String getId()
 	{
-		return orderId;
+		return id;
 	}
 	
 	public String getVendorId()
@@ -217,5 +256,30 @@ public class Order
 	public Status getStatus()
 	{
 		return status;
+	}
+
+	public Station getStation()
+	{
+		return station;
+	}
+
+	public Funder getFunder()
+	{
+		return funder;
+	}
+
+	public BigDecimal getTip()
+	{
+		return tip;
+	}
+
+	public List<Object> getCoupons()
+	{
+		return coupons;
+	}
+
+	public String getComment()
+	{
+		return comment;
 	}
 }

@@ -5,22 +5,22 @@ import java.math.BigDecimal;
 public class Supplement
 {
 	// Properties
-	private String supplementId;
+	private String id;
 	private String name;
 	private BigDecimal price;
 	
 	// Constructor
-	public Supplement(String supplementId, String name, BigDecimal price)
+	public Supplement(String id, String name, BigDecimal price)
 	{
-		this.supplementId = supplementId;
-		this.name = name;
-		this.price = price;
+		setId(id);
+		setName(name);
+		setPrice(price);
 	}
 
 	// Setters
-	public void setSupplementId(String supplementId)
+	public void setId(String id)
 	{
-		this.supplementId = supplementId;
+		this.id = id;
 	}
 
 	public void setName(String name)
@@ -34,9 +34,9 @@ public class Supplement
 	}
 
 	// Getters
-	public String getSupplementId()
+	public String getId()
 	{
-		return supplementId;
+		return id;
 	}
 
 	public String getName()

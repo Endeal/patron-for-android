@@ -15,12 +15,14 @@ import java.math.RoundingMode;
 import org.json.JSONException;
 
 import com.patron.bind.CartProductBinder;
+import com.patron.bind.PaymentBinder;
 import com.patron.db.AddOrderConnector;
 import com.patron.listeners.ButtonFinishListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Fragment;
 import com.patron.model.Funder;
 import com.patron.model.Station;
+import com.patron.model.Order;
 import com.patron.system.Globals;
 import com.patron.lists.ListFonts;
 import com.patron.system.Loadable;
@@ -141,33 +143,11 @@ public class FlashCart extends ActionBarActivity implements Loadable
 		listCart = (ListView) viewCart.findViewById(R.id.cartListItems);
 		buttonFinish = (Button) viewCart.findViewById(R.id.cartButtonFinish);
 		buttonFinish.setOnClickListener(new ButtonFinishListener(this));
-
-		// Set default cart values.
-		Station station = new Station("-1", "(none)");
-		Funder funder = null;
-		BigDecimal tip = new BigDecimal("0.00");
-		List<Object> coupons = new ArrayList<Object>();
-		String comment = "";
-		if (Globals.getVendor().getStations() != null && Globals.getVendor().getStations().size() > 0)
-		{
-			station = Globals.getVendor().getStations().get(0);
-		}
-		if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
-		{
-			funder = Globals.getUser(). getFunders().get(0);
-		}
-		FlashCart.station = station;
-		FlashCart.funder  = funder;
-		FlashCart.tip = tip;
-		FlashCart.coupons = coupons;
-		FlashCart.comment = comment;
-
-		load();
+		endLoading();
 	}
 	
 	public void load()
 	{
-		endLoading();
 	}
 	
 	public void endLoading()
@@ -236,10 +216,17 @@ public class FlashCart extends ActionBarActivity implements Loadable
 			buttonTip.setTypeface(typeface);
 			buttonCoupon.setTypeface(typeface);
 			buttonComment.setTypeface(typeface);
-			buttonStation.setText("Station:\n" + FlashCart.station.getName());
-			buttonPayment.setText("Payment:\n" + FlashCart.funder.getNumber());
-			buttonTip.setText("Tip:\n$" + FlashCart.tip.toString());
-			buttonCoupon.setText("Coupons:\n" + FlashCart.coupons.size());
+			buttonStation.setText("Station:\n" + Globals.getOrder().getStation().getName());
+			String number = Globals.getOrder().getFunder().getNumber();
+			buttonPayment.setText("Payment:\n" + number.substring(number.length() - 4));
+			buttonTip.setText("Tip:\n$" + Globals.getOrder().getTip().toString());
+			buttonCoupon.setText("Coupons:\n" + Globals.getOrder().getCoupons().size());
+			String commented = "No";
+			if (Globals.getOrder().getComment().length() > 0)
+			{
+				commented = "Yes";
+			}
+			buttonComment.setText("Comment:\n" + commented);
 
 			// Set up station button
 			buttonStation.setOnClickListener(new OnClickListener() {
@@ -259,10 +246,6 @@ public class FlashCart extends ActionBarActivity implements Loadable
 						stations[i] = station.getName();;
 					}
 					ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, stations);
-					if (listStations == null)
-						System.out.println("POOPY");
-					if (adapter == null)
-						System.out.println("URINE");
 					listStations.setAdapter(adapter);
 					dialog.show();
 
@@ -270,13 +253,76 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					listStations.setOnItemClickListener(new OnItemClickListener() {
 						public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 						{
-							FlashCart.station = Globals.getVendor().getStations().get(position);
+							Station station = Globals.getVendor().getStations().get(position);
+							Globals.getOrder().setStation(station);
 							dialog.dismiss();
+							update();
 						}
 					});
 
 					// Set the button to close the dialog when canceled.
 					buttonCancel.setOnClickListener(new OnClickListener() {
+						public void onClick(View view)
+						{
+							dialog.dismiss();
+						}
+					});
+				}
+			});
+
+			// Set up payment button
+			buttonPayment.setOnClickListener(new OnClickListener() {
+				public void onClick(View view)
+				{
+					final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+					final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View dialogView = inflater.inflate(R.layout.dialog_payment, null);
+					builder.setView(dialogView);
+					ListView listPayment = (ListView)dialogView.findViewById(R.id.dialogPaymentListMain);
+					Button buttonCancel = (Button)dialogView.findViewById(R.id.dialogPaymentButtonCancel);
+					final AlertDialog dialog = builder.create();
+
+					// Set up the payment dialog list
+					List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
+					String[] from = {"number", "bankName", "type", "address"};
+					int[] to = {R.id.paymentListItemTextNumber,R.id.paymentListItemTextBankName,
+						R.id.paymentListItemTextType, R.id.paymentListItemTextAddress};
+					for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
+					{	
+						Map<String, String> mapping = new HashMap<String, String>();
+						Funder funder = Globals.getUser().getFunders().get(i);
+						mapping.put("number", funder.getNumber());
+						mapping.put("bankName", funder.getBankName());
+						mapping.put("type", funder.getType().substring(0, 1).toUpperCase() + funder.getType().substring(1));
+						if (funder.getAddress() == null || funder.getCity() == null || funder.getState() == null)
+							mapping.put("address", "");
+						else
+							mapping.put("address", funder.getAddress() + ", " + funder.getCity() + " " + funder.getState());
+						payments.add(mapping);
+					}
+					SimpleAdapter adapter = new SimpleAdapter(view.getContext(), payments, R.layout.list_item_payment, from, to);
+					adapter.setViewBinder(new PaymentBinder());
+					listPayment.setAdapter(adapter);
+					dialog.show();
+
+					listPayment.setOnItemClickListener(new OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+						{
+							if (Globals.getUser() != null && Globals.getUser().getFunders() != null &&
+								Globals.getUser().getFunders().size() > position)
+							{
+								Funder funder = Globals.getUser().getFunders().get(position);
+								Globals.getOrder().setFunder(funder);
+								dialog.dismiss();
+								update();
+							}
+						}
+					});
+
+					// Set up the payment dialog cancel button
+					buttonCancel.setOnClickListener(new OnClickListener() {
+						@Override
 						public void onClick(View view)
 						{
 							dialog.dismiss();
@@ -298,6 +344,10 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					final SeekBar seekBarPercent = (SeekBar)dialogView.findViewById(R.id.dialogTipSeekBarPercent);
 					final TextView textPercent = (TextView)dialogView.findViewById(R.id.dialogTipTextPercent);
 					final AlertDialog dialog = builder.create();
+					if (!Globals.getOrder().getTip().toString().equals("0.00"))
+					{
+						fieldCustom.setText(Globals.getOrder().getTip().toString());
+					}
 					seekBarPercent.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 						public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
 						{
@@ -312,7 +362,17 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					buttonDone.setOnClickListener(new OnClickListener() {
 						public void onClick(View view)
 						{
-							FlashCart.tip = new BigDecimal(fieldCustom.getText().toString());
+							try  
+  							{  
+    							double d = Double.parseDouble(fieldCustom.getText().toString());
+    							tip = new BigDecimal(d);
+  							}  
+  							catch(NumberFormatException nfe)  
+  							{  
+    							tip = new BigDecimal("0.00");
+  							}
+							tip = tip.setScale(2, RoundingMode.CEILING);
+							Globals.getOrder().setTip(tip);
 							dialog.dismiss();
 							update();
 						}
@@ -332,10 +392,14 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					Button buttonDone = (Button)dialogView.findViewById(R.id.dialogCommentButtonDone);
 					final EditText fieldComment = (EditText)dialogView.findViewById(R.id.dialogCommentFieldComment);
 					final AlertDialog dialog = builder.create();
+					if (Globals.getOrder().getComment().length() > 0)
+					{
+						fieldComment.setText(Globals.getOrder().getComment());
+					}
 					buttonDone.setOnClickListener(new OnClickListener() {
 						public void onClick(View view)
 						{
-							FlashCart.comment = fieldComment.getText().toString();
+							Globals.getOrder().setComment(fieldComment.getText().toString());
 							dialog.dismiss();
 							update();
 						}
@@ -344,12 +408,18 @@ public class FlashCart extends ActionBarActivity implements Loadable
 				}
 			});
     		
-    		// Set the total price text view.
+    		// Set up pay button
 			typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
     		String text = (String) buttonFinish.getText();
     		text = "Pay Now: $" + Globals.getOrder().getPrice().toString();
     		buttonFinish.setTypeface(typeface);
     		buttonFinish.setText(text);
+    		buttonFinish.setOnClickListener(new OnClickListener() {
+    			public void onClick(View view)
+    			{
+    				finishOrder();
+    			}
+    		});
     	}
     	else
     	{

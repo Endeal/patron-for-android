@@ -20,9 +20,9 @@ public class Card extends Funder
 		setPostalCode(postalCode);
 		setHref(href);
 		setCreatedAt(createdAt);
-		this.expirationMonth = expirationMonth;
-		this.expirationYear = expirationYear;
-		this. verified = verified;
+		setExpirationMonth(expirationMonth);
+		setExpirationYear(expirationYear);
+		setVerified(verified);
 	}
 
 	// Setters

@@ -5,22 +5,22 @@ import java.math.BigDecimal;
 public class Option
 {
 	// Properties
-	private String optionId;
+	private String id;
 	private String name;
 	private BigDecimal price;
 	
 	// Constructor
-	public Option(String optionId, String name, BigDecimal price)
+	public Option(String id, String name, BigDecimal price)
 	{
-		this.optionId = optionId;
-		this.name = name;
-		this.price = price;
+		setId(id);
+		setName(name);
+		setPrice(price);
 	}
 
 	// Setters
-	public void setOptionId(String optionId)
+	public void setId(String id)
 	{
-		this.optionId = optionId;
+		this.id = id;
 	}
 
 	public void setName(String name)
@@ -34,9 +34,9 @@ public class Option
 	}
 
 	// Getters
-	public String getOptionId()
+	public String getId()
 	{
-		return optionId;
+		return id;
 	}
 
 	public String getName()

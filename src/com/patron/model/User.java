@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class User
 {
-	private String patronId;
+	private String id;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -17,28 +17,28 @@ public class User
 	private String googlePlusId;
 	private List<Funder> funders;
 
-	public User(String patronId, String firstName, String lastName, String email, String password, String birthday,
+	public User(String id, String firstName, String lastName, String email, String password, String birthday,
 		String balancedId, String facebookId, String twitterId, String googlePlusId,
 		List<Funder> funders)
 	{
-		this.patronId = patronId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.birthday = birthday;
-		this.balancedId = balancedId;
-		this.facebookId = facebookId;
-		this.twitterId = twitterId;
-		this.googlePlusId = googlePlusId;
-		this.funders = funders;
+		setId(id);
+		setFirstName(firstName);
+		setLastName(lastName);
+		setEmail(email);
+		setPassword(password);
+		setBirthday(birthday);
+		setBalancedId(balancedId);
+		setFacebookId(facebookId);
+		setTwitterId(twitterId);
+		setGooglePlusId(googlePlusId);
+		setFunders(funders);
 	}
 
 	// Setters
 
-	public void setPatronId(String patronId)
+	public void setId(String id)
 	{
-		this.patronId = patronId;
+		this.id = id;
 	}
 
 	public void setFirstName(String firstName)
@@ -93,9 +93,9 @@ public class User
 
 	// Getters
 
-	public String getPatronId()
+	public String getId()
 	{
-		return patronId;
+		return id;
 	}
 
 	public String getFirstName()

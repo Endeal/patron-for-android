@@ -7,13 +7,14 @@ import com.patron.model.Station;
 
 public class Vendor
 {
-	private String vendorId;
+	private String id;
 	private String name;
 	private String address;
 	private String city;
 	private String state;
 	private String zip;
 	private String phone;
+	private Double taxRate;
 	
 	private List<Item> items;
 	private List<Item> filteredItems;
@@ -28,27 +29,27 @@ public class Vendor
 		items = new ArrayList<Item>();
 	}
 	
-	public Vendor(String vendorId, String name, String address, String city,
+	public Vendor(String id, String name, String address, String city,
 			String state, String zip, String phone, List<Item> items,
 			List<Item> recommendations, List<Station> stations)
 	{
-		this.vendorId = vendorId;
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.phone = phone;
-		this.items = items;
-		this.recommendations = recommendations;
-		this.filteredItems = items;
-		this.stations = stations;
+		setId(id);
+		setName(name);
+		setAddress(address);
+		setCity(city);
+		setState(state);
+		setZip(zip);
+		setPhone(phone);
+		setItems(items);
+		setRecommendations(recommendations);
+		setStations(stations);
+		setTaxRate(0.0833);
 	}
 	
 	// SETTER METHODS
-	public void setVendorId(String vendorId)
+	public void setId(String id)
 	{
-		this.vendorId = vendorId;
+		this.id = id;
 	}
 	
 	public void setName(String name)
@@ -80,6 +81,11 @@ public class Vendor
 	{
 		this.phone = phone;
 	}
+
+	public void setTaxRate(double taxRate)
+	{
+		this.taxRate = taxRate;
+	}
 	
 	public void setItems(List<Item> items)
 	{
@@ -103,9 +109,9 @@ public class Vendor
 	
 	// ACCESSOR METHODS
 	
-	public String getVendorId()
+	public String getId()
 	{
-		return vendorId;
+		return id;
 	}
 	
 	public String getName()
@@ -136,6 +142,11 @@ public class Vendor
 	public String getPhone()
 	{
 		return phone;
+	}
+
+	public double getTaxRate()
+	{
+		return taxRate;
 	}
 	
 	public List<Item> getItems()

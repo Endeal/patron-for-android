@@ -79,10 +79,10 @@ public class FlashRemovePayment extends ActionBarActivity implements Loadable
 		"type",
 		"address"};
 
-		int[] to = {R.id.removePaymentListItemTextNumber,
-			R.id.removePaymentListItemTextBankName,
-			R.id.removePaymentListItemTextType,
-			R.id.removePaymentListItemTextAddress};
+		int[] to = {R.id.paymentListItemTextNumber,
+			R.id.paymentListItemTextBankName,
+			R.id.paymentListItemTextType,
+			R.id.paymentListItemTextAddress};
 		for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
 		{	
 			Map<String, String> mapping = new HashMap<String, String>();

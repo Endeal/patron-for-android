@@ -6,7 +6,7 @@ import java.util.List;
 public class Item
 {
 	// Properties
-	private String itemId;
+	private String id;
 	private String name;
 	private BigDecimal price;
 	private int maxSupplements;
@@ -15,11 +15,11 @@ public class Item
 	private List<Supplement> supplements;
 	
 	// Constructor
-	public Item(String itemId, String name, BigDecimal price, int maxSupplements,
+	public Item(String id, String name, BigDecimal price, int maxSupplements,
 			List<Category> categories, List<Attribute> attributes,
 			List<Supplement> supplements)
 	{
-		this.itemId = itemId;
+		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.maxSupplements = maxSupplements;
@@ -29,9 +29,9 @@ public class Item
 	}
 	
 	// Setters
-	public void setItemId(String itemId)
+	public void setId(String id)
 	{
-		this.itemId = itemId;
+		this.id = id;
 	}
 	
 	public void setName(String name)
@@ -65,9 +65,9 @@ public class Item
 	}
 	
 	// Getters
-	public String getItemId()
+	public String getId()
 	{
-		return itemId;
+		return id;
 	}
 	
 	public String getName()

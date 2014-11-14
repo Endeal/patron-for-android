@@ -6,21 +6,21 @@ import java.util.List;
 public class Fragment
 {
 	// Properties
-	private String fragmentId;
+	private String id;
 	private Item item;
 	private List<Selection> selections;
 	private List<Supplement> supplements;
 	private int quantity;
 	
 	// Constructor
-	public Fragment(String fragmentId, Item item, List<Selection> selections,
+	public Fragment(String id, Item item, List<Selection> selections,
 			List<Supplement> supplements, int quantity)
 	{
-		this.fragmentId = fragmentId;
-		this.item = item;
-		this.selections = selections;
-		this.supplements = supplements;
-		this.quantity = quantity;
+		setId(id);
+		setItem(item);
+		setSelections(selections);
+		setSupplements(supplements);
+		setQuantity(quantity);
 	}
 	
 	// Main Methods
@@ -43,9 +43,9 @@ public class Fragment
 	}
 
 	// Setters
-	public void setFragmentId(String fragmentId)
+	public void setId(String id)
 	{
-		this.fragmentId = fragmentId;
+		this.id = id;
 	}
 
 	public void setItem(Item item)
@@ -69,9 +69,9 @@ public class Fragment
 	}
 
 	// Getters
-	public String getFragmentId()
+	public String getId()
 	{
-		return fragmentId;
+		return id;
 	}
 
 	public Item getItem()

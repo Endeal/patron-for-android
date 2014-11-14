@@ -3,20 +3,20 @@ package com.patron.model;
 public class Category
 {
 	// Properties
-	private String categoryId;
+	private String id;
 	private String name;
 	
 	// Constructor
-	public Category(String categoryId, String name)
+	public Category(String id, String name)
 	{
-		this.categoryId = categoryId;
-		this.name = name;
+		setId(id);
+		setName(name);
 	}
 	
 	// Setters
-	public void setCategoryId(String categoryId)
+	public void setId(String id)
 	{
-		this.categoryId = categoryId;
+		this.id = id;
 	}
 	
 	public void setName(String name)
@@ -25,9 +25,9 @@ public class Category
 	}
 	
 	// Getters
-	public String getCategoryId()
+	public String getId()
 	{
-		return categoryId;
+		return id;
 	}
 	
 	public String getName()

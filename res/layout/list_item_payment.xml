@@ -8,8 +8,8 @@
     <!-- Address, city, state, zip; bank name; number; type  -->
 
     <TextView
-        android:id="@+id/removePaymentListItemTextNumber"
-        style="@style/StyleRemovePaymentListItemTextNumber"
+        android:id="@+id/paymentListItemTextNumber"
+        style="@style/StylePaymentListItemTextNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,8 +17,8 @@
         android:layout_margin="5dp" />
 
     <TextView
-        android:id="@+id/removePaymentListItemTextType"
-        style="@style/StyleRemovePaymentListItemTextType"
+        android:id="@+id/paymentListItemTextType"
+        style="@style/StylePaymentListItemTextType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -27,22 +27,22 @@
     
     <!-- Bank Name Text -->
     <TextView
-        android:id="@+id/removePaymentListItemTextBankName"
-        style="@style/StyleRemovePaymentListItemTextBankName"
+        android:id="@+id/paymentListItemTextBankName"
+        style="@style/StylePaymentListItemTextBankName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/removePaymentListItemTextNumber"
+        android:layout_below="@+id/paymentListItemTextNumber"
         android:layout_marginLeft="5dp" />
 
     <!-- Address -->
     <TextView
-        android:id="@+id/removePaymentListItemTextAddress"
-        style="@style/StyleRemovePaymentListItemTextAddress"
+        android:id="@+id/paymentListItemTextAddress"
+        style="@style/StylePaymentListItemTextAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/removePaymentListItemTextBankName"
+        android:layout_below="@+id/paymentListItemTextBankName"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp" />
     

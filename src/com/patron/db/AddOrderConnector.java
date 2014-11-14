@@ -106,6 +106,7 @@ public class AddOrderConnector extends AsyncTask<URL, Void, String>
 		}
 		else
 		{
+			System.out.println("ERROR:" + result);
 			activity.message(result);
 		}
 	}
