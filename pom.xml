@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+  <!-- Application Settings -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.patron.main</groupId>
   <artifactId>Patron</artifactId>
@@ -8,6 +9,8 @@
   <packaging>apk</packaging>
   <name>Patron</name>
 
+  <!-- Repositories -->
+  <!--
   <repositories>
     <repository>
       <id>fabric-repo</id>
@@ -21,122 +24,132 @@
       <url>http://download.crashlytics.com/maven</url>
     </pluginRepository>
   </pluginRepositories>
+-->
 
   <dependencies>
 
-   <dependency>
-    <groupId>com.patron</groupId>
-    <artifactId>urban-airship</artifactId>
-    <version>4.0.1</version>
+    <!-- Urban Airship Android SDK -->
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>urban-airship</artifactId>
+      <version>4.0.1</version>
+    </dependency>
+
+    <!-- Socialauth Android SDK -->
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth-android</artifactId>
+      <version>3.2</version>
+    </dependency>
+
+    <!-- Socialauth SDK -->
+    <dependency>
+      <groupId>com.patron</groupId>
+      <artifactId>socialauth</artifactId>
+      <version>4.4</version>
+    </dependency>
+
+    <!-- Balanced Payments Android SDK -->
+    <dependency>
+      <groupId>com.balancedpayments.android</groupId>
+      <artifactId>balanced-android-parent</artifactId>
+      <version>1.1-SNAPSHOT</version>
+      <type>apklib</type>
+    </dependency>
+
+    <!-- GSON -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.3</version>
+    </dependency>
+
+    <!-- Universal Image Loader -->
+    <dependency>
+      <groupId>com.nostra13.universalimageloader</groupId>
+      <artifactId>universal-image-loader</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+
+    <!-- Crashlytics Kit -->
+    <dependency>
+      <groupId>com.crashlytics.sdk.android</groupId>
+      <artifactId>crashlytics</artifactId>
+      <version>2.0.1</version>
+      <scope>compile</scope>
+      <type>aar</type>
+    </dependency>
+
+    <!-- Twitter Kit -->
+    <dependency>
+      <groupId>com.twitter.sdk.android</groupId>
+      <artifactId>twitter</artifactId>
+      <version>1.0.1</version>
+      <scope>compile</scope>
+      <type>aar</type>
+      <!-- We recommend providing your own support library using: -->
+      <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
+      <exclusions>
+        <exclusion>
+          <groupId>com.android.support</groupId>
+          <artifactId>support-v4</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- MoPub Kit -->
+    <dependency>
+      <groupId>com.mopub.sdk.android</groupId>
+      <artifactId>mopub</artifactId>
+      <version>3.2.2</version>
+      <scope>compile</scope>
+      <type>aar</type>
+      <!-- We recommend providing your own support library using: -->
+      <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
+      <exclusions>
+        <exclusion>
+          <groupId>com.android.support</groupId>
+          <artifactId>support-v4</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Android -->
+    <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>android</artifactId>
+      <version>4.1.1.4</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Android Support v4 -->
+    <dependency>
+     <groupId>android.support</groupId>
+     <artifactId>compatibility-v4</artifactId>
+     <version>19.1.0</version>
+     <exclusions>
+      <exclusion>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+      </exclusion>
+    </exclusions>
   </dependency>
 
+  <!-- Android Support v7 APKLIB -->
   <dependency>
-    <groupId>com.patron</groupId>
-    <artifactId>socialauth-android</artifactId>
-    <version>3.2</version>
-  </dependency>
-  <dependency>
-    <groupId>com.patron</groupId>
-    <artifactId>socialauth</artifactId>
-    <version>4.4</version>
-  </dependency>
-
-  <!-- Balanced Payments SDK -->
-
-  <dependency>
-    <groupId>com.balancedpayments.android</groupId>
-    <artifactId>balanced-android-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <groupId>android.support</groupId>
+    <artifactId>compatibility-v7-appcompat</artifactId>
+    <version>19.1.0</version>
     <type>apklib</type>
-  </dependency>
-
-  <dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.3</version>
-  </dependency>
-
-  <dependency>
-    <groupId>com.nostra13.universalimageloader</groupId>
-    <artifactId>universal-image-loader</artifactId>
-    <version>1.9.3</version>
-  </dependency>
-
-  <!-- Crashlytics Kit -->
-  <dependency>
-    <groupId>com.crashlytics.sdk.android</groupId>
-    <artifactId>crashlytics</artifactId>
-    <version>2.0.1</version>
-    <scope>compile</scope>
-    <type>aar</type>
-  </dependency>
-
-  <!-- Twitter Kit -->
-  <dependency>
-    <groupId>com.twitter.sdk.android</groupId>
-    <artifactId>twitter</artifactId>
-    <version>1.0.1</version>
-    <scope>compile</scope>
-    <type>aar</type>
-    <!-- We recommend providing your own support library using: -->
-    <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
     <exclusions>
       <exclusion>
-        <groupId>com.android.support</groupId>
-        <artifactId>support-v4</artifactId>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
       </exclusion>
     </exclusions>
   </dependency>
 
-  <!-- MoPub Kit -->
-  <dependency>
-    <groupId>com.mopub.sdk.android</groupId>
-    <artifactId>mopub</artifactId>
-    <version>3.2.2</version>
-    <scope>compile</scope>
-    <type>aar</type>
-    <!-- We recommend providing your own support library using: -->
-    <!-- https://github.com/mosabua/maven-android-sdk-deployer -->
-    <exclusions>
-      <exclusion>
-        <groupId>com.android.support</groupId>
-        <artifactId>support-v4</artifactId>
-      </exclusion>
-    </exclusions>
-  </dependency>
-
-  <dependency>
-    <groupId>com.google.android</groupId>
-    <artifactId>android</artifactId>
-    <version>4.1.1.4</version>
-    <scope>provided</scope>
-  </dependency>
-
-  <dependency>
-   <groupId>android.support</groupId>
-   <artifactId>compatibility-v4</artifactId>
-   <version>19.1.0</version>
-   <exclusions>
-    <exclusion>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-    </exclusion>
-  </exclusions>
-</dependency>
-
-<dependency>
-  <groupId>android.support</groupId>
-  <artifactId>compatibility-v7-appcompat</artifactId>
-  <version>19.1.0</version>
-  <type>apklib</type>
-  <exclusions>
-    <exclusion>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-    </exclusion>
-  </exclusions>
-</dependency>
-
+<!-- Android Support v7 JAR -->
 <dependency>
   <groupId>android.support</groupId>
   <artifactId>compatibility-v7-appcompat</artifactId>
@@ -158,13 +171,16 @@
   <pluginManagement>
    <plugins>
 
+    <!-- Android Maven Plugin -->
+    <!--
     <plugin>
      <groupId>com.jayway.maven.plugins.android.generation2</groupId>
      <artifactId>android-maven-plugin</artifactId>
      <version>3.9.0-rc.2</version>
      <extensions>true</extensions>
    </plugin>
-
+   -->
+   <!-- Android Maven Plugin -->
    <plugin>
     <groupId>com.jayway.maven.plugins.android.generation2</groupId>
     <artifactId>android-maven-plugin</artifactId>
@@ -175,6 +191,8 @@
 </plugins>
 </pluginManagement>
 <plugins>
+
+  <!-- Android Maven Plugin Configuration -->
  <plugin>
   <groupId>com.jayway.maven.plugins.android.generation2</groupId>
   <artifactId>android-maven-plugin</artifactId>
@@ -185,6 +203,9 @@
   </sdk>
 </configuration>
 </plugin>
+
+<!-- Crashlytics Plugin -->
+<!--
 <plugin>
   <groupId>com.crashlytics</groupId>
   <artifactId>crashlytics-maven</artifactId>
@@ -204,6 +225,9 @@
     </execution>
   </executions>
 </plugin>
+-->
+
+<!-- Android Maven Plugin -->
 <plugin>
   <groupId>com.jayway.maven.plugins.android.generation2</groupId>
   <artifactId>android-maven-plugin</artifactId>
@@ -216,6 +240,7 @@
 </plugins>
 </build>
 
+<!-- Build Profiles -->
 <profiles>
   <profile>
     <id>bin</id>

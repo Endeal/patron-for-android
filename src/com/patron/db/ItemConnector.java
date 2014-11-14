@@ -145,6 +145,8 @@ public class ItemConnector extends AsyncTask<URL, Void, List<Item>>
 		catch (JSONException e)
 		{
 			e.printStackTrace();
+			if (json != null)
+				System.out.println(json);
 		}
 
 		if (Globals.getVendor() != null)

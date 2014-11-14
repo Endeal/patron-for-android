@@ -249,15 +249,20 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View dialogView = inflater.inflate(R.layout.dialog_stations, null);
 					builder.setView(dialogView);
-					ListView listStations = (ListView)findViewById(R.id.dialogStationsListMain);
+					ListView listStations = (ListView)dialogView.findViewById(R.id.dialogStationsListMain);
+					Button buttonCancel = (Button)dialogView.findViewById(R.id.dialogStationsButtonCancel);
 					final AlertDialog dialog = builder.create();
-					List<String> stations = new ArrayList<String>();
-					for (Station station : Globals.getVendor().getStations())
+					String[] stations = new String[Globals.getVendor().getStations().size()];
+					for (int i = 0; i < Globals.getVendor().getStations().size(); i++)
 					{
-						String name = station.getName();
-						stations.add(name);
+						Station station = Globals.getVendor().getStations().get(i);
+						stations[i] = station.getName();;
 					}
-					ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1, stations);
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, stations);
+					if (listStations == null)
+						System.out.println("POOPY");
+					if (adapter == null)
+						System.out.println("URINE");
 					listStations.setAdapter(adapter);
 					dialog.show();
 
@@ -266,6 +271,14 @@ public class FlashCart extends ActionBarActivity implements Loadable
 						public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 						{
 							FlashCart.station = Globals.getVendor().getStations().get(position);
+							dialog.dismiss();
+						}
+					});
+
+					// Set the button to close the dialog when canceled.
+					buttonCancel.setOnClickListener(new OnClickListener() {
+						public void onClick(View view)
+						{
 							dialog.dismiss();
 						}
 					});
