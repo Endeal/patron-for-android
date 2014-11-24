@@ -66,7 +66,7 @@ public class ItemConnector extends AsyncTask<URL, Void, List<Item>>
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 			NameValuePair vendorId = new BasicNameValuePair("vendorId",
-					Globals.getVendor().getVendorId());
+					Globals.getVendor().getId());
 			postData.add(vendorId);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);

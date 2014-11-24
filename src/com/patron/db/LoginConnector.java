@@ -17,6 +17,9 @@ import org.apache.http.util.EntityUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.BasicHttpParams;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,9 +59,11 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 		try
 		{
 			URL path = params[0];
-			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(path.toURI());ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-
+			final HttpParams httpParams = new BasicHttpParams();
+    		HttpConnectionParams.setConnectionTimeout(httpParams, 10 * 1000);
+			HttpClient client = new DefaultHttpClient(httpParams);
+			HttpPost post = new HttpPost(path.toURI());
+			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 			NameValuePair pairEmail = new BasicNameValuePair("email", email);
 			NameValuePair pairPassword = new BasicNameValuePair("password", password);
 
@@ -97,7 +102,9 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 		try
 		{
 			JSONObject patron = new JSONObject(result);
-			User user = Parser.getUser(patron, password);
+			User user = Parser.getUser(patron);
+			user.setEmail(email);
+			user.setPassword(password);
 			Globals.setUser(user);
 			System.out.println(user.getFunders().size());
 			System.out.println(user.getFunders().get(0).getBankName());
@@ -113,6 +120,14 @@ public class LoginConnector extends AsyncTask<URL, Void, String>
 		{
 			activity.message("Invalid response received.");
 			System.out.println(result);
+		}
+		catch (NullPointerException e)
+		{
+			activity.message("Login timed out.");
+			if (result != null)
+			{
+				System.out.println(result);
+			}
 		}
 	}
 }

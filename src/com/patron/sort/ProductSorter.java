@@ -52,7 +52,7 @@ public class ProductSorter
 				{
 					// Go through each category in the item
 					Category itemCategory = item.getCategories().get(j);
-					if (itemCategory.getCategoryId().equals(category.getCategoryId()))
+					if (itemCategory.getId().equals(category.getId()))
 					{
 						newItems.add(item);
 						break;
@@ -76,7 +76,7 @@ public class ProductSorter
 					for (int j = 0; j < Globals.getFavoriteItems().size(); j++)
 					{
 						Item favoriteItem = Globals.getFavoriteItems().get(j);
-						if (favoriteItem.getItemId().equals(item.getItemId()))
+						if (favoriteItem.getId().equals(item.getId()))
 						{
 							if (ascending)
 								newItems.add(item);

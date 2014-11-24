@@ -108,8 +108,8 @@ public class CartProductBinder implements ViewBinder
 					for (int j = 0; j < attribute.getOptions().size(); j++)
 					{
 						optionNames[j] = attribute.getOptions().get(j).getName();
-						if (attribute.getOptions().get(j).getOptionId().equals(
-								option.getOptionId()))
+						if (attribute.getOptions().get(j).getId().equals(
+								option.getId()))
 							selectedIndex = j;
 					}
 					ArrayAdapter<String>arrayAdapter = new

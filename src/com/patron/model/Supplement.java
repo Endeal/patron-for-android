@@ -8,13 +8,15 @@ public class Supplement
 	private String id;
 	private String name;
 	private BigDecimal price;
+	private int supply;
 	
 	// Constructor
-	public Supplement(String id, String name, BigDecimal price)
+	public Supplement(String id, String name, BigDecimal price, int supply)
 	{
 		setId(id);
 		setName(name);
 		setPrice(price);
+		setSupply(supply);
 	}
 
 	// Setters
@@ -33,6 +35,11 @@ public class Supplement
 		this.price = price;
 	}
 
+	public void setSupply(int supply)
+	{
+		this.supply = supply;
+	}
+
 	// Getters
 	public String getId()
 	{
@@ -47,5 +54,10 @@ public class Supplement
 	public BigDecimal getPrice()
 	{
 		return price;
+	}
+
+	public int getSupply()
+	{
+		return supply;
 	}
 }

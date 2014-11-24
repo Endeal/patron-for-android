@@ -37,7 +37,7 @@ public class Globals
 		List<Item> items = vendor.getItems();
 		for (int j = 0; j < items.size(); j++)
 		{
-			if (items.get(j).getItemId().equals(itemId))
+			if (items.get(j).getId().equals(itemId))
 				item = items.get(j);
 		}
 		return item;

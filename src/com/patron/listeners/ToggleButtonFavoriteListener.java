@@ -45,7 +45,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 				for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
 				{
 					Item favoriteItem = Globals.getFavoriteItems().get(i);
-					if (favoriteItem.getItemId().equals(item.getItemId()))
+					if (favoriteItem.getId().equals(item.getId()))
 					{
 						isFavorite = true;
 						removeFavoriteItem(buttonView, i);
@@ -72,7 +72,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 				for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
 				{
 					Vendor favoriteVendor = Globals.getFavoriteVendors().get(i);
-					if (favoriteVendor.getVendorId().equals(vendor.getVendorId()))
+					if (favoriteVendor.getId().equals(vendor.getId()))
 					{
 						isFavorite = true;
 						removeFavoriteVendor(buttonView, i);

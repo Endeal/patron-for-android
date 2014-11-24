@@ -20,6 +20,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.urbanairship.AirshipConfigOptions;
+import com.urbanairship.Logger;
+import com.urbanairship.UAirship;
+import com.urbanairship.push.PushManager;
+
 import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
 import com.patron.db.LoginConnector;
@@ -44,6 +49,17 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_login);
 		init();
+
+		// Initialize device ID
+		/*
+		AirshipConfigOptions options = AirshipConfigOptions.loadDefaultOptions(this);
+        UAirship.takeOff(this, options);
+        PushManager.enablePush();
+        String apid = PushManager.shared().getAPID();
+        Globals.setDeviceId(apid);
+		PushManager.shared().setIntentReceiver(FlashIntentReceiver.class);
+		System.out.println(apid);
+		*/
 	}
 	
 	@Override

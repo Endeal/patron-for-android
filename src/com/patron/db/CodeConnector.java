@@ -57,9 +57,11 @@ public class CodeConnector extends AsyncTask<URL, Void, ArrayList<Code>>
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-			NameValuePair deviceId = new BasicNameValuePair("deviceId", Globals.getDeviceId());
+			NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+			NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
 
-			postData.add(deviceId);
+			postData.add(email);
+			postData.add(password);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);
 		}

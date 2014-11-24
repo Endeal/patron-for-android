@@ -56,16 +56,15 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(path.toURI());
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
-			NameValuePair deviceId = new BasicNameValuePair("deviceId", Globals.getDeviceId());
-			NameValuePair vendorId = null;
+			NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+			NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
 			NameValuePair orderId = null;
 			if (order != null)
 			{
-				vendorId = new BasicNameValuePair("vendorId", order.getVendorId());
-				orderId = new BasicNameValuePair("orderId", order.getOrderId());
+				orderId = new BasicNameValuePair("orderId", order.getId());
 			}
-			postData.add(deviceId);
-			postData.add(vendorId);
+			postData.add(email);
+			postData.add(password);
 			postData.add(orderId);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);

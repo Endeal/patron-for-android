@@ -108,7 +108,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		{
 			for (int i = 0; i < Globals.getCodes().size(); i++)
 			{
-				if (Globals.getCodes().get(i).getOrder().getOrderId().equals(orderId))
+				if (Globals.getCodes().get(i).getOrder().getId().equals(orderId))
 				{
 					scanIntent.putExtra("orderRow", "" + i);
 					System.out.println("PUT DOWN ORDER FOR ROW: " + i);

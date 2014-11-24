@@ -29,9 +29,7 @@ public class ButtonCheckoutListener implements OnClickListener
 		}
 		else
 		{
-			Toast toast = Toast.makeText(v.getContext(),
-					"No items have been added to your cart.",
-					Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(v.getContext(), "No items have been added to your cart.", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}

@@ -159,7 +159,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 					for (int j = 0; j < retrievedVendors.size(); j++)
 					{
 						Vendor favoriteVendor = retrievedVendors.get(j);
-						if (favoriteVendor.getVendorId().equals(vendor.getVendorId()))
+						if (favoriteVendor.getId().equals(vendor.getId()))
 						{
 							vendors.add(vendor);
 						}

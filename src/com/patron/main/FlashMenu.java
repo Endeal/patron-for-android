@@ -261,8 +261,8 @@ public class FlashMenu extends ActionBarActivity implements Loadable
     			mapping.put("name", item.getName());
     			mapping.put("price", price);
     			mapping.put("categories", categoriesText);
-    			mapping.put("toggleButtonFavorite", item.getItemId());
-    			mapping.put("layout", item.getItemId());
+    			mapping.put("toggleButtonFavorite", item.getId());
+    			mapping.put("layout", item.getId());
     			products.add(mapping);
     		}
     		SimpleAdapter adapter = new SimpleAdapter(this, products, R.layout.list_item_product, from, to);

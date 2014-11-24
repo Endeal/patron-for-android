@@ -2,14 +2,21 @@ package com.patron.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.Exception;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.util.Base64;
+
+import com.patron.system.Patron;
+import com.patron.system.FlashCipher;
 
 public class User
 {
 	private String id;
 	private String firstName;
 	private String lastName;
-	private String email;
-	private String password;
 	private String birthday;
 	private String balancedId;
 	private String facebookId;
@@ -17,15 +24,13 @@ public class User
 	private String googlePlusId;
 	private List<Funder> funders;
 
-	public User(String id, String firstName, String lastName, String email, String password, String birthday,
+	public User(String id, String firstName, String lastName, String birthday,
 		String balancedId, String facebookId, String twitterId, String googlePlusId,
 		List<Funder> funders)
 	{
 		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
-		setEmail(email);
-		setPassword(password);
 		setBirthday(birthday);
 		setBalancedId(balancedId);
 		setFacebookId(facebookId);
@@ -53,12 +58,35 @@ public class User
 
 	public void setEmail(String email)
 	{
-		this.email = email;
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+        	Editor editor = sharedPreferences.edit();
+        	editor.putString("email", email);
+        	editor.commit();
+    	}
+    	catch (Exception e)
+    	{
+
+    	}
 	}
 
 	public void setPassword(String password)
 	{
-		this.password = password;
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			String encryptedPassword = FlashCipher.encrypt(password);
+	        Editor editor = sharedPreferences.edit();
+	        editor.putString("password", encryptedPassword);
+	        editor.commit();
+	    }
+	    catch (Exception e)
+	    {
+
+	    }
 	}
 
 	public void setBirthday(String birthday)
@@ -110,12 +138,38 @@ public class User
 
 	public String getEmail()
 	{
-		return email;
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			String email = sharedPreferences.getString("email", "");
+	        return email;
+	    }
+	    catch (Exception e)
+	    {
+	    	System.out.println("Failed to retrieve e-mail, please login again.");
+	    	return null;
+	    }
 	}
 
 	public String getPassword()
 	{
-		return password;
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			String password = sharedPreferences.getString("password", "");
+	    	System.out.println("ENCRYPTED PASSWORD:" + password.toString());
+
+	        password = FlashCipher.decrypt(password);
+	        System.out.println("PASSWORD:" + password);
+	        return password;
+	    }
+	    catch (Exception e)
+	    {
+	    	System.out.println("Failed to retrieve password, please login again.");
+	    	return null;
+	    }
 	}
 
 	public String getBirthday()

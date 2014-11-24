@@ -31,10 +31,9 @@ import com.patron.model.Funder;
 
 public class Parser
 {
-	public static User getUser(JSONObject rawUser, String password) throws JSONException
+	public static User getUser(JSONObject rawUser) throws JSONException
 	{
 		String patronId = rawUser.getString("patronId");
-		String email = rawUser.getString("email");
 		String firstName = rawUser.getString("firstName");
 		String lastName = rawUser.getString("lastName");
 		String birthday = rawUser.getString("birthday");
@@ -47,15 +46,15 @@ public class Parser
 		JSONObject bankAccountsObject = rawUser.getJSONObject("bankAccounts");
 		JSONArray rawBankAccounts = bankAccountsObject.getJSONArray("bank_accounts");
 		List<Funder> funders = new ArrayList<Funder>();
-		for (Card card : getCards(rawCards))
+		for (Card card : Parser.getCards(rawCards))
 		{
 			funders.add(card);
 		}
-		for (BankAccount bankAccount : getBankAccounts(rawBankAccounts))
+		for (BankAccount bankAccount : Parser.getBankAccounts(rawBankAccounts))
 		{
 			funders.add(bankAccount);
 		}
-		return new User(patronId, firstName, lastName, email, password, birthday, balancedId,
+		return new User(patronId, firstName, lastName, birthday, balancedId,
 			facebookId, twitterId, googlePlusId, funders);
 	}
 
@@ -65,27 +64,33 @@ public class Parser
 		for (int i = 0; i < rawCards.length(); i++)
 		{
 			JSONObject rawCard = rawCards.getJSONObject(i);
-			JSONObject rawLinks = rawCard.getJSONObject("links");
-			JSONObject rawAddress = rawCard.getJSONObject("address");
-			String cardId = rawCard.getString("id");
-			String name = rawCard.getString("name");
-			String number = rawCard.getString("number");
-			String expirationMonth = rawCard.getString("expiration_month");
-			String expirationYear = rawCard.getString("expiration_year");
-			String type = rawCard.getString("type");
-			String bankName = rawCard.getString("bank_name");
-			String address = rawAddress.getString("line1");
-			String city = rawAddress.getString("city");
-			String state = rawAddress.getString("state");
-			String postalCode = rawAddress.getString("postal_code");
-			String href = rawCard.getString("href");
-			String createdAt = rawCard.getString("created_at");
-			boolean verified = rawCard.getBoolean("is_verified");
-			Card card = new Card(cardId, name, number, expirationMonth, expirationYear, type, bankName,
-				address, city, state, postalCode, href, createdAt, verified);
+			Card card = Parser.getCard(rawCard);
 			cards.add(card);
 		}
 		return cards;
+	}
+
+	public static Card getCard(JSONObject rawCard) throws JSONException
+	{
+		JSONObject rawLinks = rawCard.getJSONObject("links");
+		JSONObject rawAddress = rawCard.getJSONObject("address");
+		String cardId = rawCard.getString("id");
+		String name = rawCard.getString("name");
+		String number = rawCard.getString("number");
+		String expirationMonth = rawCard.getString("expiration_month");
+		String expirationYear = rawCard.getString("expiration_year");
+		String type = rawCard.getString("type");
+		String bankName = rawCard.getString("bank_name");
+		String address = rawAddress.getString("line1");
+		String city = rawAddress.getString("city");
+		String state = rawAddress.getString("state");
+		String postalCode = rawAddress.getString("postal_code");
+		String href = rawCard.getString("href");
+		String createdAt = rawCard.getString("created_at");
+		boolean verified = rawCard.getBoolean("is_verified");
+		Card card = new Card(cardId, name, number, expirationMonth, expirationYear, type, bankName,
+			address, city, state, postalCode, href, createdAt, verified);
+		return card;
 	}
 
 	public static List<BankAccount> getBankAccounts(JSONArray rawBankAccounts) throws JSONException
@@ -94,27 +99,33 @@ public class Parser
 		for (int i = 0; i < rawBankAccounts.length(); i++)
 		{
 			JSONObject rawBankAccount = rawBankAccounts.getJSONObject(i);
-			JSONObject rawLinks = rawBankAccount.getJSONObject("links");
-			JSONObject rawAddress = rawBankAccount.getJSONObject("address");
-			String bankAccountId = rawBankAccount.getString("id");
-			String name = rawBankAccount.getString("name");
-			String bankName = rawBankAccount.getString("bank_name");
-			String number = rawBankAccount.getString("account_number");
-			String type = rawBankAccount.getString("account_type");
-			String routing = rawBankAccount.getString("routing_number");
-			String address = rawAddress.getString("line1");
-			String city = rawAddress.getString("city");
-			String state = rawAddress.getString("state");
-			String postalCode = rawAddress.getString("postal_code");
-			String href = rawBankAccount.getString("href");
-			String createdAt = rawBankAccount.getString("created_at");
-			boolean creditable = rawBankAccount.getBoolean("can_credit");
-			boolean debitable = rawBankAccount.getBoolean("can_debit");
-			BankAccount bankAccount = new BankAccount(bankAccountId, name, bankName, number, type, routing,
-				address, city, state, postalCode, href, createdAt, creditable, debitable);
+			BankAccount bankAccount = Parser.getBankAccount(rawBankAccount);
 			bankAccounts.add(bankAccount);
 		}
 		return bankAccounts;
+	}
+
+	public static BankAccount getBankAccount(JSONObject rawBankAccount) throws JSONException
+	{
+		JSONObject rawLinks = rawBankAccount.getJSONObject("links");
+		JSONObject rawAddress = rawBankAccount.getJSONObject("address");
+		String bankAccountId = rawBankAccount.getString("id");
+		String name = rawBankAccount.getString("name");
+		String bankName = rawBankAccount.getString("bank_name");
+		String number = rawBankAccount.getString("account_number");
+		String type = rawBankAccount.getString("account_type");
+		String routing = rawBankAccount.getString("routing_number");
+		String address = rawAddress.getString("line1");
+		String city = rawAddress.getString("city");
+		String state = rawAddress.getString("state");
+		String postalCode = rawAddress.getString("postal_code");
+		String href = rawBankAccount.getString("href");
+		String createdAt = rawBankAccount.getString("created_at");
+		boolean creditable = rawBankAccount.getBoolean("can_credit");
+		boolean debitable = rawBankAccount.getBoolean("can_debit");
+		BankAccount bankAccount = new BankAccount(bankAccountId, name, bankName, number, type, routing,
+			address, city, state, postalCode, href, createdAt, creditable, debitable);
+		return bankAccount;
 	}
 
 	public static List<Vendor> getVendors(JSONArray rawVendors)
@@ -158,12 +169,18 @@ public class Parser
 		for (int i = 0; i < rawStations.length(); i++)
 		{
 			JSONObject rawStation = rawStations.getJSONObject(i);
-			String stationId = rawStation.getString("stationId");
-			String name = rawStation.getString("name");
-			Station station = new Station(stationId, name);
+			Station station = Parser.getStation(rawStation);
 			stations.add(station);
 		}
 		return stations;
+	}
+
+	public static Station getStation(JSONObject rawStation) throws JSONException
+	{
+		String stationId = rawStation.getString("stationId");
+		String name = rawStation.getString("name");
+		Station station = new Station(stationId, name);
+		return station;
 	}
 
 	public static List<Item> getItems(JSONArray rawItems)
@@ -187,29 +204,35 @@ public class Parser
 	
 	public static Item getItem(JSONObject rawItem) throws JSONException
 	{
-		String supply = rawItem.getString("supply");
-		String unlimited = rawItem.getString("unlimited");
-		rawItem = rawItem.getJSONObject("item");
 		String itemId = rawItem.getString("itemId");
 		String name = rawItem.getString("name");
 		BigDecimal price = new BigDecimal(rawItem.getString("price"));
 		int maxSupplements = rawItem.getInt("maxSupplements");
+		int supply = rawItem.getInt("supply");
 		JSONArray rawCategories = rawItem.getJSONArray("categories");
 		JSONArray rawAttributes = rawItem.getJSONArray("attributes");
 		JSONArray rawSupplements = rawItem.getJSONArray("supplements");
+		List<Category> categories = Parser.getCategories(rawCategories);
+		List<Attribute> attributes = Parser.getAttributes(rawAttributes);
+		List<Supplement> supplements = Parser.getSupplements(rawSupplements);
 
-		// Add the categories.
-		ArrayList<Category> categories = new ArrayList<Category>();
-		if (rawCategories != null)
-		for (int j = 0; j < rawCategories.length(); j++)
+		// Create the item
+		Item item = new Item(itemId, name, price, maxSupplements, supply,
+				categories, attributes, supplements);
+		return item;
+	}
+
+	public static List<Category> getCategories(JSONArray rawCategories) throws JSONException
+	{
+		List<Category> categories = new ArrayList<Category>();
+		for (int i = 0; i < rawCategories.length(); i++)
 		{
-			JSONObject rawCategory = rawCategories.getJSONObject(j);
-			Category category = getCategory(rawCategory);
+			JSONObject rawCategory = rawCategories.getJSONObject(i);
+			Category category = Parser.getCategory(rawCategory);
 			boolean hasCategory = false;
-			for (int k = 0; k < Globals.getCategories().size(); k++)
+			for (int j = 0; j < Globals.getCategories().size(); j++)
 			{
-				if (Globals.getCategories().get(k).getCategoryId().
-						equals(category.getCategoryId()))
+				if (Globals.getCategories().get(j).getId().equals(category.getId()))
 					hasCategory = true;
 			}
 			if (!hasCategory)
@@ -220,31 +243,7 @@ public class Parser
 			}
 			categories.add(category);
 		}
-
-		// Add the attributes.
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-		if (rawAttributes != null)
-		for (int j = 0; j < rawAttributes.length(); j++)
-		{
-			JSONObject rawAttribute = rawAttributes.getJSONObject(j);
-			Attribute attribute = getAttribute(rawAttribute);
-			attributes.add(attribute);
-		}
-
-		// Add the supplements.
-		ArrayList<Supplement> supplements = new ArrayList<Supplement>();
-		if (rawSupplements != null)
-		for (int j = 0; j < rawSupplements.length(); j++)
-		{
-			JSONObject rawSupplement = rawSupplements.getJSONObject(j);
-			Supplement supplement = getSupplement(rawSupplement);
-			supplements.add(supplement);
-		}
-
-		// Create the item
-		Item item = new Item(itemId, name, price, maxSupplements,
-				categories, attributes, supplements);
-		return item;
+		return categories;
 	}
 	
 	public static Category getCategory(JSONObject rawCategory) throws JSONException
@@ -253,6 +252,18 @@ public class Parser
 		String categoryName = rawCategory.getString("name");
 		Category category = new Category(categoryId, categoryName);
 		return category;
+	}
+
+	public static List<Attribute> getAttributes(JSONArray rawAttributes) throws JSONException
+	{
+		List<Attribute> attributes = new ArrayList<Attribute>();
+		for (int i = 0; i < rawAttributes.length(); i++)
+		{
+			JSONObject rawAttribute = rawAttributes.getJSONObject(i);
+			Attribute attribute = Parser.getAttribute(rawAttribute);
+			attributes.add(attribute);
+		}
+		return attributes;
 	}
 	
 	public static Attribute getAttribute(JSONObject rawAttribute) throws JSONException
@@ -272,23 +283,61 @@ public class Parser
 		Attribute attribute = new Attribute(attributeId, attributeName, options);
 		return attribute;
 	}
+
+	public static List<Option> getOptions(JSONArray rawOptions) throws JSONException
+	{
+		List<Option> options = new ArrayList<Option>();
+		for (int i = 0; i < rawOptions.length(); i++)
+		{
+			JSONObject rawOption = rawOptions.getJSONObject(i);
+			Option option = Parser.getOption(rawOption);
+			options.add(option);
+		}
+		return options;
+	}
 	
 	public static Option getOption(JSONObject rawOption) throws JSONException
 	{
-		String optionId = rawOption.getString("optionId");
-		String optionName = rawOption.getString("name");
-		BigDecimal optionPrice = new BigDecimal(rawOption.getString("price"));
-		Option option = new Option(optionId, optionName, optionPrice);
+		String id = rawOption.getString("optionId");
+		String name = rawOption.getString("name");
+		BigDecimal price = new BigDecimal(rawOption.getString("price"));
+		int supply = rawOption.getInt("supply");
+		Option option = new Option(id, name, price, supply);
 		return option;
+	}
+
+	public static List<Supplement> getSupplements(JSONArray rawSupplements) throws JSONException
+	{
+		List<Supplement> supplements = new ArrayList<Supplement>();
+		for (int i = 0; i < rawSupplements.length(); i++)
+		{
+			JSONObject rawSupplement = rawSupplements.getJSONObject(i);
+			Supplement supplement = Parser.getSupplement(rawSupplement);
+			supplements.add(supplement);
+		}
+		return supplements;
 	}
 	
 	public static Supplement getSupplement(JSONObject rawSupplement) throws JSONException
 	{
-		String supplementId = rawSupplement.getString("supplementId");
-		String supplementName = rawSupplement.getString("name");
-		BigDecimal supplementPrice = new BigDecimal(rawSupplement.getString("price"));
-		Supplement supplement = new Supplement(supplementId, supplementName, supplementPrice);
+		String id = rawSupplement.getString("supplementId");
+		String name = rawSupplement.getString("name");
+		BigDecimal price = new BigDecimal(rawSupplement.getString("price"));
+		int supply = rawSupplement.getInt("supply");
+		Supplement supplement = new Supplement(id, name, price, supply);
 		return supplement;
+	}
+
+	public static List<Fragment> getFragments(JSONArray rawFragments) throws JSONException
+	{
+		List<Fragment> fragments = new ArrayList<Fragment>();
+		for (int i = 0; i < rawFragments.length(); i++)
+		{
+			JSONObject rawFragment = rawFragments.getJSONObject(i);
+			Fragment fragment = Parser.getFragment(rawFragment);
+			fragments.add(fragment);
+		}
+		return fragments;
 	}
 	
 	public static Fragment getFragment(JSONObject rawFragment) throws JSONException
@@ -298,26 +347,32 @@ public class Parser
 		
 		// Get the item.
 		JSONObject rawItem = rawFragment.getJSONObject("item");
-		Item item = getItem(rawItem);
+		Item item = Parser.getItem(rawItem);
 		
 		// Get the selections.
 		JSONArray rawSelections = rawFragment.getJSONArray("selections");
 		List<Selection> selections = new ArrayList<Selection>();
-		for (int i = 0; i < rawSelections.length(); i++)
+		if (rawSelections != null && rawSelections.length() > 0)
 		{
-			JSONObject rawSelection = rawSelections.getJSONObject(i);
-			Selection selection = getSelection(rawSelection);
-			selections.add(selection);
+			for (int i = 0; i < rawSelections.length(); i++)
+			{
+				JSONObject rawSelection = rawSelections.getJSONObject(i);
+				Selection selection = getSelection(rawSelection);
+				selections.add(selection);
+			}
 		}
 		
 		// Get the supplements.
 		JSONArray rawSupplements = rawFragment.getJSONArray("supplements");
 		List<Supplement> supplements = new ArrayList<Supplement>();
-		for (int i = 0; i < rawSupplements.length(); i++)
+		if (rawSupplements != null && rawSupplements.length() > 0)
 		{
-			JSONObject rawSupplement = rawSupplements.getJSONObject(i);
-			Supplement supplement = getSupplement(rawSupplement);
-			supplements.add(supplement);
+			for (int i = 0; i < rawSupplements.length(); i++)
+			{
+				JSONObject rawSupplement = rawSupplements.getJSONObject(i);
+				Supplement supplement = getSupplement(rawSupplement);
+				supplements.add(supplement);
+			}
 		}
 		
 		Fragment fragment = new Fragment(fragmentId, item, selections, supplements, quantity);
@@ -337,52 +392,56 @@ public class Parser
 	public static Order getOrder(JSONObject rawOrder) throws JSONException
 	{
 		String orderId = rawOrder.getString("orderId");
-		String vendorId = rawOrder.getString("vendorId");
+		JSONObject rawVendor = rawOrder.getJSONObject("vendor");
+		JSONObject rawStation = rawOrder.getJSONObject("station");
+		JSONObject rawUser = rawOrder.getJSONObject("patron");
 		int status = rawOrder.getInt("status");
-		String stationId = rawOrder.getString("stationId");
 		BigDecimal tip = new BigDecimal(rawOrder.getString("tip"));
 		String comment = rawOrder.getString("comment");
 		List<Object> coupons = null;
-		String funderId = rawOrder.getString("funderId");
+		JSONObject rawFunder = rawOrder.getJSONObject("funder");
+		String funderId = rawFunder.getString("id");
 
-		// Get the objects from the data.
-		Station station = null;
-		for (Station vendorStation : Globals.getVendor().getStations())
-		{
-			if (vendorStation.getId().equals(stationId))
-			{
-				station = vendorStation;
-			}
-		}
+		// Get the vendor
+		Vendor vendor = Parser.getVendor(rawVendor);
+
+		// Get the user
+		User patron = Parser.getUser(rawUser);
+
+		// Get the station
+		Station station = Parser.getStation(rawStation);
+
+		// Get the funder
 		Funder funder = null;
-		for (Funder userFunder : Globals.getUser().getFunders())
+		if (rawFunder.getString("href").toLowerCase().contains("cards"))
 		{
-			if (userFunder.getId().equals(funderId))
-			{
-				funder = userFunder;
-			}
+			funder = Parser.getCard(rawFunder);
+		}
+		else
+		{
+			funder = Parser.getBankAccount(rawFunder);
 		}
 		
 		// Get the fragments.
-		List<Fragment> fragments = new ArrayList<Fragment>();
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
+		List<Fragment> fragments = Parser.getFragments(rawFragments);
+		/*
 		for (int i = 0; i < rawFragments.length(); i++)
 		{
+			System.out.println("getorder14");
 			JSONObject rawFragment = rawFragments.getJSONObject(i);
+			System.out.println("getorder15");
 			Fragment fragment = getFragment(rawFragment);
+			System.out.println("getorder16");
 			fragments.add(fragment);
+			System.out.println("getorder17");
 		}
 
-		Order order = new Order(orderId, vendorId, fragments, Order.getIntStatus(status), station,
+		System.out.println("getorder18");
+		*/
+		Order order = new Order(orderId, vendor, patron, fragments, Order.getIntStatus(status), station,
 			funder, tip, coupons, comment);
 		return order;
-	}
-
-	public static Station getStation(JSONObject rawStation) throws JSONException
-	{
-		String stationId = rawStation.getString("stationId");
-		String name = rawStation.getString("name");
-		return new Station(stationId, name);
 	}
 	
 	public static Code getCode(JSONObject rawCode)throws JSONException, ParseException

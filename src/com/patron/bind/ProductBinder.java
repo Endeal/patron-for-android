@@ -50,7 +50,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
 			{
 				Item favoriteItem = Globals.getFavoriteItems().get(i);
-				if (favoriteItem.getItemId().equals(item.getItemId()))
+				if (favoriteItem.getId().equals(item.getId()))
 				{
 					toggle.setChecked(true);
 				}

@@ -21,11 +21,16 @@ package com.patron.model;
 import java.math.BigDecimal;
 import java.util.List;
 import java.math.RoundingMode;
+import java.lang.Exception;
 
 import com.patron.system.Globals;
 import com.patron.model.Station;
 import com.patron.model.Card;
 import com.patron.model.Funder;
+import com.patron.model.Vendor;
+import com.patron.model.User;
+
+import com.google.gson.Gson;
 
 public class Order
 {	
@@ -37,7 +42,8 @@ public class Order
 	
 	// Properties
 	private String id;
-	private String vendorId;
+	private Vendor vendor;
+	private User patron;
 	private String deviceId;
 	private int deviceType;
 	private List<Fragment> fragments;
@@ -49,11 +55,12 @@ public class Order
 	private String comment;
 	
 	// Constructor
-	public Order(String id, String vendorId, List<Fragment> fragments, Status status, Station station,
+	public Order(String id, Vendor vendor, User patron, List<Fragment> fragments, Status status, Station station,
 		Funder funder, BigDecimal tip, List<Object> coupons, String comment)
 	{
 		setId(id);
-		setVendorId(vendorId);
+		setVendor(vendor);
+		setPatron(patron);
 		setDeviceId(Globals.getDeviceId());
 		setDeviceType(1);
 		setFragments(fragments);
@@ -177,9 +184,14 @@ public class Order
 		this.id = id;
 	}
 	
-	public void setVendorId(String vendorId)
+	public void setVendor(Vendor vendor)
 	{
-		this.vendorId = vendorId;
+		this.vendor = vendor;
+	}
+
+	public void setPatron(User patron)
+	{
+		this.patron = patron;
 	}
 
 	private void setDeviceId(String deviceId)
@@ -233,9 +245,14 @@ public class Order
 		return id;
 	}
 	
-	public String getVendorId()
+	public Vendor getVendor()
 	{
-		return vendorId;
+		return vendor;
+	}
+
+	public User getPatron()
+	{
+		return patron;
 	}
 	
 	public String getDeviceId()

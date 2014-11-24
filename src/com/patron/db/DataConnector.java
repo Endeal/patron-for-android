@@ -87,9 +87,9 @@ public class DataConnector extends AsyncTask<String, Void, ArrayList<Code>>
 					JSONObject rawCode = rawCodes.getJSONObject(i);
 					Code code = Parser.getCode(rawCode);
 					codes.add(code);
-					if (code.getOrder().getOrderId().equals(orderId))
+					if (code.getOrder().getId().equals(orderId))
 					{
-						vendorId = code.getOrder().getVendorId();
+						vendorId = code.getOrder().getVendor().getId();
 					}
 				}
 			}
@@ -109,7 +109,7 @@ public class DataConnector extends AsyncTask<String, Void, ArrayList<Code>>
 					JSONObject rawVendor = rawVendors.getJSONObject(i);
 					Vendor vendor = Parser.getVendor(rawVendor);
 					vendors.add(vendor);
-					if (vendor.getVendorId().equals(vendorId))
+					if (vendor.getId().equals(vendorId))
 					{
 						Globals.setVendor(vendor);
 					}

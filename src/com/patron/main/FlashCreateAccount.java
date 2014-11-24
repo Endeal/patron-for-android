@@ -76,7 +76,6 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 	public void update()
 	{
 		User user = new User("0", fieldFirstName.getText().toString(), fieldLastName.getText().toString(),
-			fieldEmail.getText().toString(), fieldPassword.getText().toString(),
 			FlashCreateAccount.year + "-" + (FlashCreateAccount.month + 1) + "-" + FlashCreateAccount.day,
 			null, null, null, null, null);
 		Globals.setUser(user);

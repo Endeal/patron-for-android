@@ -53,6 +53,9 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.graphics.Typeface;
 
+import java.lang.Exception;
+import com.google.gson.Gson;
+
 public class FlashCart extends ActionBarActivity implements Loadable
 {
 	// The layout elements.
@@ -74,6 +77,17 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		try
+		{
+			Gson gson = new Gson();
+			System.out.println("ON CREATE:" + gson.toJson(Globals.getOrder().getFragments()));
+		}
+		catch (Exception e)
+		{
+			System.out.println("ERROR JSONING ORDER!");
+		}
+
 		LayoutInflater inflater = LayoutInflater.from(this);
 		viewLoading = inflater.inflate(R.layout.misc_loading, null);
 		viewCart = inflater.inflate(R.layout.layout_cart, null);
@@ -115,7 +129,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
     
     public void finishOrder()
     {
-                    setContentView(viewLoading);
+            setContentView(viewLoading);
 		    AddOrderConnector addOrderConnector = new AddOrderConnector(this);
 		    URL url;
 		    try
@@ -140,6 +154,16 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	// Layout
 	public void beginLoading()
 	{
+		try
+		{
+			Gson gson = new Gson();
+			System.out.println("BEGIN LOADING:" + gson.toJson(Globals.getOrder()));
+		}
+		catch (Exception e)
+		{
+			System.out.println("ERROR JSONING ORDER!");
+		}
+
 		listCart = (ListView) viewCart.findViewById(R.id.cartListItems);
 		buttonFinish = (Button) viewCart.findViewById(R.id.cartButtonFinish);
 		buttonFinish.setOnClickListener(new ButtonFinishListener(this));
@@ -152,6 +176,16 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	
 	public void endLoading()
 	{
+		try
+		{
+			Gson gson = new Gson();
+			System.out.println("END LOADING:" + gson.toJson(Globals.getOrder()));
+		}
+		catch (Exception e)
+		{
+			System.out.println("ERROR JSONING ORDER!");
+		}
+
 		if (Globals.getOrder() != null &&
 				Globals.getOrder().getFragments() != null &&
 				Globals.getOrder().getFragments().size() > 0)
@@ -167,6 +201,16 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	
 	public void update()
 	{
+
+		try
+		{
+			Gson gson = new Gson();
+			System.out.println("UPON UPDATING:" + gson.toJson(Globals.getOrder()));
+		}
+		catch (Exception e)
+		{
+			System.out.println("ERROR JSONING ORDER!");
+		}
 		// Set main list items to a list of drinks.
     	if (Globals.getOrder().getFragments() != null &&
     			!Globals.getOrder().getFragments().isEmpty())
@@ -417,7 +461,27 @@ public class FlashCart extends ActionBarActivity implements Loadable
     		buttonFinish.setOnClickListener(new OnClickListener() {
     			public void onClick(View view)
     			{
+    				try
+					{
+						Gson gson = new Gson();
+						System.out.println("BEFORE CLICK FINISHES:" + gson.toJson(Globals.getOrder()));
+					}
+					catch (Exception e)
+					{
+						System.out.println("ERROR JSONING ORDER!");
+					}
+
     				finishOrder();
+
+    				try
+					{
+						Gson gson = new Gson();
+						System.out.println("AFTER CLICK FINISHES:" + gson.toJson(Globals.getOrder()));
+					}
+					catch (Exception e)
+					{
+						System.out.println("ERROR JSONING ORDER!");
+					}
     			}
     		});
     	}

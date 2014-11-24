@@ -84,8 +84,11 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			{
 				funder = Globals.getUser().getFunders().get(0);
 			}
-
-			order = new Order(null, Globals.getVendor().getVendorId(), fragments, Order.Status.WAITING,
+			Vendor vendor = Globals.getVendor();
+			vendor.setItems(null);
+			vendor.setFilteredItems(null);
+			vendor.setRecommendations(null);
+			order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
 				station, funder, tip, coupons, comment);
 		}
 		if (order.getFragments() != null &&
@@ -102,9 +105,10 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Globals.setOrder(order);
 		
 		// Creates a Toast that informs the user that the drink has been added to the tab.
-		System.out.println("SHOWING TOAST");
 		Toast toast = Toast.makeText(v.getContext(),
 				"Added " + item.getName() + ".", Toast.LENGTH_SHORT);
 		toast.show();
+		
+
 	}
 }

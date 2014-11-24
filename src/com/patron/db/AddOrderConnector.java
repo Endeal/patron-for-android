@@ -8,16 +8,19 @@ import java.net.URL;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
+import com.urbanairship.push.PushManager;
+
 import com.patron.main.FlashCart;
 import com.patron.system.Globals;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 public class AddOrderConnector extends AsyncTask<URL, Void, String>
 {
@@ -48,16 +51,20 @@ public class AddOrderConnector extends AsyncTask<URL, Void, String>
 		{
 			URL path = params[0];
 			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(path.toURI());
-			post.setHeader("Content-type", "application/json");
-			post.setHeader("Accept", "application/json");
+			HttpPut request = new HttpPut(path.toURI());
+			request.setHeader("Content-type", "application/json");
+			request.setHeader("Accept", "application/json");
 			Gson gson = new Gson();
-			String postData = gson.toJson(Globals.getOrder());
-			System.out.println("GOIN' POSTAL: " + postData);
+			JsonElement order = gson.toJsonTree(Globals.getOrder());
+			order.getAsJsonObject().addProperty("email", Globals.getUser().getEmail());
+			order.getAsJsonObject().addProperty("password", Globals.getUser().getPassword());
+			order.getAsJsonObject().addProperty("deviceType", "1");
+			String postData = gson.toJson(order);
 
-			// Set the post data to the request and execute the request.
-			post.setEntity(new StringEntity(postData));
-			response = client.execute(post);
+			// Set the request data to the request and execute the request.
+			request.setEntity(new StringEntity(postData));
+			response = client.execute(request);
+
 		}
 		catch (URISyntaxException e)
 		{

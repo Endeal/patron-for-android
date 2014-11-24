@@ -10,22 +10,24 @@ public class Item
 	private String name;
 	private BigDecimal price;
 	private int maxSupplements;
+	private int supply;
 	private List<Category> categories;
 	private List<Attribute> attributes;
 	private List<Supplement> supplements;
 	
 	// Constructor
-	public Item(String id, String name, BigDecimal price, int maxSupplements,
+	public Item(String id, String name, BigDecimal price, int maxSupplements, int supply,
 			List<Category> categories, List<Attribute> attributes,
 			List<Supplement> supplements)
 	{
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.maxSupplements = maxSupplements;
-		this.categories = categories;
-		this.attributes = attributes;
-		this.supplements = supplements;
+		setId(id);
+		setName(name);
+		setPrice(price);
+		setMaxSupplements(maxSupplements);
+		setSupply(supply);
+		setCategories(categories);
+		setAttributes(attributes);
+		setSupplements(supplements);
 	}
 	
 	// Setters
@@ -48,13 +50,18 @@ public class Item
 	{
 		this.maxSupplements = maxSupplements;
 	}
+
+	public void setSupply(int supply)
+	{
+		this.supply = supply;
+	}
 	
-	public void setAttributes(List<Category> categories)
+	public void setCategories(List<Category> categories)
 	{
 		this.categories = categories;
 	}
 	
-	public void setCategories(List<Attribute> attributes)
+	public void setAttributes(List<Attribute> attributes)
 	{
 		this.attributes = attributes;
 	}
@@ -83,6 +90,11 @@ public class Item
 	public int getMaxSupplements()
 	{
 		return maxSupplements;
+	}
+
+	public int getSupply()
+	{
+		return supply;
 	}
 	
 	public List<Category> getCategories()

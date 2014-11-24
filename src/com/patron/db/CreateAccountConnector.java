@@ -110,7 +110,9 @@ public class CreateAccountConnector extends AsyncTask<URL, Void, String>
 		try
 		{
 			JSONObject patron = new JSONObject(result);
-			User user = Parser.getUser(patron, password);
+			User user = Parser.getUser(patron);
+			user.setEmail(email);
+			user.setPassword(password);
 			Globals.setUser(user);
 			activity.message("Successfully created account.");
 			activity.update();
