@@ -18,6 +18,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 	@Override   
 	public void onReceive(Context context, Intent intent)
 	{   
+		/*
 		this.orderId = intent.getExtras().getString("orderId");
 		String action = intent.getAction();   
 
@@ -69,6 +70,7 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 				// register again ...   
 			}   
 		}
+		*/
 	}
 	
 	public void beginLoading()

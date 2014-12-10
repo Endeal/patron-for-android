@@ -1,10 +1,5 @@
 package com.patron.system;
 
-import com.urbanairship.AirshipConfigOptions;
-import com.urbanairship.Logger;
-import com.urbanairship.UAirship;
-import com.urbanairship.push.PushManager;
-
 import com.parse.Parse;
 import com.parse.PushService;
 
