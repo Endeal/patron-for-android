@@ -3,11 +3,14 @@ package com.patron.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.location.Location;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +20,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+
 import com.patron.listeners.DialogTutorialListener;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
-public class FlashHome extends ActionBarActivity implements Loadable
+public class FlashHome extends ActionBarActivity implements Loadable, ConnectionCallbacks, OnConnectionFailedListener
 {
 	// Layout elements.
 	public static TextView textLocation; // The bar's name.
@@ -31,6 +42,11 @@ public class FlashHome extends ActionBarActivity implements Loadable
 	public static Button buttonHomeCodes; // Go to Codes
 	public static Button buttonHomeProfile; // Go to Profile
 	public static View viewMain;
+
+    // Location services
+    private GoogleApiClient googleApiClient;
+    private final String TAG = "Patron";
+    private LocationRequest locationRequest;
 	
 	// Activity methods.
     @Override
@@ -43,6 +59,12 @@ public class FlashHome extends ActionBarActivity implements Loadable
         
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
     }
     
     @Override
@@ -174,5 +196,46 @@ public class FlashHome extends ActionBarActivity implements Loadable
     {
     	Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
     	toast.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        googleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(1000); // Update location every second
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "GoogleApiClient connection has been suspend");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "GoogleApiClient connection has failed");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        System.out.println("POOOOOOOP!");
+        System.out.println("Location received: " + location.toString());
     }
 }
