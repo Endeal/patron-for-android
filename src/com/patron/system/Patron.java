@@ -12,12 +12,22 @@ import android.content.Context;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.ConnectionResult;
 
+import com.noveogroup.android.log.Log;
+
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
 import com.patron.main.FlashScan;
 
 public class Patron extends Application
 {
 	private static Context context;
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	public static final String MIXPANEL_TOKEN = "a9c5fb2c27780b459248ef663090aa53";
+	/**
+	Initialize the library with your Mixpanel project token, MIXPANEL_TOKEN, and a reference
+ 	to your application context.
+ 	*/
+ 	MixpanelAPI mixpanel = MixpanelAPI.getInstance(context, MIXPANEL_TOKEN);
 	
 	@Override
 	public void onCreate()
@@ -25,9 +35,17 @@ public class Patron extends Application
 		super.onCreate();
 		context = this;
 		Parse.initialize(this, "l6vtkQv0R6uPJrXSCn2fiAMRjMFrH6iSA3FQtvkN", "TFzHYXvM4LbuyfqtQsigWaz1j9stCuvcho1zZyge");
-
 		// Also in this method, specify a default Activity to handle push notifications
   		PushService.setDefaultPushCallback(this, FlashScan.class);
+		Log.debug("Parse library initialized successfully");
+		Log.info("Patron application successfully created");
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+    	mixpanel.flush();
+    	super.onDestroy();
 	}
 	
 	public static Context getContext()

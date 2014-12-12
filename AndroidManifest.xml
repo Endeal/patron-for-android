@@ -7,7 +7,7 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="21" />
     
-	<!-- Urban Airship -->
+	<!-- Permissions -->
 	<permission android:name="com.patron.main.permission.UA_DATA" android:protectionLevel="signature" />
 	<uses-permission android:name="com.patron.main.permission.UA_DATA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,6 +19,9 @@
     <permission android:name="com.patron.main.permission.C2D_MESSAGE" android:protectionLevel="signature" />
     <uses-permission android:name="com.patron.main.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <!-- OPTIONAL - This permission is only necessary if your app has multiple processes -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <!-- END OPTIONAL Urban Airship Settings -->
@@ -47,6 +50,9 @@
         <!-- Intent Receivers -->
         <receiver android:name="com.urbanairship.CoreReceiver" />  
         <receiver android:name="com.patron.system.FlashIntentReceiver" />
+
+        <!-- Appsee -->
+        <service android:name="com.appsee.AppseeBackgroundUploader" />
 
         <!-- Parse -->
         <service android:name="com.parse.PushService" />
