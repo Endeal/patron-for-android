@@ -1,29 +1,33 @@
 package com.patron.main;
 
+import dalvik.system.DexFile;
+
+import java.io.IOException;
 import java.lang.Exception;
 import java.lang.Runnable;
-import java.net.URL;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Enumeration;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.widget.ImageButton;
-import android.widget.Button;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.app.AlertDialog;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import com.urbanairship.AirshipConfigOptions;
-import com.urbanairship.Logger;
-import com.urbanairship.UAirship;
-import com.urbanairship.push.PushManager;
 
 import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
@@ -37,31 +41,52 @@ import org.brickred.socialauth.android.SocialAuthError;
 import org.brickred.socialauth.android.SocialAuthListener;
 import org.brickred.socialauth.Profile;
 
-public class FlashLogin extends ActionBarActivity implements Loadable
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.ConnectionResult;
+
+public class FlashLogin extends Activity implements Loadable
 {
 	private boolean submitting;
 	private ProgressBar progressBar;
 	private SocialAuthAdapter socialAuthAdapter;
+	private ImageButton buttonPatron;
+	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+	// Activity methods
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_login);
 		init();
-
-		// Initialize device ID
-		/*
-		AirshipConfigOptions options = AirshipConfigOptions.loadDefaultOptions(this);
-        UAirship.takeOff(this, options);
-        PushManager.enablePush();
-        String apid = PushManager.shared().getAPID();
-        Globals.setDeviceId(apid);
-		PushManager.shared().setIntentReceiver(FlashIntentReceiver.class);
-		System.out.println(apid);
-		*/
 	}
-	
+
+	/*
+	* Handle results returned to the FragmentActivity
+	* by Google Play services
+	*/
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		// Decide what to do based on the original request code
+		switch (requestCode)
+		{
+			case CONNECTION_FAILURE_RESOLUTION_REQUEST :
+			/*
+			* If the result code is Activity.RESULT_OK, try
+			* to connect again
+			*/
+			switch (resultCode) {
+				case Activity.RESULT_OK :
+				/*
+				* Try the request again
+				*/
+				break;
+			}
+		}
+	}
+
+	// Loadable Inherited methods
 	@Override
 	public void beginLoading()
 	{
@@ -81,9 +106,23 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 	@Override
 	public void update()
 	{
-		Intent intent = new Intent(this, FlashHome.class);
+		System.out.println("POOOP!");
+		try {
+			DexFile df = new DexFile(this.getPackageCodePath());
+			for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
+				String s = iter.nextElement();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("URINE");
+
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+			this, buttonPatron, "loginButton");
+		Bundle bundle = options.toBundle();
+		Intent intent = new Intent(this, FlashMenu.class);
 		this.finish();
-		startActivity(intent);
+		ActivityCompat.startActivity(this, intent, bundle);
 	}
 
 	@Override
@@ -97,7 +136,7 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
-		ImageButton buttonPatron = (ImageButton)findViewById(R.id.loginButtonPatron);
+		buttonPatron = (ImageButton)findViewById(R.id.loginButtonPatron);
 		ImageButton buttonFacebook = (ImageButton)findViewById(R.id.loginButtonFacebook);
 		ImageButton buttonTwitter = (ImageButton)findViewById(R.id.loginButtonTwitter);
 		ImageButton buttonGooglePlus = (ImageButton)findViewById(R.id.loginButtonGooglePlus);
@@ -128,7 +167,7 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 				// Prepopulate Login info
 				fieldEmail.setText("mpacquiao@gmail.com");
 				fieldPassword.setText("batman");
-				
+
 				final AlertDialog dialog = builder.create();
 
 				listener.setDialog(dialog);
@@ -166,7 +205,42 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		buttonTwitter.setOnClickListener(new ButtonServiceListener(this, Provider.TWITTER));
 		buttonGooglePlus.setOnClickListener(new ButtonServiceListener(this, Provider.GOOGLEPLUS));
 	}
-	
+
+	private boolean servicesConnected()
+	{
+		// Check that Google Play services is available
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		// If Google Play services is available
+		if (ConnectionResult.SUCCESS == resultCode)
+		{
+			// In debug mode, log the status
+			System.out.println("Google Play services is available.");
+			// Continue
+			return true;
+			// Google Play services was not available for some reason.
+			// resultCode holds the error code.
+		}
+		else
+		{
+			// Get the error dialog from Google Play services
+			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+			// If Google Play services can provide an error dialog
+			if (errorDialog != null)
+			{
+				errorDialog.show();
+				/*
+				// Create a new DialogFragment for the error dialog
+				ErrorDialogFragment errorFragment = new ErrorDialogFragment();
+				// Set the dialog in the DialogFragment
+				errorFragment.setDialog(errorDialog);
+				// Show the error dialog in the DialogFragment
+				errorFragment.show(getSupportFragmentManager(), "Location Updates");
+				*/
+			}
+			return false;
+		}
+	}
+
 	private class ButtonServiceListener implements OnClickListener
 	{
 		private Loadable activity;
@@ -300,6 +374,28 @@ public class FlashLogin extends ActionBarActivity implements Loadable
 		@Override
 		public void onBack()
 		{
+		}
+	}
+
+	// Define a DialogFragment that displays the error dialog
+	public static class ErrorDialogFragment extends DialogFragment
+	{
+		private Dialog dialog;
+		public ErrorDialogFragment()
+		{
+			super();
+			dialog = null;
+		}
+		// Set the dialog to display
+		public void setDialog(Dialog dialog) {
+			this.dialog = dialog;
+		}
+
+		// Return a Dialog to the DialogFragment.
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState)
+		{
+			return dialog;
 		}
 	}
 }

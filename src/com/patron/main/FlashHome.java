@@ -32,7 +32,7 @@ import com.patron.listeners.DialogTutorialListener;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
-public class FlashHome extends ActionBarActivity implements Loadable, ConnectionCallbacks, OnConnectionFailedListener
+public class FlashHome extends ActionBarActivity implements Loadable
 {
 	// Layout elements.
 	public static TextView textLocation; // The bar's name.
@@ -47,7 +47,7 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
     private GoogleApiClient googleApiClient;
     private final String TAG = "Patron";
     private LocationRequest locationRequest;
-	
+
 	// Activity methods.
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -56,23 +56,24 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
         LayoutInflater inflater = LayoutInflater.from(this);
         viewMain = inflater.inflate(R.layout.layout_home, null);
         setContentView(viewMain);
-        
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
-
+		/*
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+				*/
     }
-    
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
     	beginLoading();
     	super.onWindowFocusChanged(hasFocus);
-    	
+
     }
 
     @Override
@@ -81,7 +82,7 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -98,7 +99,7 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
     	}
         return true;
     }
-    
+
     // Loadable methods
     public void beginLoading()
     {
@@ -110,15 +111,15 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
     	buttonHomeMenu = (Button) viewMain.findViewById(R.id.homeButtonMenu);
     	buttonHomeCodes = (Button) viewMain.findViewById(R.id.homeButtonCodes);
     	buttonHomeProfile = (Button) viewMain.findViewById(R.id.homeButtonProfile);
-    	
+
     	buttonHomeVendors.getLayoutParams().height = buttonHomeVendors.getWidth();
     	buttonHomeMenu.getLayoutParams().height = buttonHomeMenu.getWidth();
     	buttonHomeCodes.getLayoutParams().height = buttonHomeCodes.getWidth();
     	buttonHomeProfile.getLayoutParams().height = buttonHomeProfile.getWidth();
-    	
+
     	load();
     }
-    
+
     // Layout methods.
     public void load()
     {
@@ -130,7 +131,7 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
 				v.getContext().startActivity(intent);
 			}
 		});
-    	
+
     	// Go to buy items
     	buttonHomeMenu.setOnClickListener(new OnClickListener() {
 			public void onClick(View view)
@@ -139,7 +140,7 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
 				view.getContext().startActivity(intent);
 			}
     	});
-    	
+
     	// Go to codes
     	buttonHomeCodes.setOnClickListener(new OnClickListener() {
 			public void onClick(View view)
@@ -164,10 +165,10 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
                 view.getContext().startActivity(intent);
             }
         });
-    	
+
     	endLoading();
     }
-    
+
     public void endLoading()
     {
     	SharedPreferences preferences = getSharedPreferences("firstLaunch", MODE_PRIVATE);
@@ -184,14 +185,14 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
     	}
     	update();
     }
-    
+
     public void update()
     {
     	if (Globals.getVendor() != null &&
     			Globals.getVendor().getName() != null)
     	textLocation.setText(Globals.getVendor().getName());
     }
-    
+
     public void message(String msg)
     {
     	Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
@@ -210,32 +211,5 @@ public class FlashHome extends ActionBarActivity implements Loadable, Connection
         // Disconnecting the client invalidates it.
         googleApiClient.disconnect();
         super.onStop();
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(1000); // Update location every second
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(TAG, "GoogleApiClient connection has been suspend");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "GoogleApiClient connection has failed");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        System.out.println("POOOOOOOP!");
-        System.out.println("Location received: " + location.toString());
     }
 }

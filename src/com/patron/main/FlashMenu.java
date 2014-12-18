@@ -14,22 +14,24 @@ import java.util.List;
 import java.util.Map;
 import java.lang.Runnable;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.content.Context;
 
 import com.patron.bind.ProductBinder;
 import com.patron.db.ItemConnector;
@@ -43,13 +45,15 @@ import com.patron.model.Item;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
-public class FlashMenu extends ActionBarActivity implements Loadable
+public class FlashMenu extends Activity implements Loadable
 {
 	// The layout elements.
+	private DrawerLayout drawerLayoutNavigation;
+	private ListView listNavigation;
 	private ListView listMenu;
 	private Button buttonCheckout;
 	private Button buttonFavorites;
-	private ArrayList<Button> buttonCategories = new ArrayList<Button>(); 
+	private ArrayList<Button> buttonCategories = new ArrayList<Button>();
 	private View viewLoading;
 	private View viewMenu;
 	private View viewNone;
@@ -74,7 +78,7 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 	{
 		this.buttonCategories = buttonCategories;
 	}
-	
+
 	// Getters
 	public ListView getListMenu()
 	{
@@ -95,7 +99,7 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 	{
 		return buttonCategories;
 	}
-	
+
 	// Activity Methods
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -108,7 +112,7 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 		setContentView(viewLoading);
 		beginLoading();
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -146,28 +150,33 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 			return false;
 		}
 	}
-	
+
 	// Loadable
 	public void beginLoading()
 	{
 		// Find the views.
+		drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.drawer_layout);
+		listNavigation = (ListView) findViewById(R.id.menuListNavigation);
 		listMenu = (ListView) viewMenu.findViewById(R.id.menuListItems);
 		buttonCheckout = (Button) viewMenu.findViewById(R.id.menuButtonCheckout);
 		buttonFavorites = (Button) viewMenu.findViewById(R.id.menuButtonFavorites);
-		
+
+		listNavigation.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_navigation, R.id.navigationListItemTextMain,
+			getResources().getStringArray(R.array.array_navigation)));
+
 		// Set the custom fonts.
 		Typeface typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
 		buttonCheckout.setTypeface(typeface);
 		buttonFavorites.setTypeface(typeface);
-		
+
 		// Set button listeners
 		listMenu.setOnItemClickListener(new ListItemMenuAddListener());
 		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
 		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this));
-		
+
 		load();
 	}
-	
+
 	public void load()
 	{
 		ItemConnector itemConnector = new ItemConnector(this,
@@ -222,29 +231,29 @@ public class FlashMenu extends ActionBarActivity implements Loadable
 		}
 		update();
 	}
-	
+
 	public void update()
-	{	
+	{
 		// Set main list items to a list of drinks.
 		//Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
     	if (Globals.getVendor() != null && Globals.getVendor().getFilteredItems() != null)
     	{
     		List<Map<String, String>> products = new ArrayList<Map<String, String>>();
-    		
+
     		String[] from = {"name",
     				"price",
     				"categories",
     				"toggleButtonFavorite",
     				"layout"};
-    		
+
     		int[] to = {R.id.productListItemTextName,
     				R.id.productListItemTextPrice,
     				R.id.productListItemTextCategories,
     				R.id.productListItemToggleButtonFavorite,
     				R.id.productListItemLayout};
-    		
+
     		for (int i = 0; i < Globals.getVendor().getFilteredItems().size(); i++)
-    		{	
+    		{
         		Map<String, String> mapping = new HashMap<String, String>();
     			Item item = Globals.getVendor().getFilteredItems().get(i);
     			NumberFormat formatter = NumberFormat.getCurrencyInstance();
@@ -274,7 +283,7 @@ public class FlashMenu extends ActionBarActivity implements Loadable
     		setContentView(viewNone);
     	}
 	}
-	
+
 	public void message(String msg)
 	{
 		final String message = msg;

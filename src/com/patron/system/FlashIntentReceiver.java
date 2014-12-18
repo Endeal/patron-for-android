@@ -7,22 +7,22 @@ import android.util.Log;
 
 import com.patron.db.DataConnector;
 import com.patron.main.FlashScan;
-import com.urbanairship.UAirship;
-import com.urbanairship.push.PushManager;
 
 public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 {
 	private String orderId;
-	private String msg; 
+	private String msg;
+	private Context context;
 
-	@Override   
+	@Override
 	public void onReceive(Context context, Intent intent)
-	{   
+	{
+		this.context = context;
 		/*
 		this.orderId = intent.getExtras().getString("orderId");
-		String action = intent.getAction();   
+		String action = intent.getAction();
 
-		// if a notification is received ...   
+		// if a notification is received ...
 		if (action.equals(PushManager.ACTION_PUSH_RECEIVED))
 		{
 			//beginLoading();
@@ -33,51 +33,51 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		{
 			beginLoading();
 			System.out.println(msg + ": 2");
-			
-			// here you can get the extras from the intent.   
-			// and then you can use it as you wish.   
-//			msg = intent.getStringExtra(PushManager.EXTRA_ALERT);   
 
-			// for example, you can start an activity and send the msg as an extra.   
-//			Intent launch = new Intent(Intent.ACTION_MAIN);   
-//			launch.setClass(UAirship.shared().getApplicationContext(), FlashCodes.class);   
-//			launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
-//			launch.putExtra("notification", msg);   
+			// here you can get the extras from the intent.
+			// and then you can use it as you wish.
+//			msg = intent.getStringExtra(PushManager.EXTRA_ALERT);
 
-//			UAirship.shared().getApplicationContext().startActivity(launch);   
+			// for example, you can start an activity and send the msg as an extra.
+//			Intent launch = new Intent(Intent.ACTION_MAIN);
+//			launch.setClass(UAirship.shared().getApplicationContext(), FlashCodes.class);
+//			launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//			launch.putExtra("notification", msg);
 
-			// save the APID in a shared preferences ...   
-			// it'll be sent to the server ...   
+//			UAirship.shared().getApplicationContext().startActivity(launch);
+
+			// save the APID in a shared preferences ...
+			// it'll be sent to the server ...
 		}
 		else if (action.equals(PushManager.ACTION_REGISTRATION_FINISHED))
-		{   
+		{
 			//beginLoading();
 			System.out.println(msg + ": 3");
-			// to log the APID ...  
-			Log.i("Log", "Registration complete. APID:"  
-					+ intent.getStringExtra(PushManager.EXTRA_APID)  
-					+ ". Valid: "  
-					+ intent.getBooleanExtra(  
-							PushManager.EXTRA_REGISTRATION_VALID, false));  
+			// to log the APID ...
+			Log.i("Log", "Registration complete. APID:"
+					+ intent.getStringExtra(PushManager.EXTRA_APID)
+					+ ". Valid: "
+					+ intent.getBooleanExtra(
+							PushManager.EXTRA_REGISTRATION_VALID, false));
 
-			// if registration is successful ...   
+			// if registration is successful ...
 			if(intent.getBooleanExtra(PushManager.EXTRA_REGISTRATION_VALID, false))
 			{
-				// Do whatever you want ....   
-			}   
+				// Do whatever you want ....
+			}
 			else
-			{   
-				// register again ...   
-			}   
+			{
+				// register again ...
+			}
 		}
 		*/
 	}
-	
+
 	public void beginLoading()
 	{
 		load();
 	}
-	
+
 	public void load()
 	{
 		System.out.println("orderId: " + orderId);
@@ -98,10 +98,10 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 			endLoading();
 		}
 	}
-	
+
 	public void endLoading()
 	{
-		Intent scanIntent = new Intent(UAirship.shared().getApplicationContext(), FlashScan.class);
+		Intent scanIntent = new Intent(context, FlashScan.class);
 		scanIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		System.out.println("ENDED LOADING ORDER: " + orderId);
 		if (orderId != null &&
@@ -118,16 +118,15 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 				}
 			}
 		}
-		UAirship.shared().getApplicationContext().startActivity(scanIntent);
 	}
-	
+
 	public void update()
 	{
-		
+
 	}
-	
+
 	public void message(String msg)
 	{
-		
+
 	}
-}  
+}

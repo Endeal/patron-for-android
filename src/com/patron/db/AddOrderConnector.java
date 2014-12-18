@@ -15,8 +15,6 @@ import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
 
-import com.urbanairship.push.PushManager;
-
 import com.patron.main.FlashCart;
 import com.patron.system.Globals;
 import com.google.gson.Gson;
