@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="SpinnerPadding">6dp</dimen>
+    <dimen name="ListItemSize">16dip</dimen>
+
+    <!-- Home Screen -->
+    <dimen name="dimHomeTextUser">15sp</dimen>
+    <dimen name="dimHomeTextLocation">15sp</dimen>
+    <dimen name="dimHomeButtonVendorsText">12sp</dimen>
+    <dimen name="dimHomeButtonMenuText">12sp</dimen>
+    <dimen name="dimHomeButtonCodesText">12sp</dimen>
+    <dimen name="dimHomeButtonProfileText">12sp</dimen>
+
+    <!-- Login Screen -->
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordText">9sp</dimen>
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordMinHeight">10dp</dimen>
+    <dimen name="dimDialogLoginPatronButtonRequestPasswordPadding">5dp</dimen>
+
+    <dimen name="dimDialogLoginPatronButtonCreateAccountText">9sp</dimen>
+    <dimen name="dimDialogLoginPatronButtonCreateAccountMinHeight">10dp</dimen>
+    <dimen name="dimDialogLoginPatronButtonCreateAccountPadding">5dp</dimen>
+
+    <!-- Create Account Screen -->
+    <dimen name="dimCreateAccountTextFirst">16sp</dimen>
+    <dimen name="dimCreateAccountTextLast">16sp</dimen>
+    <dimen name="dimCreateAccountTextEmail">16sp</dimen>
+    <dimen name="dimCreateAccountTextPassword">16sp</dimen>
+    <dimen name="dimCreateAccountTextConfirm">16sp</dimen>
+    <dimen name="dimCreateAccountTextBirthday">16sp</dimen>
+    <dimen name="dimCreateAccountButtonCancelText">16sp</dimen>
+    <dimen name="dimCreateAccountButtonSubmitText">16sp</dimen>
+
+    <!-- Payment Screen -->
+
+    <!-- Add Card Screen -->
+    <dimen name="dimAddCardTextName">16sp</dimen>
+    <dimen name="dimAddCardTextNumber">16sp</dimen>
+    <dimen name="dimAddCardTextCode">16sp</dimen>
+    <dimen name="dimAddCardTextExpirationMonth">16sp</dimen>
+    <dimen name="dimAddCardTextExpirationYear">16sp</dimen>
+    <dimen name="dimAddCardTextAddress">16sp</dimen>
+    <dimen name="dimAddCardTextState">16sp</dimen>
+    <dimen name="dimAddCardTextCity">16sp</dimen>
+    <dimen name="dimAddCardTextPostalCode">16sp</dimen>
+    <dimen name="dimAddCardButtonSubmitText">16sp</dimen>
+
+    <!-- Add Bank Screen -->
+    <dimen name="dimAddBankTextName">16sp</dimen>
+    <dimen name="dimAddBankTextNumber">16sp</dimen>
+    <dimen name="dimAddBankTextRouting">16sp</dimen>
+    <dimen name="dimAddBankTextType">16sp</dimen>
+    <dimen name="dimAddBankButtonSubmitText">16sp</dimen>
+
+    <!-- Menu Screen -->
+    <dimen name="dimMenuButtonCheckoutText">16sp</dimen>
+    <dimen name="dimMenuButtonFavoritesText">8sp</dimen>
+    <dimen name="dimMenuButtonBeerText">8sp</dimen>
+    <dimen name="dimMenuButtonShotsText">8sp</dimen>
+    <dimen name="dimMenuButtonCocktailsText">8sp</dimen>
+    <dimen name="dimMenuButtonMartinisText">8sp</dimen>
+    <dimen name="dimMenuButtonWineText">8sp</dimen>
+    <dimen name="dimMenuListItemsDividerHeight">3px</dimen>
+
+    <!-- Cart Screen -->
+    <dimen name="dimCartButtonStationText">10sp</dimen>
+    <dimen name="dimCartButtonStationMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonStationPadding">10dp</dimen>
+    <dimen name="dimCartButtonPaymentText">10sp</dimen>
+    <dimen name="dimCartButtonPaymentMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonPaymentPadding">10dp</dimen>
+    <dimen name="dimCartButtonTipText">10sp</dimen>
+    <dimen name="dimCartButtonTipMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonTipPadding">10dp</dimen>
+    <dimen name="dimCartButtonCouponText">10sp</dimen>
+    <dimen name="dimCartButtonCouponMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonCouponPadding">10dp</dimen>
+    <dimen name="dimCartButtonCommentText">10sp</dimen>
+    <dimen name="dimCartButtonCommentMinHeight">10dp</dimen>
+    <dimen name="dimCartButtonCommentPadding">10dp</dimen>
+    <dimen name="dimCartButtonFinishText">20sp</dimen>
+    <dimen name="dimCartButtonFinishMinHeight">20dp</dimen>
+    <dimen name="dimCartButtonFinishPadding">10dp</dimen>
+
+    <!-- Favorites Screen -->
+    <dimen name="dimFavoritesListItemsDividerHeight">3px</dimen>
+
+    <!-- Profile Screen -->
+    <dimen name="dimProfileTextUser">15sp</dimen>
+    <dimen name="dimProfileTextFacebook">15sp</dimen>
+    <dimen name="dimProfileTextTwitter">15sp</dimen>
+    <dimen name="dimProfileTextGooglePlus">15sp</dimen>
+
+    <dimen name="dimProfileButtonLogoutText">15sp</dimen>
+    <dimen name="dimProfileButtonLogoutMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonLogoutPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonAddPaymentText">15sp</dimen>
+    <dimen name="dimProfileButtonAddPaymentMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonAddPaymentPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonRemovePaymentText">15sp</dimen>
+    <dimen name="dimProfileButtonRemovePaymentMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonRemovePaymentPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonFacebookText">15sp</dimen>
+    <dimen name="dimProfileButtonFacebookMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonFacebookPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonTwitterText">15sp</dimen>
+    <dimen name="dimProfileButtonTwitterMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonTwitterPadding">10dp</dimen>
+
+    <dimen name="dimProfileButtonGooglePlusText">15sp</dimen>
+    <dimen name="dimProfileButtonGooglePlusMinHeight">10dp</dimen>
+    <dimen name="dimProfileButtonGooglePlusPadding">10dp</dimen>
+
+    <!-- Help Screen -->
+    <dimen name="dimHelpText">18sp</dimen>
+    <dimen name="dimHelpTextPage">24sp</dimen>
+    <dimen name="dimHelpButtonStart">16sp</dimen>
+
+    <!-- Location List -->
+    <dimen name="dimLocationListDividerHeight">3px</dimen>
+
+    <!-- Navigation List Item -->
+    <dimen name="dimNavigationListItemTextTitleText">20sp</dimen>
+    <dimen name="dimNavigationListItemTextTitleMinHeight">20sp</dimen>
+    <dimen name="dimNavigationListItemTextTitlePadding">15sp</dimen>
+
+    <!-- Location List Item -->
+    <dimen name="dimLocationListItemTextName">15sp</dimen>
+    <dimen name="dimLocationListItemTextAddress">11sp</dimen>
+    <dimen name="dimLocationListItemTextPhone">15sp</dimen>
+
+    <!-- Product List Item -->
+    <dimen name="dimProductListItemTextName">18sp</dimen>
+    <dimen name="dimProductListItemTextType">12sp</dimen>
+    <dimen name="dimProductListItemTextAlcohol">12sp</dimen>
+    <dimen name="dimProductListItemTextPrice">18sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextAlcohol">10sp</dimen>
+    <dimen name="dimProductListItemSpinnerTextQuantity">10sp</dimen>
+
+    <dimen name="dimProductListItemToggleButtonFavoriteWidth">34dp</dimen>
+    <dimen name="dimProductListItemToggleButtonFavoriteHeight">33dp</dimen>
+
+    <!-- Cart List Item -->
+    <dimen name="dimCartListItemTextName">18sp</dimen>
+    <dimen name="dimCartListItemTextType">12sp</dimen>
+    <dimen name="dimCartListItemTextAlcohol">12sp</dimen>
+    <dimen name="dimCartListItemTextPrice">18sp</dimen>
+    <dimen name="dimCartListItemSpinnerTextAlcohol">12sp</dimen>
+    <dimen name="dimCartListItemSpinnerTextQuantity">12sp</dimen>
+
+    <dimen name="dimCartListItemButtonRemoveWidth">34dp</dimen>
+    <dimen name="dimCartListItemButtonRemoveHeight">34dp</dimen>
+
+    <!-- Code List Item -->
+    <dimen name="dimCodeListItemTextProducts">12sp</dimen>
+    <dimen name="dimCodeListItemTextTime">16sp</dimen>
+    <dimen name="dimCodeListItemTextStatus">16sp</dimen>
+
+    <!-- Remove Payment List Item -->
+    <dimen name="dimRemovePaymentListItemTextNumber">20sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextBankName">12sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextType">20sp</dimen>
+    <dimen name="dimRemovePaymentListItemTextAddress">12sp</dimen>
+
+    <!-- Miscellaneous UI Elements -->
+    <dimen name="dimMiscTextNoLocations">18sp</dimen>
+    <dimen name="dimMiscTextNoItems">18sp</dimen>
+    <dimen name="dimMiscTextNoItemsCart">18sp</dimen>
+    <dimen name="dimMiscTextNoCodes">18sp</dimen>
+    <dimen name="dimMiscTextNoCodeImage">18sp</dimen>
+
+</resources>

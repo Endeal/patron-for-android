@@ -1,0 +1,649 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    <style name="DarkTheme">255 255 255</style>
+
+    <!-- Home Screen Styles -->
+    <style name="StyleHomeTextUser">
+        <item name="android:text">@string/homeTextUser</item>
+        <item name="android:textSize">@dimen/dimHomeTextUser</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleHomeTextLocation">
+        <item name="android:text">@string/homeTextLocation</item>
+        <item name="android:textSize">@dimen/dimHomeTextLocation</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StyleHomeButtonVendors">
+        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHomeButtonVendorsText</item>
+    </style>
+
+    <style name="StyleHomeButtonMenu">
+        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHomeButtonMenuText</item>
+    </style>
+
+    <style name="StyleHomeButtonCodes">
+        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHomeButtonCodesText</item>
+    </style>
+
+    <style name="StyleHomeButtonProfile">
+        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHomeButtonProfileText</item>
+    </style>
+
+    <!-- Login Screen Styles -->
+    <style name="StyleDialogLoginPatronButtonRequestPassword">
+        <item name="android:text">@string/dialogLoginPatronButtonRequestPassword</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonRequestPasswordText</item>
+        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonRequestPasswordMinHeight</item>
+        <item name="android:padding">@dimen/dimDialogLoginPatronButtonRequestPasswordPadding</item>
+    </style>
+
+    <style name="StyleDialogLoginPatronButtonCreateAccount">
+        <item name="android:text">@string/dialogLoginPatronButtonCreateAccount</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonCreateAccountText</item>
+        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonCreateAccountMinHeight</item>
+        <item name="android:padding">@dimen/dimDialogLoginPatronButtonCreateAccountPadding</item>
+    </style>
+
+    <!-- Create Account Screen Styles -->
+    <style name="StyleCreateAccountTextFirst">
+        <item name="android:text">@string/createAccountTextFirst</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextFirst</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountTextLast">
+        <item name="android:text">@string/createAccountTextLast</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextLast</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountTextEmail">
+        <item name="android:text">@string/createAccountTextEmail</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextEmail</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountTextPassword">
+        <item name="android:text">@string/createAccountTextPassword</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextPassword</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountTextConfirm">
+        <item name="android:text">@string/createAccountTextConfirm</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextConfirm</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountTextBirthday">
+        <item name="android:text">@string/createAccountTextBirthday</item>
+        <item name="android:textSize">@dimen/dimCreateAccountTextBirthday</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountButtonCancel">
+        <item name="android:text">@string/createAccountButtonCancel</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimCreateAccountButtonCancelText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleCreateAccountButtonSubmit">
+        <item name="android:text">@string/createAccountButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimCreateAccountButtonSubmitText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Payment Screen Styles -->
+
+    <!-- Add Card Screen Styles -->
+    <style name="StyleAddCardTextName">
+        <item name="android:text">@string/addCardTextName</item>
+        <item name="android:textSize">@dimen/dimAddCardTextName</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextNumber">
+        <item name="android:text">@string/addCardTextNumber</item>
+        <item name="android:textSize">@dimen/dimAddCardTextNumber</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextCode">
+        <item name="android:text">@string/addCardTextCode</item>
+        <item name="android:textSize">@dimen/dimAddCardTextCode</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextExpirationMonth">
+        <item name="android:text">@string/addCardTextExpirationMonth</item>
+        <item name="android:textSize">@dimen/dimAddCardTextExpirationMonth</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextExpirationYear">
+        <item name="android:text">@string/addCardTextExpirationYear</item>
+        <item name="android:textSize">@dimen/dimAddCardTextExpirationYear</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextAddress">
+        <item name="android:text">@string/addCardTextAddress</item>
+        <item name="android:textSize">@dimen/dimAddCardTextAddress</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextState">
+        <item name="android:text">@string/addCardTextState</item>
+        <item name="android:textSize">@dimen/dimAddCardTextState</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextCity">
+        <item name="android:text">@string/addCardTextCity</item>
+        <item name="android:textSize">@dimen/dimAddCardTextCity</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardTextPostalCode">
+        <item name="android:text">@string/addCardTextPostalCode</item>
+        <item name="android:textSize">@dimen/dimAddCardTextPostalCode</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="StyleAddCardButtonSubmit">
+        <item name="android:text">@string/addCardButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimAddCardButtonSubmitText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Add Bank Screen Styles -->
+    <style name="StyleAddBankTextName">
+        <item name="android:text">@string/addBankTextName</item>
+        <item name="android:textSize">@dimen/dimAddBankTextName</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextNumber">
+        <item name="android:text">@string/addBankTextNumber</item>
+        <item name="android:textSize">@dimen/dimAddBankTextNumber</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextRouting">
+        <item name="android:text">@string/addBankTextRouting</item>
+        <item name="android:textSize">@dimen/dimAddBankTextRouting</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankTextType">
+        <item name="android:text">@string/addBankTextType</item>
+        <item name="android:textSize">@dimen/dimAddBankTextType</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="StyleAddBankButtonSubmit">
+        <item name="android:text">@string/addBankButtonSubmit</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/dimAddBankButtonSubmitText</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Menu Screen Styles -->
+    <style name="StyleMenuButtonCheckout">
+        <item name="android:background">@drawable/button_checkout</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMenuButtonCheckoutText</item>
+        <item name="android:text">@string/menuButtonCheckout</item>
+    </style>
+
+    <style name="StyleMenuButtonFavorites">
+        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMenuButtonFavoritesText</item>
+        <item name="android:text">@string/menuButtonFavorites</item>
+    </style>
+
+    <style name="StyleMenuListItems">
+        <item name="android:divider">#000000</item>
+        <item name="android:dividerHeight">@dimen/dimMenuListItemsDividerHeight</item>
+    </style>
+
+    <style name="StyleMenuLayoutTypes">
+    </style>
+
+    <style name="StyleMenuHorizontalScrollViewTypes">
+        <item name="android:background">@color/colorMenuHorizontalScrollViewTypes</item>
+    </style>
+
+    <!-- Cart Screen Styles -->
+    <style name="StyleCartButtonStation">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonStationText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonStationMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonStationPadding</item>
+        <item name="android:text">@string/cartButtonStation</item>
+    </style>
+
+    <style name="StyleCartButtonPayment">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonPaymentText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonPaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonPaymentPadding</item>
+        <item name="android:text">@string/cartButtonPayment</item>
+    </style>
+
+    <style name="StyleCartButtonTip">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonTipText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonTipMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonTipPadding</item>
+        <item name="android:text">@string/cartButtonTip</item>
+    </style>
+
+    <style name="StyleCartButtonCoupon">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonCouponText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonCouponMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonCouponPadding</item>
+        <item name="android:text">@string/cartButtonCoupon</item>
+    </style>
+
+    <style name="StyleCartButtonComment">
+        <item name="android:background">#CCCCCC</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/dimCartButtonCommentText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonCommentMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonCommentPadding</item>
+        <item name="android:text">@string/cartButtonComment</item>
+    </style>
+
+    <style name="StyleCartButtonFinish">
+        <item name="android:background">#AAAAAA</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimCartButtonFinishText</item>
+        <item name="android:minHeight">@dimen/dimCartButtonFinishMinHeight</item>
+        <item name="android:padding">@dimen/dimCartButtonFinishPadding</item>
+        <item name="android:text">@string/cartButtonFinish</item>
+    </style>
+
+    <!-- Codes Screen Styles -->
+    <style name="StyleCodesList">
+        <item name="android:divider">#000000</item>
+        <item name="android:dividerHeight">@dimen/dimLocationListDividerHeight</item>
+    </style>
+
+    <style name="StyleCodeListItemTextProducts">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextProducts</item>
+        <item name="android:text">@string/codeListItemTextProducts</item>
+    </style>
+
+    <style name="StyleCodeListItemTextTime">
+        <item name="android:textColor">#222266</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextTime</item>
+        <item name="android:text">@string/codeListItemTextTime</item>
+    </style>
+
+    <style name="StyleCodeListItemTextStatus">
+        <item name="android:textColor">#DD2222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCodeListItemTextStatus</item>
+        <item name="android:text">@string/codeListItemTextStatus</item>
+    </style>
+
+    <!-- Code Image Screen Styles -->
+
+    <!-- Settings Screen styles -->
+
+    <!-- Help Screen Styles -->
+    <style name="StyleHelpText1">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText1</item>
+    </style>
+    <style name="StyleHelpText2">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText2</item>
+    </style>
+    <style name="StyleHelpText3">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText3</item>
+    </style>
+    <style name="StyleHelpText4">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText4</item>
+    </style>
+    <style name="StyleHelpText5">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpText</item>
+        <item name="android:text">@string/helpText5</item>
+    </style>
+    <style name="StyleHelpTextPage">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimHelpTextPage</item>
+        <item name="android:text">@string/helpTextPage</item>
+    </style>
+    <style name="StyleHelpButtonStart">
+        <item name="android:textColor">#444444</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimHelpButtonStart</item>
+        <item name="android:text">@string/helpButtonStart</item>
+    </style>
+
+    <!-- Favorites Screen Styles -->
+    <style name="StyleFavoritesListItems">
+        <item name="android:divider">#000000</item>
+        <item name="android:dividerHeight">@dimen/dimFavoritesListItemsDividerHeight</item>
+    </style>
+
+    <!--  Locations Screen Styles -->
+    <style name="StyleLocationList">
+        <item name="android:divider">#000000</item>
+        <item name="android:dividerHeight">@dimen/dimLocationListDividerHeight</item>
+    </style>
+
+    <style name="StyleLocationListItemTextName">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimLocationListItemTextName</item>
+        <item name="android:text">@string/locationListItemTextName</item>
+    </style>
+
+    <style name="StyleLocationListItemTextAddress">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLocationListItemTextAddress</item>
+        <item name="android:text">@string/locationListItemTextAddress</item>
+    </style>
+
+    <style name="StyleLocationListItemTextPhone">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLocationListItemTextPhone</item>
+        <item name="android:text">@string/locationListItemTextPhone</item>
+    </style>
+
+    <style name="StyleLocationListItemToggleButtonFavorite">
+        <item name="android:background">@drawable/selector_toggle_button_favorite</item>
+        <item name="android:textOff"></item>
+        <item name="android:textOn"></item>
+    </style>
+
+    <!-- Profile Screen -->
+    <style name="StyleProfileImageAvatar">
+        <item name="android:src">@drawable/user_default_off</item>
+        <item name="android:contentDescription">@string/profileImageAvatar</item>
+    </style>
+    <style name="StyleProfileTextUser">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextUser</item>
+        <item name="android:text">@string/profileTextUser</item>
+    </style>
+    <style name="StyleProfileTextFacebook">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextFacebook</item>
+        <item name="android:text">@string/profileTextFacebook</item>
+    </style>
+    <style name="StyleProfileTextTwitter">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextTwitter</item>
+        <item name="android:text">@string/profileTextTwitter</item>
+    </style>
+    <style name="StyleProfileTextGooglePlus">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileTextGooglePlus</item>
+        <item name="android:text">@string/profileTextGooglePlus</item>
+    </style>
+    <style name="StyleProfileButtonLogout">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonLogoutText</item>
+        <item name="android:text">@string/profileButtonLogout</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonLogoutMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonLogoutPadding</item>
+    </style>
+    <style name="StyleProfileButtonAddPayment">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonAddPaymentText</item>
+        <item name="android:text">@string/profileButtonAddPayment</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonAddPaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonAddPaymentPadding</item>
+    </style>
+    <style name="StyleProfileButtonRemovePayment">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonRemovePaymentText</item>
+        <item name="android:text">@string/profileButtonRemovePayment</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonRemovePaymentMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonRemovePaymentPadding</item>
+    </style>
+    <style name="StyleProfileButtonFacebook">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonFacebookText</item>
+        <item name="android:text">@string/profileButtonFacebook</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonFacebookMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonTwitterPadding</item>
+    </style>
+    <style name="StyleProfileButtonTwitter">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonTwitterText</item>
+        <item name="android:text">@string/profileButtonTwitter</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonTwitterMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonTwitterPadding</item>
+    </style>
+    <style name="StyleProfileButtonGooglePlus">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProfileButtonGooglePlusText</item>
+        <item name="android:text">@string/profileButtonGooglePlus</item>
+        <item name="android:minHeight">@dimen/dimProfileButtonGooglePlusMinHeight</item>
+        <item name="android:padding">@dimen/dimProfileButtonGooglePlusPadding</item>
+    </style>
+
+    <!-- Navigation List Item -->
+    <style name="StyleNavigationListItemTitle">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:text">@string/navigationListItemTextTitle</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimNavigationListItemTextTitleText</item>
+        <item name="android:minHeight">@dimen/dimNavigationListItemTextTitleMinHeight</item>
+        <item name="android:padding">@dimen/dimNavigationListItemTextTitlePadding</item>
+    </style>
+
+    <!-- Product List Item -->
+    <style name="StyleProductListItemTextName">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProductListItemTextName</item>
+        <item name="android:text">@string/productListItemTextName</item>
+    </style>
+
+    <style name="StyleProductListItemTextType">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProductListItemTextType</item>
+        <item name="android:text">@string/productListItemTextType</item>
+    </style>
+
+    <style name="StyleProductListItemTextAlcohol">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimProductListItemTextAlcohol</item>
+        <item name="android:text">@string/productListItemTextAlcohol</item>
+    </style>
+
+    <style name="StyleProductListItemTextPrice">
+        <item name="android:textColor">#11CC11</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimProductListItemTextPrice</item>
+        <item name="android:text">@string/productListItemTextPrice</item>
+    </style>
+
+    <style name="StyleProductListItemToggleButtonFavorite">
+        <item name="android:background">@drawable/selector_toggle_button_favorite</item>
+        <item name="android:textOff"></item>
+        <item name="android:textOn"></item>
+    </style>
+
+    <!-- Cart List Item -->
+    <style name="StyleCartListItemTextName">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCartListItemTextName</item>
+        <item name="android:text">@string/cartListItemTextName</item>
+    </style>
+
+    <style name="StyleCartListItemTextType">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCartListItemTextType</item>
+        <item name="android:text">@string/cartListItemTextType</item>
+    </style>
+
+    <style name="StyleCartListItemTextAlcohol">
+        <item name="android:textColor">#222222</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCartListItemTextAlcohol</item>
+        <item name="android:text">@string/cartListItemTextAlcohol</item>
+    </style>
+
+    <style name="StyleCartListItemTextPrice">
+        <item name="android:textColor">#11CC11</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimCartListItemTextPrice</item>
+        <item name="android:text">@string/cartListItemTextPrice</item>
+    </style>
+
+    <style name="StyleCartListItemButtonRemove">
+        <item name="android:background">@drawable/button_remove</item>
+    </style>
+
+    <!-- Payment List Item -->
+    <style name="StylePaymentListItemTextNumber">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextNumber</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextNumber</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StylePaymentListItemTextType">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextType</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextType</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StylePaymentListItemTextBankName">
+        <item name="android:textColor">#555555</item>
+        <item name="android:text">@string/removePaymentListItemTextBankName</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextBankName</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StylePaymentListItemTextAddress">
+        <item name="android:textColor">#CCCCCC</item>
+        <item name="android:text">@string/removePaymentListItemTextAddress</item>
+        <item name="android:textSize">@dimen/dimRemovePaymentListItemTextAddress</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Miscellaneous Styles -->
+    <style name="StyleMiscTextNoLocations">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoLocations</item>
+        <item name="android:text">@string/miscTextNoLocations</item>
+    </style>
+
+    <style name="StyleMiscTextNoItems">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoItems</item>
+        <item name="android:text">@string/miscTextNoItems</item>
+    </style>
+
+    <style name="StyleMiscTextNoItemsCart">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoItemsCart</item>
+        <item name="android:text">@string/miscTextNoItemsCart</item>
+    </style>
+
+    <style name="StyleMiscTextNoCodes">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoCodes</item>
+        <item name="android:text">@string/miscTextNoCodes</item>
+    </style>
+
+    <style name="StyleMiscTextNoCodeImage">
+        <item name="android:textColor">#555555</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/dimMiscTextNoCodeImage</item>
+        <item name="android:text">@string/miscTextNoCodeImage</item>
+    </style>
+
+</resources>
