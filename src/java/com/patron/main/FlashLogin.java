@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.lang.Exception;
 import java.lang.Runnable;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,10 +31,14 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.patron.system.ApiExecutor;
 import com.patron.system.Loadable;
+import com.patron.listeners.OnTaskCompletedListener;
 import com.patron.lists.ListLinks;
 import com.patron.db.LoginConnector;
 import com.patron.db.ServiceConnector;
+
+import org.apache.http.HttpEntity;
 
 import org.brickred.socialauth.android.SocialAuthAdapter;
 import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
@@ -312,7 +318,19 @@ public class FlashLogin extends Activity implements Loadable
 				submitting = true;
 				String email = fieldEmail.getText().toString();
 				String password = fieldPassword.getText().toString();
-
+				ApiExecutor executor = new ApiExecutor(new OnTaskCompletedListener() {
+					public void onComplete(Map<URI, HttpEntity> data)
+					{
+						ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+						this, buttonPatron, "loginButton");
+						Bundle bundle = options.toBundle();
+						Intent intent = new Intent(this, FlashVendors.class);
+						this.finish();
+						ActivityCompat.startActivity(this, intent, bundle);
+					}
+				});
+				executor.loginPatron(email, password);
+				/*
 				LoginConnector loginConnector = new LoginConnector(activity, email, password);
 				try
 				{
@@ -322,6 +340,7 @@ public class FlashLogin extends Activity implements Loadable
 				{
 					e.printStackTrace();
 				}
+				*/
 				dialog.dismiss();
 			}
 		}

@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scanScrollLayoutMain"
+
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scanDrawerNavigation"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true" >
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/scanLayoutMain"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scanScrollLayoutMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
 
-        <ImageView
-            android:id="@+id/codeImageImageViewCode"
+        <LinearLayout
+            android:id="@+id/scanLayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:contentDescription="@string/codeImageImageViewDescription" />
-        
-        <TextView
-            android:id="@+id/scanTextOrder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/scanTextOrder" />
-        
-    </LinearLayout>
+            android:orientation="vertical" >
 
-</ScrollView>
+            <ImageView
+                android:id="@+id/codeImageImageViewCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/codeImageImageViewDescription" />
+
+            <TextView
+                android:id="@+id/scanTextOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/scanTextOrder" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- The navigation drawer -->
+    <com.patron.view.NavigationListView
+        android:id="@+id/scanListNavigation"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+
+</android.support.v4.widget.DrawerLayout>

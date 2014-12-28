@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="dark">#1F1F1F</color>
@@ -10,4 +11,14 @@
     <color name="spinner_alcohol">#888888</color>
     <color name="red">#FF0000</color>
     <color name="colorMenuHorizontalScrollViewTypes">#444444</color>
+
+    <!-- Theme -->
+    <color name="colorThemeMainPrimary">#555555</color>
+    <color name="colorThemeMainPrimaryDark">#222222</color>
+    <color name="colorThemeMainAccent">#008888</color>
+    <color name="colorThemeMainControlNormal">#666666</color>
+    <color name="colorThemeMainControlActivated">#AAAAAA</color>
+    <color name="colorThemeMainControlHighlight">#CCCCCC</color>
+    <color name="colorThemeMainSwitchThumbNormal">#888888</color>
+
 </resources>

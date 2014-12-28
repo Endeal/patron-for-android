@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,13 +27,13 @@ import com.patron.sort.LocationSorter;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
-public class FlashSearchVendors extends ActionBarActivity implements Loadable
+public class FlashSearchVendors extends Activity implements Loadable
 {
 	// The layout elements.
 	private ListView listMain;
 	private EditText editTextMain;
 	private View viewMain;
-	
+
 	// Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -44,7 +44,7 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 		setContentView(viewMain);
 		beginLoading();
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -53,7 +53,7 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 	    inflater.inflate(R.menu.menu_main, menu);
 	    return super.onCreateOptionsMenu(menu);
     }
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -71,30 +71,30 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
     		return false;
     	}
 	}
-	
+
 	@Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
     	super.onWindowFocusChanged(hasFocus);
     }
-	
+
 	// Loading
 	public void beginLoading()
 	{
 		listMain = (ListView) viewMain.findViewById(R.id.searchVendorsListMain);
 		editTextMain = (EditText) viewMain.findViewById(R.id.searchVendorsEditTextMain);
 		editTextMain.setText("");
-		
+
 		// Set the Search Listener
 		editTextMain.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
 			public void onTextChanged(CharSequence text, int start, int before, int count) {
 				List<Vendor> vendors = LocationSorter.getBySearch(Globals.getVendors(), text);
 				Globals.setFilteredVendors(vendors);
 				update();
 			}
-			
+
 			@Override
 			public void beforeTextChanged(CharSequence text, int start, int count,
 					int after) {
@@ -102,37 +102,37 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				
+
 			}
 		});
-		
+
 		// Set the Vendor List Item Listener
 		listMain.setOnItemClickListener(new ListItemVendorListener());
 		update();
 	}
-	
+
 	public void load()
 	{
-		
+
 	}
-	
+
 	public void endLoading()
 	{
-		
+
 	}
-	
+
 	public void update()
 	{
 		// Update the list to be the filtered vendors.
 		if (Globals.getVendors() != null && !Globals.getVendors().isEmpty())
     	{
     		List<Map<String, String>> locations = new ArrayList<Map<String, String>>();
-    		
+
     		String[] from = {"textName",
     				"textPhone",
     				"textAddress",
     				"toggleButtonFavorite"};
-    		
+
     		int[] to = {R.id.locationListItemTextName,
     				R.id.locationListItemTextPhone,
     				R.id.locationListItemTextAddress,
@@ -160,7 +160,7 @@ public class FlashSearchVendors extends ActionBarActivity implements Loadable
     		adapter.notifyDataSetChanged();
     	}
 	}
-	
+
 	public void message(String msg)
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);

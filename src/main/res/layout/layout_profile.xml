@@ -1,134 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profileDrawerNavigation"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!-- User Information -->
-   <LinearLayout
-      android:id="@+id/profileLayoutUser"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:weightSum="3">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-      <LinearLayout
-         android:id="@+id/profileLayoutPerson"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:layout_weight="2">
+       <!-- User Information -->
+       <LinearLayout
+          android:id="@+id/profileLayoutUser"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="3">
 
-         <ImageView
-            android:id="@+id/profileImageAvatar"
-            style="@style/StyleProfileImageAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="10dp"
-            android:layout_weight="1" />
+          <LinearLayout
+             android:id="@+id/profileLayoutPerson"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_weight="2">
 
-         <TextView
-            android:id="@+id/profileTextUser"
-            style="@style/StyleProfileTextUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/profileImageAvatar"
-            android:layout_margin="10dp"
-            android:layout_weight="1" />
+             <ImageView
+                android:id="@+id/profileImageAvatar"
+                style="@style/StyleProfileImageAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"
+                android:layout_weight="1" />
 
-      </LinearLayout>
+             <TextView
+                android:id="@+id/profileTextUser"
+                style="@style/StyleProfileTextUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/profileImageAvatar"
+                android:layout_margin="10dp"
+                android:layout_weight="1" />
 
-         <!-- Account Controls -->
-      <LinearLayout
-         android:id="@+id/profileLayoutControls"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-         android:layout_weight="1">
+          </LinearLayout>
 
-         <Button
-            android:id="@+id/profileButtonLogout"
-            style="@style/StyleProfileButtonLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" />
+             <!-- Account Controls -->
+          <LinearLayout
+             android:id="@+id/profileLayoutControls"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_weight="1">
 
-         <Button
-            android:id="@+id/profileButtonAddPayment"
-            style="@style/StyleProfileButtonAddPayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/profileButtonLogout" />
+             <Button
+                android:id="@+id/profileButtonLogout"
+                style="@style/StyleProfileButtonLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" />
 
-         <Button
-            android:id="@+id/profileButtonRemovePayment"
-            style="@style/StyleProfileButtonRemovePayment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/profileButtonAddPayment" />
+             <Button
+                android:id="@+id/profileButtonAddPayment"
+                style="@style/StyleProfileButtonAddPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/profileButtonLogout" />
 
-      </LinearLayout>
-   
-   </LinearLayout>
+             <Button
+                android:id="@+id/profileButtonRemovePayment"
+                style="@style/StyleProfileButtonRemovePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/profileButtonAddPayment" />
 
-   <!-- Network Connections -->
-   <TextView
-      android:id="@+id/profileTextFacebook"
-      style="@style/StyleProfileTextFacebook"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_above="@+id/profileTextTwitter"
-      android:layout_margin="10dp" />
+          </LinearLayout>
 
-   <Button
-      android:id="@+id/profileButtonFacebook"
-      style="@style/StyleProfileButtonFacebook"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignBaseline="@+id/profileTextFacebook"
-      android:layout_margin="10dp" />
+       </LinearLayout>
 
-   <TextView
-      android:id="@+id/profileTextTwitter"
-      style="@style/StyleProfileTextTwitter"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_above="@+id/profileTextGooglePlus"
-      android:layout_margin="10dp" />
+       <!-- Network Connections -->
+       <TextView
+          android:id="@+id/profileTextFacebook"
+          style="@style/StyleProfileTextFacebook"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_above="@+id/profileTextTwitter"
+          android:layout_margin="10dp" />
 
-   <Button
-      android:id="@+id/profileButtonTwitter"
-      style="@style/StyleProfileButtonTwitter"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignBaseline="@+id/profileTextTwitter"
-      android:layout_margin="10dp" />
+       <Button
+          android:id="@+id/profileButtonFacebook"
+          style="@style/StyleProfileButtonFacebook"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_alignBaseline="@+id/profileTextFacebook"
+          android:layout_margin="10dp" />
 
-   <TextView
-      android:id="@+id/profileTextGooglePlus"
-      style="@style/StyleProfileTextGooglePlus"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentBottom="true"
-      android:layout_margin="10dp" />
+       <TextView
+          android:id="@+id/profileTextTwitter"
+          style="@style/StyleProfileTextTwitter"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_above="@+id/profileTextGooglePlus"
+          android:layout_margin="10dp" />
 
-   <Button
-      android:id="@+id/profileButtonGooglePlus"
-      style="@style/StyleProfileButtonGooglePlus"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentRight="true"
-      android:layout_alignBaseline="@+id/profileTextGooglePlus"
-      android:layout_margin="10dp" />
+       <Button
+          android:id="@+id/profileButtonTwitter"
+          style="@style/StyleProfileButtonTwitter"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_alignBaseline="@+id/profileTextTwitter"
+          android:layout_margin="10dp" />
 
-</RelativeLayout>
+       <TextView
+          android:id="@+id/profileTextGooglePlus"
+          style="@style/StyleProfileTextGooglePlus"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentBottom="true"
+          android:layout_margin="10dp" />
+
+       <Button
+          android:id="@+id/profileButtonGooglePlus"
+          style="@style/StyleProfileButtonGooglePlus"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_alignBaseline="@+id/profileTextGooglePlus"
+          android:layout_margin="10dp" />
+
+    </RelativeLayout>
+
+    <!-- The navigation drawer -->
+    <com.patron.view.NavigationListView
+        android:id="@+id/profileListNavigation"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+
+</android.support.v4.widget.DrawerLayout>

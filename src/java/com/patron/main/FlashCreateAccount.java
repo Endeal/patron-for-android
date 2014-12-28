@@ -5,9 +5,9 @@ import java.util.Calendar;
 import java.net.URL;
 import java.net.MalformedURLException;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ProgressBar;
@@ -31,7 +31,7 @@ import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
 import org.brickred.socialauth.android.DialogListener;
 import org.brickred.socialauth.android.SocialAuthError;
 
-public class FlashCreateAccount extends ActionBarActivity implements Loadable
+public class FlashCreateAccount extends Activity implements Loadable
 {
 	private boolean submitting = false;
 
@@ -53,7 +53,7 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 		setContentView(R.layout.layout_create_account);
 		init();
 	}
-	
+
 	@Override
 	public void beginLoading()
 	{
@@ -163,7 +163,7 @@ public class FlashCreateAccount extends ActionBarActivity implements Loadable
 				}
 
 				final RelativeLayout layout = (RelativeLayout)findViewById(R.id.createAccountLayoutMain);
-				
+
 				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
 				params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 				params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);

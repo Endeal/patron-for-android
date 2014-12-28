@@ -3,9 +3,11 @@ package com.patron.main;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,19 +22,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.patron.db.ScanConnector;
+import com.patron.listeners.DrawerNavigationListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Order;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
+import com.patron.view.NavigationListView;
+import static com.patron.view.NavigationListView.Hierarchy;
 
-public class FlashScan extends ActionBarActivity implements Loadable
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class FlashScan extends Activity implements Loadable
 {
 	// The layout elements.
 	private ImageView imageCode;
 	private View viewLoading;
 	private View viewScan;
 	private Order order;
-	
+
 	// Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -51,7 +58,7 @@ public class FlashScan extends ActionBarActivity implements Loadable
 		setContentView(viewLoading);
 		beginLoading();
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -60,7 +67,7 @@ public class FlashScan extends ActionBarActivity implements Loadable
 	    inflater.inflate(R.menu.menu_main, menu);
 	    return super.onCreateOptionsMenu(menu);
     }
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -78,20 +85,34 @@ public class FlashScan extends ActionBarActivity implements Loadable
     		return false;
     	}
 	}
-	
+
 	@Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
     	super.onWindowFocusChanged(hasFocus);
     }
-	
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
+
 	// Loading
 	public void beginLoading()
 	{
 		imageCode = (ImageView) viewScan.findViewById(R.id.codeImageImageViewCode);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewScan.findViewById(R.id.scanDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) viewScan.findViewById(R.id.scanListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
+
 		load();
 	}
-	
+
 	public void load()
 	{
 		URL url = null;
@@ -113,16 +134,16 @@ public class FlashScan extends ActionBarActivity implements Loadable
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void endLoading()
 	{
 		if (Globals.getScan() != null)
 		{
 			setContentView(viewScan);
-			
-			ViewTreeObserver vto = viewScan.getViewTreeObserver(); 
-			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() { 
-				@Override 
+
+			ViewTreeObserver vto = viewScan.getViewTreeObserver();
+			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+				@Override
 				public void onGlobalLayout()
 				{
 					// Set and resize the image.
@@ -133,12 +154,12 @@ public class FlashScan extends ActionBarActivity implements Loadable
 							layout.getWidth() - margin);
 					params.setMargins(margin, margin, margin, margin);
 					imageCode.setLayoutParams(params);
-					
+
 					// Set the order text.
 					String text = order.getOrderText();
 					TextView textView = (TextView)viewScan.findViewById(R.id.scanTextOrder);
 					textView.setText(text);
-				} 
+				}
 			});
 		}
 		else
@@ -147,11 +168,11 @@ public class FlashScan extends ActionBarActivity implements Loadable
 		}
 		update();
 	}
-	
+
 	public void update()
 	{
 	}
-	
+
 	public void message(String msg)
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);

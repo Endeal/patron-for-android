@@ -18,6 +18,7 @@ import com.patron.bind.CartProductBinder;
 import com.patron.bind.PaymentBinder;
 import com.patron.db.AddOrderConnector;
 import com.patron.listeners.ButtonFinishListener;
+import com.patron.listeners.DrawerNavigationListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Fragment;
 import com.patron.model.Funder;
@@ -26,19 +27,21 @@ import com.patron.model.Order;
 import com.patron.system.Globals;
 import com.patron.lists.ListFonts;
 import com.patron.system.Loadable;
+import com.patron.view.NavigationListView;
+import static com.patron.view.NavigationListView.Hierarchy;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,7 +59,9 @@ import android.graphics.Typeface;
 import java.lang.Exception;
 import com.google.gson.Gson;
 
-public class FlashCart extends ActionBarActivity implements Loadable
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class FlashCart extends Activity implements Loadable
 {
 	// The layout elements.
 	Button buttonFinish;
@@ -71,44 +76,41 @@ public class FlashCart extends ActionBarActivity implements Loadable
 	public static BigDecimal tip = null;
 	public static List<Object> coupons = null;
 	public static String comment = "";
-	
+
 	// Activity Methods
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
-		try
-		{
-			Gson gson = new Gson();
-			System.out.println("ON CREATE:" + gson.toJson(Globals.getOrder().getFragments()));
-		}
-		catch (Exception e)
-		{
-			System.out.println("ERROR JSONING ORDER!");
-		}
-
 		LayoutInflater inflater = LayoutInflater.from(this);
 		viewLoading = inflater.inflate(R.layout.misc_loading, null);
 		viewCart = inflater.inflate(R.layout.layout_cart, null);
 		viewNone = inflater.inflate(R.layout.misc_no_items_cart, null);
 		setContentView(viewLoading);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewCart.findViewById(R.id.cartDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) viewCart.findViewById(R.id.cartListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
+
 		beginLoading();
 	}
-	
+
 	@Override
 	public void onDestroy()
 	{
 	    super.onDestroy();
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -126,7 +128,13 @@ public class FlashCart extends ActionBarActivity implements Loadable
     		return false;
     	}
     }
-    
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
+
     public void finishOrder()
     {
             setContentView(viewLoading);
@@ -142,15 +150,15 @@ public class FlashCart extends ActionBarActivity implements Loadable
 			    Toast toast = Toast.makeText(this, "Connection error.", Toast.LENGTH_SHORT);
 			    toast.show();
 		    }
-       
+
     }
-	
+
 	// Getters & Setters
 	public Activity getActivity()
 	{
 		return this;
 	}
-	
+
 	// Layout
 	public void beginLoading()
 	{
@@ -169,11 +177,11 @@ public class FlashCart extends ActionBarActivity implements Loadable
 		buttonFinish.setOnClickListener(new ButtonFinishListener(this));
 		endLoading();
 	}
-	
+
 	public void load()
 	{
 	}
-	
+
 	public void endLoading()
 	{
 		try
@@ -198,7 +206,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
 		}
 		update();
 	}
-	
+
 	public void update()
 	{
 
@@ -216,23 +224,23 @@ public class FlashCart extends ActionBarActivity implements Loadable
     			!Globals.getOrder().getFragments().isEmpty())
     	{
     		List<Map<String, Fragment>> products = new ArrayList<Map<String, Fragment>>();
-    		
+
     		String[] from = {"name",
     				"price",
     				"quantity",
     				"categories",
     				"buttonRemove",
     				"layout"};
-    		
+
     		int[] to = {R.id.cartListItemTextName,
     				R.id.cartListItemTextPrice,
     				R.id.cartListItemSpinnerQuantity,
     				R.id.cartListItemTextCategories,
     				R.id.cartListItemButtonRemove,
     				R.id.cartListItemLayout};
-    		
+
     		for (int i = 0; i < Globals.getOrder().getFragments().size(); i++)
-    		{	
+    		{
         		Map<String, Fragment> mapping = new HashMap<String, Fragment>();
     			Fragment fragment = Globals.getOrder().getFragments().get(i);
     			mapping.put("name", fragment);
@@ -332,7 +340,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					int[] to = {R.id.paymentListItemTextNumber,R.id.paymentListItemTextBankName,
 						R.id.paymentListItemTextType, R.id.paymentListItemTextAddress};
 					for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
-					{	
+					{
 						Map<String, String> mapping = new HashMap<String, String>();
 						Funder funder = Globals.getUser().getFunders().get(i);
 						mapping.put("number", funder.getNumber());
@@ -406,13 +414,13 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					buttonDone.setOnClickListener(new OnClickListener() {
 						public void onClick(View view)
 						{
-							try  
-  							{  
+							try
+  							{
     							double d = Double.parseDouble(fieldCustom.getText().toString());
     							tip = new BigDecimal(d);
-  							}  
-  							catch(NumberFormatException nfe)  
-  							{  
+  							}
+  							catch(NumberFormatException nfe)
+  							{
     							tip = new BigDecimal("0.00");
   							}
 							tip = tip.setScale(2, RoundingMode.CEILING);
@@ -451,7 +459,7 @@ public class FlashCart extends ActionBarActivity implements Loadable
 					dialog.show();
 				}
 			});
-    		
+
     		// Set up pay button
 			typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
     		String text = (String) buttonFinish.getText();
@@ -490,13 +498,13 @@ public class FlashCart extends ActionBarActivity implements Loadable
     		setContentView(viewNone);
     	}
 	}
-	
+
 	public void orderFinished()
 	{
 		Intent intent = new Intent(this, FlashHome.class);
 		startActivity(intent);
 	}
-	
+
 	public void message(String msg)
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);

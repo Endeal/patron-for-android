@@ -10,8 +10,14 @@ package com.patron.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.util.AttributeSet;
@@ -19,7 +25,10 @@ import android.util.AttributeSet;
 import com.patron.bind.NavigationBinder;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemNavigationListener;
+import com.patron.lists.ListFonts;
 import com.patron.main.R;
+import com.patron.model.User;
+import com.patron.system.Globals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +62,39 @@ public class NavigationListView extends ListView
 
     public void init()
     {
+        // Add Header
+        RelativeLayout relativeLayout = new RelativeLayout(getContext());
+
+        ImageView imageView = new ImageView(relativeLayout.getContext());
+        imageView.setId(1);
+        imageView.setImageResource(R.drawable.app_logo);
+        final float scale = getResources().getDisplayMetrics().density;
+        int width  = (int)(35 * scale);
+        int height = (int)(35 * scale);
+        int leftMargin = (int)(5 * scale);
+        int topMargin = (int)(5 * scale);
+        int bottomMargin = (int)(5 * scale);
+        RelativeLayout.LayoutParams imageViewLayoutParams = new RelativeLayout.LayoutParams(width, height);
+        imageViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        imageViewLayoutParams.setMargins(leftMargin, topMargin, 0, bottomMargin);
+        imageView.setLayoutParams(imageViewLayoutParams);
+
+        TextView textView = new TextView(relativeLayout.getContext());
+        textView.setText(Globals.getUser().getFirstName() + " " + Globals.getUser().getLastName());
+        textView.setTextColor(Color.parseColor("#FFFFFF"));
+        textView.setGravity(Gravity.CENTER_VERTICAL);
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
+        textView.setTypeface(typeface);
+        RelativeLayout.LayoutParams textViewLayoutParams = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT, height);
+        textViewLayoutParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
+        textViewLayoutParams.setMargins(leftMargin, topMargin, 0, 0);
+        textView.setLayoutParams(textViewLayoutParams);
+
+        relativeLayout.addView(imageView);
+        relativeLayout.addView(textView);
+        addHeaderView(relativeLayout);
+
         // Set up the drawer layout items.
         String[] navigationItems = getContext().getResources().getStringArray(R.array.array_navigation);
         List<Map<String, String>> navigation = new ArrayList<Map<String, String>>();
@@ -68,16 +110,37 @@ public class NavigationListView extends ListView
         SimpleAdapter adapter = new SimpleAdapter(getContext(), navigation, R.layout.list_item_navigation, from, to);
         adapter.setViewBinder(new NavigationBinder());
         setAdapter(adapter);
-
-        // Add Header
-        TextView textAppTitle = new TextView(getContext());
-        textAppTitle.setText("Flash VIP");
-        addView(textAppTitle);
     }
 
     public void setHierarchy(DrawerNavigationListener drawerNavigationListener, DrawerLayout drawerLayout, Hierarchy hierarchy)
     {
         ListItemNavigationListener navigationListItemListener = new ListItemNavigationListener(drawerNavigationListener, drawerLayout, hierarchy);
         setOnItemClickListener(navigationListItemListener);
+        int i = 0;
+        switch (hierarchy)
+        {
+            case BUY:
+                i = 1;
+                break;
+            case ORDERS:
+                i = 2;
+                break;
+            case PROFILE:
+                i = 3;
+                break;
+            case SETTINGS:
+                i = 4;
+                break;
+            case HELP:
+                i = 5;
+                break;
+            default:
+                i = 0;
+                break;
+        }
+        if (i > 0 && getChildAt(i) != null)
+        {
+            getChildAt(i).setBackgroundColor(Color.BLUE);
+        }
     }
 }

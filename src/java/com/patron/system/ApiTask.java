@@ -1,68 +1,91 @@
 package com.patron.system;
 
-public class ApiTask// extends AsyncTask<String, Integer, List<String>>
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
+import com.patron.listeners.OnTaskCompletedListener;
+
+import android.os.AsyncTask;
+
+public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, HttpEntity>>
 {
-	/*
-	private Loadable loadable;
-	private List<NameValuePair> pairs;
+	private OnTaskCompletedListener onTaskCompletedListener;
 
-	public ApiTask(Loadable loadable, Map<String, String> mappings)
+	public ApiTask(OnTaskCompletedListener onTaskCompletedListener)
 	{
-		this.loadable = loadable;
-		pairs = new ArrayList<NameValuePair>();
-		for (Map.Entry<String, String> entry : map.entrySet())
+		setOnTaskCompletedListener(onTaskCompletedListener);
+	}
+
+	public void setOnTaskCompletedListener(OnTaskCompletedListener onTaskCompletedListener)
+	{
+		this.onTaskCompletedListener = onTaskCompletedListener;
+	}
+
+	@Override
+	protected Map<URI, HttpEntity> doInBackground(HttpUriRequest requests...)
+	{
+		try
 		{
-			pairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+			Map<URI, HttpEntity> data = new HashMap<URI, HttpEntity>();
+			for (int i = 0; i < params.length; i++)
+			{
+				HttpUriRequest request = requests[i];
+				HttpClient client = new DefaultHttpClient();
+				HttpResponse response = client.execute(request);
+				data.put(request.getURI(), response.getEntity());
+			}
+			return data;
 		}
-	}
-
-	protected void onPreExecute()
-	{
-		if (loadable != null)
-			loadable.beginLoading();
-	}
-
-	protected List<String> doInBackground(String... urls)
-	{
-		HttpClient client = new DefaultHttpClient();
-		List<String> results = new ArrayList<String>();
-		for (String url : urls)
+		catch (NullPointerException e)
 		{
-        	HttpPost post = new HttpPost(url);
-        	post.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-        	HttpResponse httpResponse = client.execute(post);
-        	StatusLine statusLine = httpResponse.getStatusLine();
-        	String result = null;
-        	if (statusLine.getStatusCode() == HttpURLConnection.HTTP_OK)
-        	{
-        		result = EntityUtils.toString(httpResponse.getEntity());
-        		results.add(result);
-        	}
-        	else
-        	{
-        		System.out.println("HTTP Error:" + statusLine.getStatusCode());
-        	}
-    	}
-    	return results;
-	}
-
-	protected void onProgressUpdate(Integer... progress)
-	{
-
-	}
-
-	protected String onPostExecute(List<String> results)
-	{
-		if (loadable != null)
+			e.printStackTrace();
+		}
+		catch (URISyntaxException e)
 		{
-			loadable.endLoading(results);
+			e.printStackTrace();
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		}
+		catch (ClientProtocolException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 
-		System.out.println("API Task completed");
-		for (String result : results)
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(Map<URI, HttpEntity> data)
+	{
+		if (onTaskCompletedListener != null)
 		{
-			System.out.println(result);
+			onTaskCompletedListener.onComplete(data);
 		}
 	}
-	*/
 }

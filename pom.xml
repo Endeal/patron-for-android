@@ -80,12 +80,14 @@
     </dependency>
 
     <!-- JUnit -->
+    <!--
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    -->
 
     <!-- Android Logger -->
     <dependency>
@@ -95,11 +97,13 @@
     </dependency>
 
     <!-- HockeyApp -->
+    <!--
     <dependency>
       <groupId>net.hockeyapp.android</groupId>
       <artifactId>HockeySDK</artifactId>
       <version>3.5.0-b.4</version>
     </dependency>
+    -->
 
     <!-- Universal Image Loader -->
     <dependency>
@@ -115,7 +119,7 @@
       <artifactId>facebook-android-sdk</artifactId>
       <version>3.21.1</version>
     </dependency>
--->
+    -->
 
     <!-- Android -->
     <dependency>
@@ -222,6 +226,23 @@
         <configuration>
             <includeLibsJarsFromAar>true</includeLibsJarsFromAar>
         </configuration>
+      </plugin>
+
+      <!-- Beautifier Maven Plugin -->
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-beautifier-plugin</artifactId>
+          <version>1.0</version>
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>beautify-imports</goal>
+                  </goals>
+              </execution>
+          </executions>
+          <configuration>
+              <inputDirectory>${pom.basedir}/target/src</inputDirectory>
+          </configuration>
       </plugin>
 
       <!-- CheckStyle Maven Plugin -->

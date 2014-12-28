@@ -3,9 +3,10 @@ package com.patron.main;
 import java.lang.Exception;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,18 +18,34 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 
+import com.patron.listeners.DrawerNavigationListener;
 import com.patron.system.Loadable;
 import com.patron.system.Globals;
+import com.patron.view.NavigationListView;
+import static com.patron.view.NavigationListView.Hierarchy;
 
-public class FlashProfile extends ActionBarActivity implements Loadable
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class FlashProfile extends Activity implements Loadable
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_profile);
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View viewProfile = inflater.inflate(R.layout.layout_profile, null);
+		setContentView(viewProfile);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewProfile.findViewById(R.id.profileDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) viewProfile.findViewById(R.id.profileListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.PROFILE);
+
 		init();
 	}
 
@@ -43,7 +60,13 @@ public class FlashProfile extends ActionBarActivity implements Loadable
     	}
     	return super.onOptionsItemSelected(item);
 	}
-	
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
+
 	@Override
 	public void beginLoading()
 	{

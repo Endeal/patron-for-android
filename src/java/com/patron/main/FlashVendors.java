@@ -11,9 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,14 +27,19 @@ import android.widget.Toast;
 
 import com.patron.bind.VendorBinder;
 import com.patron.db.VendorConnector;
+import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemVendorListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Vendor;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.system.Parser;
+import com.patron.view.NavigationListView;
+import static com.patron.view.NavigationListView.Hierarchy;
 
-public class FlashVendors extends ActionBarActivity implements Loadable
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+public class FlashVendors extends Activity implements Loadable
 {
 	// The layout elements.
 	private ListView listLocations;
@@ -40,11 +47,11 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	private View viewVendors;
 	private View viewNone;
 	private List<Vendor> retrievedVendors;
-	
+
 	// Message to be displayed.
 	private Activity activity;
 	private CharSequence message;
-	
+
 	// Activity methods.
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -55,9 +62,17 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 		viewVendors = inflater.inflate(R.layout.layout_locations, null);
 		viewNone = inflater.inflate(R.layout.misc_no_locations, null);
 		setContentView(viewLoading);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewVendors.findViewById(R.id.locationsDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) viewVendors.findViewById(R.id.locationsListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
+
 		beginLoading();
 	}
-	
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -65,7 +80,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 	    getMenuInflater().inflate(R.menu.menu_search, menu);
 	    return super.onCreateOptionsMenu(menu);
     }
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -95,13 +110,19 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 			return false;
 		}
 	}
-	
+
 	@Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
     	super.onWindowFocusChanged(hasFocus);
     }
-	
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
+
 	// Main methods.
 	public void beginLoading()
 	{
@@ -119,7 +140,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 		}
 		load();
 	}
-	
+
 	public void load()
 	{
 		VendorConnector dbconnector = new VendorConnector(this);
@@ -142,7 +163,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void endLoading()
 	{
 		if (Globals.getVendors() != null &&
@@ -150,7 +171,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 		{
 			setContentView(viewVendors);
 			// Check if all the items have the favorited ones from the preferences.
-			ArrayList<Vendor> vendors = new ArrayList<Vendor>(); 
+			ArrayList<Vendor> vendors = new ArrayList<Vendor>();
 			if (retrievedVendors != null && !retrievedVendors.isEmpty())
 			{
 				for (int i = 0; i < Globals.getVendors().size(); i++)
@@ -174,23 +195,23 @@ public class FlashVendors extends ActionBarActivity implements Loadable
 		}
 		update();
 	}
-	
+
 	public void update()
 	{
     	if (Globals.getVendors() != null && !Globals.getVendors().isEmpty())
     	{
     		List<Map<String, String>> locations = new ArrayList<Map<String, String>>();
-    		
+
     		String[] from = {"textName",
     				"textPhone",
     				"textAddress",
     				"toggleButtonFavorite"};
-    		
+
     		int[] to = {R.id.locationListItemTextName,
     				R.id.locationListItemTextPhone,
     				R.id.locationListItemTextAddress,
     				R.id.locationListItemToggleButtonFavorite};
-    		
+
     		for (int i = 0; i < Globals.getVendors().size(); i++)
     		{
     			Map<String, String> mapping = new HashMap<String, String>();
@@ -212,7 +233,7 @@ public class FlashVendors extends ActionBarActivity implements Loadable
     		adapter.notifyDataSetChanged();
     	}
 	}
-	
+
 	public void message(String msg)
 	{
 		message = msg;

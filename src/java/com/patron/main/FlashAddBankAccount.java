@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Button;
@@ -29,7 +29,7 @@ import android.widget.EditText;
 import com.patron.system.Loadable;
 import com.patron.db.AddBankAccountConnector;
 
-public class FlashAddBankAccount extends ActionBarActivity implements Loadable
+public class FlashAddBankAccount extends Activity implements Loadable
 {
 	private boolean submitting = false;
 	private RelativeLayout layout;
@@ -44,7 +44,7 @@ public class FlashAddBankAccount extends ActionBarActivity implements Loadable
 		layout = (RelativeLayout)findViewById(R.id.addBankAccountLayoutMain);
 		init();
 	}
-	
+
 	@Override
 	public void beginLoading()
 	{

@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ListView;
@@ -32,7 +32,7 @@ import com.patron.model.User;
 import com.patron.model.Funder;
 import com.patron.bind.PaymentBinder;
 
-public class FlashRemovePayment extends ActionBarActivity implements Loadable
+public class FlashRemovePayment extends Activity implements Loadable
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -41,7 +41,7 @@ public class FlashRemovePayment extends ActionBarActivity implements Loadable
 		setContentView(R.layout.layout_remove_payment);
 		init();
 	}
-	
+
 	@Override
 	public void beginLoading()
 	{
@@ -84,7 +84,7 @@ public class FlashRemovePayment extends ActionBarActivity implements Loadable
 			R.id.paymentListItemTextType,
 			R.id.paymentListItemTextAddress};
 		for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
-		{	
+		{
 			Map<String, String> mapping = new HashMap<String, String>();
 			Funder funder = Globals.getUser().getFunders().get(i);
 			mapping.put("number", funder.getNumber());

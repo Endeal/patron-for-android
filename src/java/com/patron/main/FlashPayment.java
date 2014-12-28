@@ -3,9 +3,9 @@ package com.patron.main;
 import java.lang.Exception;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,7 +27,7 @@ import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
 import org.brickred.socialauth.android.DialogListener;
 import org.brickred.socialauth.android.SocialAuthError;
 
-public class FlashPayment extends ActionBarActivity implements Loadable
+public class FlashPayment extends Activity implements Loadable
 {
 	private SocialAuthAdapter socialAuthAdapter;
 
@@ -51,7 +51,7 @@ public class FlashPayment extends ActionBarActivity implements Loadable
     	}
     	return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void beginLoading()
 	{

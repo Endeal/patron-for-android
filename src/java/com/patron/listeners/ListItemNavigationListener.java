@@ -35,7 +35,11 @@ public class ListItemNavigationListener implements OnItemClickListener
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        drawerLayout.closeDrawers();
+        if (position > 0)
+        {
+            drawerLayout.closeDrawers();
+        }
+        position--;
         Intent intent = null;
         Context context = view.getContext();
         switch (position)

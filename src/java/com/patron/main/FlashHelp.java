@@ -1,8 +1,10 @@
 package com.patron.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
+
+import com.patron.listeners.DrawerNavigationListener;
+import com.patron.view.NavigationListView;
+import static com.patron.view.NavigationListView.Hierarchy;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FlashHelp extends Activity
 {
@@ -38,6 +46,13 @@ public class FlashHelp extends Activity
         textPage = (TextView)viewMain.findViewById(R.id.helpTextPage);
         imageButtonPrevious.setVisibility(View.INVISIBLE);
         page = 1;
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewMain.findViewById(R.id.helpDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) viewMain.findViewById(R.id.helpListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.HELP);
 
         // Set up the next button.
         imageButtonNext.setOnClickListener(new OnClickListener() {
@@ -125,5 +140,11 @@ public class FlashHelp extends Activity
     {
     	super.onWindowFocusChanged(hasFocus);
     }
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
 
 }

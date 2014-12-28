@@ -10,7 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,12 +55,13 @@ import static com.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashMenu extends Activity implements Loadable
+public class FlashMenu extends Activity implements Loadable, OnRefreshListener
 {
 	// The layout elements.
 	private DrawerLayout drawerLayoutNavigation;
 	private NavigationListView listNavigation;
 	private ListView listMenu;
+	private SwipeRefreshLayout swipeRefreshLayoutItems;
 	private Button buttonCheckout;
 	private Button buttonFavorites;
 	private ArrayList<Button> buttonCategories = new ArrayList<Button>();
@@ -158,6 +162,18 @@ public class FlashMenu extends Activity implements Loadable
 		}
 	}
 
+	// SwipeRefreshLayout refresh listener
+	@Override public void onRefresh()
+	{
+		new Handler().postDelayed(new Runnable() {
+			@Override public void run()
+			{
+				swipeRefreshLayoutItems.setRefreshing(false);
+			}
+		}, 5000);
+	}
+
+	// Calligraphy
 	@Override
 	protected void attachBaseContext(Context newBase)
 	{
@@ -173,21 +189,20 @@ public class FlashMenu extends Activity implements Loadable
 		listMenu = (ListView) viewMenu.findViewById(R.id.menuListItems);
 		buttonCheckout = (Button) viewMenu.findViewById(R.id.menuButtonCheckout);
 		buttonFavorites = (Button) viewMenu.findViewById(R.id.menuButtonFavorites);
+		swipeRefreshLayoutItems = (SwipeRefreshLayout) viewMenu.findViewById(R.id.menuSwipeRefreshLayoutItems);
+		swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+			android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
 		// Set up the drawer layout.
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
 
-		// Set the custom fonts.
-		Typeface typeface = Typeface.createFromAsset(getAssets(), ListFonts.FONT_MAIN_BOLD);
-		buttonCheckout.setTypeface(typeface);
-		buttonFavorites.setTypeface(typeface);
-
 		// Set button listeners
 		listMenu.setOnItemClickListener(new ListItemMenuAddListener());
 		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
 		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this));
+		swipeRefreshLayoutItems.setOnRefreshListener(this);
 
 		load();
 	}
