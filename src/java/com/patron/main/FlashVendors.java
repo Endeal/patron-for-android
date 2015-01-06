@@ -31,6 +31,7 @@ import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemVendorListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Vendor;
+import com.patron.R;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.system.Parser;

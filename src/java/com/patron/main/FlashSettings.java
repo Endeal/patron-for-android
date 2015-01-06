@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.patron.listeners.DrawerNavigationListener;
-import com.patron.view.NavigationListView;
+import com.patron.R; import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

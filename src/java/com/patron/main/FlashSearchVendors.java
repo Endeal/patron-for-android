@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.patron.bind.VendorBinder;
 import com.patron.listeners.ListItemVendorListener;
 import com.patron.model.Vendor;
+import com.patron.R;
 import com.patron.sort.LocationSorter;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;

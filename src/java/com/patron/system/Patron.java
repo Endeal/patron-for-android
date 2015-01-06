@@ -10,7 +10,8 @@ import com.parse.Parse;
 import com.parse.PushService;
 
 import com.patron.main.FlashLogin;
-import com.patron.main.R;
+import com.patron.R;
+import com.patron.social.SocialExecutor;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -22,6 +23,7 @@ public class Patron extends Application
 	public void onCreate()
 	{
 		super.onCreate();
+        SocialExecutor.onCreate(this, "zzj56RtJAssnuE9sSUl1NoeeT", "4QOqpgbwzZ15SLGINwUI8RNLyT98c7pZRbW3K7xt96aPx6mRdE");
 		CalligraphyConfig.initDefault("fonts/Quicksand-Regular.otf", R.attr.fontPath);
 		//context = this;
 		context = getApplicationContext();

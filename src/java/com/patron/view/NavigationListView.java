@@ -26,8 +26,8 @@ import com.patron.bind.NavigationBinder;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemNavigationListener;
 import com.patron.lists.ListFonts;
-import com.patron.main.R;
 import com.patron.model.User;
+import com.patron.R;
 import com.patron.system.Globals;
 
 import java.util.ArrayList;

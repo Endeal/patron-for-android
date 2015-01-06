@@ -24,12 +24,8 @@ import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
 import com.patron.db.CreateAccountConnector;
 import com.patron.model.User;
+import com.patron.R;
 import com.patron.system.Globals;
-
-import org.brickred.socialauth.android.SocialAuthAdapter;
-import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
-import org.brickred.socialauth.android.DialogListener;
-import org.brickred.socialauth.android.SocialAuthError;
 
 public class FlashCreateAccount extends Activity implements Loadable
 {

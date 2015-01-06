@@ -26,6 +26,7 @@ import com.patron.model.Station;
 import com.patron.model.Order;
 import com.patron.system.Globals;
 import com.patron.lists.ListFonts;
+import com.patron.R;
 import com.patron.system.Loadable;
 import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;

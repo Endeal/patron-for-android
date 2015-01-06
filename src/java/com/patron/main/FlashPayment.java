@@ -20,17 +20,11 @@ import android.view.MenuItem;
 import android.app.AlertDialog;
 import android.widget.EditText;
 
+import com.patron.R;
 import com.patron.system.Loadable;
-
-import org.brickred.socialauth.android.SocialAuthAdapter;
-import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
-import org.brickred.socialauth.android.DialogListener;
-import org.brickred.socialauth.android.SocialAuthError;
 
 public class FlashPayment extends Activity implements Loadable
 {
-	private SocialAuthAdapter socialAuthAdapter;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{

@@ -64,6 +64,11 @@ public class Globals
 	    return dp;
 	}
 
+    public static boolean hasUser()
+    {
+        return Globals.user != null;
+    }
+
 	// Setters
 	public static void setUser(User user)
 	{

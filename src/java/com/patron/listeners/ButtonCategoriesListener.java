@@ -7,9 +7,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.patron.main.FlashMenu;
-import com.patron.main.R;
 import com.patron.model.Category;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.sort.ProductSorter;
 import com.patron.system.Globals;
 
@@ -17,13 +17,13 @@ public class ButtonCategoriesListener implements OnClickListener
 {
 	FlashMenu activity;
 	Category category;
-	
+
 	public ButtonCategoriesListener(FlashMenu activity, Category category)
 	{
 		this.activity = activity;
 		this.category = category;
 	}
-	
+
 	public void onClick(View v)
 	{
 		if (v.getBackground().getConstantState() ==
@@ -45,7 +45,7 @@ public class ButtonCategoriesListener implements OnClickListener
 					button.setBackgroundResource(R.drawable.button_filter_off);
 				}
 			}
-			
+
 			v.setBackgroundResource(R.drawable.button_filter_on);
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByCategory(items, category, true);

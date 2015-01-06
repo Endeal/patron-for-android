@@ -12,9 +12,9 @@ import android.widget.ToggleButton;
 
 import com.patron.listeners.ToggleButtonFavoriteListener;
 import com.patron.lists.ListFonts;
-import com.patron.main.R;
 import com.patron.model.Attribute;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.system.Globals;
 
 public class ProductBinder implements SimpleAdapter.ViewBinder
@@ -29,7 +29,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			TextView text = (TextView) view;
 			text.setTypeface(typeface);
 		}
-		
+
 		// Set the categories text and font.
 		else if (view.getId() == R.id.productListItemTextCategories)
 		{
@@ -37,7 +37,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			TextView text = (TextView) view;
 			text.setTypeface(typeface);
 		}
-		
+
 		// Set the toggled state of the favorite button.
 		else if (view.getId() == R.id.productListItemToggleButtonFavorite)
 		{
@@ -45,7 +45,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			Item item = Globals.getItemById(data.toString());
 			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(item);
 			toggle.setOnClickListener(listener);
-			
+
 			toggle.setChecked(false);
 			for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
 			{
@@ -55,10 +55,10 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 					toggle.setChecked(true);
 				}
 			}
-			
+
         	return true;
 		}
-		
+
 		else if (view.getId() == R.id.productListItemLayout)
 		{
 			RelativeLayout relativeLayout = (RelativeLayout)view;
@@ -79,7 +79,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 					String[] optionNames = new String[attribute.getOptions().size()];
 					for (int j = 0; j < attribute.getOptions().size(); j++)
 					{
-						optionNames[j] = attribute.getOptions().get(j).getName(); 
+						optionNames[j] = attribute.getOptions().get(j).getName();
 					}
 					ArrayAdapter<String>arrayAdapter = new
 							ArrayAdapter<String>(view.getContext(),
@@ -98,7 +98,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 					else
 					{
 						params.addRule(RelativeLayout.BELOW, lastSpinner.getId());
-						
+
 					}
 					spinner.setLayoutParams(params);
 
@@ -110,7 +110,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			}
 			return true;
 		}
-		
+
 		// Set the quantity spinner.
 		/*
         else if (view.getId() == R.id.productListItemSpinnerQuantity)

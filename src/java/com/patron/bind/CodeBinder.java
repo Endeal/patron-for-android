@@ -1,7 +1,7 @@
 package com.patron.bind;
 
 import com.patron.lists.ListFonts;
-import com.patron.main.R;
+import com.patron.R;
 
 import android.graphics.Typeface;
 import android.view.View;

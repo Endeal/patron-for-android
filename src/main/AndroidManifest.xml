@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.patron.main"
+    package="com.patron"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -25,6 +25,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <!-- OPTIONAL - This permission is only necessary if your app has multiple processes -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
 
@@ -43,8 +44,15 @@
         android:allowBackup="true">
 
         <!-- API Keys -->
-        <meta-data android:name="com.crashlytics.ApiKey"
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
             android:value="74453a2a9b59155feaa4e4e36cadf6a83a6eecd1 "/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/appId"/>
 
         <!-- Intent Receivers -->
         <receiver android:name="com.patron.system.FlashIntentReceiver" />
@@ -282,6 +290,30 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.patron.main.FlashHome" />
+        </activity>
+
+        <!-- The Facebook Login Activity -->
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/titleActivityFacebook"
+            android:theme="@style/Theme.Main"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashLogin">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashLogin" />
+        </activity>
+
+        <!-- The Twitter Login Activity -->
+        <activity
+            android:name="com.twitter.sdk.android.core.identity.OAuthActivity"
+            android:label="@string/titleActivityTwitter"
+            android:theme="@style/Theme.Main"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashLogin">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashLogin" />
         </activity>
 
     </application>

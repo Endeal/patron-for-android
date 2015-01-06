@@ -8,8 +8,8 @@ import android.widget.ToggleButton;
 
 import com.patron.listeners.ToggleButtonFavoriteListener;
 import com.patron.lists.ListFonts;
-import com.patron.main.R;
 import com.patron.model.Vendor;
+import com.patron.R;
 import com.patron.system.Globals;
 
 public class VendorBinder implements SimpleAdapter.ViewBinder
@@ -32,7 +32,7 @@ public class VendorBinder implements SimpleAdapter.ViewBinder
 			TextView text = (TextView) view;
 			text.setTypeface(typeface);
 		}
-		
+
 		// Set the toggled state of the favorite button.
 		else if (view.getId() == R.id.locationListItemToggleButtonFavorite)
 		{
@@ -41,7 +41,7 @@ public class VendorBinder implements SimpleAdapter.ViewBinder
 			Vendor vendor = Globals.getVendors().get(row);
 			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(vendor);
 			toggle.setOnClickListener(listener);
-			
+
 			toggle.setChecked(false);
 			for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
 			{
@@ -51,7 +51,7 @@ public class VendorBinder implements SimpleAdapter.ViewBinder
 					toggle.setChecked(true);
 				}
 			}
-			
+
         	return true;
 		}
         return false;

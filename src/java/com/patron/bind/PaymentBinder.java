@@ -8,7 +8,7 @@ import android.widget.SimpleAdapter;
 import android.widget.LinearLayout.LayoutParams;
 
 import com.patron.lists.ListFonts;
-import com.patron.main.R;
+import com.patron.R;
 
 public class PaymentBinder implements SimpleAdapter.ViewBinder
 {

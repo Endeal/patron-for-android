@@ -7,21 +7,21 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.patron.main.FlashMenu;
-import com.patron.main.R;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.sort.ProductSorter;
 import com.patron.system.Globals;
 
 public class ButtonFavoritesListener implements OnClickListener
 {
 	FlashMenu activity;
-	
+
 	public ButtonFavoritesListener(FlashMenu activity)
 	{
-		
+
 		this.activity = activity;
 	}
-	
+
 	public void onClick(View v)
 	{
 		if (v.getBackground().getConstantState() ==

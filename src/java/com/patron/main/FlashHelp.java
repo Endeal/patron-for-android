@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.patron.listeners.DrawerNavigationListener;
+import com.patron.R;
 import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 

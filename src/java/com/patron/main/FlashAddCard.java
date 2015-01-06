@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
 
+import com.patron.R;
 import com.patron.system.Loadable;
 import com.patron.db.AddCardConnector;
 

@@ -20,6 +20,14 @@
 
     <!-- Login Screen -->
     <string name="loginTextInstruction">Select a service to login:</string>
+    <string name="loginHintEditTextEmail">E-mail Address</string>
+    <string name="loginHintEditTextPassword">Password</string>
+    <string name="loginButtonSubmit">Submit</string>
+    <string name="loginButtonResetPassword">Reset Password</string>
+    <string name="loginButtonCreateAccount">Create Account</string>
+    <string name="loginButtonFacebook">Login with Facebook</string>
+    <string name="loginButtonTwitter">Login with Twitter</string>
+    <string name="loginButtonGoogle">Login with Google</string>
     <string name="dialogLoginPatronButtonRequestPassword">Forgot Password</string>
     <string name="dialogLoginPatronButtonCreateAccount">Create New Account</string>
 
@@ -160,6 +168,7 @@
     <string name="appName">Flash VIP</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
+    <string name="appId">648356855200728</string>
 
     <!-- Activity Titles -->
     <string name="titleActivityHome">Flash VIP</string>
@@ -180,6 +189,8 @@
     <string name="titleActivitySearchItems">Search</string>
     <string name="titleActivitySettings">Settings</string>
     <string name="titleActivityHelp">Help</string>
+    <string name="titleActivityFacebook">Facebook</string>
+    <string name="titleActivityTwitter">Twitter</string>
 
     <!-- Menu Items -->
     <string name="menuItemSettings">Settings</string>

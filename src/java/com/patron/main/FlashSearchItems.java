@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.patron.bind.ProductBinder;
 import com.patron.listeners.ListItemMenuAddListener;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.sort.ProductSorter;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;

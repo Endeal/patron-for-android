@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import com.patron.listeners.DialogTutorialListener;
+import com.patron.R;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 

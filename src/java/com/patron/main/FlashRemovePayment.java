@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.widget.EditText;
 
+import com.patron.R;
 import com.patron.system.Loadable;
 import com.patron.system.Globals;
 import com.patron.db.RemoveCardConnector;

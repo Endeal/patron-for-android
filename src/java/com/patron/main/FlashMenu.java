@@ -48,6 +48,7 @@ import com.patron.listeners.ListItemMenuAddListener;
 import com.patron.lists.ListFonts;
 import com.patron.lists.ListLinks;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.view.NavigationListView;

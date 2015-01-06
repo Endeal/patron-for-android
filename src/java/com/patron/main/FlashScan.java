@@ -25,6 +25,7 @@ import com.patron.db.ScanConnector;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Order;
+import com.patron.R;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.view.NavigationListView;

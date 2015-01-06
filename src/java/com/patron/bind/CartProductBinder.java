@@ -18,23 +18,23 @@ import com.patron.listeners.SpinnerAttributeListener;
 import com.patron.listeners.SpinnerQuantityListener;
 import com.patron.lists.ListFonts;
 import com.patron.main.FlashCart;
-import com.patron.main.R;
 import com.patron.model.Attribute;
 import com.patron.model.Option;
 import com.patron.model.Selection;
 import com.patron.model.Fragment;
 import com.patron.model.Item;
+import com.patron.R;
 import com.patron.system.Loadable;
 
 public class CartProductBinder implements ViewBinder
 {
 	private Loadable activity;
-	
+
 	public CartProductBinder(Loadable activity)
 	{
 		this.activity = activity;
 	}
-	
+
 	public boolean setViewValue(View view, Object data, String textRepresentation)
 	{
 		// Change the font of the name and price.
@@ -82,7 +82,7 @@ public class CartProductBinder implements ViewBinder
             ((Button)view).setOnClickListener(listener);
             return true;
         }
-		
+
 		// Add the attributes
 		else if (view.getId() == R.id.cartListItemLayout)
 		{
@@ -116,7 +116,7 @@ public class CartProductBinder implements ViewBinder
 							ArrayAdapter<String>(view.getContext(),
 									android.R.layout.simple_spinner_item,
 									optionNames);
-					
+
 					// Create the spinner.
 					Spinner spinner = new Spinner(view.getContext());
 					spinner.setAdapter(arrayAdapter);
@@ -131,7 +131,7 @@ public class CartProductBinder implements ViewBinder
 					else
 					{
 						params.addRule(RelativeLayout.BELOW, lastSpinner.getId());
-						
+
 					}
 					spinner.setLayoutParams(params);
 					spinner.setSelection(selectedIndex);
@@ -147,7 +147,7 @@ public class CartProductBinder implements ViewBinder
 			}
 			return true;
 		}
-		
+
         // Set up the quantity spinner.
         else if (view.getId() == R.id.cartListItemSpinnerQuantity)
         {

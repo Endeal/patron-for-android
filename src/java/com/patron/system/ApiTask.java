@@ -2,6 +2,7 @@ package com.patron.system;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 import java.net.URISyntaxException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Map;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -27,14 +31,9 @@ import com.patron.listeners.OnTaskCompletedListener;
 
 import android.os.AsyncTask;
 
-public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, HttpEntity>>
+public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 {
 	private OnTaskCompletedListener onTaskCompletedListener;
-
-	public ApiTask(OnTaskCompletedListener onTaskCompletedListener)
-	{
-		setOnTaskCompletedListener(onTaskCompletedListener);
-	}
 
 	public void setOnTaskCompletedListener(OnTaskCompletedListener onTaskCompletedListener)
 	{
@@ -42,17 +41,22 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, HttpEntity
 	}
 
 	@Override
-	protected Map<URI, HttpEntity> doInBackground(HttpUriRequest requests...)
+	protected Map<URI, byte[]> doInBackground(HttpUriRequest... requests)
 	{
-		try
+        final HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(params, 10000);
+        HttpConnectionParams.setSoTimeout(params, 10000);
+        HttpClient client = new DefaultHttpClient(params);
+	    try
 		{
-			Map<URI, HttpEntity> data = new HashMap<URI, HttpEntity>();
-			for (int i = 0; i < params.length; i++)
+			Map<URI, byte[]> data = new HashMap<URI, byte[]>();
+			for (int i = 0; i < requests.length; i++)
 			{
 				HttpUriRequest request = requests[i];
-				HttpClient client = new DefaultHttpClient();
-				HttpResponse response = client.execute(request);
-				data.put(request.getURI(), response.getEntity());
+                HttpResponse response = client.execute(request);
+                HttpEntity entity = response.getEntity();
+                byte[] bytes = EntityUtils.toByteArray(entity);
+				data.put(request.getURI(), bytes);
 			}
 			return data;
 		}
@@ -60,10 +64,10 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, HttpEntity
 		{
 			e.printStackTrace();
 		}
-		catch (URISyntaxException e)
-		{
-			e.printStackTrace();
-		}
+        catch (UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
 		catch (UnsupportedEncodingException e)
 		{
 			e.printStackTrace();
@@ -81,7 +85,7 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, HttpEntity
 	}
 
 	@Override
-	protected void onPostExecute(Map<URI, HttpEntity> data)
+	protected void onPostExecute(Map<URI, byte[]> data)
 	{
 		if (onTaskCompletedListener != null)
 		{

@@ -12,49 +12,80 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
-  <TextView
-    android:id="@+id/loginTextInstruction"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:text="@string/loginTextInstruction" />
+    <TextView
+        android:id="@+id/loginTextInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/loginTextInstruction" />
 
-      <GridLayout
+    <EditText
+        android:id="@+id/loginEditTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:columnCount="2">
+        android:layout_margin="10dp"
+        android:hint="@string/loginHintEditTextEmail" />
 
-        <ImageButton
-          android:id="@+id/loginButtonPatron"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:background="@null"
-          android:src="@drawable/app_logo" />
+    <EditText
+        android:id="@+id/loginEditTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/loginHintEditTextPassword" />
 
-          <ImageButton 
-            android:id="@+id/loginButtonFacebook"
+    <Button
+        android:id="@+id/loginButtonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginButtonSubmit" />
+
+    <LinearLayout
+        android:id="@+id/loginLinearLayoutAccountControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/loginButtonResetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/facebook" />
+            android:layout_weight="1"
+            android:text="@string/loginButtonResetPassword" />
 
-            <ImageButton
-              android:id="@+id/loginButtonTwitter"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="@null"
-              android:src="@drawable/twitter" />
+        <Button
+            android:id="@+id/loginButtonCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/loginButtonCreateAccount" />
 
-              <ImageButton
-                android:id="@+id/loginButtonGooglePlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/googleplus" />
+    </LinearLayout>
 
-              </GridLayout>
+    <Button
+        android:id="@+id/loginButtonFacebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:text="@string/loginButtonFacebook" />
 
-            </LinearLayout>
+    <Button
+        android:id="@+id/loginButtonTwitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/loginButtonTwitter" />
 
-          </ScrollView>
+    <Button
+        android:id="@+id/loginButtonGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginButtonGoogle" />
+
+
+    </LinearLayout>
+
+  </ScrollView>
