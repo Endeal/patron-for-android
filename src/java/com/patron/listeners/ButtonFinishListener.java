@@ -1,39 +1,40 @@
 package com.patron.listeners;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.main.FlashCart;
+import com.patron.main.FlashCodes;
+import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 
-public class ButtonFinishListener implements View.OnClickListener
+public class ButtonFinishListener implements OnClickListener
 {
-    
-	FlashCart activity;
-	
-	public ButtonFinishListener(FlashCart activity)
+    @Override
+	public void onClick(View tempView)
 	{
-		this.activity = activity;
-	}
-	
-	public void onClick(View view)
-	{
-		if (Globals.getOrder() != null &&
-				Globals.getOrder().getFragments() != null &&
-				!Globals.getOrder().getFragments().isEmpty())
-		{
-			Toast success = Toast.makeText(view.getContext(),
-					"Success",
-					Toast.LENGTH_SHORT);
-			success.show();
-		}
-		else
-		{
-			Toast error = Toast.makeText(view.getContext(),
-					"No drinks added to tab yet.",
-					Toast.LENGTH_SHORT);
-			error.show();
-		}
+        final View view = tempView;
+        ApiExecutor apiExecutor = new ApiExecutor();
+        apiExecutor.addOrder(Globals.getOrder(), view.getContext(), new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                Activity activity = (Activity)view.getContext();
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    activity, view, "buttonFinish");
+                Bundle bundle = options.toBundle();
+                Intent intent = new Intent(activity, FlashCodes.class);
+                ActivityCompat.startActivity(activity, intent, bundle);
+                activity.finish();
+            }
+        });
 	}
 }

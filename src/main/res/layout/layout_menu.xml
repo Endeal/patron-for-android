@@ -28,6 +28,15 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <Button
+            android:id="@+id/menuButtonSelectVendor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:elevation="5dp"
+            android:background="#999999"
+            android:text="Select Vendor" />
+
         <!-- The checkout button -->
         <Button
             android:id="@+id/menuButtonCheckout"

@@ -316,6 +316,18 @@
                 android:value="com.patron.main.FlashLogin" />
         </activity>
 
+        <!-- The Twitter Share E-mail Activity -->
+        <activity
+            android:name="com.twitter.sdk.android.core.identity.ShareEmailActivity"
+            android:label="@string/titleActivityTwitterShareEmail"
+            android:theme="@style/Theme.Main"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.patron.main.FlashLogin">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.patron.main.FlashLogin" />
+        </activity>
+
     </application>
 
 </manifest>

@@ -94,6 +94,14 @@
       <version>1.9.3</version>
     </dependency>
 
+    <!-- Quick Return -->
+    <dependency>
+        <groupId>com.felipecsl.quickreturn</groupId>
+        <artifactId>library</artifactId>
+        <version>1.5.0</version>
+        <type>aar</type>
+    </dependency>
+
     <!-- Facebook -->
     <dependency>
         <groupId>com.facebook.android</groupId>

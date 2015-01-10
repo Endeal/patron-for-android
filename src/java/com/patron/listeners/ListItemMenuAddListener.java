@@ -66,7 +66,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Fragment fragment = new Fragment(null, item, selections,
 				null, quantity);
 
-		// Adds the TabDrink that was just created to the tab.
+		// Adds the fragment that was just created to the order.
 		Order order = Globals.getOrder();
 		List<Fragment> fragments = null;
 		if (order == null)
@@ -116,7 +116,5 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Toast toast = Toast.makeText(v.getContext(),
 				"Added " + item.getName() + ".", Toast.LENGTH_SHORT);
 		toast.show();
-
-
 	}
 }

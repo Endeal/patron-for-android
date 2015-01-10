@@ -191,6 +191,7 @@
     <string name="titleActivityHelp">Help</string>
     <string name="titleActivityFacebook">Facebook</string>
     <string name="titleActivityTwitter">Twitter</string>
+    <string name="titleActivityTwitterShareEmail">Twitter</string>
 
     <!-- Menu Items -->
     <string name="menuItemSettings">Settings</string>

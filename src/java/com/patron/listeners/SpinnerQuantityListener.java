@@ -11,19 +11,19 @@ import com.patron.model.Order;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
-public class SpinnerQuantityListener implements OnItemSelectedListener 
+public class SpinnerQuantityListener implements OnItemSelectedListener
 {
 	private Fragment fragment;
-	private Loadable activity;
+    private OnApiExecutedListener listener;
 	private boolean firstCallHappened;
-	
-	public SpinnerQuantityListener(Fragment fragment, Loadable activity)
+
+	public SpinnerQuantityListener(Fragment fragment, OnApiExecutedListener listener)
 	{
 		this.fragment = fragment;
-		this.activity = activity;
+        this.listener = listener;
 		firstCallHappened = false;
 	}
-	
+
 	public void onItemSelected(AdapterView<?> adapter, View view,
 			int position, long id)
 	{
@@ -39,7 +39,7 @@ public class SpinnerQuantityListener implements OnItemSelectedListener
 				Globals.setOrder(order);
 				if (firstCallHappened)
 				{
-					activity.update();
+                    listener.onExecuted();
 				}
 				firstCallHappened = true;
 				break;
@@ -50,6 +50,6 @@ public class SpinnerQuantityListener implements OnItemSelectedListener
 
 	public void onNothingSelected(AdapterView<?> adapter)
 	{
-		
+
 	}
 }

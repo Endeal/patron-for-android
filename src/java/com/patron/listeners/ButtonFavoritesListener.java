@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.main.FlashMenu;
 import com.patron.model.Item;
 import com.patron.R;
@@ -15,11 +16,12 @@ import com.patron.system.Globals;
 public class ButtonFavoritesListener implements OnClickListener
 {
 	FlashMenu activity;
+    OnApiExecutedListener listener;
 
-	public ButtonFavoritesListener(FlashMenu activity)
+	public ButtonFavoritesListener(FlashMenu activity, OnApiExecutedListener listener)
 	{
-
 		this.activity = activity;
+        this.listener = listener;
 	}
 
 	public void onClick(View v)
@@ -43,13 +45,13 @@ public class ButtonFavoritesListener implements OnClickListener
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByFavorites(items, true);
 			Globals.getVendor().setFilteredItems(newItems);
-			activity.update();
+            listener.onExecuted();
 		}
 		else
 		{
 			v.setBackgroundResource(R.drawable.button_filter_off);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
-			activity.update();
+            listener.onExecuted();
 		}
 	}
 }

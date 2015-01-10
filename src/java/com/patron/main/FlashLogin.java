@@ -38,9 +38,11 @@ import android.widget.Toast;
 import com.facebook.widget.LoginButton;
 
 import com.patron.db.LoginConnector;
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnTaskCompletedListener;
 import com.patron.lists.ListLinks;
 import com.patron.R;
+import com.patron.social.OnSocialTaskCompletedListener;
 import com.patron.social.SocialExecutor;
 import static com.patron.social.SocialExecutor.Network;
 import com.patron.system.ApiExecutor;
@@ -103,16 +105,16 @@ public class FlashLogin extends FragmentActivity
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(view.getContext(), "POOP!", Toast.LENGTH_SHORT).show();
                 if (!submitting)
                 {
                     submitting = true;
                     final Activity activity = (Activity)view.getContext();
                     String email = editTextEmail.getText().toString();
                     String password = editTextPassword.getText().toString();
-                    ApiExecutor executor = new ApiExecutor(new OnTaskCompletedListener() {
+                    ApiExecutor executor = new ApiExecutor();
+                    executor.loginPatron(email, password, new OnApiExecutedListener() {
                         @Override
-                        public void onComplete(Map<URI, byte[]> data)
+                        public void onExecuted()
                         {
                             if (!Globals.hasUser())
                             {
@@ -123,12 +125,11 @@ public class FlashLogin extends FragmentActivity
                             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 activity, buttonSubmit, "loginButton");
                             Bundle bundle = options.toBundle();
-                            Intent intent = new Intent(activity, FlashVendors.class);
+                            Intent intent = new Intent(activity, FlashMenu.class);
                             ActivityCompat.startActivity(activity, intent, bundle);
                             activity.finish();
                         }
                     });
-                    executor.loginPatron(email, password);
                 }
             }
         });
@@ -157,13 +158,13 @@ public class FlashLogin extends FragmentActivity
             }
         });
 
-        // Login with Google
+        // Login with Google+
         socialExecutor = new SocialExecutor(this, savedInstanceState, Network.GOOGLE_PLUS, Network.FACEBOOK, Network.TWITTER);
         buttonGooglePlus.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                socialExecutor.signIn(Network.GOOGLE_PLUS);
+                socialExecutor.signIn(Network.GOOGLE_PLUS, null);
             }
         });
 
@@ -172,7 +173,7 @@ public class FlashLogin extends FragmentActivity
             @Override
             public void onClick(View view)
             {
-                socialExecutor.signIn(Network.FACEBOOK);
+                socialExecutor.signIn(Network.FACEBOOK, null);
             }
         });
 
@@ -181,7 +182,13 @@ public class FlashLogin extends FragmentActivity
             @Override
             public void onClick(View view)
             {
-                socialExecutor.signIn(Network.TWITTER);
+                socialExecutor.signIn(Network.TWITTER, new OnSocialTaskCompletedListener() {
+                    @Override
+                    public void onComplete()
+                    {
+                        socialExecutor.getEmail(Network.TWITTER);
+                    }
+                });
             }
         });
     }

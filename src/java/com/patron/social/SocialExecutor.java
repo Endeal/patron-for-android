@@ -9,10 +9,18 @@ import android.os.Bundle;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
 
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
@@ -31,13 +39,16 @@ import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import com.twitter.sdk.android.Twitter;
 
 import io.fabric.sdk.android.Fabric;
 
+import java.io.IOException;
 import java.lang.NullPointerException;
 import java.util.Arrays;
 
@@ -57,10 +68,10 @@ public class SocialExecutor
 
     // Facebook
     private LoginButton facebookButton;
+    private UiLifecycleHelper facebookHelper;
 
     // Twitter
     private TwitterLoginButton twitterButton;
-
 
     public static enum Network
     {
@@ -77,69 +88,6 @@ public class SocialExecutor
         this.bundle = bundle;
 
         // Google+
-        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity) != ConnectionResult.SUCCESS)
-        {
-            Toast.makeText(activity, "Google Play Services not available.", Toast.LENGTH_SHORT).show();
-        }
-        else if (Arrays.asList(networks).contains(Network.GOOGLE_PLUS))
-        {
-            Plus.PlusOptions.Builder builder = new Plus.PlusOptions.Builder();
-            builder = builder.addActivityTypes("http://schemas.google.com/AddActivity");
-            Plus.PlusOptions options = builder.build();
-            googleClient = new GoogleApiClient.Builder(activity)
-                .addConnectionCallbacks(new ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(Bundle bundle)
-                    {
-                        googleSigningIn = false;
-                        Toast.makeText(activity, "Signed in with Google+", Toast.LENGTH_SHORT).show();
-                        Plus.PeopleApi.loadVisible(googleClient, null).setResultCallback(new ResultCallback() {
-                            @Override
-                            public void onResult(com.google.android.gms.common.api.Result result)
-                            {
-                                if (Plus.PeopleApi.getCurrentPerson(googleClient) != null)
-                                {
-                                    Person currentPerson = Plus.PeopleApi.getCurrentPerson(googleClient);
-                                    googlePlusUser = currentPerson;
-                                    String personName = currentPerson.getDisplayName();
-                                    String[] parts = personName.split(" ");
-                                    String firstName = parts[0];
-                                    String lastName = parts[parts.length - 1];
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onConnectionSuspended(int cause)
-                    {
-                        googleClient.connect();
-                    }
-                }).addOnConnectionFailedListener(new OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult result)
-                    {
-                        if (!result.hasResolution())
-                        {
-                            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(),
-                                activity, 0).show();
-                            return;
-                        }
-                        if (!googleIntentInProgress)
-                        {
-                            googleResult = result;
-                            if (googleSigningIn)
-                            {
-
-                            }
-                        }
-                    }
-                }).addApi(Plus.API, options)
-                .addScope(Plus.SCOPE_PLUS_LOGIN)
-                .addScope(Plus.SCOPE_PLUS_PROFILE)
-                .build();
-            googleClient.connect();
-        }
 
         // Facebook
         if (Arrays.asList(networks).contains(Network.FACEBOOK))
@@ -151,29 +99,32 @@ public class SocialExecutor
                 // Add the fragment on initial activity setup
                 mainFragment = new FacebookFragment();
                 //activity.getSupportFragmentManager().beginTransaction().add(android.R.id.content, mainFragment).commit();
+                facebookButton.setSessionStatusCallback(new Session.StatusCallback() {
+                    @Override
+                    public void call(Session session, SessionState state, Exception exception)
+                    {
+                        if (state == SessionState.OPENED)
+                        {
+                        }
+                        else
+                        {
+                        }
+                    }
+                });
             }
             else
             {
                 // Or set the fragment from restored state info
                 mainFragment = (FacebookFragment)activity.getSupportFragmentManager().findFragmentById(android.R.id.content);
             }
+            facebookHelper = new UiLifecycleHelper(activity, null);
+            facebookHelper.onCreate(bundle);
         }
 
         // Twitter
         if (Arrays.asList(networks).contains(Network.TWITTER))
         {
             twitterButton = new TwitterLoginButton(activity);
-            twitterButton.setCallback(new Callback<TwitterSession>() {
-               @Override
-               public void success(Result<TwitterSession> result) {
-                   Toast.makeText(activity, "Signed in with Twitter.", Toast.LENGTH_SHORT).show();
-               }
-
-               @Override
-               public void failure(TwitterException exception) {
-                   Toast.makeText(activity, "Failed to sign in with Twitter.", Toast.LENGTH_SHORT).show();
-               }
-            });
         }
     }
 
@@ -181,6 +132,26 @@ public class SocialExecutor
     {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(twitterKey, twitterSecret);
         Fabric.with(application, new Twitter(authConfig));
+    }
+
+    public void onPause()
+    {
+        facebookHelper.onPause();
+    }
+
+    public void onResume()
+    {
+        facebookHelper.onResume();
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        facebookHelper.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onDestroy()
+    {
+        facebookHelper.onDestroy();
     }
 
     public void onActivityResult(int requestCode, int responseCode, Intent intent)
@@ -201,12 +172,108 @@ public class SocialExecutor
         {
             twitterButton.onActivityResult(requestCode, responseCode, intent);
         }
+        facebookHelper.onActivityResult(requestCode, responseCode, intent, new FacebookDialog.Callback() {
+            @Override
+            public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data)
+            {
+                Toast.makeText(activity, "Facebook result unsuccessful.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data)
+            {
+                Toast.makeText(activity, "Facebook result successful.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public boolean signedIn(Network network)
+    {
+        switch (network)
+        {
+            // Google+
+            case GOOGLE_PLUS:
+                return googleClient.isConnected();
+            // Facebook
+            case FACEBOOK:
+                Session facebookSession = Session.getActiveSession();
+                return (facebookSession != null && facebookSession.isOpened());
+            // Twitter
+            case TWITTER:
+                TwitterSession twitterSession = Twitter.getSessionManager().getActiveSession();
+                return (twitterSession != null && twitterSession.getAuthToken() != null);
+        }
+        return false;
     }
 
-    public void signIn(Network network)
+    public void signIn(Network network, OnSocialTaskCompletedListener listener)
     {
         if (network == Network.GOOGLE_PLUS)
         {
+            if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity) != ConnectionResult.SUCCESS)
+            {
+                Toast.makeText(activity, "Google Play Services not available.", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                if (googleClient == null)
+                {
+                    Plus.PlusOptions.Builder builder = new Plus.PlusOptions.Builder();
+                    builder = builder.addActivityTypes("http://schemas.google.com/AddActivity");
+                    Plus.PlusOptions options = builder.build();
+                    googleClient = new GoogleApiClient.Builder(activity)
+                        .addConnectionCallbacks(new ConnectionCallbacks() {
+                            @Override
+                            public void onConnected(Bundle bundle)
+                            {
+                                googleSigningIn = false;
+                                Toast.makeText(activity, "Signed in with Google+", Toast.LENGTH_SHORT).show();
+                                Plus.PeopleApi.loadVisible(googleClient, null).setResultCallback(new ResultCallback() {
+                                    @Override
+                                    public void onResult(com.google.android.gms.common.api.Result result)
+                                    {
+                                        if (Plus.PeopleApi.getCurrentPerson(googleClient) != null)
+                                        {
+                                            Person currentPerson = Plus.PeopleApi.getCurrentPerson(googleClient);
+                                            googlePlusUser = currentPerson;
+                                            String personName = currentPerson.getDisplayName();
+                                            String[] parts = personName.split(" ");
+                                            String firstName = parts[0];
+                                            String lastName = parts[parts.length - 1];
+                                        }
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onConnectionSuspended(int cause)
+                            {
+                                googleClient.connect();
+                            }
+                        }).addOnConnectionFailedListener(new OnConnectionFailedListener() {
+                            @Override
+                            public void onConnectionFailed(ConnectionResult result)
+                            {
+                                if (!result.hasResolution())
+                                {
+                                    GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(),
+                                        activity, 0).show();
+                                    return;
+                                }
+                                if (!googleIntentInProgress)
+                                {
+                                    googleResult = result;
+                                    if (googleSigningIn)
+                                    {
+
+                                    }
+                                }
+                            }
+                        }).addApi(Plus.API, options)
+                        .addScope(Plus.SCOPE_PLUS_LOGIN)
+                        .addScope(Plus.SCOPE_PLUS_PROFILE)
+                        .build();
+                }
+            }
             if (!googleClient.isConnecting())
             {
                 googleSigningIn = true;
@@ -233,6 +300,22 @@ public class SocialExecutor
         }
         if (network == Network.TWITTER)
         {
+            final OnSocialTaskCompletedListener socialTaskCompletedListener = listener;
+            twitterButton.setCallback(new Callback<TwitterSession>() {
+                @Override
+                public void success(Result<TwitterSession> result) {
+                   Toast.makeText(activity, "Signed in with Twitter.", Toast.LENGTH_SHORT).show();
+                   if (socialTaskCompletedListener != null)
+                    {
+                       socialTaskCompletedListener.onComplete();
+                    }
+               }
+
+               @Override
+               public void failure(TwitterException exception) {
+                   Toast.makeText(activity, "Failed to sign in with Twitter.", Toast.LENGTH_SHORT).show();
+               }
+            });
             twitterButton.performClick();
         }
     }
@@ -249,11 +332,30 @@ public class SocialExecutor
 
     public String getEmail(Network network)
     {
+        if (network == Network.TWITTER)
+        {
+            TwitterSession session = Twitter.getSessionManager().getActiveSession();
+            TwitterAuthClient authClient = new TwitterAuthClient();
+            authClient.requestEmail(session, new Callback() {
+                @Override
+                public void success(Result result)
+                {
+                    Toast.makeText(activity, "E-mail received!" + result.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void failure(TwitterException exception)
+                {
+                    Toast.makeText(activity, "No e-mail address received.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         return "";
     }
 
-    public void shareLink(String message, String action, String desktopLink, String deepLink)
+    public void shareLink(Network network, String message, String action, String desktopLink, String deepLink)
     {
+        // Google+
         PlusShare.Builder builder = new PlusShare.Builder(activity);
         builder.addCallToAction(action, Uri.parse(desktopLink), deepLink);
         builder.setContentUrl(Uri.parse(desktopLink));
@@ -262,28 +364,93 @@ public class SocialExecutor
         activity.startActivityForResult(builder.getIntent(), 0);
     }
 
-    public void shareText(String message)
+    public void shareText(Network network, String message)
     {
         // Google+
-        Intent shareIntent = new PlusShare.Builder(activity)
-            .setType("text/plain")
-            .setText(message)
-            .getIntent();
-        activity.startActivityForResult(shareIntent, 0);
+        if (network == Network.GOOGLE_PLUS)
+        {
+            Intent shareIntent = new PlusShare.Builder(activity)
+                .setType("text/plain")
+                .setText(message)
+                .getIntent();
+            activity.startActivityForResult(shareIntent, 0);
+        }
+
+        // Facebook
+        if (network == Network.FACEBOOK)
+        {
+            FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(activity)
+                .setLink("http//example.com")
+                .setName("Test")
+                .setDescription("This is a test post")
+                .setCaption("Caption")
+                .build();
+            facebookHelper.trackPendingDialogCall(shareDialog.present());
+        }
 
         // Twitter
-        TweetComposer.Builder builder = new TweetComposer.Builder(activity).text(message);
-        builder.show();
-    }
-
-    public void postText(String message, Network network)
-    {
-
+        if (network == Network.TWITTER)
+        {
+            TweetComposer.Builder builder = new TweetComposer.Builder(activity).text(message);
+            builder.show();
+        }
     }
 
     public void postRichData(Network network)
     {
 
+    }
+
+    public String getAccessToken(Network network)
+    {
+        switch (network)
+        {
+            case GOOGLE_PLUS:
+                String accessToken = null;
+                String[] scopes = new String[3];
+                scopes[0] = "oauth2:server:client_id:342319301171-mhho1d9668o2l12j413lq5a8ij3vrnfp.apps.googleusercontent.com:api_scope:";
+                scopes[1] = "https://www.googleapis.com/auth/plus.login ";
+                scopes[2] = "https://www.googleapis.com/auth/plus.me ";
+                scopes[3] = "profile";
+                try
+                {
+                    accessToken = GoogleAuthUtil.getToken(activity, Plus.AccountApi.getAccountName(googleClient),
+                        "oauth2:" + TextUtils.join(" ", scopes));
+                }
+                catch (IOException transientEx)
+                {
+                    // network or server error, the call is expected to succeed if you try again later.
+                    // Don't attempt to call again immediately - the request is likely to
+                    // fail, you'll hit quotas or back-off.
+                }
+                catch (UserRecoverableAuthException e)
+                {
+                    // Recover
+                    accessToken = null;
+                }
+                catch (GoogleAuthException authEx)
+                {
+                    // Failure. The call is not expected to ever succeed so it should not be
+                    // retried.
+                }
+                catch (Exception e)
+                {
+                    throw new RuntimeException(e);
+                }
+                return accessToken;
+            case FACEBOOK:
+                Session facebookSession = Session.getActiveSession();
+                if (facebookSession.isOpened())
+                {
+                    return facebookSession.getAccessToken();
+                }
+                break;
+            case TWITTER:
+                TwitterSession twitterSession = Twitter.getSessionManager().getActiveSession();
+                TwitterAuthToken authToken = twitterSession.getAuthToken();
+                return authToken.toString();
+        }
+        return "";
     }
 }
 

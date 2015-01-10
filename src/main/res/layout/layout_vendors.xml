@@ -10,15 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ListView
-            android:id="@+id/locationsList"
-            style="@style/StyleLocationList"
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/vendorsSwipeRefreshLayoutVendors"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" >
+            android:layout_height="match_parent">
 
-        </ListView>
+            <ListView
+                android:id="@+id/vendorsListViewVendors"
+                style="@style/StyleLocationList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <Button
+            android:id="@+id/vendorsButtonFindNearest"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="#999999"
+            android:text="Find Nearest" />
 
     </RelativeLayout>
 

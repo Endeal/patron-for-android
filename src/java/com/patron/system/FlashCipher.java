@@ -73,7 +73,7 @@ public class FlashCipher
     }
 
     public static String decrypt(String text)
-    { 
+    {
         final String ivAndEncryptedMessageBase64 = text;
         final String symKeyHex = ListKeys.PASSWORD_DECRYPTION_KEY;
         final byte[] symKeyData = hexStringToByteArray(symKeyHex);

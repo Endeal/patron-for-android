@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.patron.listeners.ButtonRemoveListener;
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.SpinnerAttributeListener;
 import com.patron.listeners.SpinnerQuantityListener;
 import com.patron.lists.ListFonts;
@@ -28,11 +29,11 @@ import com.patron.system.Loadable;
 
 public class CartProductBinder implements ViewBinder
 {
-	private Loadable activity;
+    private OnApiExecutedListener listener;
 
-	public CartProductBinder(Loadable activity)
+	public CartProductBinder(OnApiExecutedListener listener)
 	{
-		this.activity = activity;
+        this.listener = listener;
 	}
 
 	public boolean setViewValue(View view, Object data, String textRepresentation)
@@ -77,9 +78,8 @@ public class CartProductBinder implements ViewBinder
 		else if (view.getId() == R.id.cartListItemButtonRemove)
 		{
 			Fragment fragment = (Fragment)data;
-            ButtonRemoveListener listener = new ButtonRemoveListener(
-            		(FlashCart)view.getContext(), fragment);
-            ((Button)view).setOnClickListener(listener);
+            ButtonRemoveListener removeListener = new ButtonRemoveListener(listener, fragment);
+            ((Button)view).setOnClickListener(removeListener);
             return true;
         }
 
@@ -135,9 +135,8 @@ public class CartProductBinder implements ViewBinder
 					}
 					spinner.setLayoutParams(params);
 					spinner.setSelection(selectedIndex);
-					SpinnerAttributeListener listener = new
-							SpinnerAttributeListener(fragment, attribute, activity);
-					spinner.setOnItemSelectedListener(listener);
+					SpinnerAttributeListener attributeListener = new SpinnerAttributeListener(fragment, attribute, listener);
+					spinner.setOnItemSelectedListener(attributeListener);
 
 					// Add the attribute to the view.
 					relativeLayout.addView(spinner);
@@ -154,9 +153,8 @@ public class CartProductBinder implements ViewBinder
         	Fragment fragment = (Fragment)data;
         	System.out.println("Quantity: " + fragment.getQuantity());
         	((Spinner)view).setSelection(fragment.getQuantity() - 1);
-        	SpinnerQuantityListener listener = new
-        			SpinnerQuantityListener(fragment, activity);
-        	((Spinner)view).setOnItemSelectedListener(listener);
+        	SpinnerQuantityListener quantityListener = new SpinnerQuantityListener(fragment, listener);
+        	((Spinner)view).setOnItemSelectedListener(quantityListener);
         	return true;
         }
         return false;

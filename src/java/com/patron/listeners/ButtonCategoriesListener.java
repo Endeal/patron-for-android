@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.patron.listeners.OnMenuRefreshListener;
 import com.patron.main.FlashMenu;
 import com.patron.model.Category;
 import com.patron.model.Item;
@@ -17,11 +18,13 @@ public class ButtonCategoriesListener implements OnClickListener
 {
 	FlashMenu activity;
 	Category category;
+    OnMenuRefreshListener listener;
 
-	public ButtonCategoriesListener(FlashMenu activity, Category category)
+	public ButtonCategoriesListener(FlashMenu activity, Category category, OnMenuRefreshListener listener)
 	{
 		this.activity = activity;
 		this.category = category;
+        this.listener = listener;
 	}
 
 	public void onClick(View v)
@@ -50,13 +53,13 @@ public class ButtonCategoriesListener implements OnClickListener
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByCategory(items, category, true);
 			Globals.getVendor().setFilteredItems(newItems);
-			activity.update();
+            listener.onExecuted();
 		}
 		else
 		{
 			v.setBackgroundResource(R.drawable.button_filter_off);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
-			activity.update();
+            listener.onExecuted();
 		}
 	}
 }

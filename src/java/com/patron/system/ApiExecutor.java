@@ -1,8 +1,19 @@
 package com.patron.system;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnTaskCompletedListener;
+import com.patron.listeners.UserLocationListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.BankAccount;
 import com.patron.model.Card;
@@ -17,6 +28,7 @@ import com.patron.system.Parser;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.Runnable;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +40,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.HttpEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.NameValuePair;
@@ -39,27 +52,13 @@ import org.json.JSONObject;
 
 public class ApiExecutor
 {
-    private OnTaskCompletedListener onTaskCompletedListener;
     private ApiTask apiTask;
     private Map<URI, byte[]> data;
 
     public ApiExecutor()
     {
-        setOnTaskCompletedListener(null);
         setApiTask(new ApiTask());
         setData(null);
-    }
-
-    public ApiExecutor(OnTaskCompletedListener onTaskCompletedListener)
-    {
-        setOnTaskCompletedListener(onTaskCompletedListener);
-        setApiTask(new ApiTask());
-        setData(null);
-    }
-
-    private void setOnTaskCompletedListener(OnTaskCompletedListener onTaskCompletedListener)
-    {
-        this.onTaskCompletedListener = onTaskCompletedListener;
     }
 
     private void setApiTask(ApiTask apiTask)
@@ -72,18 +71,24 @@ public class ApiExecutor
         this.data = data;
     }
 
-    private void callback()
+    public void callback(OnApiExecutedListener... listeners)
     {
-        if (onTaskCompletedListener != null)
+        if (listeners == null || listeners.length == 0)
         {
-            onTaskCompletedListener.onComplete(data);
+            return;
+        }
+        for (OnApiExecutedListener listener : listeners)
+        {
+            listener.onExecuted();
         }
     }
 
     // Login
-    public void loginPatron(String email, String password)
+    public void loginPatron(String email, String password, OnApiExecutedListener... tempListeners)
     {
+        final String finalEmail = email;
         final String finalPassword = password;
+        final OnApiExecutedListener[] listeners = tempListeners;
         HttpPost request = new HttpPost(ListLinks.API_LOGIN_PATRON);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
         NameValuePair pairEmail = new BasicNameValuePair("email", email);
@@ -107,6 +112,7 @@ public class ApiExecutor
                             if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
                             {
                                 User user = Parser.getUser(new JSONObject(rawUser));
+                                user.setEmail(finalEmail);
                                 user.setPassword(finalPassword);
                                 Globals.setUser(user);
                             }
@@ -120,7 +126,7 @@ public class ApiExecutor
                     {
                         e.printStackTrace();
                     }
-                    callback();
+                    callback(listeners);
                 }
             });
             apiTask.execute(request);
@@ -150,8 +156,10 @@ public class ApiExecutor
         callback();
     }
 
-    public void createAccount(String firstName, String lastName, String email, String password, String birthday)
+    public void createAccount(String firstName, String lastName, String email, String password, String birthday,
+            OnApiExecutedListener... tempListeners)
     {
+            final OnApiExecutedListener[] listeners = tempListeners;
             HttpPost request = new HttpPost(ListLinks.API_ADD_ACCOUNT);
             ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			NameValuePair pairFirstName = new BasicNameValuePair("firstName", firstName);
@@ -176,6 +184,7 @@ public class ApiExecutor
                         {
                             String response = new String(entry.getValue());
                         }
+                        callback(listeners);
                     }
                 });
             }
@@ -185,8 +194,9 @@ public class ApiExecutor
     }
 
     // Vendor Interaction
-    public void getVendors()
+    public void getVendors(OnApiExecutedListener... tempListeners)
     {
+        final OnApiExecutedListener[] listeners = tempListeners;
         HttpGet request = new HttpGet(ListLinks.API_GET_VENDORS);
         ApiTask apiTask = new ApiTask();
         apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
@@ -205,6 +215,7 @@ public class ApiExecutor
                             Globals.setVendors(vendors);
                         }
                     }
+                    callback(listeners);
                 }
                 catch (JSONException e)
                 {
@@ -213,23 +224,116 @@ public class ApiExecutor
             }
         });
         apiTask.execute(request);
-        callback();
     }
 
-    public void findNearestVendor()
+    public void selectNearestVendor(Context tempContext, OnApiExecutedListener... tempListeners)
     {
-        callback();
+        final Context context = tempContext;
+        final OnApiExecutedListener[] listeners = tempListeners;
+        final ApiExecutor executor = this;
+        final Runnable runnable = new Runnable() {
+            public void run()
+            {
+                try
+                {
+                    LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                    boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                    boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                    if (isGPSEnabled == false && isNetworkEnabled == false)
+                    {
+                        // no network provider is enabled
+                        callback(listeners);
+                    }
+                    else
+                    {
+                        long minTime = (long)1;
+                        float minDistance = (float)1;
+                        boolean canGetLocation = true;
+                        Location location;
+                        UserLocationListener listener = new UserLocationListener(context, executor, listeners);
+                        if (isNetworkEnabled)
+                        {
+                            location = null;
+                            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
+                            if (locationManager != null)
+                            {
+                                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                                if (location != null)
+                                {
+                                    double latitude = location.getLatitude();
+                                    double longitude = location.getLongitude();
+                                    Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
+                                        Toast.LENGTH_SHORT).show();
+                                    System.out.println("POSITION:" + latitude + " " + longitude);
+                                    int closest = 0;
+                                    List<Vendor> vendors = Globals.getVendors();
+                                    for (int i = 0; i < vendors.size(); i++)
+                                    {
+                                        closest = i;
+                                    }
+                                    Globals.setVendor(vendors.get(closest));
+                                    callback(listeners);
+                                }
+                            }
+                        }
+                        if (isGPSEnabled)
+                        {
+                            location = null;
+                            if (location == null)
+                            {
+                                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
+                                if (locationManager != null)
+                                {
+                                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                    if (location != null)
+                                    {
+                                        double latitude = location.getLatitude();
+                                        double longitude = location.getLongitude();
+                                        Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
+                                            Toast.LENGTH_SHORT).show();
+                                        System.out.println("POSITION:" + latitude + " " + longitude);
+                                        int closest = 0;
+                                        List<Vendor> vendors = Globals.getVendors();
+                                        for (int i = 0; i < vendors.size(); i++)
+                                        {
+                                            closest = i;
+                                        }
+                                        Globals.setVendor(vendors.get(closest));
+                                        callback(listeners);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+        getVendors(new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                runnable.run();
+            }
+        });
     }
 
-    public void getItems(Vendor vendor)
+    public void getItems(String vendorId, OnApiExecutedListener... tempListeners)
     {
+        final OnApiExecutedListener[] listeners = tempListeners;
         HttpPost request = new HttpPost(ListLinks.API_GET_ITEMS);
         User user = Globals.getUser();
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
         NameValuePair email = new BasicNameValuePair("email", user.getEmail());
         NameValuePair password = new BasicNameValuePair("password", user.getPassword());
+        NameValuePair vendor = new BasicNameValuePair("vendorId", vendorId);
         pairs.add(email);
         pairs.add(password);
+        pairs.add(vendor);
         try
         {
             request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
@@ -250,7 +354,12 @@ public class ApiExecutor
                                 Globals.getVendor().setItems(items);
                                 Globals.getVendor().setFilteredItems(items);
                             }
+                            callback(listeners);
                         }
+                    }
+                    catch (NullPointerException e)
+                    {
+                        e.printStackTrace();
                     }
                     catch (JSONException e)
                     {
@@ -281,9 +390,62 @@ public class ApiExecutor
         callback();
     }
 
-    public void addOrder(Order order)
+    public void addOrder(Order order, Context tempContext, OnApiExecutedListener... tempListeners)
     {
-        callback();
+        final OnApiExecutedListener[] listeners = tempListeners;
+        final Context context = tempContext;
+        final Toast failureToast = Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT);
+        try
+        {
+            HttpPut request = new HttpPut(ListLinks.API_ADD_ORDER);
+            request.setHeader("Content-type", "application/json");
+            request.setHeader("Accept", "application/json");
+            Gson gson = new Gson();
+            JsonElement jsonOrder = gson.toJsonTree(order);
+            jsonOrder.getAsJsonObject().addProperty("email", Globals.getUser().getEmail());
+            jsonOrder.getAsJsonObject().addProperty("password", Globals.getUser().getPassword());
+            jsonOrder.getAsJsonObject().addProperty("deviceType", "1");
+            String postData = gson.toJson(jsonOrder);
+            request.setEntity(new StringEntity(postData));
+            ApiTask apiTask = new ApiTask();
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        String rawOrder = new String(entry.getValue());
+                        rawOrder = rawOrder.replaceAll("\\n", "");
+                        if (rawUri.equals(ListLinks.API_ADD_ORDER))
+                        {
+                            if (rawOrder.equals("1"))
+                            {
+                                Toast.makeText(context, "Successfully placed order.", Toast.LENGTH_SHORT).show();
+                                callback(listeners);
+                            }
+                            else
+                            {
+                                Toast.makeText(context, rawOrder, Toast.LENGTH_SHORT).show();
+                                System.out.println("Email:" + Globals.getUser().getEmail());
+                                System.out.println("Password:" + Globals.getUser().getPassword());
+                            }
+                        }
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            failureToast.show();
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            failureToast.show();
+            e.printStackTrace();
+        }
     }
 
     // Profile

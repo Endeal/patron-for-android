@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.model.Attribute;
 import com.patron.model.Fragment;
 import com.patron.model.Order;
@@ -17,17 +18,17 @@ public class SpinnerAttributeListener implements OnItemSelectedListener
 {
 	private Fragment fragment;
 	private Attribute attribute;
-	private Loadable activity;
+	private OnApiExecutedListener listener;
 	private boolean firstCallHappened;
-	
-	public SpinnerAttributeListener(Fragment fragment, Attribute attribute, Loadable activity)
+
+	public SpinnerAttributeListener(Fragment fragment, Attribute attribute, OnApiExecutedListener listener)
 	{
 		this.fragment = fragment;
 		this.attribute = attribute;
-		this.activity = activity;
+        this.listener = listener;
 		firstCallHappened = false;
 	}
-	
+
 	public void onItemSelected(AdapterView<?> adapter, View view,
 			int position, long id)
 	{
@@ -58,7 +59,7 @@ public class SpinnerAttributeListener implements OnItemSelectedListener
 				Globals.setOrder(order);
 				if (firstCallHappened)
 				{
-					activity.update();
+                    listener.onExecuted();
 				}
 				firstCallHappened = true;
 				break;
@@ -69,6 +70,6 @@ public class SpinnerAttributeListener implements OnItemSelectedListener
 
 	public void onNothingSelected(AdapterView<?> adapter)
 	{
-		
+
 	}
 }
