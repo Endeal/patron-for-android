@@ -36,7 +36,7 @@
     <uses-permission android:name="com.parse.starter.permission.C2D_MESSAGE" />
 
     <application
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/logo_app"
         android:name="com.patron.system.Patron"
         android:allowClearUserData="true"
         android:enabled="true"

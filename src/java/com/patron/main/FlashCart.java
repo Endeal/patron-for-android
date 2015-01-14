@@ -71,7 +71,7 @@ public class FlashCart extends Activity
                 }
                 buttonComment.setText("Comment:\n" + commented);
                 String text = (String) buttonFinish.getText();
-                text = "Pay Now: $" + Globals.getOrder().getPrice().toString();
+                text = "Pay Now: $" + Globals.getOrder().getTotalPrice().toString();
                 buttonFinish.setText(text);
             }
         };

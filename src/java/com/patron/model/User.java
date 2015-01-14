@@ -48,7 +48,7 @@ public class User
 
 	public void setFirstName(String firstName)
 	{
-		this.firstName = firstName;	
+		this.firstName = firstName;
 	}
 
 	public void setLastName(String lastName)
@@ -61,7 +61,7 @@ public class User
 		try
 		{
 			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
         	Editor editor = sharedPreferences.edit();
         	editor.putString("email", email);
         	editor.commit();
@@ -77,7 +77,7 @@ public class User
 		try
 		{
 			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
 			String encryptedPassword = FlashCipher.encrypt(password);
 	        Editor editor = sharedPreferences.edit();
 	        editor.putString("password", encryptedPassword);
@@ -141,13 +141,12 @@ public class User
 		try
 		{
 			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
 			String email = sharedPreferences.getString("email", "");
 	        return email;
 	    }
 	    catch (Exception e)
 	    {
-	    	System.out.println("Failed to retrieve e-mail, please login again.");
 	    	return null;
 	    }
 	}
@@ -157,17 +156,13 @@ public class User
 		try
 		{
 			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("patron_credentials", Context.MODE_PRIVATE);
+			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
 			String password = sharedPreferences.getString("password", "");
-	    	System.out.println("ENCRYPTED PASSWORD:" + password.toString());
-
 	        password = FlashCipher.decrypt(password);
-	        System.out.println("PASSWORD:" + password);
 	        return password;
 	    }
 	    catch (Exception e)
 	    {
-	    	System.out.println("Failed to retrieve password, please login again.");
 	    	return null;
 	    }
 	}

@@ -28,7 +28,7 @@ public class ButtonFavoritesListener implements OnClickListener
 	{
 		if (v.getBackground().getConstantState() ==
 				v.getContext().getResources().getDrawable(
-						R.drawable.button_filter_off).getConstantState())
+						R.drawable.button_filter_favorites_unpressed).getConstantState())
 		{
 			// Set backgrounds to unselected for other buttons.
 			if (activity.getButtonCategories() != null &&
@@ -37,11 +37,11 @@ public class ButtonFavoritesListener implements OnClickListener
 				for (int i = 0; i < activity.getButtonCategories().size(); i++)
 				{
 					Button button = activity.getButtonCategories().get(i);
-					button.setBackgroundResource(R.drawable.button_filter_off);
+					button.setBackgroundResource(R.drawable.button_filter_favorites_unpressed);
 				}
 			}
 
-			v.setBackgroundResource(R.drawable.button_filter_on);
+			v.setBackgroundResource(R.drawable.button_filter_favorites_pressed);
 			List<Item> items = Globals.getVendor().getItems();
 			List<Item> newItems = ProductSorter.getByFavorites(items, true);
 			Globals.getVendor().setFilteredItems(newItems);
@@ -49,7 +49,7 @@ public class ButtonFavoritesListener implements OnClickListener
 		}
 		else
 		{
-			v.setBackgroundResource(R.drawable.button_filter_off);
+			v.setBackgroundResource(R.drawable.button_filter_favorites_pressed);
 			Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
             listener.onExecuted();
 		}

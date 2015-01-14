@@ -6,14 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
         <RelativeLayout
             android:id="@+id/settingsLayoutMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
 
             <!-- Settings Text -->
 
@@ -36,22 +32,31 @@
                 android:text="@string/settingsTextFacebookPublishOrder" />
 
             <TextView
-                android:id="@+id/settingsTextFacebookPublishFavoriteVendor"
+                android:id="@+id/settingsTextNetworkFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/settingsTextFacebookPublishOrder"
                 android:layout_margin="10dp"
-                android:text="@string/settingsTextFacebookPublishFavoriteVendor" />
+                android:text="@string/settingsTextNetworkFacebook" />
 
             <TextView
-                android:id="@+id/settingsTextFacebookPublishFavoriteItem"
+                android:id="@+id/settingsTextNetworkTwitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextFacebookPublishFavoriteVendor"
+                android:layout_below="@+id/settingsTextNetworkFacebook"
                 android:layout_margin="10dp"
-                android:text="@string/settingsTextFacebookPublishFavoriteItem" />
+                android:text="@string/settingsTextNetworkTwitter" />
+
+            <TextView
+                android:id="@+id/settingsTextNetworkGooglePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/settingsTextNetworkTwitter"
+                android:layout_margin="10dp"
+                android:text="@string/settingsTextNetworkGooglePlus" />
 
             <!-- Settings Checkboxes -->
 
@@ -71,51 +76,74 @@
                 android:layout_alignBaseline="@+id/settingsTextFacebookPublishOrder"
                 android:layout_margin="10dp"/>
 
-            <CheckBox
-                android:id="@+id/settingsCheckboxFacebookPublishFavoriteVendor"
+            <Button
+                android:id="@+id/settingsButtonNetworkFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextFacebookPublishFavoriteVendor"
-                android:layout_margin="10dp" />
+                android:layout_alignBaseline="@+id/settingsTextNetworkFacebook"
+                android:layout_margin="10dp"
+                android:text="@string/settingsButtonNetworkConnect" />
 
-            <CheckBox
-                android:id="@+id/settingsCheckboxFacebookPublishFavoriteItem"
+            <Button
+                android:id="@+id/settingsButtonNetworkTwitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextFacebookPublishFavoriteItem"
-                android:layout_margin="10dp" />
-
-            <!-- Feedback & Rate App Buttons -->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/settingsTextFacebookPublishFavoriteItem"
-            android:orientation="horizontal"
-            android:weightSum="3" >
+                android:layout_alignBaseline="@+id/settingsTextNetworkTwitter"
+                android:layout_margin="10dp"
+                android:text="@string/settingsButtonNetworkConnect" />
 
             <Button
-                android:id="@+id/settingsButtonFeedback"
+                android:id="@+id/settingsButtonNetworkGooglePlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@+id/settingsTextNetworkGooglePlus"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="@string/settingsButtonFeedback" />
+                android:text="@string/settingsButtonNetworkConnect"/>
+
+            <!-- Cards and Bank Accounts -->
+            <LinearLayout
+                android:id="@+id/settingsLinearLayoutFunders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settingsTextNetworkGooglePlus"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <Button
+                    android:id="@+id/settingsButtonAddCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settingsButtonAddCard" />
+
+                <Button
+                    android:id="@+id/settingsButtonAddBankAccount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settingsButtonAddBankAccount" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/settingsListViewFunders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/settingsLinearLayoutFunders"
+                android:layout_above="@+id/settingsButtonLogout" />
 
             <Button
-                android:id="@+id/settingsButtonRate"
-                android:layout_width="wrap_content"
+                android:id="@+id/settingsButtonLogout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="@string/settingsButtonRate" />
-        </LinearLayout>
+                android:text="@string/settingsButtonLogout" />
 
         </RelativeLayout>
-
-    </ScrollView>
 
     <!-- The navigation drawer -->
     <com.patron.view.NavigationListView

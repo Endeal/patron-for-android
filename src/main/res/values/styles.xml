@@ -17,28 +17,24 @@
     </style>
 
     <style name="StyleHomeButtonVendors">
-        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonVendorsText</item>
     </style>
 
     <style name="StyleHomeButtonMenu">
-        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonMenuText</item>
     </style>
 
     <style name="StyleHomeButtonCodes">
-        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonCodesText</item>
     </style>
 
     <style name="StyleHomeButtonProfile">
-        <item name="android:background">@drawable/button_filter_off</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimHomeButtonProfileText</item>
@@ -235,7 +231,7 @@
     </style>
 
     <style name="StyleMenuButtonFavorites">
-        <item name="android:background">@drawable/button_filter_off</item>
+        <item name="android:background">@drawable/button_filter_favorites</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMenuButtonFavoritesText</item>
@@ -419,7 +415,7 @@
     </style>
 
     <style name="StyleLocationListItemToggleButtonFavorite">
-        <item name="android:background">@drawable/selector_toggle_button_favorite</item>
+        <item name="android:background">@drawable/checkbox_favorite</item>
         <item name="android:textOff"></item>
         <item name="android:textOn"></item>
     </style>
@@ -543,7 +539,7 @@
     </style>
 
     <style name="StyleProductListItemToggleButtonFavorite">
-        <item name="android:background">@drawable/selector_toggle_button_favorite</item>
+        <item name="android:background">@drawable/checkbox_favorite</item>
         <item name="android:textOff"></item>
         <item name="android:textOn"></item>
     </style>

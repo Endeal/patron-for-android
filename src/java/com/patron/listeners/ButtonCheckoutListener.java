@@ -1,6 +1,8 @@
 package com.patron.listeners;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,22 +10,32 @@ import android.widget.Toast;
 
 import com.patron.main.FlashCart;
 import com.patron.system.Globals;
+import com.patron.system.Patron;
+
+import java.math.BigDecimal;
 
 public class ButtonCheckoutListener implements OnClickListener
 {
 	Activity activity;
-	
+
 	public ButtonCheckoutListener(Activity activity)
 	{
 		this.activity = activity;
 	}
-	
+
 	public void onClick(View v)
 	{
-		if (Globals.getOrder() != null &&
-				Globals.getOrder().getFragments() != null &&
-				!Globals.getOrder().getFragments().isEmpty())
+        // Start the new activity.
+		if (Globals.getOrder() != null && Globals.getOrder().getFragments() != null &&
+            !Globals.getOrder().getFragments().isEmpty())
 		{
+            // Set the default tip.
+            Context context = Patron.getContext();
+            SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
+            String defaultTip = sharedPreferences.getString("tip", "0.00");
+            BigDecimal newTip = Globals.getOrder().getPrice().multiply(new BigDecimal(defaultTip)).setScale(2, BigDecimal.ROUND_DOWN);
+            Globals.getOrder().setTip(newTip);
+
 			Intent intent = new Intent(activity, FlashCart.class);
 			activity.startActivity(intent);
 		}

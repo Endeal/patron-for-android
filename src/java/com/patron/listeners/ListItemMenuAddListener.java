@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,6 +24,7 @@ import com.patron.model.Station;
 import com.patron.model.Funder;
 import com.patron.model.Vendor;
 import com.patron.system.Globals;
+import com.patron.system.Patron;
 
 public class ListItemMenuAddListener implements OnItemClickListener
 {
@@ -77,13 +80,29 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			BigDecimal tip = new BigDecimal("0.00");
 			List<Object> coupons = new ArrayList<Object>();
 			String comment = "";
+
+            // Get defaults from shared preferences.
+            Context context = Patron.getContext();
+            SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
+            String defaultPayment = sharedPreferences.getString("payment", "-1");
+            String defaultTip = sharedPreferences.getString("tip", "0.00");
+
 			if (Globals.getVendor().getStations() != null && Globals.getVendor().getStations().size() > 0)
 			{
 				station = Globals.getVendor().getStations().get(0);
 			}
 			if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
 			{
+                List<Funder> funders = Globals.getUser().getFunders();
 				funder = Globals.getUser().getFunders().get(0);
+                for (int i = 0; i < funders.size(); i++)
+                {
+                    Funder tempFunder = funders.get(i);
+                    if (tempFunder.getId().equals(defaultPayment) && !defaultPayment.equals("-1"))
+                    {
+                        funder = tempFunder;
+                    }
+                }
 			}
 			try
 			{
@@ -93,6 +112,9 @@ public class ListItemMenuAddListener implements OnItemClickListener
 				vendor.setRecommendations(null);
 				order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
 					station, funder, tip, coupons, comment);
+                BigDecimal price = order.getPrice();
+                BigDecimal newTip = price.multiply(new BigDecimal(defaultTip));
+                order.setTip(newTip);
 			}
 			catch (CloneNotSupportedException e)
 			{

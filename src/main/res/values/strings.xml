@@ -106,10 +106,14 @@
     <!-- Settings Screen -->
     <string name="settingsTextLocate">Auto-Select Nearest Vendor</string>
     <string name="settingsTextFacebookPublishOrder">Publish Orders to Facebook</string>
-    <string name="settingsTextFacebookPublishFavoriteVendor">Publish Favorite Vendors to Facebook</string>
-    <string name="settingsTextFacebookPublishFavoriteItem">Publish Favorite Items to Facebook</string>
-    <string name="settingsButtonFeedback">Give Feedback</string>
-    <string name="settingsButtonRate">Rate App</string>
+    <string name="settingsTextNetworkFacebook">Facebook</string>
+    <string name="settingsTextNetworkTwitter">Twitter</string>
+    <string name="settingsTextNetworkGooglePlus">Google+</string>
+    <string name="settingsButtonNetworkConnect">Connect</string>
+    <string name="settingsButtonNetworkDisconnect">Disconnect</string>
+    <string name="settingsButtonAddCard">Add Card</string>
+    <string name="settingsButtonAddBankAccount">Add Bank</string>
+    <string name="settingsButtonLogout">Logout</string>
 
     <!-- Help Screen -->
     <string name="helpText1">First, select the vendor you want to buy from.</string>

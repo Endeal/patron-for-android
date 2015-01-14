@@ -67,7 +67,7 @@ public class NavigationListView extends ListView
 
         ImageView imageView = new ImageView(relativeLayout.getContext());
         imageView.setId(1);
-        imageView.setImageResource(R.drawable.app_logo);
+        imageView.setImageResource(R.drawable.logo_app);
         final float scale = getResources().getDisplayMetrics().density;
         int width  = (int)(35 * scale);
         int height = (int)(35 * scale);

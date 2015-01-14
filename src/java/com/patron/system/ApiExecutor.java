@@ -251,31 +251,6 @@ public class ApiExecutor
                         boolean canGetLocation = true;
                         Location location;
                         UserLocationListener listener = new UserLocationListener(context, executor, listeners);
-                        if (isNetworkEnabled)
-                        {
-                            location = null;
-                            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
-                            if (locationManager != null)
-                            {
-                                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                                if (location != null)
-                                {
-                                    double latitude = location.getLatitude();
-                                    double longitude = location.getLongitude();
-                                    Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
-                                        Toast.LENGTH_SHORT).show();
-                                    System.out.println("POSITION:" + latitude + " " + longitude);
-                                    int closest = 0;
-                                    List<Vendor> vendors = Globals.getVendors();
-                                    for (int i = 0; i < vendors.size(); i++)
-                                    {
-                                        closest = i;
-                                    }
-                                    Globals.setVendor(vendors.get(closest));
-                                    callback(listeners);
-                                }
-                            }
-                        }
                         if (isGPSEnabled)
                         {
                             location = null;
@@ -301,6 +276,31 @@ public class ApiExecutor
                                         Globals.setVendor(vendors.get(closest));
                                         callback(listeners);
                                     }
+                                }
+                            }
+                        }
+                        else if (isNetworkEnabled)
+                        {
+                            location = null;
+                            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
+                            if (locationManager != null)
+                            {
+                                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                                if (location != null)
+                                {
+                                    double latitude = location.getLatitude();
+                                    double longitude = location.getLongitude();
+                                    Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
+                                        Toast.LENGTH_SHORT).show();
+                                    System.out.println("POSITION:" + latitude + " " + longitude);
+                                    int closest = 0;
+                                    List<Vendor> vendors = Globals.getVendors();
+                                    for (int i = 0; i < vendors.size(); i++)
+                                    {
+                                        closest = i;
+                                    }
+                                    Globals.setVendor(vendors.get(closest));
+                                    callback(listeners);
                                 }
                             }
                         }
@@ -427,8 +427,6 @@ public class ApiExecutor
                             else
                             {
                                 Toast.makeText(context, rawOrder, Toast.LENGTH_SHORT).show();
-                                System.out.println("Email:" + Globals.getUser().getEmail());
-                                System.out.println("Password:" + Globals.getUser().getPassword());
                             }
                         }
                     }

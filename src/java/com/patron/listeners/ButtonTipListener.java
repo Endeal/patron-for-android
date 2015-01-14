@@ -43,11 +43,15 @@ public class ButtonTipListener implements OnClickListener
         {
             fieldCustom.setText(Globals.getOrder().getTip().toString());
         }
+        seekBarPercent.setMax(100);
+        int percent = (int)(Globals.getOrder().getTipPercent().doubleValue() * 100);
+        seekBarPercent.setProgress(percent);
+        textPercent.setText(percent + "%");
         seekBarPercent.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
                 BigDecimal value = Globals.getOrder().getPrice().multiply(new BigDecimal((progress / 100.0) + ""));
-                value = value.setScale(2, RoundingMode.CEILING);
+                value = value.setScale(2, BigDecimal.ROUND_DOWN);
                 fieldCustom.setText(value.toString());
                 textPercent.setText(progress + "%");
             }
@@ -67,7 +71,7 @@ public class ButtonTipListener implements OnClickListener
                 {
                     tip = new BigDecimal("0.00");
                 }
-                tip = tip.setScale(2, RoundingMode.CEILING);
+                tip = tip.setScale(2, BigDecimal.ROUND_DOWN);
                 Globals.getOrder().setTip(tip);
                 listener.onExecuted();
                 dialog.dismiss();

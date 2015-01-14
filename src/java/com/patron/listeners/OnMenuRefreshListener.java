@@ -123,7 +123,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
             for (int i = 0; i < Globals.getCategories().size(); i++)
             {
                 Button button = new Button(linearLayout.getContext());
-                button.setBackgroundResource(R.drawable.button_filter_off);
+                button.setBackgroundResource(R.drawable.button_category_unpressed);
                 button.setTextAppearance(activity, R.style.StyleMenuButtonFavorites);
                 float width = Globals.convertDpToPixel(60, activity);
                 float height = Globals.convertDpToPixel(60, activity);
