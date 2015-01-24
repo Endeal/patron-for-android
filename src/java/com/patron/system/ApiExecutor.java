@@ -25,12 +25,15 @@ import com.patron.model.Vendor;
 import com.patron.system.ApiTask;
 import com.patron.system.Globals;
 import com.patron.system.Parser;
+import com.patron.system.Patron;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.Runnable;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +62,32 @@ public class ApiExecutor
     {
         setApiTask(new ApiTask());
         setData(null);
+    }
+
+    private void setMockData(ApiTask apiTask, String data, String link)
+    {
+        // Mock data for offline testing.
+        if (!Patron.DEBUGGING_OFFLINE)
+        {
+            return;
+        }
+        try
+        {
+            apiTask.setMocking(true);
+            Map<URI, byte[]> mockData = new HashMap<URI, byte[]>();
+            URI uri = new URI(link);
+            byte[] bytes = data.getBytes("UTF-8");
+            mockData.put(uri, bytes);
+            apiTask.setMockData(mockData);
+        }
+        catch (URISyntaxException e)
+        {
+            e.printStackTrace();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void setApiTask(ApiTask apiTask)
@@ -129,6 +158,9 @@ public class ApiExecutor
                     callback(listeners);
                 }
             });
+            String data = "{'patronId':'1','firstName':'James','lastName':'Whiteman','email':'jameswhiteman@outlook.com','birthday':'1993-09-14'," +
+                "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
+            setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
             apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)

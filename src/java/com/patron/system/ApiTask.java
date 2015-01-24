@@ -33,19 +33,74 @@ import android.os.AsyncTask;
 
 public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 {
-	private OnTaskCompletedListener onTaskCompletedListener;
+	private OnTaskCompletedListener onTaskCompletedListener = null;
+    private boolean mocking = false;
+    private Map<URI, byte[]> mockData = null;
+    private int connectionTimeout = 10000;
+    private int socketTimeout = 10000;
 
 	public void setOnTaskCompletedListener(OnTaskCompletedListener onTaskCompletedListener)
 	{
 		this.onTaskCompletedListener = onTaskCompletedListener;
 	}
 
+    public OnTaskCompletedListener getOnTaskCompletedListener()
+    {
+        return this.onTaskCompletedListener;
+    }
+
+    public void setMocking(boolean mocking)
+    {
+        this.mocking = mocking;
+    }
+
+    public boolean getMocking()
+    {
+        return this.mocking;
+    }
+
+    public void setMockData(Map<URI, byte[]> mockData)
+    {
+        this.mockData = mockData;
+    }
+
+    public Map<URI, byte[]> getMockData()
+    {
+        return this.mockData;
+    }
+
+    public void setConnectionTimeout(int connectionTimeout)
+    {
+        this.connectionTimeout = connectionTimeout;
+    }
+
+    public int getConnectionTimeout()
+    {
+        return this.connectionTimeout;
+    }
+
+    public void setSocketTimeout(int socketTimeout)
+    {
+        this.socketTimeout = socketTimeout;
+    }
+
+    public int getSocketTimeout()
+    {
+        return this.socketTimeout;
+    }
+
 	@Override
 	protected Map<URI, byte[]> doInBackground(HttpUriRequest... requests)
 	{
+        // Immediately return mock data if the task is designed as such.
+        if (this.mocking)
+        {
+            return this.mockData;
+        }
+
         final HttpParams params = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(params, 10000);
-        HttpConnectionParams.setSoTimeout(params, 10000);
+        HttpConnectionParams.setConnectionTimeout(params, getConnectionTimeout());
+        HttpConnectionParams.setSoTimeout(params, getSocketTimeout());
         HttpClient client = new DefaultHttpClient(params);
 	    try
 		{
