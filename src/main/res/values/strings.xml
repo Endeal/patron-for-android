@@ -106,9 +106,9 @@
     <!-- Settings Screen -->
     <string name="settingsTextLocate">Auto-Select Nearest Vendor</string>
     <string name="settingsTextFacebookPublishOrder">Publish Orders to Facebook</string>
-    <string name="settingsTextNetworkFacebook">Facebook</string>
-    <string name="settingsTextNetworkTwitter">Twitter</string>
-    <string name="settingsTextNetworkGooglePlus">Google+</string>
+    <string name="settingsTextViewNetworkFacebook">Facebook</string>
+    <string name="settingsTextViewNetworkTwitter">Twitter</string>
+    <string name="settingsTextViewNetworkGooglePlus">Google+</string>
     <string name="settingsButtonNetworkConnect">Connect</string>
     <string name="settingsButtonNetworkDisconnect">Disconnect</string>
     <string name="settingsButtonAddCard">Add Card</string>
@@ -228,9 +228,8 @@
     <string-array name="array_navigation">
         <item>Buy</item>
         <item>Orders</item>
-        <item>Profile</item>
+        <item>Vouchers</item>
         <item>Settings</item>
-        <item>Help</item>
     </string-array>
 
     <string-array name="array_card_expiration_months">

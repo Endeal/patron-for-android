@@ -56,22 +56,16 @@ public class ListItemNavigationListener implements OnItemClickListener
                     intent = new Intent(context, FlashCodes.class);
                 }
                 break;
-            case 2: // Profile
-                if (hierarchy != Hierarchy.PROFILE)
+            case 2: // Vouchers
+                if (hierarchy != Hierarchy.VOUCHERS)
                 {
                     intent = new Intent(context, FlashProfile.class);
                 }
                 break;
-            case 3: // Settings
+            default:
                 if (hierarchy != Hierarchy.SETTINGS)
                 {
                     intent = new Intent(context, FlashSettings.class);
-                }
-                break;
-            case 4: // Help
-                if (hierarchy != Hierarchy.HELP)
-                {
-                    intent = new Intent(context, FlashHelp.class);
                 }
                 break;
         }

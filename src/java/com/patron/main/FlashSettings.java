@@ -5,15 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentActivity;
+import android.widget.TextView;
 import android.view.View;
 
 import com.patron.listeners.DrawerNavigationListener;
-import com.patron.R; import com.patron.view.NavigationListView;
+import com.patron.R;
+import com.patron.social.SocialExecutor;
+import static com.patron.social.SocialExecutor.Network;
+import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashSettings extends Activity
+public class FlashSettings extends FragmentActivity
 {
 	// Activity methods.
     @Override
@@ -28,6 +33,52 @@ public class FlashSettings extends Activity
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.SETTINGS);
+
+        // Check if networks are signed in.
+        SocialExecutor executor = new SocialExecutor(this, savedInstanceState, Network.FACEBOOK,
+                Network.TWITTER, Network.GOOGLE_PLUS);
+        boolean facebookSignedIn = executor.signedIn(Network.FACEBOOK);
+        boolean twitterSignedIn = executor.signedIn(Network.TWITTER);
+        boolean googlePlusSignedIn = executor.signedIn(Network.GOOGLE_PLUS);
+
+        // Identify the correct text for the social network statuses.
+        String textFacebook = "";
+        String textTwitter = "";
+        String textGooglePlus = "";
+        if (facebookSignedIn)
+        {
+            textFacebook = "Facebook: " + executor.getEmail(Network.FACEBOOK);
+        }
+        else
+        {
+            textFacebook = "Facebook: Disconnected";
+        }
+
+        if (twitterSignedIn)
+        {
+            textTwitter = "Twitter: Connected";
+        }
+        else
+        {
+            textTwitter = "Twitter: Disconnected";
+        }
+
+        if (googlePlusSignedIn)
+        {
+            textGooglePlus = "Google+: " + executor.getEmail(Network.GOOGLE_PLUS);
+        }
+        else
+        {
+            textGooglePlus = "Google+: Disconnected";
+        }
+
+        // Edit the social network text to correct status.
+        TextView textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
+        TextView textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
+        TextView textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
+        textViewFacebook.setText(textFacebook);
+        textViewTwitter.setText(textTwitter);
+        textViewGooglePlus.setText(textGooglePlus);
     }
 
 	@Override

@@ -42,7 +42,7 @@ public class FlashProfile extends Activity
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.profileListNavigation);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.PROFILE);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.VOUCHERS);
 	}
 
 	@Override

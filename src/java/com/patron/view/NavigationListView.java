@@ -39,7 +39,7 @@ public class NavigationListView extends ListView
 {
     public static enum Hierarchy
     {
-        BUY, ORDERS, PROFILE, SETTINGS, HELP
+        BUY, ORDERS, VOUCHERS, SETTINGS
     }
 
     public NavigationListView(Context context)
@@ -125,14 +125,11 @@ public class NavigationListView extends ListView
             case ORDERS:
                 i = 2;
                 break;
-            case PROFILE:
+            case VOUCHERS:
                 i = 3;
                 break;
             case SETTINGS:
                 i = 4;
-                break;
-            case HELP:
-                i = 5;
                 break;
             default:
                 i = 0;

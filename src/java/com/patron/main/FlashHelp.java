@@ -53,7 +53,7 @@ public class FlashHelp extends Activity
 		NavigationListView listNavigation = (NavigationListView) viewMain.findViewById(R.id.helpListNavigation);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.HELP);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.SETTINGS);
 
         // Set up the next button.
         imageButtonNext.setOnClickListener(new OnClickListener() {
@@ -114,38 +114,4 @@ public class FlashHelp extends Activity
 
         setContentView(viewMain);
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_help, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-    	switch (item.getItemId())
-    	{
-    	case R.id.menuItemSettings:
-    		Intent intentSettings = new Intent(this, FlashSettings.class);
-    		startActivity(intentSettings);
-    		return true;
-    	default:
-    		return false;
-    	}
-    }
-
-	@Override
-    public void onWindowFocusChanged(boolean hasFocus)
-    {
-    	super.onWindowFocusChanged(hasFocus);
-    }
-
-	@Override
-	protected void attachBaseContext(Context newBase)
-	{
-		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
-	}
-
 }

@@ -192,7 +192,7 @@ public class SocialExecutor
         {
             // Google+
             case GOOGLE_PLUS:
-                return googleClient.isConnected();
+                return (googleClient != null && googleClient.isConnected());
             // Facebook
             case FACEBOOK:
                 Session facebookSession = Session.getActiveSession();
@@ -272,25 +272,26 @@ public class SocialExecutor
                         .addScope(Plus.SCOPE_PLUS_LOGIN)
                         .addScope(Plus.SCOPE_PLUS_PROFILE)
                         .build();
+                    }
                 }
-            }
-            if (!googleClient.isConnecting())
-            {
-                googleSigningIn = true;
-                try
+                else if (!googleClient.isConnecting())
                 {
-                    googleIntentInProgress = true;
-                    googleResult.startResolutionForResult(activity, CODE_GOOGLE_SIGN_IN);
-                }
-                catch (NullPointerException e)
-                {
-                    googleIntentInProgress = false;
-                    googleClient.connect();
-                }
-                catch (SendIntentException e)
-                {
-                    googleIntentInProgress = false;
-                    googleClient.connect();
+                    googleSigningIn = true;
+                    try
+                    {
+                        googleIntentInProgress = true;
+                        googleResult.startResolutionForResult(activity, CODE_GOOGLE_SIGN_IN);
+                    }
+                    catch (NullPointerException e)
+                    {
+                        googleIntentInProgress = false;
+                        googleClient.connect();
+                    }
+                    catch (SendIntentException e)
+                    {
+                        googleIntentInProgress = false;
+                        googleClient.connect();
+                    }
                 }
             }
         }

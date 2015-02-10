@@ -32,31 +32,31 @@
                 android:text="@string/settingsTextFacebookPublishOrder" />
 
             <TextView
-                android:id="@+id/settingsTextNetworkFacebook"
+                android:id="@+id/settingsTextViewNetworkFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/settingsTextFacebookPublishOrder"
                 android:layout_margin="10dp"
-                android:text="@string/settingsTextNetworkFacebook" />
+                android:text="@string/settingsTextViewNetworkFacebook" />
 
             <TextView
-                android:id="@+id/settingsTextNetworkTwitter"
+                android:id="@+id/settingsTextViewNetworkTwitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextNetworkFacebook"
+                android:layout_below="@+id/settingsTextViewNetworkFacebook"
                 android:layout_margin="10dp"
-                android:text="@string/settingsTextNetworkTwitter" />
+                android:text="@string/settingsTextViewNetworkTwitter" />
 
             <TextView
-                android:id="@+id/settingsTextNetworkGooglePlus"
+                android:id="@+id/settingsTextViewNetworkGooglePlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextNetworkTwitter"
+                android:layout_below="@+id/settingsTextViewNetworkTwitter"
                 android:layout_margin="10dp"
-                android:text="@string/settingsTextNetworkGooglePlus" />
+                android:text="@string/settingsTextViewNetworkGooglePlus" />
 
             <!-- Settings Checkboxes -->
 
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextNetworkFacebook"
+                android:layout_alignBaseline="@+id/settingsTextViewNetworkFacebook"
                 android:layout_margin="10dp"
                 android:text="@string/settingsButtonNetworkConnect" />
 
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextNetworkTwitter"
+                android:layout_alignBaseline="@+id/settingsTextViewNetworkTwitter"
                 android:layout_margin="10dp"
                 android:text="@string/settingsButtonNetworkConnect" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextNetworkGooglePlus"
+                android:layout_alignBaseline="@+id/settingsTextViewNetworkGooglePlus"
                 android:layout_margin="10dp"
                 android:text="@string/settingsButtonNetworkConnect"/>
 
@@ -108,7 +108,7 @@
                 android:id="@+id/settingsLinearLayoutFunders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/settingsTextNetworkGooglePlus"
+                android:layout_below="@+id/settingsTextViewNetworkGooglePlus"
                 android:orientation="horizontal"
                 android:weightSum="2" >
 
