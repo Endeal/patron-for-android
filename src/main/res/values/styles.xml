@@ -59,6 +59,15 @@
         <item name="android:padding">@dimen/dimDialogLoginPatronButtonCreateAccountPadding</item>
     </style>
 
+    <!-- Login Screen Styles -->
+    <style name="StyleLoginTextViewTitle">
+        <item name="android:text">@string/loginTextViewTitle</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/dimLoginTextViewTitleText</item>
+        <item name="android:padding">@dimen/dimLoginTextViewTitlePadding</item>
+        <item name="android:minHeight">@dimen/dimLoginTextViewTitleMinHeight</item>
+    </style>
+
     <!-- Create Account Screen Styles -->
     <style name="StyleCreateAccountTextFirst">
         <item name="android:text">@string/createAccountTextFirst</item>

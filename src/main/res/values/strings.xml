@@ -19,7 +19,7 @@
     <string name="homeImageButtonDescriptionProfile">Profile</string>
 
     <!-- Login Screen -->
-    <string name="loginTextInstruction">Select a service to login:</string>
+    <string name="loginTextViewTitle">Flash VIP</string>
     <string name="loginHintEditTextEmail">E-mail Address</string>
     <string name="loginHintEditTextPassword">Password</string>
     <string name="loginButtonSubmit">Submit</string>

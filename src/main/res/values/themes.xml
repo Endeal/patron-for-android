@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <style name="Theme.Main" parent="Theme.AppCompat.Light">
+
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/colorThemeMainPrimary</item>
 
@@ -17,5 +18,11 @@
         <item name="colorControlActivated">@color/colorThemeMainControlActivated</item>
         <item name="colorControlHighlight">@color/colorThemeMainControlHighlight</item>
         <item name="colorSwitchThumbNormal">@color/colorThemeMainSwitchThumbNormal</item>
+
+        <!-- Default backgrounds -->
+        <item name="android:background">@color/colorThemeMainBackground</item>
+        <item name="android:windowBackground">@color/colorThemeMainWindowBackground</item>
+        <item name="android:colorBackground">@color/colorThemeMainColorBackground</item>
+
     </style>
 </resources>

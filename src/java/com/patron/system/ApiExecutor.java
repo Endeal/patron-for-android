@@ -161,6 +161,7 @@ public class ApiExecutor
             String data = "{'patronId':'1','firstName':'James','lastName':'Whiteman','email':'jameswhiteman@outlook.com','birthday':'1993-09-14'," +
                 "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
             setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
+            apiTask.setMocking(Patron.DEBUGGING_OFFLINE);
             apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)

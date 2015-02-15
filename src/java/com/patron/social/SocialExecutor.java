@@ -272,7 +272,6 @@ public class SocialExecutor
                         .addScope(Plus.SCOPE_PLUS_LOGIN)
                         .addScope(Plus.SCOPE_PLUS_PROFILE)
                         .build();
-                    }
                 }
                 else if (!googleClient.isConnecting())
                 {

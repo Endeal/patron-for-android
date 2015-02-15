@@ -18,7 +18,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class Patron extends Application
 {
 	private static Context context;
-    public static boolean DEBUGGING_OFFLINE = false;
+    public static boolean DEBUGGING_OFFLINE = true;
 
 	@Override
 	public void onCreate()

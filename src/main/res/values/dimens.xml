@@ -21,6 +21,10 @@
     <dimen name="dimDialogLoginPatronButtonCreateAccountMinHeight">10dp</dimen>
     <dimen name="dimDialogLoginPatronButtonCreateAccountPadding">5dp</dimen>
 
+    <dimen name="dimLoginTextViewTitleText">20sp</dimen>
+    <dimen name="dimLoginTextViewTitleMinHeight">10dp</dimen>
+    <dimen name="dimLoginTextViewTitlePadding">5dp</dimen>
+
     <!-- Create Account Screen -->
     <dimen name="dimCreateAccountTextFirst">16sp</dimen>
     <dimen name="dimCreateAccountTextLast">16sp</dimen>

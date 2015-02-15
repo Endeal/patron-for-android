@@ -64,6 +64,8 @@ import com.google.android.gms.common.ConnectionResult;
 
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FlashLogin extends FragmentActivity
 {
 	private boolean submitting;
@@ -198,5 +200,12 @@ public class FlashLogin extends FragmentActivity
 	{
         super.onActivityResult(requestCode, resultCode, data);
         socialExecutor.onActivityResult(requestCode, resultCode, data);
+	}
+
+	// Calligraphy
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
 	}
 }
