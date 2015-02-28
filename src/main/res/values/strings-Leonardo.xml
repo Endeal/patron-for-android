@@ -28,6 +28,8 @@
     <string name="loginButtonFacebook">Login with Facebook</string>
     <string name="loginButtonTwitter">Login with Twitter</string>
     <string name="loginButtonGooglePlus">Login with Google+</string>
+    <string name="loginPatronButtonRequestPassword">Reset Password</string>
+    <string name="loginPatronButtonCreateAccount">Create Account</string>
 
     <!-- Create Account Screen -->
     <string name="createAccountTextFirst">First:</string>

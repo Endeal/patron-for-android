@@ -2,6 +2,10 @@ package com.patron.model;
 
 import java.math.BigDecimal;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Option
 {
 	// Properties
@@ -9,7 +13,7 @@ public class Option
 	private String name;
 	private BigDecimal price;
 	private int supply;
-	
+
 	// Constructor
 	public Option(String id, String name, BigDecimal price, int supply)
 	{
@@ -18,6 +22,14 @@ public class Option
 		setPrice(price);
 		setSupply(supply);
 	}
+
+    public Option(JSONObject rawOption) throws JSONException
+    {
+        setId(rawOption.getString("optionId"));
+        setName(rawOption.getString("name"));
+        setPrice(new BigDecimal(rawOption.getString("price")));
+        setSupply(rawOption.getInt("supply"));
+    }
 
 	// Setters
 	public void setId(String id)

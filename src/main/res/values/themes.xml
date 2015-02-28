@@ -24,5 +24,7 @@
         <item name="android:windowBackground">@color/colorThemeMainWindowBackground</item>
         <item name="android:colorBackground">@color/colorThemeMainColorBackground</item>
 
+        <item name="android:textColor">@color/colorThemeMainText</item>
+
     </style>
 </resources>

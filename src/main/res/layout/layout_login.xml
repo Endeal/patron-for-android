@@ -21,20 +21,21 @@
 
     <EditText
         android:id="@+id/loginEditTextEmail"
+        style="@style/StyleLoginEditTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="@string/loginHintEditTextEmail" />
+        android:layout_margin="10dp" />
 
     <EditText
         android:id="@+id/loginEditTextPassword"
+        style="@style/StyleLoginEditTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="@string/loginHintEditTextPassword" />
+        android:layout_margin="10dp" />
 
     <Button
         android:id="@+id/loginButtonSubmit"
+        style="@style/StyleLoginButtonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/loginButtonSubmit" />
@@ -48,6 +49,7 @@
 
         <Button
             android:id="@+id/loginButtonResetPassword"
+            style="@style/StyleLoginButtonResetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,6 +57,7 @@
 
         <Button
             android:id="@+id/loginButtonCreateAccount"
+            style="@style/StyleLoginButtonCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -81,8 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="@string/loginButtonGoogle" />
-
+        android:text="@string/loginButtonGooglePlus" />
 
     </LinearLayout>
 

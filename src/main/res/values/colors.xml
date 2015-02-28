@@ -21,8 +21,9 @@
     <color name="colorThemeMainControlHighlight">#CCCCCC</color>
     <color name="colorThemeMainSwitchThumbNormal">#888888</color>
 
-    <color name="colorThemeMainBackground">#999999</color>
-    <color name="colorThemeMainWindowBackground">#111111</color>
-    <color name="colorThemeMainColorBackground">#555555</color>
+    <color name="colorThemeMainBackground">#333333</color>
+    <color name="colorThemeMainWindowBackground">#333333</color>
+    <color name="colorThemeMainColorBackground">#333333</color>
+    <color name="colorThemeMainText">#FFFFFF</color>
 
 </resources>

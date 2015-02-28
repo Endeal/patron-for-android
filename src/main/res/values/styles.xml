@@ -42,30 +42,79 @@
 
     <!-- Login Screen Styles -->
     <style name="StyleDialogLoginPatronButtonRequestPassword">
-        <item name="android:text">@string/dialogLoginPatronButtonRequestPassword</item>
         <item name="android:textColor">#444444</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonRequestPasswordText</item>
-        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonRequestPasswordMinHeight</item>
-        <item name="android:padding">@dimen/dimDialogLoginPatronButtonRequestPasswordPadding</item>
     </style>
 
     <style name="StyleDialogLoginPatronButtonCreateAccount">
-        <item name="android:text">@string/dialogLoginPatronButtonCreateAccount</item>
         <item name="android:textColor">#444444</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">@dimen/dimDialogLoginPatronButtonCreateAccountText</item>
-        <item name="android:minHeight">@dimen/dimDialogLoginPatronButtonCreateAccountMinHeight</item>
-        <item name="android:padding">@dimen/dimDialogLoginPatronButtonCreateAccountPadding</item>
     </style>
 
     <!-- Login Screen Styles -->
     <style name="StyleLoginTextViewTitle">
         <item name="android:text">@string/loginTextViewTitle</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/dimLoginTextViewTitleText</item>
+        <item name="android:textSize">@dimen/dimLoginTextViewTitleTextSize</item>
         <item name="android:padding">@dimen/dimLoginTextViewTitlePadding</item>
-        <item name="android:minHeight">@dimen/dimLoginTextViewTitleMinHeight</item>
+    </style>
+
+    <style name="StyleLoginEditTextEmail">
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:hint">@string/loginEditTextEmail</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginEditTextEmailTextSize</item>
+        <item name="android:padding">@dimen/dimLoginEditTextEmailPadding</item>
+    </style>
+
+    <style name="StyleLoginEditTextPassword">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:hint">@string/loginEditTextPassword</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginEditTextPasswordTextSize</item>
+        <item name="android:padding">@dimen/dimLoginEditTextPasswordPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonSubmit">
+        <item name="android:text">@string/loginButtonSubmit</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonSubmitTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonSubmitPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonResetPassword">
+        <item name="android:text">@string/loginButtonResetPassword</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonResetPasswordTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonResetPasswordPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonCreateAccount">
+        <item name="android:text">@string/loginButtonCreateAccount</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonCreateAccountTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonCreateAccountPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonFacebook">
+        <item name="android:text">@string/loginButtonFacebook</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonFacebookTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonFacebookPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonTwitter">
+        <item name="android:text">@string/loginButtonTwitter</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonTwitterTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonTwitterPadding</item>
+    </style>
+
+    <style name="StyleLoginButtonGooglePlus">
+        <item name="android:text">@string/loginButtonGooglePlus</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/dimLoginButtonGooglePlusTextSize</item>
+        <item name="android:padding">@dimen/dimLoginButtonGooglePlusPadding</item>
     </style>
 
     <!-- Create Account Screen Styles -->
@@ -510,6 +559,7 @@
     <!-- Navigation List Item -->
     <style name="StyleNavigationListItemTitle">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:background">#000000</item>
         <item name="android:text">@string/navigationListItemTextTitle</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textStyle">bold</item>

@@ -2,6 +2,9 @@ package com.patron.model;
 
 import java.math.BigDecimal;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Supplement
 {
 	// Properties
@@ -9,7 +12,7 @@ public class Supplement
 	private String name;
 	private BigDecimal price;
 	private int supply;
-	
+
 	// Constructor
 	public Supplement(String id, String name, BigDecimal price, int supply)
 	{
@@ -18,6 +21,14 @@ public class Supplement
 		setPrice(price);
 		setSupply(supply);
 	}
+
+    public Supplement(JSONObject rawSupplement) throws JSONException
+    {
+        setId(rawSupplement.getString("supplementId"));
+        setName(rawSupplement.getString("name"));
+        setPrice(new BigDecimal(rawSupplement.getString("price")));
+        setSupply(rawSupplement.getInt("supply"));
+    }
 
 	// Setters
 	public void setId(String id)

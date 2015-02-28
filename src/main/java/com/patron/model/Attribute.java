@@ -1,6 +1,11 @@
 package com.patron.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Attribute
 {
@@ -8,7 +13,7 @@ public class Attribute
 	private String id;
 	private String name;
 	private List<Option> options;
-	
+
 	// Constructor
 	public Attribute(String id, String name, List<Option> options)
 	{
@@ -16,7 +21,22 @@ public class Attribute
 		setName(name);
 		setOptions(options);
 	}
-	
+
+    public Attribute(JSONObject rawAttribute) throws JSONException
+    {
+        options = new ArrayList<Option>();
+
+        setId(rawAttribute.getString("attributeId"));
+        setName(rawAttribute.getString("name"));
+        JSONArray rawOptions = rawAttribute.getJSONArray("options");
+        for (int i = 0; i < rawOptions.length(); i++)
+        {
+            JSONObject rawOption = rawOptions.getJSONObject(i);
+            Option option = new Option(rawOption);
+            options.add(option);
+        }
+    }
+
 	// Setters
 	public void setId(String id)
 	{
@@ -30,7 +50,7 @@ public class Attribute
 	{
 		this.options = options;
 	}
-	
+
 	// Getters
 	public String getId()
 	{
