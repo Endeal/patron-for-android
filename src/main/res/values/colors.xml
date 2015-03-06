@@ -12,6 +12,27 @@
     <color name="red">#FF0000</color>
     <color name="colorMenuHorizontalScrollViewTypes">#444444</color>
 
+    <!-- Buttons -->
+    <color name="colorButtonMainEnabled">#55CC88</color>
+    <color name="colorButtonMainDisabled">#333333</color>
+    <color name="colorButtonMainPressed">#119944</color>
+    <color name="colorButtonMainFocused">#119944</color>
+
+    <color name="colorButtonFacebookEnabled">#222299</color>
+    <color name="colorButtonFacebookDisabled">#333333</color>
+    <color name="colorButtonFacebookPressed">#5555CC</color>
+    <color name="colorButtonFacebookFocused">#5555CC</color>
+
+    <color name="colorButtonTwitterEnabled">#666688</color>
+    <color name="colorButtonTwitterDisabled">#333333</color>
+    <color name="colorButtonTwitterPressed">#9999CC</color>
+    <color name="colorButtonTwitterFocused">#9999CC</color>
+
+    <color name="colorButtonGooglePlusEnabled">#884422</color>
+    <color name="colorButtonGooglePlusDisabled">#333333</color>
+    <color name="colorButtonGooglePlusPressed">#BB7733</color>
+    <color name="colorButtonGooglePlusFocused">#BB7733</color>
+
     <!-- Theme -->
     <color name="colorThemeMainPrimary">#555555</color>
     <color name="colorThemeMainPrimaryDark">#222222</color>

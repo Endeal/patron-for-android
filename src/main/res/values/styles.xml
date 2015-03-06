@@ -42,17 +42,20 @@
 
     <!-- Login Screen Styles -->
     <style name="StyleDialogLoginPatronButtonRequestPassword">
+        <item name="android:background">@drawable/button_main</item>
         <item name="android:textColor">#444444</item>
         <item name="android:textStyle">normal</item>
     </style>
 
     <style name="StyleDialogLoginPatronButtonCreateAccount">
+        <item name="android:background">@drawable/button_main</item>
         <item name="android:textColor">#444444</item>
         <item name="android:textStyle">normal</item>
     </style>
 
     <!-- Login Screen Styles -->
     <style name="StyleLoginTextViewTitle">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
         <item name="android:text">@string/loginTextViewTitle</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/dimLoginTextViewTitleTextSize</item>
@@ -76,6 +79,8 @@
     </style>
 
     <style name="StyleLoginButtonSubmit">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/loginButtonSubmit</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonSubmitTextSize</item>
@@ -83,38 +88,48 @@
     </style>
 
     <style name="StyleLoginButtonResetPassword">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:text">@string/loginButtonResetPassword</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonResetPasswordTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonResetPasswordPadding</item>
+        <item name="android:background">@drawable/button_main</item>
     </style>
 
     <style name="StyleLoginButtonCreateAccount">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:text">@string/loginButtonCreateAccount</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonCreateAccountTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonCreateAccountPadding</item>
+        <item name="android:background">@drawable/button_main</item>
     </style>
 
     <style name="StyleLoginButtonFacebook">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:text">@string/loginButtonFacebook</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonFacebookTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonFacebookPadding</item>
+        <item name="android:background">@drawable/button_main</item>
     </style>
 
     <style name="StyleLoginButtonTwitter">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:text">@string/loginButtonTwitter</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonTwitterTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonTwitterPadding</item>
+        <item name="android:background">@drawable/button_main</item>
     </style>
 
     <style name="StyleLoginButtonGooglePlus">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:text">@string/loginButtonGooglePlus</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonGooglePlusTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonGooglePlusPadding</item>
+        <item name="android:background">@drawable/button_main</item>
     </style>
 
     <!-- Create Account Screen Styles -->
