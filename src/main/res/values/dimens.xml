@@ -24,13 +24,13 @@
     <dimen name="dimLoginEditTextPasswordPadding">7dp</dimen>
 
     <dimen name="dimLoginButtonSubmitTextSize">20sp</dimen>
-    <dimen name="dimLoginButtonSubmitPadding">5dp</dimen>
+    <dimen name="dimLoginButtonSubmitPadding">0dp</dimen>
 
     <dimen name="dimLoginButtonResetPasswordTextSize">20sp</dimen>
-    <dimen name="dimLoginButtonResetPasswordPadding">5dp</dimen>
+    <dimen name="dimLoginButtonResetPasswordPadding">0dp</dimen>
 
     <dimen name="dimLoginButtonCreateAccountTextSize">20sp</dimen>
-    <dimen name="dimLoginButtonCreateAccountPadding">5dp</dimen>
+    <dimen name="dimLoginButtonCreateAccountPadding">0dp</dimen>
 
     <dimen name="dimLoginButtonFacebookTextSize">20sp</dimen>
     <dimen name="dimLoginButtonFacebookPadding">5dp</dimen>

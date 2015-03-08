@@ -67,6 +67,7 @@
 
     <Button
         android:id="@+id/loginButtonFacebook"
+        style="@style/StyleLoginButtonFacebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

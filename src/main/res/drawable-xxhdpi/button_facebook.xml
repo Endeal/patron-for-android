@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="true"
-        android:drawable="@color/colorButtonFacebookEnabled" />
+        android:drawable="@drawable/button_facebook_unpressed" />
     <item android:state_enabled="false"
         android:drawable="@color/colorButtonFacebookDisabled" />
     <item android:state_pressed="true"
     	android:state_enabled="true"
-        android:drawable="@color/colorButtonFacebookPressed" />
+        android:drawable="@drawable/button_facebook_pressed" />
     <item android:state_focused="true"
     	android:state_enabled="true"
-        android:drawable="@color/colorButtonFacebookFocused" />
+        android:drawable="@drawable/button_facebook_pressed" />
 </selector>

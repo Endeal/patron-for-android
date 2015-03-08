@@ -29,6 +29,7 @@ import com.patron.system.Patron;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.NullPointerException;
 import java.lang.Runnable;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -154,6 +155,10 @@ public class ApiExecutor
                     catch (JSONException e)
                     {
                         e.printStackTrace();
+                    }
+                    catch (NullPointerException e)
+                    {
+                        Toast.makeText(Patron.getContext(), "Failed to login.", Toast.LENGTH_SHORT).show();
                     }
                     callback(listeners);
                 }

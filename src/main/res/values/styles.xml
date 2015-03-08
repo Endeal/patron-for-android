@@ -111,7 +111,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonFacebookTextSize</item>
         <item name="android:padding">@dimen/dimLoginButtonFacebookPadding</item>
-        <item name="android:background">@drawable/button_main</item>
+        <item name="android:background">@drawable/button_facebook</item>
     </style>
 
     <style name="StyleLoginButtonTwitter">
