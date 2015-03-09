@@ -63,7 +63,8 @@ public class NavigationListView extends ListView
     public void init()
     {
         // Set background of list view.
-        setBackgroundColor(Color.parseColor("#000000"));
+        //setBackgroundColor(Color.parseColor("#000000"));
+        setBackgroundColor(Color.TRANSPARENT);
 
         // Add Header
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
@@ -80,11 +81,12 @@ public class NavigationListView extends ListView
         imageViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         imageViewLayoutParams.setMargins(leftMargin, topMargin, 0, bottomMargin);
         imageView.setLayoutParams(imageViewLayoutParams);
+        relativeLayout.setBackgroundColor(Color.parseColor("#000000"));
 
         TextView textView = new TextView(relativeLayout.getContext());
         textView.setText(Globals.getUser().getFirstName() + " " + Globals.getUser().getLastName());
         textView.setTextColor(Color.parseColor("#FFFFFF"));
-        textView.setBackgroundColor(Color.parseColor("#000000"));
+        textView.setBackgroundColor(Color.TRANSPARENT);
         textView.setGravity(Gravity.CENTER_VERTICAL);
         Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
         textView.setTypeface(typeface);

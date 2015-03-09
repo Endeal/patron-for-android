@@ -81,6 +81,7 @@ public class Globals
 		{
 			logger.error("Null vendor set.", vendor);
 		}
+        Globals.order = null;
 		Globals.vendor = vendor;
 	}
 

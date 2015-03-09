@@ -1,8 +1,10 @@
 package com.patron.listeners;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
@@ -124,7 +126,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
             {
                 Button button = new Button(linearLayout.getContext());
                 button.setBackgroundResource(R.drawable.button_category_unpressed);
-                button.setTextAppearance(activity, R.style.StyleMenuButtonFavorites);
+                button.setTextAppearance(activity, R.style.ButtonCategory);
                 float width = Globals.convertDpToPixel(60, activity);
                 float height = Globals.convertDpToPixel(60, activity);
                 LayoutParams params = new LayoutParams((int)width, (int)height);

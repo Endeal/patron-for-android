@@ -7,39 +7,36 @@
     android:descendantFocusability="blocksDescendants" >
 
     <!-- Time Text -->
-
     <TextView
         android:id="@+id/codeListItemTextTime"
-        style="@style/StyleCodeListItemTextTime"
+        style="@style/TextViewListItemTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp" />
-    
-    <!-- Status Text -->
 
+    <!-- Status Text -->
     <TextView
         android:id="@+id/codeListItemTextStatus"
-        style="@style/StyleCodeListItemTextStatus"
+        style="@style/TextViewListItemStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp" />
-    
-    <!-- Products Text -->
 
+    <!-- Products Text -->
     <TextView
         android:id="@+id/codeListItemTextProducts"
-        style="@style/StyleCodeListItemTextProducts"
+        style="@style/TextViewListItemDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/codeListItemTextTime"
         android:layout_marginLeft="10dp"
         android:paddingBottom="10dp" />
-    
+
 </RelativeLayout>

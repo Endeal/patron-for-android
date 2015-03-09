@@ -142,7 +142,7 @@ public class FlashLogin extends FragmentActivity
             public void onClick(View view)
             {
                 LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                Builder builder = new Builder(view.getContext());
+                Builder builder = new Builder(view.getContext(), R.style.DialogMain);
                 View dialogRequestPasswordView = inflater.inflate(R.layout.dialog_request_password, null);
                 builder.setView(dialogRequestPasswordView);
                 final AlertDialog dialogRequestPassword = builder.create();

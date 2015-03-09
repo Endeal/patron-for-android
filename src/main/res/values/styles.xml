@@ -79,7 +79,7 @@
     </style>
 
     <style name="StyleLoginButtonSubmit">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/loginButtonSubmit</item>
         <item name="android:textStyle">normal</item>
@@ -88,7 +88,7 @@
     </style>
 
     <style name="StyleLoginButtonResetPassword">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/loginButtonResetPassword</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonResetPasswordTextSize</item>
@@ -97,7 +97,7 @@
     </style>
 
     <style name="StyleLoginButtonCreateAccount">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/loginButtonCreateAccount</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonCreateAccountTextSize</item>
@@ -106,7 +106,7 @@
     </style>
 
     <style name="StyleLoginButtonFacebook">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/loginButtonFacebook</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonFacebookTextSize</item>
@@ -115,7 +115,7 @@
     </style>
 
     <style name="StyleLoginButtonTwitter">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/loginButtonTwitter</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonTwitterTextSize</item>
@@ -124,7 +124,7 @@
     </style>
 
     <style name="StyleLoginButtonGooglePlus">
-        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/loginButtonGooglePlus</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonGooglePlusTextSize</item>
@@ -134,55 +134,49 @@
 
     <!-- Create Account Screen Styles -->
     <style name="StyleCreateAccountTextFirst">
-        <item name="android:text">@string/createAccountTextFirst</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextFirst</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountTextLast">
-        <item name="android:text">@string/createAccountTextLast</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextLast</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountTextEmail">
-        <item name="android:text">@string/createAccountTextEmail</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextEmail</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountTextPassword">
-        <item name="android:text">@string/createAccountTextPassword</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextPassword</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountTextConfirm">
-        <item name="android:text">@string/createAccountTextConfirm</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextConfirm</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountTextBirthday">
-        <item name="android:text">@string/createAccountTextBirthday</item>
         <item name="android:textSize">@dimen/dimCreateAccountTextBirthday</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountButtonCancel">
-        <item name="android:text">@string/createAccountButtonCancel</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/dimCreateAccountButtonCancelText</item>
         <item name="android:padding">10dp</item>
     </style>
 
     <style name="StyleCreateAccountButtonSubmit">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
         <item name="android:text">@string/createAccountButtonSubmit</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/dimCreateAccountButtonSubmitText</item>
@@ -680,6 +674,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Reset Password Dialog -->
+    <style name="StyleResetPasswordButtonSubmit">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:text">@string/dialogResetPasswordButtonSubmit</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="StyleResetPasswordButtonSubmit">
+    </style>
+
     <!-- Miscellaneous Styles -->
     <style name="StyleMiscTextNoLocations">
         <item name="android:textColor">#555555</item>
@@ -714,6 +721,255 @@
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/dimMiscTextNoCodeImage</item>
         <item name="android:text">@string/miscTextNoCodeImage</item>
+    </style>
+
+    <!-- Universal Styles -->
+    <style name="DialogMain">
+        <item name="android:padding">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <style name="LayoutTransparent">
+        <item name="android:background">#00FFFFFF</item>
+    </style>
+    <style name="LayoutMain">
+        <item name="android:background">#252525</item>
+    </style>
+    <style name="ListViewMain">
+        <item name="android:background">#252525</item>
+    </style>
+    <style name="LayoutCategories">
+        <item name="android:background">#002919</item>
+    </style>
+    <style name="ButtonMain">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:text">@string/loginButtonSubmit</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ButtonMedium">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:text">@string/loginButtonSubmit</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ButtonSmall">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:background">@drawable/button_main</item>
+        <item name="android:text">@string/loginButtonSubmit</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="ButtonFacebook">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_facebook</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ButtonTwitter">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_twitter</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ButtonGooglePlus">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_google_plus</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="ButtonCheckout">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_checkout</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="ButtonQuickReturn">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_select_vendor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="ButtonConnect">
+        <item name="android:background">@drawable/button_confirm</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="ButtonDisconnect">
+        <item name="android:background">@drawable/button_remove</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="ButtonSearch">
+        <item name="android:background">@drawable/button_search</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="ButtonFavorites">
+        <item name="android:background">@drawable/button_filter_favorites</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="ButtonCategory">
+        <item name="fontPath">fonts/Montserrat-Light.ttf</item>
+        <item name="android:background">@drawable/button_category</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="ButtonRemove">
+    </style>
+    <style name="ButtonOrder">
+        <item name="fontPath">fonts/Montserrat-Light.ttf</item>
+        <item name="android:background">@drawable/button_order</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="ButtonPay">
+        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="android:background">@drawable/button_pay</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:padding">0dp</item>
+    </style>
+    <style name="EditTextMainName">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textCapWords</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextMainEmail">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextMainPassword">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextMoney">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLength">7</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextMessage">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textShortMessage</item>
+        <item name="android:maxLength">300</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="CheckboxFavorite">
+    </style>
+    <style name="CheckboxSetting">
+    </style>
+    <style name="TextViewTitleBig">
+    </style>
+    <style name="TextViewTitleSmall">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="TextViewLabel">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">10dp</item>
+    </style>
+    <style name="TextViewPercent">
+    </style>
+    <style name="TextViewListItemName">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemDescription">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemPrice">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#44AA44</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemPhone">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#4444BB</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemTime">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#8888DD</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemStatus">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#DD3333</item>
+        <item name="android:padding">1dp</item>
+    </style>
+    <style name="TextViewListItemAccountType">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#BBBBBB</item>
+        <item name="android:padding">1dp</item>
     </style>
 
 </resources>

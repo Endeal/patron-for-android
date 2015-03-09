@@ -10,7 +10,16 @@
     <color name="spinner">#608080</color>
     <color name="spinner_alcohol">#888888</color>
     <color name="red">#FF0000</color>
-    <color name="colorMenuHorizontalScrollViewTypes">#444444</color>
+
+    <color name="colorMenuLinearLayoutCategories">#00FFFFFF</color>
+    <color name="colorMenuHorizontalScrollViewTypes">#0E5340</color>
+    <color name="colorMenuButtonCategoryText">#000000</color>
+
+    <color name="colorCreateAccountInput">#FFFFFF</color>
+    <color name="colorCreateAccountLabel">#FFFFFF</color>
+    <color name="colorCreateAccountButton">#000000</color>
+    <color name="colorCreateAccountSubmit">#000000</color>
+    <color name="colorCreateAccountInputHint">#777777</color>
 
     <!-- Buttons -->
     <color name="colorButtonMainEnabled">#55CC88</color>
@@ -18,33 +27,42 @@
     <color name="colorButtonMainPressed">#119944</color>
     <color name="colorButtonMainFocused">#119944</color>
 
-    <color name="colorButtonFacebookEnabled">#222299</color>
+    <color name="colorButtonFacebookEnabled">#3b5998</color>
     <color name="colorButtonFacebookDisabled">#333333</color>
-    <color name="colorButtonFacebookPressed">#5555CC</color>
-    <color name="colorButtonFacebookFocused">#5555CC</color>
+    <color name="colorButtonFacebookPressed">#6B89C8</color>
+    <color name="colorButtonFacebookFocused">#6B89C8</color>
 
-    <color name="colorButtonTwitterEnabled">#666688</color>
+    <color name="colorButtonTwitterEnabled">#1DCAFF</color>
     <color name="colorButtonTwitterDisabled">#333333</color>
-    <color name="colorButtonTwitterPressed">#9999CC</color>
-    <color name="colorButtonTwitterFocused">#9999CC</color>
+    <color name="colorButtonTwitterPressed">#4DFAFF</color>
+    <color name="colorButtonTwitterFocused">#4DFAFF</color>
 
-    <color name="colorButtonGooglePlusEnabled">#884422</color>
+    <color name="colorButtonGooglePlusEnabled">#D34836</color>
     <color name="colorButtonGooglePlusDisabled">#333333</color>
-    <color name="colorButtonGooglePlusPressed">#BB7733</color>
-    <color name="colorButtonGooglePlusFocused">#BB7733</color>
+    <color name="colorButtonGooglePlusPressed">#FF6866</color>
+    <color name="colorButtonGooglePlusFocused">#FF6866</color>
+
+    <!-- Dialogs -->
+    <color name="colorButtonCancel">#000000</color>
+    <color name="colorButtonDone">#000000</color>
+    <color name="colorDialogTitle">#FFFFFF</color>
+    <color name="colorEditTextHint">#999999</color>
 
     <!-- Theme -->
-    <color name="colorThemeMainPrimary">#555555</color>
-    <color name="colorThemeMainPrimaryDark">#222222</color>
-    <color name="colorThemeMainAccent">#008888</color>
+    <color name="colorThemeMainPrimary">#302E2F</color>
+    <color name="colorThemeMainPrimaryDark">#101E0F</color>
+    <color name="colorThemeMainAccent">#008865</color>
     <color name="colorThemeMainControlNormal">#666666</color>
     <color name="colorThemeMainControlActivated">#AAAAAA</color>
     <color name="colorThemeMainControlHighlight">#CCCCCC</color>
     <color name="colorThemeMainSwitchThumbNormal">#888888</color>
 
-    <color name="colorThemeMainBackground">#333333</color>
-    <color name="colorThemeMainWindowBackground">#333333</color>
-    <color name="colorThemeMainColorBackground">#333333</color>
+    <color name="colorThemeMainBackground">#252525</color>
+    <!--
+    <color name="colorThemeMainWindowBackground">#222925</color>
+    -->
+    <color name="colorThemeMainWindowBackground">#00FFFFFF</color>
+    <color name="colorThemeMainColorBackground">#252525</color>
     <color name="colorThemeMainText">#FFFFFF</color>
 
 </resources>

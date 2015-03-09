@@ -70,7 +70,7 @@ public class ButtonFinishListener implements OnClickListener
                 }
             }
         };
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
         builder.setMessage("Are you sure you want to place this order?").setPositiveButton("Yes", dialogClickListener)
             .setNegativeButton("No", dialogClickListener).show();
 	}

@@ -27,7 +27,7 @@
 
             <Button
                 android:id="@+id/cartButtonStation"
-                style="@style/StyleCartButtonStation"
+                style="@style/ButtonOrder"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,7 +35,7 @@
 
             <Button
                 android:id="@+id/cartButtonPayment"
-                style="@style/StyleCartButtonPayment"
+                style="@style/ButtonOrder"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -43,7 +43,7 @@
 
             <Button
                 android:id="@+id/cartButtonTip"
-                style="@style/StyleCartButtonTip"
+                style="@style/ButtonOrder"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -51,7 +51,7 @@
 
             <Button
                 android:id="@+id/cartButtonCoupon"
-                style="@style/StyleCartButtonCoupon"
+                style="@style/ButtonOrder"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -59,7 +59,7 @@
 
             <Button
                 android:id="@+id/cartButtonComment"
-                style="@style/StyleCartButtonComment"
+                style="@style/ButtonOrder"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
 
         <Button
             android:id="@+id/cartButtonFinish"
-            style="@style/StyleCartButtonFinish"
+            style="@style/ButtonPay"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true" />

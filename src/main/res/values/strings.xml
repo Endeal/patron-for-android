@@ -30,13 +30,12 @@
     <string name="loginButtonGooglePlus">Login with Google+</string>
 
     <!-- Create Account Screen -->
-    <string name="createAccountTextFirst">First:</string>
-    <string name="createAccountTextLast">Last:</string>
-    <string name="createAccountTextEmail">Email:</string>
-    <string name="createAccountTextPassword">Password:</string>
-    <string name="createAccountTextConfirm">Confirm:</string>
-    <string name="createAccountTextBirthday">Birthday:</string>
-    <string name="createAccountButtonCancel">Cancel</string>
+    <string name="createAccountEditTextFirst">First Name</string>
+    <string name="createAccountEditTextLast">Last Name</string>
+    <string name="createAccountEditTextEmail">Email Address</string>
+    <string name="createAccountEditTextPassword">Password</string>
+    <string name="createAccountEditTextConfirm">Confirm Password</string>
+    <string name="createAccountTextViewBirthday">Birthday:</string>
     <string name="createAccountButtonSubmit">Submit</string>
 
     <!-- Payment Screen -->
@@ -60,6 +59,9 @@
     <string name="addBankTextType">Account Type:</string>
     <string name="addBankButtonSubmit">Submit</string>
 
+    <!-- Vendors Screen -->
+    <string name="vendorsButtonFindNearest">Find Nearest</string>
+
     <!-- Menu Screen -->
     <string name="menuButtonCheckout">Checkout</string>
     <string name="menuButtonFavorites">Favorites</string>
@@ -69,6 +71,7 @@
     <string name="menuButtonMartinis">Martinis</string>
     <string name="menuButtonWine">Wine</string>
     <string name="menuImageButtonDescriptionDelete">Delete from Tab</string>
+    <string name="menuButtonSelectVendor">Select Vendor</string>
 
     <!-- Cart Screen -->
     <string name="cartButtonStation">Station</string>
@@ -221,6 +224,27 @@
     <string name="condes_martini">Martinis</string>
     <string name="textbox_search_default">Search</string>
 
+    <!-- Reset Password Dialog -->
+    <string name="dialogResetPasswordTextViewTitle">Enter the e-mail address of the account to send a new one</string>
+    <string name="dialogResetPasswordButtonSubmit">Submit</string>
+    <string name="dialogResetPasswordEditTextEmail">johnsmith@example.com</string>
+
+    <!-- Stations Dialog -->
+    <string name="dialogStationButtonCancel">Cancel</string>
+
+    <!-- Payments Dialog -->
+    <string name="dialogPaymentButtonCancel">Cancel</string>
+
+    <!-- Tip Dialog -->
+    <string name="dialogTipTextViewTitle">Enter the amount to tip with your order</string>
+    <string name="dialogTipTextViewPercent">0%</string>
+    <string name="dialogTipEditTextCustom">0.00</string>
+    <string name="dialogTipButtonDone">Done</string>
+
+    <!-- Comment Dialog -->
+    <string name="dialogCommentTextViewTitle">Enter a comment to be sent with your order to the vendor</string>
+    <string name="dialogCommentEditTextMessage">Max 300 characters...</string>
+    <string name="dialogCommentButtonDone">Done</string>
 
     <!-- Arrays -->
     <string-array name="array_navigation">

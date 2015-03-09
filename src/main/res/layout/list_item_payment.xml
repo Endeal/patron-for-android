@@ -3,13 +3,14 @@
 <!-- Defining a container for List Item-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF">
 
     <!-- Address, city, state, zip; bank name; number; type  -->
 
     <TextView
         android:id="@+id/paymentListItemTextNumber"
-        style="@style/StylePaymentListItemTextNumber"
+        style="@style/TextViewListItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -18,17 +19,17 @@
 
     <TextView
         android:id="@+id/paymentListItemTextType"
-        style="@style/StylePaymentListItemTextType"
+        style="@style/TextViewListItemDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp" />
-    
+
     <!-- Bank Name Text -->
     <TextView
         android:id="@+id/paymentListItemTextBankName"
-        style="@style/StylePaymentListItemTextBankName"
+        style="@style/TextViewListItemAccountType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -38,12 +39,12 @@
     <!-- Address -->
     <TextView
         android:id="@+id/paymentListItemTextAddress"
-        style="@style/StylePaymentListItemTextAddress"
+        style="@style/TextViewListItemDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/paymentListItemTextBankName"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp" />
-    
+
 </RelativeLayout>

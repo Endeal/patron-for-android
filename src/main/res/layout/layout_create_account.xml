@@ -4,119 +4,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- Text labelling what each field is for -->
-    <TextView
-        android:id="@+id/createAccountTextFirst"
-        style="@style/StyleCreateAccountTextFirst"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/createAccountEditTextFirst"
+        style="@style/EditTextMainName"
+        android:hint="@string/createAccountEditTextFirst"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
+    <EditText
+        android:id="@+id/createAccountEditTextLast"
+        style="@style/EditTextMainName"
+        android:hint="@string/createAccountEditTextLast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createAccountEditTextFirst" />
+
+    <EditText
+        android:id="@+id/createAccountEditTextEmail"
+        style="@style/EditTextMainEmail"
+        android:hint="@string/createAccountEditTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createAccountEditTextLast" />
+
+    <EditText
+        android:id="@+id/createAccountEditTextPassword"
+        style="@style/EditTextMainPassword"
+        android:hint="@string/createAccountEditTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createAccountEditTextEmail" />
+
+    <EditText
+        android:id="@+id/createAccountEditTextConfirm"
+        style="@style/EditTextMainPassword"
+        android:hint="@string/createAccountEditTextConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createAccountEditTextPassword" />
+
     <TextView
-        android:id="@+id/createAccountTextLast"
-        style="@style/StyleCreateAccountTextLast"
+        android:id="@+id/createAccountTextViewBirthday"
+        style="@style/TextViewLabel"
+        android:text="@string/createAccountTextViewBirthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextFirst" />
-
-    <TextView
-        android:id="@+id/createAccountTextEmail"
-        style="@style/StyleCreateAccountTextEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextLast" />
-
-    <TextView
-        android:id="@+id/createAccountTextPassword"
-        style="@style/StyleCreateAccountTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextEmail" />
-
-    <TextView
-        android:id="@+id/createAccountTextConfirm"
-        style="@style/StyleCreateAccountTextConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextPassword" />
-
-    <TextView
-        android:id="@+id/createAccountTextBirthday"
-        style="@style/StyleCreateAccountTextBirthday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/createAccountTextConfirm" />
-
-    <!-- The actual fields -->
-
-    <EditText
-        android:id="@+id/createAccountFieldFirst"
-        android:inputType="textCapWords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextFirst"
-        android:layout_alignBaseline="@+id/createAccountTextFirst" />
-
-    <EditText
-        android:id="@+id/createAccountFieldLast"
-        android:inputType="textCapWords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextLast"
-        android:layout_alignBaseline="@+id/createAccountTextLast" />
-
-    <EditText
-        android:id="@+id/createAccountFieldEmail"
-        android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextEmail"
-        android:layout_alignBaseline="@+id/createAccountTextEmail" />
-
-    <EditText
-        android:id="@+id/createAccountFieldPassword"
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextPassword"
-        android:layout_alignBaseline="@+id/createAccountTextPassword" />
-
-    <EditText
-        android:id="@+id/createAccountFieldConfirm"
-        android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextConfirm"
-        android:layout_alignBaseline="@+id/createAccountTextConfirm" />
+        android:layout_below="@+id/createAccountEditTextConfirm" />
 
     <Button
         android:id="@+id/createAccountButtonBirthday"
+        style="@style/ButtonMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/createAccountTextBirthday"
-        android:layout_alignBaseline="@+id/createAccountTextBirthday" />
-
-    <!-- Action buttons -->
+        android:layout_toRightOf="@+id/createAccountTextViewBirthday"
+        android:layout_alignBaseline="@+id/createAccountTextViewBirthday" />
 
     <Button
         android:id="@+id/createAccountButtonSubmit"
-        style="@style/StyleCreateAccountButtonSubmit"
-        android:layout_width="wrap_content"
+        style="@style/ButtonMain"
+        android:text="@string/createAccountButtonSubmit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/createAccountTextBirthday"
-        android:layout_margin="10dp" />
+        android:layout_below="@+id/createAccountTextViewBirthday"
+        android:layout_margin="30dp" />
 
 </RelativeLayout>

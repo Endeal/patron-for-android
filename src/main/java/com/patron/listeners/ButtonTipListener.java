@@ -30,7 +30,7 @@ public class ButtonTipListener implements OnClickListener
     @Override
     public void onClick(View view)
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
         final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.dialog_tip, null);
         builder.setView(dialogView);

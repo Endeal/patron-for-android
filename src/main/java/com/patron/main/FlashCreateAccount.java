@@ -27,6 +27,8 @@ import com.patron.model.User;
 import com.patron.R;
 import com.patron.system.Globals;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FlashCreateAccount extends Activity implements Loadable
 {
 	private boolean submitting = false;
@@ -94,11 +96,11 @@ public class FlashCreateAccount extends Activity implements Loadable
 		final Button buttonBirthday = (Button)findViewById(R.id.createAccountButtonBirthday);
 		Button buttonSubmit = (Button)findViewById(R.id.createAccountButtonSubmit);
 		progressIndicator = new ProgressBar(this);
-		fieldFirstName = (EditText)findViewById(R.id.createAccountFieldFirst);
-		fieldLastName = (EditText)findViewById(R.id.createAccountFieldLast);
-		fieldEmail = (EditText)findViewById(R.id.createAccountFieldEmail);
-		fieldPassword = (EditText)findViewById(R.id.createAccountFieldPassword);
-		fieldConfirm = (EditText)findViewById(R.id.createAccountFieldConfirm);
+		fieldFirstName = (EditText)findViewById(R.id.createAccountEditTextFirst);
+		fieldLastName = (EditText)findViewById(R.id.createAccountEditTextLast);
+		fieldEmail = (EditText)findViewById(R.id.createAccountEditTextEmail);
+		fieldPassword = (EditText)findViewById(R.id.createAccountEditTextPassword);
+		fieldConfirm = (EditText)findViewById(R.id.createAccountEditTextConfirm);
 
 		// Prepopulate fields.
 		fieldFirstName.setText("John");
@@ -166,11 +168,11 @@ public class FlashCreateAccount extends Activity implements Loadable
 				layout.addView(progressIndicator, params);
 				submitting = true;
 
-				fieldFirstName = (EditText)findViewById(R.id.createAccountFieldFirst);
-				fieldLastName = (EditText)findViewById(R.id.createAccountFieldLast);
-				fieldEmail = (EditText)findViewById(R.id.createAccountFieldEmail);
-				fieldPassword = (EditText)findViewById(R.id.createAccountFieldPassword);
-				fieldConfirm = (EditText)findViewById(R.id.createAccountFieldConfirm);
+				fieldFirstName = (EditText)findViewById(R.id.createAccountEditTextFirst);
+				fieldLastName = (EditText)findViewById(R.id.createAccountEditTextLast);
+				fieldEmail = (EditText)findViewById(R.id.createAccountEditTextEmail);
+				fieldPassword = (EditText)findViewById(R.id.createAccountEditTextPassword);
+				fieldConfirm = (EditText)findViewById(R.id.createAccountEditTextConfirm);
 
 				CreateAccountConnector connector = new CreateAccountConnector(activity, fieldFirstName.getText().toString(),
 					fieldLastName.getText().toString(), fieldEmail.getText().toString(), fieldPassword.getText().toString(),
@@ -185,5 +187,11 @@ public class FlashCreateAccount extends Activity implements Loadable
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
 	}
 }

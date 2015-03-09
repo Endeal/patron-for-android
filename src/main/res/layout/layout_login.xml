@@ -21,27 +21,29 @@
 
     <EditText
         android:id="@+id/loginEditTextEmail"
-        style="@style/StyleLoginEditTextEmail"
+        style="@style/EditTextMainEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
     <EditText
         android:id="@+id/loginEditTextPassword"
-        style="@style/StyleLoginEditTextPassword"
+        style="@style/EditTextMainPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
 
     <Button
         android:id="@+id/loginButtonSubmit"
-        style="@style/StyleLoginButtonSubmit"
+        style="@style/ButtonMedium"
+        android:text="@string/loginButtonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp" />
 
     <LinearLayout
         android:id="@+id/loginLinearLayoutAccountControls"
+        style="@style/LayoutTransparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -49,7 +51,8 @@
 
         <Button
             android:id="@+id/loginButtonResetPassword"
-            style="@style/StyleLoginButtonResetPassword"
+            style="@style/ButtonMedium"
+            android:text="@string/loginButtonResetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +60,8 @@
 
         <Button
             android:id="@+id/loginButtonCreateAccount"
-            style="@style/StyleLoginButtonCreateAccount"
+            style="@style/ButtonMedium"
+            android:text="@string/loginButtonCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,7 +71,7 @@
 
     <Button
         android:id="@+id/loginButtonFacebook"
-        style="@style/StyleLoginButtonFacebook"
+        style="@style/ButtonFacebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -75,6 +79,7 @@
 
     <Button
         android:id="@+id/loginButtonTwitter"
+        style="@style/ButtonTwitter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -82,6 +87,7 @@
 
     <Button
         android:id="@+id/loginButtonGoogle"
+        style="@style/ButtonGooglePlus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

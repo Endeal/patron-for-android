@@ -78,30 +78,30 @@
 
             <Button
                 android:id="@+id/settingsButtonNetworkFacebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonConnect"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/settingsTextViewNetworkFacebook"
-                android:layout_margin="10dp"
-                android:text="@string/settingsButtonNetworkConnect" />
+                android:layout_marginRight="10dp" />
 
             <Button
                 android:id="@+id/settingsButtonNetworkTwitter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonConnect"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/settingsTextViewNetworkTwitter"
-                android:layout_margin="10dp"
-                android:text="@string/settingsButtonNetworkConnect" />
+                android:layout_marginRight="10dp" />
 
             <Button
                 android:id="@+id/settingsButtonNetworkGooglePlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ButtonConnect"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/settingsTextViewNetworkGooglePlus"
-                android:layout_margin="10dp"
-                android:text="@string/settingsButtonNetworkConnect"/>
+                android:layout_marginRight="10dp" />
 
             <!-- Cards and Bank Accounts -->
             <LinearLayout
@@ -114,17 +114,21 @@
 
                 <Button
                     android:id="@+id/settingsButtonAddCard"
+                    style="@style/ButtonMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/settingsButtonAddCard" />
+                    android:text="@string/settingsButtonAddCard"
+                    android:layout_margin="5dp"/>
 
                 <Button
                     android:id="@+id/settingsButtonAddBankAccount"
+                    style="@style/ButtonMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/settingsButtonAddBankAccount" />
+                    android:text="@string/settingsButtonAddBankAccount"
+                    android:layout_margin="5dp"/>
 
             </LinearLayout>
 
@@ -137,6 +141,7 @@
 
             <Button
                 android:id="@+id/settingsButtonLogout"
+                style="@style/ButtonMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

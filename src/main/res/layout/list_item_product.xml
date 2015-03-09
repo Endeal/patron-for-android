@@ -11,14 +11,14 @@
 
 <TextView
     android:id="@+id/productListItemTextName"
-    style="@style/StyleProductListItemTextName"
+    style="@style/TextViewListItemName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
     android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
     android:layout_margin="10dip" />
 
-<Spinner 
+<Spinner
     android:id="@+id/productListItemSpinnerQuantity"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
 <TextView
     android:id="@+id/productListItemTextPrice"
-    style="@style/StyleProductListItemTextPrice"
+    style="@style/TextViewListItemPrice"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
@@ -50,7 +50,7 @@
 
 <TextView
     android:id="@+id/productListItemTextCategories"
-    style="@style/StyleProductListItemTextType"
+    style="@style/TextViewListItemDescription"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"

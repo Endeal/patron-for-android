@@ -2,9 +2,12 @@ package com.patron.listeners;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -28,13 +31,14 @@ public class ButtonStationListener implements OnClickListener
     @Override
     public void onClick(View view)
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
         final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.dialog_stations, null);
         builder.setView(dialogView);
         ListView listStations = (ListView)dialogView.findViewById(R.id.dialogStationsListMain);
         Button buttonCancel = (Button)dialogView.findViewById(R.id.dialogStationsButtonCancel);
         final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         String[] stations = new String[Globals.getVendor().getStations().size()];
         for (int i = 0; i < Globals.getVendor().getStations().size(); i++)
         {

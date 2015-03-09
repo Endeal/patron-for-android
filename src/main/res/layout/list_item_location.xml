@@ -18,7 +18,7 @@
 
 <TextView
     android:id="@+id/locationListItemTextName"
-    style="@style/StyleLocationListItemTextName"
+    style="@style/TextViewListItemName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_toRightOf="@+id/locationListItemToggleButtonFavorite"
@@ -27,7 +27,7 @@
 
 <TextView
     android:id="@+id/locationListItemTextPhone"
-    style="@style/StyleLocationListItemTextPhone"
+    style="@style/TextViewListItemPhone"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
@@ -38,7 +38,7 @@
 
 <TextView
     android:id="@+id/locationListItemTextAddress"
-    style="@style/StyleLocationListItemTextAddress"
+    style="@style/TextViewListItemDescription"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"

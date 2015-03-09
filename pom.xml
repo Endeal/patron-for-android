@@ -52,8 +52,7 @@
     <dependency>
       <groupId>com.balancedpayments.android</groupId>
       <artifactId>balanced-android-parent</artifactId>
-      <version>1.1-SNAPSHOT</version>
-      <type>apklib</type>
+      <version>1.0</version>
     </dependency>
 
     <!-- GSON -->

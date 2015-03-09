@@ -2,29 +2,36 @@
 <resources>
 <style name="Theme.Main" parent="Theme.AppCompat.Light">
 
-        <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/colorThemeMainPrimary</item>
+    <!-- colorPrimary is used for the default action bar background -->
+    <item name="colorPrimary">@color/colorThemeMainPrimary</item>
 
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/colorThemeMainPrimaryDark</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="colorPrimaryDark">@color/colorThemeMainPrimaryDark</item>
 
-        <!-- colorAccent is used as the default value for colorControlActivated
-        which is used to tint widgets -->
-        <item name="colorAccent">@color/colorThemeMainAccent</item>
+    <!-- colorAccent is used as the default value for colorControlActivated
+    which is used to tint widgets -->
+    <item name="colorAccent">@color/colorThemeMainAccent</item>
 
-        <!-- You can also set colorControlNormal, colorControlActivated
-        colorControlHighlight & colorSwitchThumbNormal. -->
-        <item name="colorControlNormal">@color/colorThemeMainControlNormal</item>
-        <item name="colorControlActivated">@color/colorThemeMainControlActivated</item>
-        <item name="colorControlHighlight">@color/colorThemeMainControlHighlight</item>
-        <item name="colorSwitchThumbNormal">@color/colorThemeMainSwitchThumbNormal</item>
+    <!-- You can also set colorControlNormal, colorControlActivated
+    colorControlHighlight & colorSwitchThumbNormal. -->
+    <item name="colorControlNormal">@color/colorThemeMainControlNormal</item>
+    <item name="colorControlActivated">@color/colorThemeMainControlActivated</item>
+    <item name="colorControlHighlight">@color/colorThemeMainControlHighlight</item>
+    <item name="colorSwitchThumbNormal">@color/colorThemeMainSwitchThumbNormal</item>
 
-        <!-- Default backgrounds -->
-        <item name="android:background">@color/colorThemeMainBackground</item>
-        <item name="android:windowBackground">@color/colorThemeMainWindowBackground</item>
-        <item name="android:colorBackground">@color/colorThemeMainColorBackground</item>
+    <!-- Default backgrounds -->
+    <item name="android:background">@color/colorThemeMainBackground</item>
+    <item name="android:windowBackground">@color/colorThemeMainWindowBackground</item>
+    <item name="android:colorBackground">@color/colorThemeMainColorBackground</item>
 
-        <item name="android:textColor">@color/colorThemeMainText</item>
+    <item name="android:textColor">@color/colorThemeMainText</item>
 
-    </style>
+    <item name="android:textViewStyle">@style/StyleDefaultTextView</item>
+
+</style>
+
+<style name="StyleDefaultTextView" parent="@android:style/Widget.TextView">
+    <item name="android:background">#00FFFFFF</item>
+</style>
+
 </resources>

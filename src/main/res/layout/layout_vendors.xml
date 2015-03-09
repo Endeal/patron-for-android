@@ -28,11 +28,11 @@
 
         <Button
             android:id="@+id/vendorsButtonFindNearest"
+            style="@style/ButtonQuickReturn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:background="#999999"
-            android:text="Find Nearest" />
+            android:text="@string/vendorsButtonFindNearest" />
 
     </RelativeLayout>
 
