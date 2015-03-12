@@ -80,7 +80,7 @@ public class FlashMenu extends Activity
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
         DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
+		final NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
 
 		// Find the views.
@@ -133,6 +133,7 @@ public class FlashMenu extends Activity
                 @Override
                 public void onExecuted()
                 {
+                    listNavigation.getTextViewHeader().setText(Globals.getVendor().getName() + "\n" + Globals.getPoints(Globals.getVendor().getId()) + " Points");
                     apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
                 }
             });

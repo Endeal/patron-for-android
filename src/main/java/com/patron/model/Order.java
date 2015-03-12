@@ -51,6 +51,7 @@ public class Order
 	private Station station;
 	private Funder funder;
 	private BigDecimal tip;
+    private BigDecimal tax;
 	private List<Object> coupons;
 	private String comment;
 
@@ -81,7 +82,7 @@ public class Order
 		{
 			total = total.add(fragments.get(i).getPrice());
 		}
-		total = total.add(total.multiply(new BigDecimal(Globals.getVendor().getTaxRate())));
+		total = total.add(getTax());
 		total = total.add(getTip());
 		total = total.setScale(2, RoundingMode.FLOOR);
 		return total;
@@ -97,6 +98,19 @@ public class Order
 		}
 		total = total.setScale(2, RoundingMode.FLOOR);
 		return total;
+    }
+
+    public BigDecimal getTax()
+    {
+		BigDecimal total = new BigDecimal(0);
+        if (fragments != null)
+		for (int i = 0; i < fragments.size(); i++)
+		{
+			total = total.add(fragments.get(i).getPrice());
+		}
+        BigDecimal tax = total.multiply(new BigDecimal(Globals.getVendor().getTaxRate()));
+        tax = tax.setScale(2, RoundingMode.FLOOR);
+        return tax;
     }
 
     public BigDecimal getTipPercent()

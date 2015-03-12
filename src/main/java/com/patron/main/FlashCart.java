@@ -13,12 +13,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.patron.listeners.ButtonCommentListener;
 import com.patron.listeners.ButtonFinishListener;
 import com.patron.listeners.ButtonPaymentListener;
 import com.patron.listeners.ButtonStationListener;
 import com.patron.listeners.ButtonTipListener;
+import com.patron.listeners.ButtonReviewListener;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnCartRefreshListener;
@@ -53,6 +55,7 @@ public class FlashCart extends Activity
         final Button buttonTip = (Button) findViewById(R.id.cartButtonTip);
         final Button buttonCoupon = (Button) findViewById(R.id.cartButtonCoupon);
         final Button buttonComment = (Button) findViewById(R.id.cartButtonComment);
+        final Button buttonReview = (Button) findViewById(R.id.cartButtonReview);
 
         // Set button text.
         OnApiExecutedListener buttonRefreshListener = new OnApiExecutedListener() {
@@ -86,7 +89,15 @@ public class FlashCart extends Activity
         buttonPayment.setOnClickListener(new ButtonPaymentListener(cartRefreshListener));
         buttonTip.setOnClickListener(new ButtonTipListener(cartRefreshListener));
         buttonComment.setOnClickListener(new ButtonCommentListener(cartRefreshListener));
+        buttonReview.setOnClickListener(new ButtonReviewListener(cartRefreshListener));
         buttonFinish.setOnClickListener(new ButtonFinishListener());
+        buttonCoupon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Toast.makeText(view.getContext(), "You don't have any vouchers.", Toast.LENGTH_SHORT).show();
+            }
+        });
 	}
 
 	@Override

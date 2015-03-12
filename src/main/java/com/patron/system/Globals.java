@@ -1,7 +1,9 @@
 package com.patron.system;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +38,7 @@ public class Globals
 	private static List<Vendor> favoriteVendors = new ArrayList<Vendor>();
 	private static List<Item> favoriteItems =  new ArrayList<Item>();
 	private static Bitmap scan;
+    private static Map<String, Integer> points = new HashMap<String, Integer>();
 
 	// MAIN METHODS
 	public static Item getItemById(String itemId)
@@ -130,6 +133,11 @@ public class Globals
 		Globals.scan = codeImage;
 	}
 
+    public static void setPoints(Map<String, Integer> points)
+    {
+        Globals.points = points;
+    }
+
 	// Getters
 	public static User getUser()
 	{
@@ -190,4 +198,16 @@ public class Globals
 	{
 		return scan;
 	}
+
+    public static Map<String, Integer> getPoints()
+    {
+        return points;
+    }
+
+    public static int getPoints(String vendorId)
+    {
+        if (points.get(vendorId) == null)
+            return -1;
+        return points.get(vendorId);
+    }
 }

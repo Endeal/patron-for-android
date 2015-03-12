@@ -23,10 +23,12 @@ public class User
 	private String twitterId;
 	private String googlePlusId;
 	private List<Funder> funders;
+    private List<String> vendors;
+    private List<String> items;
 
 	public User(String id, String firstName, String lastName, String birthday,
 		String balancedId, String facebookId, String twitterId, String googlePlusId,
-		List<Funder> funders)
+		List<Funder> funders, List<String> vendors, List<String> items)
 	{
 		setId(id);
 		setFirstName(firstName);
@@ -37,6 +39,8 @@ public class User
 		setTwitterId(twitterId);
 		setGooglePlusId(googlePlusId);
 		setFunders(funders);
+        setVendors(vendors);
+        setItems(items);
 	}
 
 	// Setters
@@ -119,6 +123,16 @@ public class User
 		this.funders = funders;
 	}
 
+    public void setVendors(List<String> vendors)
+    {
+        this.vendors = vendors;
+    }
+
+    public void setItems(List<String> items)
+    {
+        this.items = items;
+    }
+
 	// Getters
 
 	public String getId()
@@ -196,4 +210,14 @@ public class User
 	{
 		return funders;
 	}
+
+    public List<String> getVendors()
+    {
+        return vendors;
+    }
+
+    public List<String> getItems()
+    {
+        return items;
+    }
 }

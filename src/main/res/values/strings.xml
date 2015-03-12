@@ -79,6 +79,7 @@
     <string name="cartButtonTip">Tip</string>
     <string name="cartButtonCoupon">Coupon</string>
     <string name="cartButtonComment">Comment</string>
+    <string name="cartButtonReview">Price Breakdown</string>
     <string name="cartButtonFinish">Pay Now</string>
 
     <!-- Scan Screen -->
@@ -245,6 +246,11 @@
     <string name="dialogCommentTextViewTitle">Enter a comment to be sent with your order to the vendor</string>
     <string name="dialogCommentEditTextMessage">Max 300 characters...</string>
     <string name="dialogCommentButtonDone">Done</string>
+
+    <!-- Review Dialog -->
+    <string name="dialogReviewTextViewTitle">Here is a breakdown of what costs what</string>
+    <string name="dialogReviewTextViewMain"></string>
+    <string name="dialogReviewButtonDone">Done</string>
 
     <!-- Arrays -->
     <string-array name="array_navigation">

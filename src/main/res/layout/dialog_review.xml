@@ -1,0 +1,40 @@
+<ScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/LayoutMain"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialogReviewTextViewTitle"
+            style="@style/TextViewTitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/dialogReviewTextViewTitle" />
+
+        <TextView
+            android:id="@+id/dialogReviewTextViewMain"
+            style="@style/TextViewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="dialogReviewTextViewMain" />
+
+        <Button
+            android:id="@+id/dialogReviewButtonDone"
+            style="@style/ButtonMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/dialogReviewButtonDone" />
+
+    </LinearLayout>
+
+</ScrollView>

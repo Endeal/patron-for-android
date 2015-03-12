@@ -10,9 +10,12 @@ import android.widget.TextView;
 import android.view.View;
 
 import com.patron.listeners.DrawerNavigationListener;
+import com.patron.listeners.ListItemSettingsFunderListener;
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.R;
 import com.patron.social.SocialExecutor;
 import static com.patron.social.SocialExecutor.Network;
+import com.patron.view.ListViewFunders;
 import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 
@@ -79,6 +82,18 @@ public class FlashSettings extends FragmentActivity
         textViewFacebook.setText(textFacebook);
         textViewTwitter.setText(textTwitter);
         textViewGooglePlus.setText(textGooglePlus);
+
+        // Set up the funders list.
+        final ListViewFunders funders = (ListViewFunders) findViewById(R.id.settingsListViewFunders);
+        funders.update();
+        OnApiExecutedListener updater = new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                funders.update();
+            }
+        };
+        funders.setOnItemClickListener(new ListItemSettingsFunderListener(updater));
     }
 
 	@Override

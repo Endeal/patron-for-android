@@ -5,12 +5,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <ListView
+    <com.patron.view.ListViewFunders
         android:id="@+id/dialogPaymentListMain"
         style="@style/ListViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+    </com.patron.view.ListViewFunders>
 
     <Button
     	android:id="@+id/dialogPaymentButtonCancel"

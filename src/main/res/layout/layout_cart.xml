@@ -22,7 +22,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/cartButtonFinish"
+            android:layout_above="@+id/cartLayoutFinish"
             android:weightSum="5" >
 
             <Button
@@ -67,12 +67,31 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/cartButtonFinish"
-            style="@style/ButtonPay"
+        <LinearLayout
+            android:id="@+id/cartLayoutFinish"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:weightSum="4" >
+
+            <Button
+                android:id="@+id/cartButtonReview"
+                style="@style/ButtonReview"
+                android:text="@string/cartButtonReview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/cartButtonFinish"
+                style="@style/ButtonPay"
+                android:text="@string/cartButtonFinish"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

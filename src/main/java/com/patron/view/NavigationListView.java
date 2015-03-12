@@ -42,6 +42,8 @@ public class NavigationListView extends ListView
         BUY, ORDERS, VOUCHERS, SETTINGS
     }
 
+    private TextView textViewHeader;
+
     public NavigationListView(Context context)
     {
         super(context);
@@ -63,8 +65,7 @@ public class NavigationListView extends ListView
     public void init()
     {
         // Set background of list view.
-        //setBackgroundColor(Color.parseColor("#000000"));
-        setBackgroundColor(Color.TRANSPARENT);
+        setBackgroundColor(Color.parseColor("#000000"));
 
         // Add Header
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
@@ -83,21 +84,30 @@ public class NavigationListView extends ListView
         imageView.setLayoutParams(imageViewLayoutParams);
         relativeLayout.setBackgroundColor(Color.parseColor("#000000"));
 
-        TextView textView = new TextView(relativeLayout.getContext());
-        textView.setText(Globals.getUser().getFirstName() + " " + Globals.getUser().getLastName());
-        textView.setTextColor(Color.parseColor("#FFFFFF"));
-        textView.setBackgroundColor(Color.TRANSPARENT);
-        textView.setGravity(Gravity.CENTER_VERTICAL);
+        // Get the reward points for the vendor.
+        textViewHeader = new TextView(relativeLayout.getContext());
+        if (Globals.getVendor() != null)
+        {
+            int points = Globals.getPoints(Globals.getVendor().getId());
+            if (points == -1)
+            {
+                points = 0;
+            }
+            textViewHeader.setText(Globals.getVendor().getName() + "\n" + points + " Points");
+        }
+        textViewHeader.setTextColor(Color.parseColor("#FFFFFF"));
+        textViewHeader.setBackgroundColor(Color.TRANSPARENT);
+        textViewHeader.setGravity(Gravity.CENTER_VERTICAL);
         Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
-        textView.setTypeface(typeface);
+        textViewHeader.setTypeface(typeface);
         RelativeLayout.LayoutParams textViewLayoutParams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT, height);
         textViewLayoutParams.addRule(RelativeLayout.RIGHT_OF, imageView.getId());
         textViewLayoutParams.setMargins(leftMargin, topMargin, 0, 0);
-        textView.setLayoutParams(textViewLayoutParams);
+        textViewHeader.setLayoutParams(textViewLayoutParams);
 
         relativeLayout.addView(imageView);
-        relativeLayout.addView(textView);
+        relativeLayout.addView(textViewHeader);
         addHeaderView(relativeLayout);
 
         // Set up the drawer layout items.
@@ -144,5 +154,10 @@ public class NavigationListView extends ListView
         {
             getChildAt(i).setBackgroundColor(Color.BLUE);
         }
+    }
+
+    public TextView getTextViewHeader()
+    {
+        return textViewHeader;
     }
 }

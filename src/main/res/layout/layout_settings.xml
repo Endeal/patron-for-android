@@ -132,7 +132,7 @@
 
             </LinearLayout>
 
-            <ListView
+            <com.patron.view.ListViewFunders
                 android:id="@+id/settingsListViewFunders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

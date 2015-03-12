@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.main.FlashCart;
 import com.patron.main.FlashCodes;
+import com.patron.R;
 import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.patron.system.Patron;

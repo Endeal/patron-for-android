@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,8 @@ public class Parser
 		JSONArray rawCards = cardsObject.getJSONArray("cards");
 		JSONObject bankAccountsObject = rawUser.getJSONObject("bankAccounts");
 		JSONArray rawBankAccounts = bankAccountsObject.getJSONArray("bank_accounts");
+        JSONArray rawVendors = rawUser.getJSONArray("vendors");
+        JSONArray rawItems = rawUser.getJSONArray("items");
 		List<Funder> funders = new ArrayList<Funder>();
 		for (Card card : Parser.getCards(rawCards))
 		{
@@ -54,8 +57,28 @@ public class Parser
 		{
 			funders.add(bankAccount);
 		}
+        List<String> vendors = new ArrayList<String>();
+        for (int i = 0; i < rawVendors.length(); i++)
+        {
+            JSONObject rawVendor = rawVendors.getJSONObject(i);
+            String vendor = rawVendor.getString("vendorId");
+            vendors.add(vendor);
+            System.out.println("POOP VENDORS:" + vendors.toString());
+
+            int rawPoints = rawVendor.getInt("points");
+            Map<String, Integer> points = Globals.getPoints();
+            points.put(vendor, rawPoints);
+            Globals.setPoints(points);
+            System.out.println("POOP POINTS:" + points.toString());
+        }
+        List<String> items = new ArrayList<String>();
+        for (int i = 0; i < rawItems.length(); i++)
+        {
+            String item = rawItems.getString(i);
+            items.add(item);
+        }
 		return new User(patronId, firstName, lastName, birthday, balancedId,
-			facebookId, twitterId, googlePlusId, funders);
+			facebookId, twitterId, googlePlusId, funders, vendors, items);
 	}
 
 	public static List<Card> getCards(JSONArray rawCards) throws JSONException
@@ -146,7 +169,7 @@ public class Parser
 		}
 		return vendors;
 	}
-	
+
 	public static Vendor getVendor(JSONObject rawVendor) throws JSONException
 	{
 		String vendorId = rawVendor.getString("vendorId");
@@ -201,7 +224,7 @@ public class Parser
 		}
 		return items;
 	}
-	
+
 	public static Item getItem(JSONObject rawItem) throws JSONException
 	{
 		String itemId = rawItem.getString("itemId");
@@ -245,7 +268,7 @@ public class Parser
 		}
 		return categories;
 	}
-	
+
 	public static Category getCategory(JSONObject rawCategory) throws JSONException
 	{
 		String categoryId = rawCategory.getString("categoryId");
@@ -265,7 +288,7 @@ public class Parser
 		}
 		return attributes;
 	}
-	
+
 	public static Attribute getAttribute(JSONObject rawAttribute) throws JSONException
 	{
 		JSONArray rawOptions = rawAttribute.getJSONArray("options");
@@ -295,7 +318,7 @@ public class Parser
 		}
 		return options;
 	}
-	
+
 	public static Option getOption(JSONObject rawOption) throws JSONException
 	{
 		String id = rawOption.getString("optionId");
@@ -317,7 +340,7 @@ public class Parser
 		}
 		return supplements;
 	}
-	
+
 	public static Supplement getSupplement(JSONObject rawSupplement) throws JSONException
 	{
 		String id = rawSupplement.getString("supplementId");
@@ -339,16 +362,16 @@ public class Parser
 		}
 		return fragments;
 	}
-	
+
 	public static Fragment getFragment(JSONObject rawFragment) throws JSONException
 	{
 		String fragmentId = rawFragment.getString("fragmentId");
 		int quantity = rawFragment.getInt("quantity");
-		
+
 		// Get the item.
 		JSONObject rawItem = rawFragment.getJSONObject("item");
 		Item item = Parser.getItem(rawItem);
-		
+
 		// Get the selections.
 		JSONArray rawSelections = rawFragment.getJSONArray("selections");
 		List<Selection> selections = new ArrayList<Selection>();
@@ -361,7 +384,7 @@ public class Parser
 				selections.add(selection);
 			}
 		}
-		
+
 		// Get the supplements.
 		JSONArray rawSupplements = rawFragment.getJSONArray("supplements");
 		List<Supplement> supplements = new ArrayList<Supplement>();
@@ -374,11 +397,11 @@ public class Parser
 				supplements.add(supplement);
 			}
 		}
-		
+
 		Fragment fragment = new Fragment(fragmentId, item, selections, supplements, quantity);
 		return fragment;
 	}
-	
+
 	public static Selection getSelection(JSONObject rawSelection) throws JSONException
 	{
 		JSONObject rawAttribute = rawSelection.getJSONObject("attribute");
@@ -388,7 +411,7 @@ public class Parser
 		Selection selection = new Selection(attribute, option);
 		return selection;
 	}
-	
+
 	public static Order getOrder(JSONObject rawOrder) throws JSONException
 	{
 		String orderId = rawOrder.getString("orderId");
@@ -421,7 +444,7 @@ public class Parser
 		{
 			funder = Parser.getBankAccount(rawFunder);
 		}
-		
+
 		// Get the fragments.
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
@@ -443,7 +466,7 @@ public class Parser
 			funder, tip, coupons, comment);
 		return order;
 	}
-	
+
 	public static Code getCode(JSONObject rawCode)throws JSONException, ParseException
 	{
 		String timeReceived = rawCode.getString("timestamp");
@@ -451,7 +474,7 @@ public class Parser
 		Date parsedDate = dateFormat.parse(timeReceived);
 		Timestamp parsedTimestamp = new Timestamp(parsedDate.getTime());
 		long timestamp = parsedTimestamp.getTime();
-		
+
 		JSONObject rawOrder = rawCode.getJSONObject("order");
 		Order order = getOrder(rawOrder);
 		Code code = new Code(timestamp, order);

@@ -2,6 +2,11 @@ package com.patron.model;
 
 public abstract class Funder
 {
+    public static enum Type
+    {
+        Card, BankAccount
+    }
+
 	// Properties
 	private String id;
 	private String name;
@@ -15,12 +20,25 @@ public abstract class Funder
 	private String href;
 	private String createdAt;
 
+    // Convenience for checking type.
+    public Type getFunderType()
+    {
+        if (this.type.toLowerCase().equals("credit") || this.type.toLowerCase().equals("debit"))
+        {
+            return Type.Card;
+        }
+        else
+        {
+            return Type.BankAccount;
+        }
+    }
+
 	// Setters
 	public void setId(String id)
 	{
 		this.id = id;
 	}
-	
+
 	public void setName(String name)
 	{
 		this.name = name;
@@ -76,7 +94,7 @@ public abstract class Funder
 	{
 		return this.id;
 	}
-	
+
 	public String getName()
 	{
 		return this.name;

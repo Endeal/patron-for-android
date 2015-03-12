@@ -18,6 +18,8 @@ import com.patron.lists.ListLinks;
 import com.patron.model.BankAccount;
 import com.patron.model.Card;
 import com.patron.model.Code;
+import com.patron.model.Funder;
+import static com.patron.model.Funder.Type;
 import com.patron.model.Item;
 import com.patron.model.Order;
 import com.patron.model.User;
@@ -493,6 +495,59 @@ public class ApiExecutor
     public void addCard(Card card)
     {
         callback();
+    }
+
+    public void removeFunder(Funder funder, final OnApiExecutedListener... listeners)
+    {
+        String link = ListLinks.API_REMOVE_CARD;
+        String key = "card";
+        if (funder.getFunderType() == Funder.Type.BankAccount)
+        {
+            link = ListLinks.API_REMOVE_BANK_ACCOUNT;
+            key = "bankAccount";
+        }
+        final String url = link;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair instrument = new BasicNameValuePair(key, funder.getHref());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(instrument);
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            ApiTask apiTask = new ApiTask();
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            if (response.equals("1"))
+                            {
+                                Toast.makeText(Patron.getContext(), "Removed funding instrument.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                    callback(listeners);
+                }
+            });
+        }
+        catch (UnsupportedEncodingException e)
+        {
+
+        }
+        apiTask.execute(request);
     }
 
     public void removeCard(Map<String, String> data)
