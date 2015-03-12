@@ -43,6 +43,37 @@ public class User
         setItems(items);
 	}
 
+    // Convenience
+    public boolean hasFavoriteVendor(String vendorId)
+    {
+        if (getVendors() != null && getVendors().size() > 0)
+        {
+            for (int i = 0; i < getVendors().size(); i++)
+            {
+                if (vendorId.equals(getVendors().get(i)))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isFavoriteItem(String itemId)
+    {
+        if (getItems() != null && getItems().size() > 0)
+        {
+            for (int i = 0; i < getItems().size(); i++)
+            {
+                if (itemId.equals(getItems().get(i)))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 	// Setters
 
 	public void setId(String id)

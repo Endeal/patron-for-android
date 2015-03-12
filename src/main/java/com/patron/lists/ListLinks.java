@@ -40,6 +40,10 @@ public class ListLinks
 	public static final String API_ADD_ORDER = BASE_URL + "add/addOrder.php";
 	public static final String API_ADD_CARD = BASE_URL + "add/addCard.php";
 	public static final String API_ADD_BANK_ACCOUNT = BASE_URL + "add/addBankAccount.php";
+    public static final String API_ADD_FAVORITE_VENDOR = BASE_URL + "add/addFavoriteVendor.php";
+    public static final String API_ADD_FAVORITE_ITEM = BASE_URL + "add/addFavoriteItem.php";
 	public static final String API_REMOVE_CARD = BASE_URL + "remove/removeCard.php";
 	public static final String API_REMOVE_BANK_ACCOUNT = BASE_URL + "remove/removeBankAccount.php";
+    public static final String API_REMOVE_FAVORITE_VENDOR = BASE_URL + "remove/removeFavoriteVendor.php";
+    public static final String API_REMOVE_FAVORITE_ITEM = BASE_URL + "remove/removeFavoriteItem.php";
 }

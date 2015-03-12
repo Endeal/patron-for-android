@@ -569,4 +569,96 @@ public class ApiExecutor
     {
         callback();
     }
+
+    public void addFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_ADD_FAVORITE_VENDOR;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(vendorId);
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            ApiTask apiTask = new ApiTask();
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            if (response.equals("1"))
+                            {
+                                Toast.makeText(Patron.getContext(), "Successfully added favorite vendor.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                    callback(listeners);
+                }
+            });
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        apiTask.execute(request);
+    }
+
+    public void removeFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_REMOVE_FAVORITE_VENDOR;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(vendorId);
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            ApiTask apiTask = new ApiTask();
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            if (response.equals("1"))
+                            {
+                                Toast.makeText(Patron.getContext(), "Successfully removed favorite vendor.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                    callback(listeners);
+                }
+            });
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        apiTask.execute(request);
+    }
 }

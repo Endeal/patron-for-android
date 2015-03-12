@@ -49,19 +49,9 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
                 R.id.locationListItemTextAddress,
                 R.id.locationListItemToggleButtonFavorite};
 
-        for (int i = 0; i < Globals.getVendors().size(); i++)
-        {
-            Map<String, String> mapping = new HashMap<String, String>();
-            Vendor currentLocation = Globals.getVendors().get(i);
-            mapping.put("textName", currentLocation.getName());
-            mapping.put("textPhone", currentLocation.getPhone());
-            mapping.put("textAddress", currentLocation.getAddress() +
-                    ", " + currentLocation.getCity() +
-                    ", " + currentLocation.getState() +
-                    currentLocation.getZip());
-            mapping.put("toggleButtonFavorite", "" + i);
-            locations.add(mapping);
-        }
+        addMappings(true, locations);
+        addMappings(false, locations);
+
         SimpleAdapter adapter = new SimpleAdapter(listLocations.getContext(), locations,
             R.layout.list_item_location, from, to);
         adapter.setViewBinder(new VendorBinder());
@@ -75,5 +65,26 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
         targetView.setAnimatedTransition(true);
         final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
         attacher.setOnItemClickListener(new ListItemVendorListener());
+    }
+
+
+    public void addMappings(boolean favorite, List<Map<String, String>> locations)
+    {
+        for (int i = 0; i < Globals.getVendors().size(); i++)
+        {
+            Map<String, String> mapping = new HashMap<String, String>();
+            Vendor currentLocation = Globals.getVendors().get(i);
+            if (Globals.getUser().hasFavoriteVendor(currentLocation.getId()) == favorite)
+            {
+                mapping.put("textName", currentLocation.getName());
+                mapping.put("textPhone", currentLocation.getPhone());
+                mapping.put("textAddress", currentLocation.getAddress() +
+                        ", " + currentLocation.getCity() +
+                        ", " + currentLocation.getState() +
+                        currentLocation.getZip());
+                mapping.put("toggleButtonFavorite", "" + i);
+                locations.add(mapping);
+            }
+        }
     }
 }

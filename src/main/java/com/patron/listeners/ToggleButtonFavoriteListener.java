@@ -3,13 +3,16 @@ package com.patron.listeners;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.patron.model.Item;
 import com.patron.model.Vendor;
+import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.google.gson.Gson;
 
@@ -36,6 +39,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	@Override
 	public void onClick(View buttonView)
 	{
+        final Context context = buttonView.getContext();
 		// A product was selected.
 		if (item != null)
 		{
@@ -66,6 +70,28 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 		// A location was selected.
 		else
 		{
+            ApiExecutor executor = new ApiExecutor();
+            if (Globals.getUser().hasFavoriteVendor(vendor.getId()))
+            {
+                executor.removeFavoriteVendor(vendor, new OnApiExecutedListener() {
+                    @Override
+                    public void onExecuted()
+                    {
+                        Toast.makeText(context, "Removed vendor from favorites.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else
+            {
+                executor.addFavoriteVendor(vendor, new OnApiExecutedListener() {
+                    @Override
+                    public void onExecuted()
+                    {
+                        Toast.makeText(context, "Added vendor to favorites.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            /*
 			if (Globals.getFavoriteVendors() != null && !Globals.getFavoriteVendors().isEmpty())
 			{
 				boolean isFavorite = false;
@@ -88,6 +114,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 			{
 				addFavoriteVendor(buttonView);
 			}
+            */
 		}
 	}
 
@@ -104,7 +131,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 		editor.commit();
 		Globals.setFavoriteVendors(favorites);
 	}
-	
+
 	public void addFavoriteItem(View buttonView)
 	{
 		List<Item> favorites = Globals.getFavoriteItems();
@@ -118,7 +145,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 		editor.commit();
 		Globals.setFavoriteItems(favorites);
 	}
-	
+
 	public void removeFavoriteVendor(View buttonView, int i)
 	{
 		List<Vendor> favorites = Globals.getFavoriteVendors();
@@ -132,7 +159,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 		editor.commit();
 		Globals.setFavoriteVendors(favorites);
 	}
-	
+
 	public void removeFavoriteItem(View buttonView, int i)
 	{
 		List<Item> favorites = Globals.getFavoriteItems();

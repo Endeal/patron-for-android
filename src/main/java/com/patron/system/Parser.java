@@ -62,7 +62,11 @@ public class Parser
         {
             JSONObject rawVendor = rawVendors.getJSONObject(i);
             String vendor = rawVendor.getString("vendorId");
-            vendors.add(vendor);
+            String favorite = rawVendor.getString("favorite");
+            if (favorite.equals("1"))
+            {
+                vendors.add(vendor);
+            }
             System.out.println("POOP VENDORS:" + vendors.toString());
 
             int rawPoints = rawVendor.getInt("points");

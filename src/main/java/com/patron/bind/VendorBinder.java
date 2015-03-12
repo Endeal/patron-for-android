@@ -43,14 +43,10 @@ public class VendorBinder implements SimpleAdapter.ViewBinder
 			toggle.setOnClickListener(listener);
 
 			toggle.setChecked(false);
-			for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
-			{
-				Vendor favoriteVendor = Globals.getFavoriteVendors().get(i);
-				if (favoriteVendor.getId().equals(vendor.getId()))
-				{
-					toggle.setChecked(true);
-				}
-			}
+            if (Globals.getUser().hasFavoriteVendor(vendor.getId()))
+            {
+                toggle.setChecked(true);
+            }
 
         	return true;
 		}
