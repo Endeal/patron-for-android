@@ -110,14 +110,14 @@
 
         <!-- Profile Screen Activity -->
         <activity
-            android:name="com.patron.main.FlashProfile"
-            android:label="@string/titleActivityProfile"
+            android:name="com.patron.main.FlashVouchers"
+            android:label="@string/titleActivityVouchers"
             android:theme="@style/Theme.Main"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.patron.main.FlashHome">
+            android:parentActivityName="com.patron.main.FlashLogin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.patron.main.FlashHome" />
+                android:value="com.patron.main.FlashLogin" />
         </activity>
 
         <!-- The Create Account Screen Activity -->

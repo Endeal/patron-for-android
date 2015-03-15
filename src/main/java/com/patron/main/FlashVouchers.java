@@ -29,17 +29,17 @@ import static com.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashProfile extends Activity
+public class FlashVouchers extends Activity
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_profile);
+        setContentView(R.layout.layout_vouchers);
 
 		// Set up the navigation drawer.
-		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.profileDrawerNavigation);
-		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.profileListNavigation);
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.vouchersDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.vouchersListNavigation);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.VOUCHERS);

@@ -535,19 +535,19 @@ public class ApiExecutor
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument: " + response, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                     callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
 
         }
-        apiTask.execute(request);
     }
 
     public void removeCard(Map<String, String> data)
@@ -597,23 +597,23 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Successfully added favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
                                 Toast.makeText(Patron.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
                     }
-                    callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
         }
-        apiTask.execute(request);
     }
 
     public void removeFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
@@ -643,22 +643,22 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Successfully removed favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Removed favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
                                 Toast.makeText(Patron.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
                     }
-                    callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
         }
-        apiTask.execute(request);
     }
 }

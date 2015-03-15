@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
+import android.widget.Button;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemSettingsFunderListener;
@@ -79,6 +81,8 @@ public class FlashSettings extends FragmentActivity
         TextView textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
         TextView textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
         TextView textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
+        Button buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
+        Button buttonAddBankAccount = (Button)findViewById(R.id.settingsButtonAddBankAccount);
         textViewFacebook.setText(textFacebook);
         textViewTwitter.setText(textTwitter);
         textViewGooglePlus.setText(textGooglePlus);
@@ -94,6 +98,24 @@ public class FlashSettings extends FragmentActivity
             }
         };
         funders.setOnItemClickListener(new ListItemSettingsFunderListener(updater));
+        buttonAddCard.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Activity activity = (Activity)view.getContext();
+                Intent intent = new Intent(activity, FlashAddCard.class);
+                activity.startActivity(intent);
+            }
+        });
+        buttonAddBankAccount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Activity activity = (Activity)view.getContext();
+                Intent intent = new Intent(activity, FlashAddBankAccount.class);
+                activity.startActivity(intent);
+            }
+        });
     }
 
 	@Override

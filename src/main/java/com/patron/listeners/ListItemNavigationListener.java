@@ -15,7 +15,7 @@ import com.patron.listeners.DrawerNavigationListener;
 import com.patron.main.FlashCodes;
 import com.patron.main.FlashHelp;
 import com.patron.main.FlashMenu;
-import com.patron.main.FlashProfile;
+import com.patron.main.FlashVouchers;
 import com.patron.main.FlashSettings;
 import com.patron.main.FlashVendors;
 import static com.patron.view.NavigationListView.Hierarchy;
@@ -59,7 +59,7 @@ public class ListItemNavigationListener implements OnItemClickListener
             case 2: // Vouchers
                 if (hierarchy != Hierarchy.VOUCHERS)
                 {
-                    intent = new Intent(context, FlashProfile.class);
+                    intent = new Intent(context, FlashVouchers.class);
                 }
                 break;
             default:

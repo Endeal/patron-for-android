@@ -14,29 +14,11 @@
             <!-- Settings Text -->
 
             <TextView
-                android:id="@+id/settingsTextLocate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:text="@string/settingsTextLocate" />
-
-            <TextView
-                android:id="@+id/settingsTextFacebookPublishOrder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextLocate"
-                android:layout_margin="10dp"
-                android:text="@string/settingsTextFacebookPublishOrder" />
-
-            <TextView
                 android:id="@+id/settingsTextViewNetworkFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextFacebookPublishOrder"
                 android:layout_margin="10dp"
                 android:text="@string/settingsTextViewNetworkFacebook" />
 
@@ -59,23 +41,6 @@
                 android:text="@string/settingsTextViewNetworkGooglePlus" />
 
             <!-- Settings Checkboxes -->
-
-            <CheckBox
-                android:id="@+id/settingsCheckboxLocate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextLocate"
-                android:layout_margin="10dp" />
-
-            <CheckBox
-                android:id="@+id/settingsCheckboxFacebookPublishOrder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextFacebookPublishOrder"
-                android:layout_margin="10dp"/>
-
             <Button
                 android:id="@+id/settingsButtonNetworkFacebook"
                 style="@style/ButtonConnect"
@@ -137,7 +102,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settingsLinearLayoutFunders"
-                android:layout_above="@+id/settingsButtonLogout" />
+                android:layout_above="@+id/settingsLinearLayoutLegal" />
+
+            <LinearLayout
+                android:id="@+id/settingsLinearLayoutLegal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/settingsButtonLogout"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/settingsTextViewPrivacyPolicy"
+                    style="@style/TextViewLegal"
+                    android:text="Privacy Policy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/settingsTextViewTermsOfService"
+                    style="@style/TextViewLegal"
+                    android:text="Terms of Service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/settingsButtonLogout"

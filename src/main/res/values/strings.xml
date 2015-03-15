@@ -86,18 +86,8 @@
     <string name="codeImageImageViewDescription">QR Code</string>
     <string name="scanTextOrder">Order</string>
 
-    <!-- Profile Screen -->
-    <string name="profileImageAvatar">Image</string>
-    <string name="profileTextUser">First Last</string>
-    <string name="profileTextFacebook">Facebook: Not Connected</string>
-    <string name="profileTextTwitter">Twitter: Not Connected</string>
-    <string name="profileTextGooglePlus">Google+: Not Connected</string>
-    <string name="profileButtonLogout">Logout</string>
-    <string name="profileButtonAddPayment">Add Payment</string>
-    <string name="profileButtonRemovePayment">Remove Payment</string>
-    <string name="profileButtonFacebook">Connect</string>
-    <string name="profileButtonTwitter">Connect</string>
-    <string name="profileButtonGooglePlus">Connect</string>
+    <!-- Vouchers Screen -->
+    <string name="vouchersTextViewTitle">You do not have any vouchers.</string>
 
     <!-- Search Vendors Screen -->
     <string name="searchVendorsTextMain">Search:</string>
@@ -190,7 +180,7 @@
     <string name="titleActivityScan">Scan</string>
     <string name="titleActivityFavorites">Favorites</string>
     <string name="titleActivityLocations">Vendors</string>
-    <string name="titleActivityProfile">Profile</string>
+    <string name="titleActivityVouchers">Vouchers</string>
     <string name="titleActivitySearchVendors">Search</string>
     <string name="titleActivitySearchItems">Search</string>
     <string name="titleActivitySettings">Settings</string>
