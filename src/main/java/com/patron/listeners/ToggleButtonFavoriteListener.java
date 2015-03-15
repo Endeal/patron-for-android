@@ -73,16 +73,20 @@ public class ToggleButtonFavoriteListener implements OnClickListener
             ApiExecutor executor = new ApiExecutor();
             if (Globals.getUser().hasFavoriteVendor(vendor.getId()))
             {
+                executor.removeFavoriteVendor(vendor);
+                /*
                 executor.removeFavoriteVendor(vendor, new OnApiExecutedListener() {
                     @Override
                     public void onExecuted()
                     {
-                        Toast.makeText(context, "Removed vendor from favorites.", Toast.LENGTH_SHORT).show();
                     }
                 });
+                */
             }
             else
             {
+                executor.addFavoriteVendor(vendor);
+                /*
                 executor.addFavoriteVendor(vendor, new OnApiExecutedListener() {
                     @Override
                     public void onExecuted()
@@ -90,6 +94,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
                         Toast.makeText(context, "Added vendor to favorites.", Toast.LENGTH_SHORT).show();
                     }
                 });
+                */
             }
             /*
 			if (Globals.getFavoriteVendors() != null && !Globals.getFavoriteVendors().isEmpty())

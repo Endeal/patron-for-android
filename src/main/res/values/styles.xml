@@ -852,6 +852,14 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:padding">10dp</item>
     </style>
+    <style name="TextViewLegal">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#5588EE</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="TextViewLabel">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>
         <item name="android:textSize">24sp</item>

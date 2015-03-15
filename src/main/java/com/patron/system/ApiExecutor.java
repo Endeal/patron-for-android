@@ -562,7 +562,7 @@ public class ApiExecutor
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument: " + response, Toast.LENGTH_SHORT).show();
                             }
                             loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
@@ -629,12 +629,10 @@ public class ApiExecutor
                             System.out.println("afv4");
                             if (response.equals("1"))
                             {
-                                System.out.println("afv5");
-                                Toast.makeText(Patron.getContext(), "Successfully added favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                System.out.println("afv6");
                                 Toast.makeText(Patron.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
@@ -678,7 +676,7 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Successfully removed favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Patron.getContext(), "Removed favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
