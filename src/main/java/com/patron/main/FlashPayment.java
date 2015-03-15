@@ -38,7 +38,7 @@ public class FlashPayment extends Activity implements Loadable
 	{
     	if (item.getItemId() == android.R.id.home)
     	{
-        	Intent intent = new Intent(this, FlashProfile.class);
+        	Intent intent = new Intent(this, FlashVouchers.class);
         	this.finish();
         	startActivity(intent);
         	return true;

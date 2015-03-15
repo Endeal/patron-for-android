@@ -161,9 +161,7 @@ public class FlashHome extends ActionBarActivity implements Loadable
                 }
                 else
                 {*/
-                    intent = new Intent(view.getContext(), FlashProfile.class);
                 //}
-                view.getContext().startActivity(intent);
             }
         });
 

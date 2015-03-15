@@ -247,7 +247,7 @@
       <configuration>
         <sdk>
           <!-- platform or api level (api level 4 = platform 1.6) -->
-          <platform>21</platform>
+          <platform>22</platform>
         </sdk>
         <!--
             <dexOptimize>false</dexOptimize>

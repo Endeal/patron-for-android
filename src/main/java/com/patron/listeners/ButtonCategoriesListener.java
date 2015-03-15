@@ -14,8 +14,9 @@ import com.patron.R;
 import com.patron.sort.ProductSorter;
 import com.patron.system.Globals;
 
-public class ButtonCategoriesListener implements OnClickListener
+public class ButtonCategoriesListener// implements OnClickListener
 {
+	/*
 	FlashMenu activity;
 	Category category;
     OnMenuRefreshListener listener;
@@ -24,7 +25,7 @@ public class ButtonCategoriesListener implements OnClickListener
 	{
 		this.activity = activity;
 		this.category = category;
-        this.listener = listener;
+    this.listener = listener;
 	}
 
 	public void onClick(View v)
@@ -62,4 +63,5 @@ public class ButtonCategoriesListener implements OnClickListener
             listener.onExecuted();
 		}
 	}
+	*/
 }

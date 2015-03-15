@@ -21,6 +21,7 @@ import com.patron.model.Item;
 import com.patron.model.Order;
 import com.patron.model.Vendor;
 import com.patron.model.User;
+import com.patron.view.ButtonFilter;
 
 public class Globals
 {
@@ -38,7 +39,8 @@ public class Globals
 	private static List<Vendor> favoriteVendors = new ArrayList<Vendor>();
 	private static List<Item> favoriteItems =  new ArrayList<Item>();
 	private static Bitmap scan;
-    private static Map<String, Integer> points = new HashMap<String, Integer>();
+  private static Map<String, Integer> points = new HashMap<String, Integer>();
+	private static ButtonFilter buttonFilter;
 
 	// MAIN METHODS
 	public static Item getItemById(String itemId)
@@ -138,6 +140,11 @@ public class Globals
         Globals.points = points;
     }
 
+public static void setButtonFilter(ButtonFilter buttonFilter)
+{
+	Globals.buttonFilter = buttonFilter;
+}
+
 	// Getters
 	public static User getUser()
 	{
@@ -210,4 +217,9 @@ public class Globals
             return -1;
         return points.get(vendorId);
     }
+
+		public static ButtonFilter getButtonFilter()
+		{
+			return buttonFilter;
+		}
 }

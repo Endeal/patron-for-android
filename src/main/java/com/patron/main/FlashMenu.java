@@ -55,11 +55,15 @@ import com.patron.listeners.OnMenuRefreshListener;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.lists.ListFonts;
 import com.patron.lists.ListLinks;
+import com.patron.model.Category;
 import com.patron.model.Item;
 import com.patron.R;
 import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
+import com.patron.view.ButtonCategory;
+import com.patron.view.ButtonFavorites;
+import com.patron.view.ButtonSearch;
 import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 
@@ -78,32 +82,32 @@ public class FlashMenu extends Activity
 
 		// Set up the drawer layout.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
-        DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+    DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		final NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
 
 		// Find the views.
 		ListView listMenu = (ListView) findViewById(R.id.menuListItems);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menuLayoutTypes);
-        Button buttonSelectVendor = (Button) findViewById(R.id.menuButtonSelectVendor);
+    LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menuLayoutTypes);
+    Button buttonSelectVendor = (Button) findViewById(R.id.menuButtonSelectVendor);
 		Button buttonCheckout = (Button) findViewById(R.id.menuButtonCheckout);
-		Button buttonFavorites = (Button) findViewById(R.id.menuButtonFavorites);
+    ButtonSearch buttonSearch = (ButtonSearch) findViewById(R.id.menuButtonSearch);
+		ButtonFavorites buttonFavorites = (ButtonFavorites) findViewById(R.id.menuButtonFavorites);
 		final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
 		swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
 			android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
-
-        // Listener to refresh the page on fetching the items for the vendor.
-        final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems,
-                listMenu, linearLayout, buttonSelectVendor);
+    // Listener to refresh the page on fetching the items for the vendor.
+    final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems,
+            listMenu, linearLayout, buttonSelectVendor);
 
         // Update the items on manual refresh.
         final ApiExecutor apiExecutor = new ApiExecutor();
         int startOffset = (int)Globals.convertDpToPixel(10, this);
         int endOffset = (int)Globals.convertDpToPixel(50, this);
         swipeRefreshLayoutItems.setProgressViewOffset(false, startOffset, endOffset);
-		swipeRefreshLayoutItems.setOnRefreshListener(new OnRefreshListener() {
+		    swipeRefreshLayoutItems.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh()
             {
@@ -144,8 +148,9 @@ public class FlashMenu extends Activity
         }
 
         // Set up listeners
-		buttonFavorites.setOnClickListener(new ButtonFavoritesListener(this, refreshListener));
-		buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
+        buttonSearch.setListener(refreshListener);
+        buttonFavorites.setListener(refreshListener);
+		    buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
         buttonSelectVendor.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view)
@@ -164,16 +169,6 @@ public class FlashMenu extends Activity
     public List<Button> getButtonCategories()
     {
         return buttonCategories;
-    }
-
-    public void setButtonCategories(List<Button> buttonCategories)
-    {
-        this.buttonCategories = buttonCategories;
-    }
-
-    public Button getButtonFavorites()
-    {
-        return (Button)findViewById(R.id.menuButtonFavorites);
     }
 
 	// Calligraphy

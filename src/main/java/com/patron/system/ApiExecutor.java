@@ -127,6 +127,7 @@ public class ApiExecutor
         NameValuePair pairPassword = new BasicNameValuePair("password", password);
         pairs.add(pairEmail);
         pairs.add(pairPassword);
+        System.out.println("login1");
         try
         {
             request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
@@ -137,30 +138,38 @@ public class ApiExecutor
                 {
                     try
                     {
+                      System.out.println("login3");
                         for (Map.Entry<URI, byte[]> entry : data.entrySet())
                         {
+                            System.out.println("login4");
                             String rawUri = entry.getKey().toString();
                             String rawUser = new String(entry.getValue());
                             if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
                             {
+                                System.out.println("login5");
                                 User user = Parser.getUser(new JSONObject(rawUser));
                                 user.setEmail(finalEmail);
                                 user.setPassword(finalPassword);
                                 Globals.setUser(user);
+                                System.out.println("login6");
                             }
                         }
                     }
                     catch (NetworkOnMainThreadException e)
                     {
                         e.printStackTrace();
+                        System.out.println("login7");
                     }
                     catch (JSONException e)
                     {
                         e.printStackTrace();
+                        System.out.println("login8");
                     }
                     catch (NullPointerException e)
                     {
+                        System.out.println("login9");
                         Toast.makeText(Patron.getContext(), "Failed to login.", Toast.LENGTH_SHORT).show();
+                        System.out.println("login10");
                     }
                     callback(listeners);
                 }
@@ -169,16 +178,20 @@ public class ApiExecutor
                 "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
             setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
             apiTask.setMocking(Patron.DEBUGGING_OFFLINE);
+            System.out.println("login11");
             apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
+            System.out.println("login12");
         }
         catch (IOException e)
         {
             e.printStackTrace();
+            System.out.println("login13");
         }
+        System.out.println("login14");
     }
 
     public void loginFacebook()
@@ -452,21 +465,35 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                    System.out.println("ao1");
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
+                        System.out.println("ao2");
                         String rawUri = entry.getKey().toString();
+                        System.out.println("ao3");
                         String rawOrder = new String(entry.getValue());
+                        System.out.println("ao4");
+                        System.out.println("prepended string:" + rawOrder);
                         rawOrder = rawOrder.replaceAll("\\n", "");
+                        System.out.println("ao5");
                         if (rawUri.equals(ListLinks.API_ADD_ORDER))
                         {
+                            System.out.println("ao6");
                             if (rawOrder.equals("1"))
                             {
+                                System.out.println("ao7");
                                 Toast.makeText(context, "Successfully placed order.", Toast.LENGTH_SHORT).show();
+                                System.out.println("ao8");
                                 callback(listeners);
+                                System.out.println("ao9");
                             }
                             else
                             {
+                                System.out.println("ao10");
+                                System.out.println(rawOrder);
+                                System.out.println("ao11");
                                 Toast.makeText(context, rawOrder, Toast.LENGTH_SHORT).show();
+                                System.out.println("ao12");
                             }
                         }
                     }
@@ -515,10 +542,10 @@ public class ApiExecutor
         pairs.add(email);
         pairs.add(password);
         pairs.add(instrument);
+        ApiTask apiTask = new ApiTask();
         try
         {
             request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            ApiTask apiTask = new ApiTask();
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
@@ -537,17 +564,17 @@ public class ApiExecutor
                             {
                                 Toast.makeText(Patron.getContext(), "Failed to remove funding instrument.", Toast.LENGTH_SHORT).show();
                             }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
                     }
-                    callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
 
         }
-        apiTask.execute(request);
     }
 
     public void removeCard(Map<String, String> data)
@@ -581,39 +608,47 @@ public class ApiExecutor
         pairs.add(email);
         pairs.add(password);
         pairs.add(vendorId);
+        System.out.println("afv1");
         try
         {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
             ApiTask apiTask = new ApiTask();
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            System.out.println("afv2");
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                    System.out.println("afvdone");
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
+                        System.out.println("afv3");
                         if (rawUri.equals(url))
                         {
                             String response = new String(entry.getValue());
+                            System.out.println("afv4");
                             if (response.equals("1"))
                             {
+                                System.out.println("afv5");
                                 Toast.makeText(Patron.getContext(), "Successfully added favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
+                                System.out.println("afv6");
                                 Toast.makeText(Patron.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
                     }
-                    callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
+            System.out.println("afv8");
         }
-        apiTask.execute(request);
     }
 
     public void removeFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
@@ -629,8 +664,8 @@ public class ApiExecutor
         pairs.add(vendorId);
         try
         {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
             ApiTask apiTask = new ApiTask();
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
@@ -649,16 +684,16 @@ public class ApiExecutor
                             {
                                 Toast.makeText(Patron.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }
                     }
-                    callback(listeners);
                 }
             });
+            apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
         }
-        apiTask.execute(request);
     }
 }

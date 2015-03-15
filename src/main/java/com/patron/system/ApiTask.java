@@ -33,20 +33,38 @@ import android.os.AsyncTask;
 
 public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 {
-	private OnTaskCompletedListener onTaskCompletedListener = null;
-    private boolean mocking = false;
-    private Map<URI, byte[]> mockData = null;
-    private int connectionTimeout = 10000;
-    private int socketTimeout = 10000;
+		private OnTaskCompletedListener listener;
+    private boolean mocking;
+    private Map<URI, byte[]> mockData;
+    private int connectionTimeout;
+    private int socketTimeout;
 
-	public void setOnTaskCompletedListener(OnTaskCompletedListener onTaskCompletedListener)
+		public ApiTask()
+		{
+				this.listener = null;
+				this.mocking = false;
+				this.mockData = null;
+				this.connectionTimeout = 10000;
+				this.socketTimeout = 10000;
+		}
+
+		public ApiTask(OnTaskCompletedListener listener)
+		{
+			this.listener = listener;
+			this.mocking = false;
+			this.mockData = null;
+			this.connectionTimeout = 10000;
+			this.socketTimeout = 10000;
+		}
+
+	public void setOnTaskCompletedListener(OnTaskCompletedListener listener)
 	{
-		this.onTaskCompletedListener = onTaskCompletedListener;
+		this.listener = listener;
 	}
 
     public OnTaskCompletedListener getOnTaskCompletedListener()
     {
-        return this.onTaskCompletedListener;
+        return this.listener;
     }
 
     public void setMocking(boolean mocking)
@@ -98,41 +116,59 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
             return this.mockData;
         }
 
+				System.out.println("task1");
         final HttpParams params = new BasicHttpParams();
+				System.out.println("task2");
         HttpConnectionParams.setConnectionTimeout(params, getConnectionTimeout());
+				System.out.println("task3");
         HttpConnectionParams.setSoTimeout(params, getSocketTimeout());
+				System.out.println("task4");
         HttpClient client = new DefaultHttpClient(params);
+				System.out.println("task5");
 	    try
-		{
-			Map<URI, byte[]> data = new HashMap<URI, byte[]>();
-			for (int i = 0; i < requests.length; i++)
 			{
-				HttpUriRequest request = requests[i];
+					Map<URI, byte[]> data = new HashMap<URI, byte[]>();
+					System.out.println("task6");
+					for (int i = 0; i < requests.length; i++)
+					{
+								HttpUriRequest request = requests[i];
+								System.out.println("task7");
                 HttpResponse response = client.execute(request);
+								System.out.println("task8");
                 HttpEntity entity = response.getEntity();
+								System.out.println("task9");
                 byte[] bytes = EntityUtils.toByteArray(entity);
-				data.put(request.getURI(), bytes);
+								System.out.println("task10");
+								data.put(request.getURI(), bytes);
+								System.out.println("task11");
+								System.out.println("data:" + new String(bytes));
+								System.out.println(data.toString());
+					}
+					return data;
 			}
-			return data;
-		}
 		catch (NullPointerException e)
 		{
+			System.out.println("task12");
 			e.printStackTrace();
 		}
         catch (UnknownHostException e)
         {
+				System.out.println("task13");
             e.printStackTrace();
         }
 		catch (UnsupportedEncodingException e)
 		{
+		System.out.println("task14");
 			e.printStackTrace();
 		}
 		catch (ClientProtocolException e)
 		{
+		System.out.println("task15");
 			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
+		System.out.println("task16");
 			e.printStackTrace();
 		}
 
@@ -142,9 +178,12 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 	@Override
 	protected void onPostExecute(Map<URI, byte[]> data)
 	{
-		if (onTaskCompletedListener != null)
+		System.out.println("taskpost1");
+		if (listener != null)
 		{
-			onTaskCompletedListener.onComplete(data);
+			System.out.println("taskpost2");
+			listener.onComplete(data);
+			System.out.println("taskpost3");
 		}
 	}
 }

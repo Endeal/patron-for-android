@@ -47,6 +47,19 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true" />
 
+        <!-- Search Input -->
+        <EditText
+            android:id="@+id/menuEditTextSearch"
+            style="@style/EditTextMessage"
+            android:visibility="gone"
+            android:background="#77114025"
+            android:hint="e.g. water..."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/menuHorizontalScrollViewTypes" />
+
         <!-- The scroll view for the categories -->
         <HorizontalScrollView
             android:id="@+id/menuHorizontalScrollViewTypes"
@@ -65,15 +78,15 @@
                 android:orientation="horizontal" >
 
                 <!-- The buttons for selecting each drink type -->
-                <Button
-                    android:id="@+id/menuButtonFavorites"
+                <com.patron.view.ButtonSearch
+                    android:id="@+id/menuButtonSearch"
                     style="@style/ButtonSearch"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_margin="10dp" />
 
-                <Button
+                <com.patron.view.ButtonFavorites
                     android:id="@+id/menuButtonFavorites"
                     style="@style/ButtonFavorites"
                     android:layout_width="60dp"

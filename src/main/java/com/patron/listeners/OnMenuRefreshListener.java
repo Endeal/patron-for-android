@@ -36,6 +36,7 @@ import com.patron.model.Item;
 import com.patron.model.Vendor;
 import com.patron.R;
 import com.patron.system.Globals;
+import com.patron.view.ButtonCategory;
 
 public class OnMenuRefreshListener implements OnApiExecutedListener
 {
@@ -110,6 +111,58 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         SimpleAdapter adapter = new SimpleAdapter(activity, products, R.layout.list_item_product, from, to);
         adapter.setViewBinder(new ProductBinder());
 
+        // Go over the views.
+        // Go over the categories for each view.
+        // If the categoryId matches the view's categoryId...
+        // We know the view should exist.
+        // If no categoryId matches the view's categoryId...
+        // We know the view should not exist.
+        boolean buttonShouldExist = false;
+        for(int i = 0; i < linearLayout.getChildCount(); i++)
+        {
+          View view = linearLayout.getChildAt(i);
+          for (int j = 0; j < Globals.getCategories().size(); j++)
+          {
+            if (Globals.getCategories() != null && !Globals.getCategories().isEmpty())
+            {
+              Category category = Globals.getCategories().get(j);
+              if (view.getTag() != null && view.getTag().toString().equals(category.getId()))
+              {
+                buttonShouldExist = true;
+              }
+            }
+          }
+          if (!buttonShouldExist && view.getId() != R.id.menuButtonSearch && view.getId() != R.id.menuButtonFavorites)
+          {
+            linearLayout.removeView(view);
+          }
+        }
+
+        // Go over each category.
+        // For each category go over every view.
+        // If the view has an id equal to the category's id...
+        // We know it has already been added.
+        // If no view has an id equal to the category's id...
+        // We know it should be added.
+        boolean viewAdded = false;
+        for (int i = 0; i < Globals.getCategories().size(); i++)
+        {
+          Category category = Globals.getCategories().get(i);
+          for (int j = 0; j < linearLayout.getChildCount(); j++)
+          {
+            View view = linearLayout.getChildAt(j);
+            if (view.getTag() != null && view.getTag().toString().equals(category.getId()))
+            {
+              viewAdded = true;
+            }
+          }
+          if (!viewAdded)
+          {
+            ButtonCategory button = new ButtonCategory(activity, category, this);
+            linearLayout.addView(button);
+          }
+        }
+
         // Quick Return
         int space = (int)Globals.convertDpToPixel(49, activity);
         listMenu.setAdapter(new QuickReturnAdapter(adapter));
@@ -118,30 +171,5 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         targetView.setAnimatedTransition(true);
         final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
         attacher.setOnItemClickListener(new ListItemMenuAddListener());
-
-        // Update the categories
-        if (Globals.getCategories() != null && !Globals.getCategories().isEmpty())
-        {
-            for (int i = 0; i < Globals.getCategories().size(); i++)
-            {
-                Button button = new Button(linearLayout.getContext());
-                button.setBackgroundResource(R.drawable.button_category_unpressed);
-                button.setTextAppearance(activity, R.style.ButtonCategory);
-                float width = Globals.convertDpToPixel(60, activity);
-                float height = Globals.convertDpToPixel(60, activity);
-                LayoutParams params = new LayoutParams((int)width, (int)height);
-                params.gravity = Gravity.CENTER;
-                params.setMargins(10, 10, 10, 10);
-                button.setLayoutParams(params);
-                button.setText(Globals.getCategories().get(i).getName());
-                button.setOnClickListener(new ButtonCategoriesListener(activity, Globals.getCategories().get(i), this));
-                linearLayout.addView(button);
-                if (activity.getButtonCategories() == null)
-                {
-                    activity.setButtonCategories(new ArrayList<Button>());
-                }
-                activity.getButtonCategories().add(button);
-            }
-        }
     }
 }
