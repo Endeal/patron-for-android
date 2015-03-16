@@ -1,5 +1,7 @@
 package com.patron.model;
 
+import java.lang.Cloneable;
+import java.lang.CloneNotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Attribute
+public class Attribute implements Cloneable
 {
 	// Properties
 	private String id;
@@ -36,6 +38,20 @@ public class Attribute
             options.add(option);
         }
     }
+
+	public Attribute clone() throws CloneNotSupportedException
+	{
+		String newId = new String(getId());
+		String newName = new String(getName());
+		List<Option> newOptions = new ArrayList<Option>();
+		for (int i = 0; i < getOptions().size(); i++)
+		{
+			Option newOption = getOptions().get(i).clone();
+			newOptions.add(newOption);
+		}
+		Attribute newAttribute = new Attribute(newId, newName, newOptions);
+		return newAttribute;
+	}
 
 	// Setters
 	public void setId(String id)

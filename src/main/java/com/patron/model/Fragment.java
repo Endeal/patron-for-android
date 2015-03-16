@@ -1,9 +1,12 @@
 package com.patron.model;
 
+import java.lang.Cloneable;
+import java.lang.CloneNotSupportedException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment
+public class Fragment implements Cloneable
 {
 	// Properties
 	private String id;
@@ -11,7 +14,7 @@ public class Fragment
 	private List<Selection> selections;
 	private List<Supplement> supplements;
 	private int quantity;
-	
+
 	// Constructor
 	public Fragment(String id, Item item, List<Selection> selections,
 			List<Supplement> supplements, int quantity)
@@ -22,7 +25,48 @@ public class Fragment
 		setSupplements(supplements);
 		setQuantity(quantity);
 	}
-	
+
+	// Cloneable
+	public Fragment clone() throws CloneNotSupportedException
+	{
+		String newId = new String(getId());
+		Item newItem = item.clone();
+		List<Selection> newSelections = new ArrayList<Selection>();
+		List<Supplement> newSupplements = new ArrayList<Supplement>();
+		int newQuantity = new Integer(getQuantity());
+
+		// Fill Selections
+		for (int i = 0; i < getSelections().size(); i++)
+		{
+			Selection newSelection = getSelections().get(i).clone();
+			newSelections.add(newSelection);
+		}
+
+		// Fill Supplements
+		for (int i = 0; i < getSupplements().size(); i++)
+		{
+			Supplement newSupplement = getSupplements().get(i).clone();
+			newSupplements.add(newSupplement);
+		}
+
+		Fragment fragment = new Fragment(newId, newItem, newSelections, newSupplements, newQuantity);
+		return fragment;
+	}
+
+	// Convenience
+	public boolean hasSupplement(Supplement supplement)
+	{
+		for (int i = 0; i < supplements.size(); i++)
+		{
+			Supplement has = supplements.get(i);
+			if (has.getId().equals(supplement.getId()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// Main Methods
 	public BigDecimal getPrice()
 	{

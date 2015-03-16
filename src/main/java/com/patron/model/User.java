@@ -59,7 +59,7 @@ public class User
         return false;
     }
 
-    public boolean isFavoriteItem(String itemId)
+    public boolean hasFavoriteItem(String itemId)
     {
         if (getItems() != null && getItems().size() > 0)
         {

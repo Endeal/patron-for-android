@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/listItemSupplementRelativeLayoutMain"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+<Button
+    android:id="@+id/listItemSupplementToggleButtonMain"
+    style="@style/ButtonSupplement"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="5dp" />
+
+</RelativeLayout>

@@ -32,11 +32,17 @@ import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnMenuRefreshListener;
 import com.patron.main.FlashMenu;
 import com.patron.model.Category;
+import com.patron.model.Fragment;
 import com.patron.model.Item;
+import com.patron.model.Supplement;
 import com.patron.model.Vendor;
+import com.patron.model.Attribute;
+import com.patron.model.Selection;
+import com.patron.model.Option;
 import com.patron.R;
 import com.patron.system.Globals;
 import com.patron.view.ButtonCategory;
+import com.patron.view.ButtonFilter;
 
 public class OnMenuRefreshListener implements OnApiExecutedListener
 {
@@ -45,6 +51,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
     private ListView listMenu;
     private LinearLayout linearLayout;
     private Button buttonSelectVendor;
+    private List<ButtonFilter> filters;
 
     public OnMenuRefreshListener(SwipeRefreshLayout swipeRefreshLayoutItems,
             ListView listMenu, LinearLayout linearLayout, Button buttonSelectVendor)
@@ -54,6 +61,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         this.listMenu = listMenu;
         this.linearLayout = linearLayout;
         this.buttonSelectVendor = buttonSelectVendor;
+        this.filters = new ArrayList<ButtonFilter>();
     }
 
     @Override
@@ -75,39 +83,63 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
             Toast.makeText(activity, "No items for this filter.", Toast.LENGTH_SHORT).show();
         }
 
-        List<Map<String, String>> products = new ArrayList<Map<String, String>>();
+        List<Map<String, Fragment>> products = new ArrayList<Map<String, Fragment>>();
         String[] from = {"name",
                 "price",
-                "categories",
+                "supplements",
                 "toggleButtonFavorite",
                 "layout"};
         int[] to = {R.id.productListItemTextName,
                 R.id.productListItemTextPrice,
-                R.id.productListItemTextCategories,
+                R.id.productListItemButtonSupplements,
                 R.id.productListItemToggleButtonFavorite,
                 R.id.productListItemLayout};
+
+        // If the menu was refreshed, apply any filters
+        if (swipeRefreshLayoutItems.isRefreshing())
+        {
+          for (int i = 0; i < filters.size(); i++)
+          {
+            ButtonFilter filter = filters.get(i);
+            if (filter.getChecked())
+            {
+              filter.setChecked(true);
+            }
+          }
+        }
+
+        List<Fragment> fragments = new ArrayList<Fragment>();
         for (int i = 0; i < Globals.getVendor().getFilteredItems().size(); i++)
         {
-            Map<String, String> mapping = new HashMap<String, String>();
+            Map<String, Fragment> mapping = new HashMap<String, Fragment>();
+
+            // Create default fragment
             Item item = Globals.getVendor().getFilteredItems().get(i);
-            NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            String price = formatter.format(item.getPrice());
-            String categoriesText = "";
-            for (int j = 0; j < item.getCategories().size(); j++)
+            List<Selection> selections = new ArrayList<Selection>();
+            if (item.getAttributes() != null && item.getAttributes().size() > 0)
+            for (int j = 0; j < item.getAttributes().size(); j++)
             {
-                if (!categoriesText.equals(""))
-                {
-                    categoriesText = categoriesText + "\n";
-                }
-                categoriesText = categoriesText + item.getCategories().get(j).getName();
+              Attribute attribute = item.getAttributes().get(j);
+              if (attribute.getOptions() != null && attribute.getOptions().size() > 0)
+              {
+                Option option = attribute.getOptions().get(0);
+                Selection selection = new Selection(attribute, option);
+                selections.add(selection);
+              }
             }
-            mapping.put("name", item.getName());
-            mapping.put("price", price);
-            mapping.put("categories", categoriesText);
-            mapping.put("toggleButtonFavorite", item.getId());
-            mapping.put("layout", item.getId());
+            List<Supplement> supplements = new ArrayList<Supplement>();
+            Fragment fragment = new Fragment("", item, selections, supplements, 1);
+            fragments.add(fragment);
+
+            // Create Mappings
+            mapping.put("name", fragment);
+            mapping.put("price", fragment);
+            mapping.put("supplements", fragment);
+            mapping.put("toggleButtonFavorite", fragment);
+            mapping.put("layout", fragment);
             products.add(mapping);
         }
+        Globals.setFragments(fragments);
         SimpleAdapter adapter = new SimpleAdapter(activity, products, R.layout.list_item_product, from, to);
         adapter.setViewBinder(new ProductBinder());
 
@@ -120,7 +152,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         boolean buttonShouldExist = false;
         for(int i = 0; i < linearLayout.getChildCount(); i++)
         {
-          View view = linearLayout.getChildAt(i);
+          ButtonFilter view = (ButtonFilter)linearLayout.getChildAt(i);
           for (int j = 0; j < Globals.getCategories().size(); j++)
           {
             if (Globals.getCategories() != null && !Globals.getCategories().isEmpty())
@@ -134,6 +166,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
           }
           if (!buttonShouldExist && view.getId() != R.id.menuButtonSearch && view.getId() != R.id.menuButtonFavorites)
           {
+            filters.remove(view);
             linearLayout.removeView(view);
           }
         }
@@ -159,6 +192,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
           if (!viewAdded)
           {
             ButtonCategory button = new ButtonCategory(activity, category, this);
+            filters.add(button);
             linearLayout.addView(button);
           }
         }

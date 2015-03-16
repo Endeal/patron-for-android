@@ -43,27 +43,14 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 		// A product was selected.
 		if (item != null)
 		{
-			if (Globals.getFavoriteItems() != null && !Globals.getFavoriteItems().isEmpty())
+			ApiExecutor executor = new ApiExecutor();
+			if (Globals.getUser().hasFavoriteItem(item.getId()))
 			{
-				boolean isFavorite = false;
-				for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
-				{
-					Item favoriteItem = Globals.getFavoriteItems().get(i);
-					if (favoriteItem.getId().equals(item.getId()))
-					{
-						isFavorite = true;
-						removeFavoriteItem(buttonView, i);
-						break;
-					}
-				}
-				if (!isFavorite)
-				{
-					addFavoriteItem(buttonView);
-				}
+				executor.removeFavoriteItem(item);
 			}
 			else
 			{
-				addFavoriteItem(buttonView);
+				executor.addFavoriteItem(item);
 			}
 		}
 
@@ -74,108 +61,12 @@ public class ToggleButtonFavoriteListener implements OnClickListener
             if (Globals.getUser().hasFavoriteVendor(vendor.getId()))
             {
                 executor.removeFavoriteVendor(vendor);
-                /*
-                executor.removeFavoriteVendor(vendor, new OnApiExecutedListener() {
-                    @Override
-                    public void onExecuted()
-                    {
-                    }
-                });
-                */
             }
             else
             {
                 executor.addFavoriteVendor(vendor);
-                /*
-                executor.addFavoriteVendor(vendor, new OnApiExecutedListener() {
-                    @Override
-                    public void onExecuted()
-                    {
-                        Toast.makeText(context, "Added vendor to favorites.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                */
             }
-            /*
-			if (Globals.getFavoriteVendors() != null && !Globals.getFavoriteVendors().isEmpty())
-			{
-				boolean isFavorite = false;
-				for (int i = 0; i < Globals.getFavoriteVendors().size(); i++)
-				{
-					Vendor favoriteVendor = Globals.getFavoriteVendors().get(i);
-					if (favoriteVendor.getId().equals(vendor.getId()))
-					{
-						isFavorite = true;
-						removeFavoriteVendor(buttonView, i);
-						break;
-					}
-				}
-				if (!isFavorite)
-				{
-					addFavoriteVendor(buttonView);
-				}
-			}
-			else
-			{
-				addFavoriteVendor(buttonView);
-			}
-            */
 		}
 	}
 
-	public void addFavoriteVendor(View buttonView)
-	{
-		List<Vendor> favorites = Globals.getFavoriteVendors();
-		favorites.add(vendor);
-		Gson gson = new Gson();
-		String json = gson.toJson(favorites);
-		Activity activity = (Activity)buttonView.getContext();
-		SharedPreferences preferences = activity.getPreferences(Activity.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("favoriteVendors", json);
-		editor.commit();
-		Globals.setFavoriteVendors(favorites);
-	}
-
-	public void addFavoriteItem(View buttonView)
-	{
-		List<Item> favorites = Globals.getFavoriteItems();
-		favorites.add(item);
-		Gson gson = new Gson();
-		String json = gson.toJson(favorites);
-		Activity activity = (Activity)buttonView.getContext();
-		SharedPreferences preferences = activity.getPreferences(Activity.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("favoriteItems", json);
-		editor.commit();
-		Globals.setFavoriteItems(favorites);
-	}
-
-	public void removeFavoriteVendor(View buttonView, int i)
-	{
-		List<Vendor> favorites = Globals.getFavoriteVendors();
-		favorites.remove(i);
-		Gson gson = new Gson();
-		String json = gson.toJson(favorites);
-		Activity activity = (Activity)buttonView.getContext();
-		SharedPreferences preferences = activity.getPreferences(Activity.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("favoriteVendors", json);
-		editor.commit();
-		Globals.setFavoriteVendors(favorites);
-	}
-
-	public void removeFavoriteItem(View buttonView, int i)
-	{
-		List<Item> favorites = Globals.getFavoriteItems();
-		favorites.remove(i);
-		Gson gson = new Gson();
-		String json = gson.toJson(favorites);
-		Activity activity = (Activity)buttonView.getContext();
-		SharedPreferences preferences = activity.getPreferences(Activity.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		editor.putString("favoriteItems", json);
-		editor.commit();
-		Globals.setFavoriteItems(favorites);
-	}
 }

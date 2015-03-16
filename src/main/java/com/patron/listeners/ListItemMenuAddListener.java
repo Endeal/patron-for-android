@@ -21,6 +21,7 @@ import com.patron.model.Option;
 import com.patron.model.Order;
 import com.patron.model.Selection;
 import com.patron.model.Station;
+import com.patron.model.Supplement;
 import com.patron.model.Funder;
 import com.patron.model.Vendor;
 import com.patron.system.Globals;
@@ -40,15 +41,41 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Spinner spinnerQuantity = (Spinner) relativeLayout.getChildAt(1);
 		if (relativeLayout.getChildCount() > 5)
 		{
-			for (int i = 0; i < relativeLayout.getChildCount() - 5; i++)
+			for (int i = 0; i < relativeLayout.getChildCount(); i++)
 			{
-				Spinner spinner = (Spinner)relativeLayout.getChildAt(5 + i);
-				spinnerAttributes.add(spinner);
+				View view = (View)relativeLayout.getChildAt(i);
+				if (view.getTag() != null && view.getTag().equals("attribute"))
+				{
+					Spinner spinner = (Spinner)view;
+					spinnerAttributes.add(spinner);
+				}
 			}
 		}
 
 		// Gets the item for this given row.
-		Item item = Globals.getVendor().getFilteredItems().get(row);
+		Fragment oldFragment = Globals.getFragments().get(row);
+		Fragment fragment = new Fragment(oldFragment.getId(), oldFragment.getItem(),
+			oldFragment.getSelections(), oldFragment.getSupplements(), oldFragment.getQuantity());
+
+		if (oldFragment.getItem().getSupplements() != null && oldFragment.getItem().getSupplements().size() > 0)
+		{
+			System.out.println("OG Supplements:" + oldFragment.getItem().getSupplements());
+			System.out.println("Copy Supplements:" + fragment.getItem().getSupplements());
+			System.out.println("OG Additions:" + oldFragment.getSupplements().size());
+			System.out.println("Copy Additions:" + fragment.getSupplements().size());
+
+			Supplement tempSupplement = oldFragment.getItem().getSupplements().get(0);
+			List<Supplement> tempSupplements = new ArrayList<Supplement>();
+			tempSupplements.add(tempSupplement);
+			oldFragment.setSupplements(tempSupplements);
+
+			System.out.println("2OG Supplements:" + oldFragment.getItem().getSupplements());
+			System.out.println("2Copy Supplements:" + fragment.getItem().getSupplements());
+			System.out.println("2OG Additions:" + oldFragment.getSupplements().size());
+			System.out.println("2Copy Additions:" + fragment.getSupplements().size());
+		}
+
+		Item item = fragment.getItem();
 		ArrayList<Selection> selections = new ArrayList<Selection>();
 		for (int i = 0; i < spinnerAttributes.size(); i++)
 		{
@@ -66,8 +93,11 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			}
 		}
 		int quantity = spinnerQuantity.getSelectedItemPosition() + 1;
+		fragment.setSelections(selections);
+		fragment.setQuantity(quantity);
+		/*
 		Fragment fragment = new Fragment(null, item, selections,
-				null, quantity);
+				supplements, quantity);*/
 
 		// Adds the fragment that was just created to the order.
 		Order order = Globals.getOrder();
@@ -94,7 +124,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
 			{
                 List<Funder> funders = Globals.getUser().getFunders();
-				funder = Globals.getUser().getFunders().get(0);
+								funder = Globals.getUser().getFunders().get(0);
                 for (int i = 0; i < funders.size(); i++)
                 {
                     Funder tempFunder = funders.get(i);
@@ -136,7 +166,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
 
 		// Creates a Toast that informs the user that the drink has been added to the tab.
 		Toast toast = Toast.makeText(v.getContext(),
-				"Added " + item.getName() + ".", Toast.LENGTH_SHORT);
+				"Added " + item.getName() + " to order", Toast.LENGTH_SHORT);
 		toast.show();
 	}
 }

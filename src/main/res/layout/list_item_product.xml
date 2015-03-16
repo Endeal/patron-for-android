@@ -8,15 +8,30 @@
     android:descendantFocusability="blocksDescendants" >
 
 <!-- First Row -->
+<LinearLayout
+  android:id="@+id/productListItemLinearLayoutMiddle"
+  android:orientation="vertical"
+  android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerVertical="true">
 
-<TextView
-    android:id="@+id/productListItemTextName"
-    style="@style/TextViewListItemName"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
-    android:layout_margin="10dip" />
+    <TextView
+        android:id="@+id/productListItemTextName"
+        style="@style/TextViewListItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
+
+    <Button
+      android:id="@+id/productListItemButtonSupplements"
+      style="@style/ButtonSupplements"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10dp"
+      android:layout_marginBottom="10dp" />
+
+  </LinearLayout>
 
 <Spinner
     android:id="@+id/productListItemSpinnerQuantity"
@@ -24,6 +39,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
     android:layout_toLeftOf="@+id/productListItemTextPrice"
+    android:layout_marginTop="10dp"
     android:entries="@array/array_quantity" />
 
 <TextView
@@ -44,10 +60,13 @@
     android:layout_height="@dimen/dimProductListItemToggleButtonFavoriteHeight"
     android:layout_alignParentLeft="true"
     android:layout_centerVertical="true"
-    android:layout_margin="5dip" />
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp" />
 
 <!-- Bottom Row -->
-
+<!--
 <TextView
     android:id="@+id/productListItemTextCategories"
     style="@style/TextViewListItemDescription"
@@ -56,7 +75,8 @@
     android:layout_toRightOf="@+id/productListItemToggleButtonFavorite"
     android:layout_below="@+id/productListItemTextName"
     android:layout_marginLeft="10dp"
-    android:paddingBottom="10dp" />
+    android:layout_marginBottom="10dp" />
+  -->
 
 <!-- Selections -->
 <!-- Supplements -->

@@ -140,7 +140,7 @@ public class FlashSearchItems extends Activity implements Loadable
 
     		int[] to = {R.id.productListItemTextName,
     				R.id.productListItemTextPrice,
-    				R.id.productListItemTextCategories,
+    				R.id.productListItemTextPrice,
     				R.id.productListItemToggleButtonFavorite,
     				R.id.productListItemLayout};
 

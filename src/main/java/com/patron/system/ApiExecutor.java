@@ -608,25 +608,20 @@ public class ApiExecutor
         pairs.add(email);
         pairs.add(password);
         pairs.add(vendorId);
-        System.out.println("afv1");
         try
         {
             ApiTask apiTask = new ApiTask();
             request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            System.out.println("afv2");
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
-                    System.out.println("afvdone");
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
-                        System.out.println("afv3");
                         if (rawUri.equals(url))
                         {
                             String response = new String(entry.getValue());
-                            System.out.println("afv4");
                             if (response.equals("1"))
                             {
                                 Toast.makeText(Patron.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
@@ -645,7 +640,6 @@ public class ApiExecutor
         catch (UnsupportedEncodingException e)
         {
             e.printStackTrace();
-            System.out.println("afv8");
         }
     }
 
@@ -681,6 +675,98 @@ public class ApiExecutor
                             else
                             {
                                 Toast.makeText(Patron.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
+                            }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
+                        }
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFavoriteItem(Item item, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_ADD_FAVORITE_ITEM;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(itemId);
+        try
+        {
+            ApiTask apiTask = new ApiTask();
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            if (response.equals("1"))
+                            {
+                                Toast.makeText(Patron.getContext(), "Added favorite item.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to add favorite item.", Toast.LENGTH_SHORT).show();
+                            }
+                            loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
+                        }
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeFavoriteItem(Item item, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_REMOVE_FAVORITE_ITEM;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(itemId);
+        try
+        {
+            ApiTask apiTask = new ApiTask();
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            if (response.equals("1"))
+                            {
+                                Toast.makeText(Patron.getContext(), "Removed favorite item.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to remove favorite item.", Toast.LENGTH_SHORT).show();
                             }
                             loginPatron(Globals.getUser().getEmail(), Globals.getUser().getPassword(), listeners);
                         }

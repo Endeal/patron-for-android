@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="true"
-        android:drawable="@color/colorButtonGooglePlusEnabled" />
-    <item android:state_enabled="false"
-        android:drawable="@color/colorButtonGooglePlusDisabled" />
-    <item android:state_pressed="true"
-    	android:state_enabled="true"
-        android:drawable="@color/colorButtonGooglePlusPressed" />
-    <item android:state_focused="true"
-    	android:state_enabled="true"
-        android:drawable="@color/colorButtonGooglePlusFocused" />
-</selector>
+    <item android:drawable="@drawable/button_google_plus_pressed"
+          android:state_pressed="true" />
+    <item android:drawable="@drawable/button_google_plus_unpressed" />
+ </selector>

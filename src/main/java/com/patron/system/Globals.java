@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.patron.main.FlashLogin;
 import com.patron.model.Category;
 import com.patron.model.Code;
+import com.patron.model.Fragment;
 import com.patron.model.Item;
 import com.patron.model.Order;
 import com.patron.model.Vendor;
@@ -34,6 +35,7 @@ public class Globals
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
 	private static List<Category> categories = new ArrayList<Category>();
 	private static List<Code> codes = new ArrayList<Code>();
+	private static List<Fragment> fragments = new ArrayList<Fragment>();
 	private static Order order;
 	private static String deviceId;
 	private static List<Vendor> favoriteVendors = new ArrayList<Vendor>();
@@ -110,6 +112,11 @@ public class Globals
 		Globals.codes = codes;
 	}
 
+	public static void setFragments(List<Fragment> fragments)
+	{
+		Globals.fragments = fragments;
+	}
+
 	public static void setOrder(Order order)
 	{
 		Globals.order = order;
@@ -179,6 +186,11 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	public static List<Code> getCodes()
 	{
 		return codes;
+	}
+
+	public static List<Fragment> getFragments()
+	{
+		return fragments;
 	}
 
 	public static Order getOrder()

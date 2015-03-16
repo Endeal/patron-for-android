@@ -1,5 +1,7 @@
 package com.patron.model;
 
+import java.lang.Cloneable;
+import java.lang.CloneNotSupportedException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Item
+public class Item implements Cloneable
 {
 	// Properties
 	private String id;
@@ -33,6 +35,44 @@ public class Item
 		setCategories(categories);
 		setAttributes(attributes);
 		setSupplements(supplements);
+	}
+
+	public Item clone() throws CloneNotSupportedException
+	{
+		String newId = new String(getId());
+		String newName = new String(getName());
+		BigDecimal newPrice = new BigDecimal(getPrice().toString());
+		int newMaxSupplements = new Integer(getMaxSupplements());
+		int newSupply = new Integer(getSupply());
+
+		List<Category> newCategories = new ArrayList<Category>();
+		List<Attribute> newAttributes = new ArrayList<Attribute>();
+		List<Supplement> newSupplements = new ArrayList<Supplement>();
+
+		// Fill categories
+		for (int i = 0; i < getCategories().size(); i++)
+		{
+			Category newCategory = getCategories().get(i).clone();
+			newCategories.add(newCategory);
+		}
+
+		// Fill attributes
+		for (int i = 0; i < getAttributes().size(); i++)
+		{
+			Attribute newAttribute = getAttributes().get(i).clone();
+			newAttributes.add(newAttribute);
+		}
+
+		// Fill supplements
+		for (int i = 0; i < getSupplements().size(); i++)
+		{
+			Supplement newSupplement = getSupplements().get(i).clone();
+			newSupplements.add(newSupplement);
+		}
+
+		Item newItem = new Item(newId, newName, newPrice, newMaxSupplements, newSupply,
+				newCategories, newAttributes, newSupplements);
+		return newItem;
 	}
 
     public Item(JSONObject rawItem) throws JSONException

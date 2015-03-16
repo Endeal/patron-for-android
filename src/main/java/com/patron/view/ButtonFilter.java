@@ -29,7 +29,7 @@ public abstract class ButtonFilter extends Button
   {
     if (checked == true)
     {
-      if (Globals.getButtonFilter() != null)
+      if (Globals.getButtonFilter() != null && Globals.getButtonFilter() != this)
       {
         Globals.getButtonFilter().setChecked(false);
       }

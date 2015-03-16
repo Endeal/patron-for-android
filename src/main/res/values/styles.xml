@@ -698,12 +698,31 @@
         <item name="android:textSize">8sp</item>
         <item name="android:padding">5dp</item>
     </style>
+    <style name="ButtonSupplements">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:text">Additions...</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:background">@drawable/button_supplements</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:padding">7dp</item>
+    </style>
     <style name="ButtonCategory">
         <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:background">@drawable/button_category</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#000000</item>
         <item name="android:textSize">8sp</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="ButtonSupplement">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:background">@drawable/button_supplement</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:padding">5dp</item>
         <item name="android:textAllCaps">false</item>
     </style>

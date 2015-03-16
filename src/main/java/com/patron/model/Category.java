@@ -1,5 +1,8 @@
 package com.patron.model;
 
+import java.lang.Cloneable;
+import java.lang.CloneNotSupportedException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +24,14 @@ public class Category
         setId(rawCategory.getString("categoryId"));
         setName(rawCategory.getString("name"));
     }
+
+		public Category clone() throws CloneNotSupportedException
+		{
+			String newId = new String(getId());
+			String newName = new String(getName());
+			Category newCategory = new Category(newId, newName);
+			return newCategory;
+		}
 
 	// Setters
 	public void setId(String id)

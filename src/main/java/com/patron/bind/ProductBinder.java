@@ -6,67 +6,137 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SimpleAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.view.View;
+import android.view.View.OnClickListener;
 
+import com.patron.listeners.ButtonSupplementsListener;
 import com.patron.listeners.ToggleButtonFavoriteListener;
 import com.patron.lists.ListFonts;
 import com.patron.model.Attribute;
+import com.patron.model.Category;
+import com.patron.model.Fragment;
 import com.patron.model.Item;
 import com.patron.R;
 import com.patron.system.Globals;
+
+import java.util.List;
+import java.text.NumberFormat;
 
 public class ProductBinder implements SimpleAdapter.ViewBinder
 {
 	public boolean setViewValue(View view, Object data, String textRepresentation)
     {
-		// Change the font of the name and price.
-		if (view.getId() == R.id.productListItemTextName ||
-				view.getId() == R.id.productListItemTextPrice)
+		// Name text view
+		if (view.getId() == R.id.productListItemTextName)
 		{
-			Typeface typeface = Typeface.createFromAsset(view.getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
 			TextView text = (TextView) view;
-			text.setTypeface(typeface);
+			Fragment fragment = (Fragment)data;
+			String name = fragment.getItem().getName();
+			text.setText(name);
+			return true;
+		}
+		// Price text view
+		if (view.getId() == R.id.productListItemTextPrice)
+		{
+			TextView text = (TextView)view;
+			Fragment fragment = (Fragment)data;
+			Item item = fragment.getItem();
+			NumberFormat formatter = NumberFormat.getCurrencyInstance();
+			String price = formatter.format(item.getPrice());
+			text.setText(price);
+			return true;
 		}
 
-		// Set the categories text and font.
+		// Set the categories text view
+		/*
 		else if (view.getId() == R.id.productListItemTextCategories)
 		{
 			Typeface typeface = Typeface.createFromAsset(view.getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
 			TextView text = (TextView) view;
-			text.setTypeface(typeface);
+			Fragment fragment = (Fragment)data;
+			Item item = fragment.getItem();
+			String categoriesText = "";
+			for (int j = 0; j < item.getCategories().size(); j++)
+			{
+					if (!categoriesText.equals(""))
+					{
+							categoriesText = categoriesText + "\n";
+					}
+					categoriesText = categoriesText + item.getCategories().get(j).getName();
+			}
+			System.out.println("FRAGMENT CATEGORIES POSTBIND:" + categoriesText);
+			text.setText(categoriesText);
+			//text.setTypeface(typeface);
+			return true;
 		}
+		*/
 
-		// Set the toggled state of the favorite button.
+		// Favorite button
 		else if (view.getId() == R.id.productListItemToggleButtonFavorite)
 		{
 			ToggleButton toggle = (ToggleButton) view;
-			Item item = Globals.getItemById(data.toString());
+			Fragment fragment = (Fragment)data;
+			Item item = fragment.getItem();
 			ToggleButtonFavoriteListener listener = new ToggleButtonFavoriteListener(item);
 			toggle.setOnClickListener(listener);
+			toggle.setChecked(Globals.getUser().hasFavoriteItem(item.getId()));
+			return true;
+		}
 
-			toggle.setChecked(false);
-			for (int i = 0; i < Globals.getFavoriteItems().size(); i++)
+		// Supplements button
+		else if (view.getId() == R.id.productListItemButtonSupplements)
+		{
+			Fragment fragment = (Fragment)data;
+			Button button = (Button)view;
+			Item item = fragment.getItem();
+			if (item.getSupplements() != null && item.getSupplements().size() > 0)
 			{
-				Item favoriteItem = Globals.getFavoriteItems().get(i);
-				if (favoriteItem.getId().equals(item.getId()))
-				{
-					toggle.setChecked(true);
-				}
+				ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
+				button.setOnClickListener(listener);
+				button.setVisibility(View.VISIBLE);
 			}
-
-        	return true;
+			else
+			{
+				button.setVisibility(View.GONE);
+			}
+			return true;
 		}
 
 		else if (view.getId() == R.id.productListItemLayout)
 		{
 			RelativeLayout relativeLayout = (RelativeLayout)view;
-			Item item = Globals.getItemById(data.toString());
+			Fragment fragment = (Fragment)data;
+			Item item = fragment.getItem();
 
 			// Remove excess attributes.
 			if (relativeLayout.getChildCount() > 5)
 				relativeLayout.removeViews(5, relativeLayout.getChildCount() - 5);
+
+				// Create supplements button
+
+				if (item.getSupplements() != null && item.getSupplements().size() > 0)
+				{
+					/*
+			    float width = Globals.convertDpToPixel(25, view.getContext());
+			    float height = Globals.convertDpToPixel(25, view.getContext());
+					float marginTop = Globals.convertDpToPixel(10, view.getContext());
+					float marginRight = Globals.convertDpToPixel(5, view.getContext());
+					Button supplementsButton = new Button(view.getContext());
+					LayoutParams supplementsParams = new LayoutParams((int)width, (int)height);//new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					supplementsParams.addRule(RelativeLayout.LEFT_OF, R.id.productListItemSpinnerQuantity);
+					supplementsParams.addRule(RelativeLayout.ALIGN_BASELINE, R.id.productListItemSpinnerQuantity);
+					supplementsParams.setMargins(0, (int)marginTop, (int)marginRight, 0);
+					supplementsButton.setLayoutParams(supplementsParams);
+					ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
+					supplementsButton.setOnClickListener(listener);
+					supplementsButton.setBackgroundResource(R.drawable.button_supplements);
+					relativeLayout.addView(supplementsButton);
+					*/
+				}
 
 			// Create the attributes
 			if (item.getAttributes() != null &&
@@ -86,9 +156,13 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 									android.R.layout.simple_spinner_item,
 									optionNames);
 					Spinner spinner = new Spinner(view.getContext());
+					spinner.setTag("attribute");
 					spinner.setAdapter(arrayAdapter);
+					float marginBottom = Globals.convertDpToPixel(10, view.getContext());
+					float marginRight = Globals.convertDpToPixel(10, view.getContext());
 					LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 							LayoutParams.WRAP_CONTENT);
+					params.setMargins(0, 0, (int)marginRight, (int)marginBottom);
 					params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 					if (lastSpinner == null)
 					{
@@ -110,27 +184,6 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			}
 			return true;
 		}
-
-		// Set the quantity spinner.
-		/*
-        else if (view.getId() == R.id.productListItemSpinnerQuantity)
-        {
-        	// Set the listener for the spinner
-        	final int drink_id = Integer.parseInt(data.toString());
-        	((Spinner)view).setOnItemSelectedListener(new OnItemSelectedListener() {
-
-        		public void onItemSelected(AdapterView<?> adapter, View view,
-        				int position, long id)
-        		{
-        			Globals.setArrayToAlcohol(drink_id, position);
-        		}
-
-        		public void onNothingSelected(AdapterView<?> arg0)
-        		{
-        		}
-        	});
-        	return true;
-        }*/
-        return false;
-    }
+  return false;
+  }
 }

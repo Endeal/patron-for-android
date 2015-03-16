@@ -8,6 +8,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.inputmethod.InputMethodManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,6 +60,11 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
     this.listener = listener;
   }
 
+  public OnApiExecutedListener getListener()
+  {
+    return this.listener;
+  }
+
   public void init()
   {
     setBackgroundResource(R.drawable.button_search_unpressed);
@@ -102,7 +108,12 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
     {
       setBackgroundResource(R.drawable.button_search_pressed);
       editTextSearch.setVisibility(View.VISIBLE);
-      editTextSearch.requestFocus();
+      boolean focused = editTextSearch.requestFocus();
+      if (focused)
+      {
+        InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editTextSearch, InputMethodManager.SHOW_IMPLICIT);
+      }
       editTextSearch.addTextChangedListener(new TextWatcher() {
           public void afterTextChanged(Editable s)
           {
@@ -122,6 +133,10 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
               }
             }
             Globals.getVendor().setFilteredItems(items);
+            if (getListener() != null)
+            {
+              getListener().onExecuted();
+            }
           }
           public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
           public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -132,6 +147,8 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
       setBackgroundResource(R.drawable.button_search_unpressed);
       editTextSearch.setVisibility(View.GONE);
       Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
+      InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+      inputManager.hideSoftInputFromWindow(editTextSearch.getWindowToken(), 0);
     }
   }
 }

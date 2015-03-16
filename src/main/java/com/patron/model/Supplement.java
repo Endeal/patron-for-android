@@ -1,11 +1,13 @@
 package com.patron.model;
 
+import java.lang.Cloneable;
+import java.lang.CloneNotSupportedException;
 import java.math.BigDecimal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Supplement
+public class Supplement implements Cloneable
 {
 	// Properties
 	private String id;
@@ -29,6 +31,16 @@ public class Supplement
         setPrice(new BigDecimal(rawSupplement.getString("price")));
         setSupply(rawSupplement.getInt("supply"));
     }
+
+		public Supplement clone() throws CloneNotSupportedException
+		{
+			String newId = new String(getId());
+			String newName = new String(getName());
+			BigDecimal newPrice = new BigDecimal(getPrice().toString());
+			int newSupply = new Integer(getSupply());
+			Supplement newSupplement = new Supplement(newId, newName, newPrice, newSupply);
+			return newSupplement;
+		}
 
 	// Setters
 	public void setId(String id)
