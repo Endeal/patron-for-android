@@ -35,7 +35,12 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 		{
 			TextView text = (TextView) view;
 			Fragment fragment = (Fragment)data;
+			String itemId = fragment.getItem().getId();
 			String name = fragment.getItem().getName();
+			if (Globals.getVendor().getRewardItems().get(itemId) != null)
+			{
+				name = name + "\n(+" + Globals.getVendor().getRewardItems().get(itemId).toString() + " points)";
+			}
 			text.setText(name);
 			return true;
 		}
@@ -113,30 +118,14 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			Item item = fragment.getItem();
 
 			// Remove excess attributes.
-			if (relativeLayout.getChildCount() > 5)
-				relativeLayout.removeViews(5, relativeLayout.getChildCount() - 5);
-
-				// Create supplements button
-
-				if (item.getSupplements() != null && item.getSupplements().size() > 0)
+			for (int i = 0; i < relativeLayout.getChildCount(); i++)
+			{
+				View v = relativeLayout.getChildAt(i);
+				if (v.getTag() != null && v.getTag().equals("attribute"))
 				{
-					/*
-			    float width = Globals.convertDpToPixel(25, view.getContext());
-			    float height = Globals.convertDpToPixel(25, view.getContext());
-					float marginTop = Globals.convertDpToPixel(10, view.getContext());
-					float marginRight = Globals.convertDpToPixel(5, view.getContext());
-					Button supplementsButton = new Button(view.getContext());
-					LayoutParams supplementsParams = new LayoutParams((int)width, (int)height);//new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					supplementsParams.addRule(RelativeLayout.LEFT_OF, R.id.productListItemSpinnerQuantity);
-					supplementsParams.addRule(RelativeLayout.ALIGN_BASELINE, R.id.productListItemSpinnerQuantity);
-					supplementsParams.setMargins(0, (int)marginTop, (int)marginRight, 0);
-					supplementsButton.setLayoutParams(supplementsParams);
-					ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
-					supplementsButton.setOnClickListener(listener);
-					supplementsButton.setBackgroundResource(R.drawable.button_supplements);
-					relativeLayout.addView(supplementsButton);
-					*/
+					relativeLayout.removeViewAt(i);
 				}
+			}
 
 			// Create the attributes
 			if (item.getAttributes() != null &&

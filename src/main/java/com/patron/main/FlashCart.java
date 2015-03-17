@@ -62,11 +62,24 @@ public class FlashCart extends Activity
             @Override
             public void onExecuted()
             {
+								// Station
                 buttonStation.setText("Station:\n" + Globals.getOrder().getStation().getName());
-                String number = Globals.getOrder().getFunder().getNumber();
+
+								// Funder
+								String number;
+								if (Globals.getOrder().getFunder() == null)
+									number = "?";
+								else
+                	number = Globals.getOrder().getFunder().getNumber();
                 buttonPayment.setText("Payment:\n" + number.substring(number.length() - 4));
+
+								// Tip
                 buttonTip.setText("Tip:\n$" + Globals.getOrder().getTip().toString());
-                buttonCoupon.setText("Coupons:\n" + Globals.getOrder().getCoupons().size());
+
+								// Vouchers
+                buttonCoupon.setText("Vouchers:\n" + Globals.getOrder().getCoupons().size());
+
+								// Comment
                 String commented = "No";
                 if (Globals.getOrder().getComment().length() > 0)
                 {

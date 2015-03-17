@@ -35,7 +35,8 @@ public class DrawerNavigationListener extends SimpleDrawerListener
                 activity, view, "NavigationListItem");
             Bundle bundle = options.toBundle();
             activity.finish();
-            ActivityCompat.startActivity(activity, intent, bundle);
+            //ActivityCompat.startActivity(activity, intent, bundle);
+            activity.startActivity(intent);
             intent = null;
         }
     }

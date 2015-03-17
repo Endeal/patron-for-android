@@ -117,6 +117,20 @@ public class FlashMenu extends Activity
                         @Override
                         public void onExecuted()
                         {
+                            if (Globals.getVendor() == null)
+                            {
+                              Activity activity = (Activity)swipeRefreshLayoutItems.getContext();
+                              /*Activity activity = (Activity)view.getContext();
+                              ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                  activity, view, "findFailedSelectVendor");
+                              Bundle bundle = options.toBundle();*/
+                              Intent intent = new Intent(activity, FlashVendors.class);
+                              //ActivityCompat.startActivity(activity, intent, bundle);
+                              activity.startActivity(intent);
+                              activity.finish();
+                              swipeRefreshLayoutItems.setRefreshing(false);
+                              return;
+                            }
                             apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
                             swipeRefreshLayoutItems.setRefreshing(false);
                         }
@@ -137,8 +151,23 @@ public class FlashMenu extends Activity
                 @Override
                 public void onExecuted()
                 {
+                  if (Globals.getVendor() != null)
+                  {
                     listNavigation.getTextViewHeader().setText(Globals.getVendor().getName() + "\n" + Globals.getPoints(Globals.getVendor().getId()) + " Points");
                     apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
+                  }
+                  else
+                  {
+                    Activity activity = (Activity)swipeRefreshLayoutItems.getContext();
+                    /*Activity activity = (Activity)view.getContext();
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        activity, view, "findFailedSelectVendor");
+                    Bundle bundle = options.toBundle();*/
+                    Intent intent = new Intent(activity, FlashVendors.class);
+                    //ActivityCompat.startActivity(activity, intent, bundle);
+                    activity.startActivity(intent);
+                    activity.finish();
+                  }
                 }
             });
         }
@@ -160,7 +189,8 @@ public class FlashMenu extends Activity
                     activity, view, "selectVendorButton");
                 Bundle bundle = options.toBundle();
                 Intent intent = new Intent(activity, FlashVendors.class);
-                ActivityCompat.startActivity(activity, intent, bundle);
+                //ActivityCompat.startActivity(activity, intent, bundle);
+                activity.startActivity(intent);
                 activity.finish();
             }
         });

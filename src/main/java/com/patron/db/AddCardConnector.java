@@ -40,13 +40,9 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 	private String code;
 	private int month;
 	private int year;
-	private String address;
-	private String state;
-	private String city;
-	private String postalCode;
 
 	public AddCardConnector(Loadable activity, String name, String number, String code, int month,
-		int year, String address, String state, String city, String postalCode)
+		int year)
 	{
 		this.activity = activity;
 		this.name = name;
@@ -54,10 +50,6 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 		this.code = code;
 		this.month = month;
 		this.year = year;
-		this.address = address;
-		this.state = state;
-		this.city = city;
-		this.postalCode = postalCode;
 	}
 
 	@Override
@@ -66,17 +58,11 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 		Balanced balanced = new Balanced(contexts[0]);
 		String cardHref = null;
 		Map<String, Object> response = null;
-		HashMap<String, String> addressMap = new HashMap<String, String>();
-		addressMap.put("line1", address);
-		addressMap.put("state", state);
-		addressMap.put("city", city);
-		addressMap.put("postal_code", postalCode);
 		HashMap<String, Object> optionalFields = new HashMap<String, Object>();
 		optionalFields.put("name", name);
 		optionalFields.put("cvv", code);
 		optionalFields.put("expiration_month", month);
 		optionalFields.put("expiration_year", year);
-		optionalFields.put("address", addressMap);
 		try
 		{
 			// Create the card in the Balanced API.

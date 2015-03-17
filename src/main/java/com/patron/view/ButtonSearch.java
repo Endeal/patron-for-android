@@ -123,14 +123,11 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
             List<Item> items = new ArrayList<Item>();
             for (int i = 0; i < Globals.getVendor().getItems().size(); i++)
             {
-              Item item = Globals.getVendor().getItems().get(i);
-              for (int j = 0; j < Globals.getUser().getItems().size(); j++)
-              {
+                Item item = Globals.getVendor().getItems().get(i);
                 if (item.getName().toLowerCase().contains(term.toLowerCase()))
                 {
                   items.add(item);
                 }
-              }
             }
             Globals.getVendor().setFilteredItems(items);
             if (getListener() != null)

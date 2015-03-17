@@ -77,7 +77,7 @@ public class FlashCreateAccount extends Activity implements Loadable
 			FlashCreateAccount.year + "-" + (FlashCreateAccount.month + 1) + "-" + FlashCreateAccount.day,
 			null, null, null, null, null, null, null);
 		Globals.setUser(user);
-		Intent intent = new Intent(this, FlashPayment.class);
+		Intent intent = new Intent(this, FlashMenu.class);
 		this.finish();
 		startActivity(intent);
 	}

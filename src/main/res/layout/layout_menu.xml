@@ -9,34 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <!-- The main list of items -->
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/menuSwipeRefreshLayoutItems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ListView
-                android:id="@+id/menuListItems"
-                style="@style/StyleMenuListItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/menuHorizontalScrollViewTypes" >
-            </ListView>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <Button
-            android:id="@+id/menuButtonSelectVendor"
-            style="@style/ButtonQuickReturn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:elevation="5dp"
-            android:text="@string/menuButtonSelectVendor" />
-
         <!-- The checkout button -->
         <Button
             android:id="@+id/menuButtonCheckout"
@@ -46,19 +18,6 @@
             android:layout_height="90dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true" />
-
-        <!-- Search Input -->
-        <EditText
-            android:id="@+id/menuEditTextSearch"
-            style="@style/EditTextMessage"
-            android:visibility="gone"
-            android:background="#77114025"
-            android:hint="e.g. water..."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_above="@+id/menuHorizontalScrollViewTypes" />
 
         <!-- The scroll view for the categories -->
         <HorizontalScrollView
@@ -97,6 +56,47 @@
                 </LinearLayout>
 
         </HorizontalScrollView>
+
+        <!-- The main list of items -->
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/menuSwipeRefreshLayoutItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menuHorizontalScrollViewTypes">
+
+            <ListView
+                android:id="@+id/menuListItems"
+                style="@style/StyleMenuListItems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true" >
+            </ListView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <Button
+            android:id="@+id/menuButtonSelectVendor"
+            style="@style/ButtonQuickReturn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:elevation="5dp"
+            android:text="@string/menuButtonSelectVendor" />
+
+        <!-- Search Input -->
+        <EditText
+            android:id="@+id/menuEditTextSearch"
+            style="@style/EditTextMessage"
+            android:visibility="gone"
+            android:background="#77114025"
+            android:hint="e.g. water..."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/menuHorizontalScrollViewTypes" />
 
     </RelativeLayout>
 

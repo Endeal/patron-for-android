@@ -77,13 +77,11 @@ public class FlashRemovePayment extends Activity implements Loadable
 
 		String[] from = {"number",
 		"bankName",
-		"type",
-		"address"};
+		"type"};
 
 		int[] to = {R.id.paymentListItemTextNumber,
 			R.id.paymentListItemTextBankName,
-			R.id.paymentListItemTextType,
-			R.id.paymentListItemTextAddress};
+			R.id.paymentListItemTextType};
 		for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
 		{
 			Map<String, String> mapping = new HashMap<String, String>();
@@ -91,10 +89,6 @@ public class FlashRemovePayment extends Activity implements Loadable
 			mapping.put("number", funder.getNumber());
 			mapping.put("bankName", funder.getBankName());
 			mapping.put("type", funder.getType().substring(0, 1).toUpperCase() + funder.getType().substring(1));
-			if (funder.getAddress() == null || funder.getCity() == null || funder.getState() == null)
-				mapping.put("address", "");
-			else
-				mapping.put("address", funder.getAddress() + ", " + funder.getCity() + " " + funder.getState());
 			payments.add(mapping);
 		}
 		SimpleAdapter adapter = new SimpleAdapter(this, payments, R.layout.list_item_payment, from, to);

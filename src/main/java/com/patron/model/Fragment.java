@@ -77,7 +77,7 @@ public class Fragment implements Cloneable
 		{
 			total = total.add(selections.get(i).getOption().getPrice());
 		}
-		if (supplements != null && selections.size() > 0)
+		if (supplements != null && supplements.size() > 0)
 		for (int i = 0; i < supplements.size(); i++)
 		{
 			total = total.add(supplements.get(i).getPrice());

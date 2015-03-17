@@ -205,5 +205,6 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         targetView.setAnimatedTransition(true);
         final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
         attacher.setOnItemClickListener(new ListItemMenuAddListener());
+        //targetView.setPosition(QuickReturnTargetView.POSITION_BOTTOM);
     }
 }

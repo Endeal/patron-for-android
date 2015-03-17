@@ -30,6 +30,8 @@ import com.patron.R;
 import com.patron.system.Loadable;
 import com.patron.db.AddCardConnector;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FlashAddCard extends Activity implements Loadable
 {
 	private boolean submitting = false;
@@ -37,11 +39,18 @@ public class FlashAddCard extends Activity implements Loadable
 	private ProgressBar progressIndicator;
 	public static int expirationMonth = 1;
 	public static int expirationYear = 1970;
+	private String screen;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		this.screen = null;
+		if (savedInstanceState != null)
+		{
+			String value = savedInstanceState.getString("activity");
+			this.screen = value;
+		}
 		setContentView(R.layout.layout_add_card);
 		layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
 		init();
@@ -73,7 +82,15 @@ public class FlashAddCard extends Activity implements Loadable
 	@Override
 	public void update()
 	{
-		Intent intent = new Intent(this, FlashHome.class);
+		Intent intent;
+		if (screen != null && screen.equals("cart"))
+		{
+			intent = new Intent(this, FlashCart.class);
+		}
+		else
+		{
+			intent = new Intent(this, FlashSettings.class);
+		}
 		startActivity(intent);
 	}
 
@@ -93,25 +110,26 @@ public class FlashAddCard extends Activity implements Loadable
 	public void init()
 	{
 		// Get the layout elements.
-		final EditText fieldName = (EditText)findViewById(R.id.addCardFieldName);
-		final EditText fieldNumber = (EditText)findViewById(R.id.addCardFieldNumber);
-		final EditText fieldCode = (EditText)findViewById(R.id.addCardFieldCode);
-		final Spinner fieldExpirationMonth = (Spinner)findViewById(R.id.addCardFieldExpirationMonth);
-		final Spinner fieldExpirationYear = (Spinner)findViewById(R.id.addCardFieldExpirationYear);
+		final EditText fieldName = (EditText)findViewById(R.id.addCardEditTextName);
+		final EditText fieldNumber = (EditText)findViewById(R.id.addCardEditTextNumber);
+		final EditText fieldCode = (EditText)findViewById(R.id.addCardEditTextCode);
+		final Spinner fieldExpirationMonth = (Spinner)findViewById(R.id.addCardSpinnerExpirationMonth);
+		final Spinner fieldExpirationYear = (Spinner)findViewById(R.id.addCardSpinnerExpirationYear);
+		/*
 		final EditText fieldAddress = (EditText)findViewById(R.id.addCardFieldAddress);
 		final EditText fieldState = (EditText)findViewById(R.id.addCardFieldState);
 		final EditText fieldCity = (EditText)findViewById(R.id.addCardFieldCity);
-		final EditText fieldPostalCode = (EditText)findViewById(R.id.addCardFieldPostalCode);
+		final EditText fieldPostalCode = (EditText)findViewById(R.id.addCardFieldPostalCode);*/
 		final Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
 
 		// Set field's to mock data.
 		fieldName.setText("James Whiteman");
 		fieldNumber.setText("4833160029475107");
-		fieldCode.setText("768");
+		fieldCode.setText("768");/*
 		fieldAddress.setText("1500 Ralston Avenue");
 		fieldState.setText("CA");
 		fieldCity.setText("Belmont");
-		fieldPostalCode.setText("94002");
+		fieldPostalCode.setText("94002");*/
 
 		// Spinner actions
 		fieldExpirationMonth.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -153,15 +171,14 @@ public class FlashAddCard extends Activity implements Loadable
 					String number = fieldNumber.getText().toString();
 					String code = fieldCode.getText().toString();
 					int month = FlashAddCard.expirationMonth;
-					int year = FlashAddCard.expirationYear;
+					int year = FlashAddCard.expirationYear;/*
 					String address = fieldAddress.getText().toString();
 					String state = fieldState.getText().toString();
 					String city = fieldCity.getText().toString();
-					String postalCode = fieldPostalCode.getText().toString();
+					String postalCode = fieldPostalCode.getText().toString();*/
 
 					// Add the card to the user.
-					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month,
-						year, address, state, city, postalCode);
+					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month, year);
 					connector.execute(view.getContext());
 				}
 			}
@@ -171,5 +188,11 @@ public class FlashAddCard extends Activity implements Loadable
 	public FlashAddCard getActivity()
 	{
 		return this;
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
 	}
 }

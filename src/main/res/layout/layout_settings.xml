@@ -118,7 +118,9 @@
                     android:text="Privacy Policy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:onClick="viewPrivacyPolicy"
+                    android:clickable="true" />
 
                 <TextView
                     android:id="@+id/settingsTextViewTermsOfService"
@@ -126,7 +128,9 @@
                     android:text="Terms of Service"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:onClick="viewTermsOfService"
+                    android:clickable="true" />
 
             </LinearLayout>
 

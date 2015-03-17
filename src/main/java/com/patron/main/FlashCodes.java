@@ -26,10 +26,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.patron.bind.CodeBinder;
 import com.patron.db.CodeConnector;
 import com.patron.listeners.DrawerNavigationListener;
+import com.patron.listeners.OnCodesRefreshListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Code;
 import com.patron.model.Order;
 import com.patron.R;
+import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.view.NavigationListView;
@@ -49,11 +51,20 @@ public class FlashCodes extends Activity implements Loadable
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		LayoutInflater inflater = LayoutInflater.from(this);
-		viewLoading = inflater.inflate(R.layout.misc_loading, null);
-		viewCodes = inflater.inflate(R.layout.layout_codes, null);
-		setContentView(viewLoading);
-		beginLoading();
+		setContentView(R.layout.layout_codes);
+
+		// Set the refresh listener.
+		ListView listCodes = (ListView)findViewById(R.id.codesListViewMain);
+		OnCodesRefreshListener listener = new OnCodesRefreshListener(listCodes);
+		ApiExecutor executor = new ApiExecutor();
+		executor.getCodes(listener);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.codesDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.codesListNavigation);
+		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
 	}
 
 	@Override
@@ -98,14 +109,7 @@ public class FlashCodes extends Activity implements Loadable
 	// Loading
 	public void beginLoading()
 	{
-		listCodes = (ListView) viewCodes.findViewById(R.id.codesList);
-
-		// Set up the navigation drawer.
-		DrawerLayout drawerLayoutNavigation = (DrawerLayout) viewCodes.findViewById(R.id.codesDrawerNavigation);
-		NavigationListView listNavigation = (NavigationListView) viewCodes.findViewById(R.id.codesListNavigation);
-		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
-		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
+		//listCodes = (ListView) viewCodes.findViewById(R.id.codesList);
 
 		load();
 	}
@@ -147,62 +151,12 @@ public class FlashCodes extends Activity implements Loadable
 
 	public void update()
 	{
-		List<Code> codes = Globals.getCodes();
-		List<Map<String, String>> codesMap = new ArrayList<Map<String, String>>();
 
-		String[] from = {"textTime",
-				"textStatus",
-				"textOrders"};
-
-		int[] to = {R.id.codeListItemTextTime,
-				R.id.codeListItemTextStatus,
-				R.id.codeListItemTextProducts};
-
-		// Don't update the list if the codes are empty.
-		if (codes == null || codes.isEmpty())
-			return;
-
-		// Map the values to the elements of the list item.
-		for (int i = 0; i < codes.size(); i++)
-		{
-			Map<String, String> mapping = new HashMap<String, String>();
-			Code code = codes.get(i);
-			mapping.put("textTime", code.getTimestampText());
-			mapping.put("textStatus", Order.getStatusText(code.getOrder().getStatus()));
-			mapping.put("textOrders", code.getOrder().getOrderText());
-			codesMap.add(mapping);
-		}
-
-		// Bind the values to the elements of the list item.
-		SimpleAdapter adapter = new SimpleAdapter(this,
-				codesMap, R.layout.list_item_code, from, to);
-		adapter.setViewBinder(new CodeBinder());
-		listCodes.setAdapter(adapter);
-		listCodes.setOnItemClickListener(new CodeItemListener(this));
-		adapter.notifyDataSetChanged();
 	}
 
 	public void message(String msg)
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
 		toast.show();
-	}
-
-	// List item listener.
-	public static class CodeItemListener implements OnItemClickListener
-	{
-		private Activity activity;
-
-		public CodeItemListener(Activity activity)
-		{
-			this.activity = activity;
-		}
-
-		public void onItemClick(AdapterView<?> adapter, View v, int item, long row)
-		{
-			Intent intent = new Intent(activity, FlashScan.class);
-			intent.putExtra("orderRow", "" + item);
-			activity.startActivity(intent);
-		}
 	}
 }

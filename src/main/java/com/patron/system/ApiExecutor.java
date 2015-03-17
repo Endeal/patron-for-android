@@ -1,6 +1,8 @@
 package com.patron.system;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +26,7 @@ import com.patron.model.Item;
 import com.patron.model.Order;
 import com.patron.model.User;
 import com.patron.model.Vendor;
+import com.patron.R;
 import com.patron.system.ApiTask;
 import com.patron.system.Globals;
 import com.patron.system.Parser;
@@ -32,9 +35,11 @@ import com.patron.system.Patron;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.NullPointerException;
+import java.lang.Math;
 import java.lang.Runnable;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -302,61 +307,43 @@ public class ApiExecutor
                         long minTime = (long)1;
                         float minDistance = (float)1;
                         boolean canGetLocation = true;
-                        Location location;
+                        Location location = null;
                         UserLocationListener listener = new UserLocationListener(context, executor, listeners);
                         if (isGPSEnabled)
                         {
-                            location = null;
-                            if (location == null)
-                            {
-                                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
-                                if (locationManager != null)
-                                {
-                                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                    if (location != null)
-                                    {
-                                        double latitude = location.getLatitude();
-                                        double longitude = location.getLongitude();
-                                        Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
-                                            Toast.LENGTH_SHORT).show();
-                                        System.out.println("POSITION:" + latitude + " " + longitude);
-                                        int closest = 0;
-                                        List<Vendor> vendors = Globals.getVendors();
-                                        for (int i = 0; i < vendors.size(); i++)
-                                        {
-                                            closest = i;
-                                        }
-                                        Globals.setVendor(vendors.get(closest));
-                                        callback(listeners);
-                                    }
-                                }
-                            }
+                          locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
+                          location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         }
                         else if (isNetworkEnabled)
                         {
-                            location = null;
-                            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
-                            if (locationManager != null)
-                            {
-                                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                                if (location != null)
-                                {
-                                    double latitude = location.getLatitude();
-                                    double longitude = location.getLongitude();
-                                    Toast.makeText(context, "lat:" + latitude + "\nlong:" + longitude,
-                                        Toast.LENGTH_SHORT).show();
-                                    System.out.println("POSITION:" + latitude + " " + longitude);
-                                    int closest = 0;
-                                    List<Vendor> vendors = Globals.getVendors();
-                                    for (int i = 0; i < vendors.size(); i++)
-                                    {
-                                        closest = i;
-                                    }
-                                    Globals.setVendor(vendors.get(closest));
-                                    callback(listeners);
-                                }
-                            }
+                          locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
+                          location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         }
+                        selectNearestLocation(location, context);
+
+                        // Confirm the user wants to use this vendor.
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                              switch (which)
+                              {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                  dialog.dismiss();
+                                  callback(listeners);
+                                  break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                  Globals.setVendor(null);
+                                  dialog.dismiss();
+                                  callback(listeners);
+                                  break;
+                              }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        if (Globals.getVendor() != null)
+                        builder.setMessage("Are you at " + Globals.getVendor().getName() + "?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
                     }
 
                 }
@@ -373,6 +360,38 @@ public class ApiExecutor
                 runnable.run();
             }
         });
+    }
+
+    private void selectNearestLocation(Location location, Context context)
+    {
+      if (location != null)
+      {
+          double latitude = location.getLatitude();
+          double longitude = location.getLongitude();
+          System.out.println("POSITION:" + latitude + " " + longitude);
+          int closest = 0;
+          final List<Vendor> vendors = Globals.getVendors();
+          for (int i = 0; i < vendors.size(); i++)
+          {
+              Vendor vendor = vendors.get(i);
+              double latDiff = Math.abs(vendor.getLatitude() - latitude);
+              double longDiff = Math.abs(vendor.getLongitude() - longitude);
+              double newDistance = latDiff + longDiff;
+              Vendor closestVendor = vendors.get(closest);
+              latDiff = Math.abs(closestVendor.getLatitude() - latitude);
+              longDiff = Math.abs(closestVendor.getLongitude() - longitude);
+              double oldDistance = latDiff + longDiff;
+              if (newDistance < oldDistance)
+              {
+                closest = i;
+              }
+          }
+          Globals.setVendor(vendors.get(closest));
+      }
+      else
+      {
+        Toast.makeText(context, "GPS/Network positioning failed.", Toast.LENGTH_SHORT).show();
+      }
     }
 
     public void getItems(String vendorId, OnApiExecutedListener... tempListeners)
@@ -430,12 +449,63 @@ public class ApiExecutor
         {
             e.printStackTrace();
         }
-        callback();
     }
 
-    public void getCodes()
+    public void getCodes(final OnApiExecutedListener... listeners)
     {
-        callback();
+        final String url = ListLinks.API_GET_CODES;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        pairs.add(email);
+        pairs.add(password);
+        ApiTask apiTask = new ApiTask();
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                  }
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            String response = new String(entry.getValue());
+                            try
+                            {
+                              JSONArray rawCodes = new JSONArray(response);
+                              List<Code> codes = Parser.getCodes(rawCodes);
+                              Globals.setCodes(codes);
+                              callback(listeners);
+                            }
+                            catch (JSONException e)
+                            {
+                              Toast.makeText(Patron.getContext(), "Failed to get orders: " + response, Toast.LENGTH_SHORT).show();
+                              callback(listeners);
+                            }
+                            catch (ParseException e)
+                            {
+                              callback(listeners);
+                            }
+                        }
+                        callback(listeners);
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          callback(listeners);
+        }
     }
 
     public void getScan(Code code)
@@ -550,6 +620,10 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();

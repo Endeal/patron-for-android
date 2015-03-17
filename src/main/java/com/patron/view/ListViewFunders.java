@@ -40,9 +40,9 @@ public class ListViewFunders extends ListView
     public void update()
     {
         List<Map<String, String>> payments = new ArrayList<Map<String, String>>();
-        String[] from = {"number", "bankName", "type", "address"};
+        String[] from = {"number", "bankName", "type"};
         int[] to = {R.id.paymentListItemTextNumber,R.id.paymentListItemTextBankName,
-            R.id.paymentListItemTextType, R.id.paymentListItemTextAddress};
+            R.id.paymentListItemTextType};
         for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
         {
             Map<String, String> mapping = new HashMap<String, String>();
@@ -50,14 +50,6 @@ public class ListViewFunders extends ListView
             mapping.put("number", funder.getNumber());
             mapping.put("bankName", funder.getBankName());
             mapping.put("type", funder.getType().substring(0, 1).toUpperCase() + funder.getType().substring(1));
-            if (funder.getAddress() == null || funder.getCity() == null || funder.getState() == null)
-            {
-                mapping.put("address", "");
-            }
-            else
-            {
-                mapping.put("address", funder.getAddress() + ", " + funder.getCity() + " " + funder.getState());
-            }
             payments.add(mapping);
         }
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

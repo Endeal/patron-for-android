@@ -48,10 +48,8 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
                 R.id.locationListItemTextPhone,
                 R.id.locationListItemTextAddress,
                 R.id.locationListItemToggleButtonFavorite};
-
-        addMappings(true, locations);
-        addMappings(false, locations);
-
+        sortVendors();
+        addMappings(locations);
         SimpleAdapter adapter = new SimpleAdapter(listLocations.getContext(), locations,
             R.layout.list_item_location, from, to);
         adapter.setViewBinder(new VendorBinder());
@@ -68,23 +66,42 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
     }
 
 
-    public void addMappings(boolean favorite, List<Map<String, String>> locations)
+    public void addMappings(List<Map<String, String>> locations)
     {
         for (int i = 0; i < Globals.getVendors().size(); i++)
         {
             Map<String, String> mapping = new HashMap<String, String>();
             Vendor currentLocation = Globals.getVendors().get(i);
-            if (Globals.getUser().hasFavoriteVendor(currentLocation.getId()) == favorite)
-            {
-                mapping.put("textName", currentLocation.getName());
-                mapping.put("textPhone", currentLocation.getPhone());
-                mapping.put("textAddress", currentLocation.getAddress() +
+            mapping.put("textName", currentLocation.getName());
+            mapping.put("textPhone", currentLocation.getPhone());
+            mapping.put("textAddress", currentLocation.getAddress() +
                         ", " + currentLocation.getCity() +
                         ", " + currentLocation.getState() +
                         currentLocation.getZip());
-                mapping.put("toggleButtonFavorite", "" + i);
-                locations.add(mapping);
-            }
+            mapping.put("toggleButtonFavorite", "" + i);
+            locations.add(mapping);
         }
+    }
+
+    private void sortVendors()
+    {
+      List<Vendor> vendors = new ArrayList<Vendor>();
+      for (int i = 0; i < Globals.getVendors().size(); i++)
+      {
+          Vendor currentLocation = Globals.getVendors().get(i);
+          if (Globals.getUser().hasFavoriteVendor(currentLocation.getId()))
+          {
+            vendors.add(currentLocation);
+          }
+      }
+      for (int i = 0; i < Globals.getVendors().size(); i++)
+      {
+        Vendor currentLocation = Globals.getVendors().get(i);
+        if (!Globals.getUser().hasFavoriteVendor(currentLocation.getId()))
+        {
+          vendors.add(currentLocation);
+        }
+      }
+      Globals.setVendors(vendors);
     }
 }

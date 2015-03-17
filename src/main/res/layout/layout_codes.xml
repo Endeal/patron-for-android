@@ -11,7 +11,7 @@
         android:layout_height="match_parent" >
 
         <ListView
-            android:id="@+id/codesList"
+            android:id="@+id/codesListViewMain"
             style="@style/StyleCodesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

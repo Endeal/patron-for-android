@@ -658,6 +658,7 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
     <style name="LayoutTransparent">
         <item name="android:background">#00FFFFFF</item>
@@ -837,6 +838,16 @@
         <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:inputType">numberDecimal</item>
         <item name="android:maxLength">7</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColorHint">#777777</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextMainNumber">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">19</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textColorHint">#777777</item>

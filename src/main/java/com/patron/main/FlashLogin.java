@@ -128,7 +128,8 @@ public class FlashLogin extends FragmentActivity
                                 activity, buttonSubmit, "loginButton");
                             Bundle bundle = options.toBundle();
                             Intent intent = new Intent(activity, FlashMenu.class);
-                            ActivityCompat.startActivity(activity, intent, bundle);
+                            //ActivityCompat.startActivity(activity, intent, bundle);
+														activity.startActivity(intent);
                             activity.finish();
                         }
                     });

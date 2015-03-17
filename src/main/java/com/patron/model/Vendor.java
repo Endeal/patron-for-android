@@ -2,7 +2,9 @@ package com.patron.model;
 
 import java.lang.Cloneable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.patron.model.Station;
 
@@ -16,11 +18,16 @@ public class Vendor
 	private String zip;
 	private String phone;
 	private Double taxRate;
+	private double latitude;
+	private double longitude;
 
 	private List<Item> items;
 	private List<Item> filteredItems;
 	private List<Item> recommendations;
 	private List<Station> stations;
+	private Map<String, Integer> rewardItems;
+	private Map<String, Integer> rewardOptions;
+	private Map<String, Integer> rewardSupplements;
 
 	// CONSTRUCTORS
 
@@ -32,7 +39,8 @@ public class Vendor
 
 	public Vendor(String id, String name, String address, String city,
 			String state, String zip, String phone, List<Item> items,
-			List<Item> recommendations, List<Station> stations)
+			List<Item> recommendations, List<Station> stations,
+			double latitude, double longitude)
 	{
 		setId(id);
 		setName(name);
@@ -44,6 +52,8 @@ public class Vendor
 		setItems(items);
 		setRecommendations(recommendations);
 		setStations(stations);
+		setLatitude(latitude);
+		setLongitude(longitude);
 		setTaxRate(0.0833);
 	}
 
@@ -52,7 +62,7 @@ public class Vendor
 	{
 		Vendor vendor = new Vendor(this.id, this.name, this.address, this.city,
 			this.state, this.zip, this.phone, this.items, this.recommendations,
-			this.stations);
+			this.stations, this.latitude, this.longitude);
 		return vendor;
 	}
 
@@ -92,6 +102,16 @@ public class Vendor
 		this.phone = phone;
 	}
 
+	public void setLatitude(double latitude)
+	{
+		this.latitude = latitude;
+	}
+
+	public void setLongitude(double longitude)
+	{
+		this.longitude = longitude;
+	}
+
 	public void setTaxRate(double taxRate)
 	{
 		this.taxRate = taxRate;
@@ -115,6 +135,21 @@ public class Vendor
 	public void setStations(List<Station> stations)
 	{
 		this.stations = stations;
+	}
+
+	public void setRewardItems(Map<String, Integer> rewardItems)
+	{
+		this.rewardItems = rewardItems;
+	}
+
+	public void setRewardOptions(Map<String, Integer> rewardOptions)
+	{
+		this.rewardOptions = rewardOptions;
+	}
+
+	public void setRewardSupplements(Map<String, Integer> rewardSupplements)
+	{
+		this.rewardSupplements = rewardSupplements;
 	}
 
 	// ACCESSOR METHODS
@@ -154,6 +189,16 @@ public class Vendor
 		return phone;
 	}
 
+	public double getLatitude()
+	{
+		return latitude;
+	}
+
+	public double getLongitude()
+	{
+		return longitude;
+	}
+
 	public double getTaxRate()
 	{
 		return taxRate;
@@ -177,5 +222,20 @@ public class Vendor
 	public List<Station> getStations()
 	{
 		return stations;
+	}
+
+	public Map<String, Integer> getRewardItems()
+	{
+		return rewardItems;
+	}
+
+	public Map<String, Integer> getRewardOptions()
+	{
+		return rewardOptions;
+	}
+
+	public Map<String, Integer> getRewardSupplements()
+	{
+		return rewardSupplements;
 	}
 }

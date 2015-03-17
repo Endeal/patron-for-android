@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,8 +47,8 @@ public class Parser
 		JSONArray rawCards = cardsObject.getJSONArray("cards");
 		JSONObject bankAccountsObject = rawUser.getJSONObject("bankAccounts");
 		JSONArray rawBankAccounts = bankAccountsObject.getJSONArray("bank_accounts");
-        JSONArray rawVendors = rawUser.getJSONArray("vendors");
-        JSONArray rawItems = rawUser.getJSONArray("items");
+    JSONArray rawVendors = rawUser.getJSONArray("vendors");
+    JSONArray rawItems = rawUser.getJSONArray("items");
 		List<Funder> funders = new ArrayList<Funder>();
 		for (Card card : Parser.getCards(rawCards))
 		{
@@ -183,10 +184,27 @@ public class Parser
 		String state = rawVendor.getString("state");
 		String zip = rawVendor.getString("zip");
 		String phone = rawVendor.getString("phone");
+		double latitude = rawVendor.getDouble("latitude");
+		double longitude = rawVendor.getDouble("longitude");
 		JSONArray rawStations = rawVendor.getJSONArray("stations");
+		JSONArray rawRewardItems = rawVendor.getJSONArray("rewardItems");
+		JSONArray rawRewardOptions = rawVendor.getJSONArray("rewardOptions");
+		JSONArray rawRewardSupplements = rawVendor.getJSONArray("rewardSupplements");
 		List<Station> stations = getStations(rawStations);
 		Vendor vendor = new Vendor(vendorId, name, address, city, state,
-				zip, phone, null, null, stations);
+				zip, phone, null, null, stations, latitude, longitude);
+
+		// 	Get reward items.
+		Map<String, Integer> rewardItems = new HashMap<String, Integer>();
+		for (int i = 0; i < rawRewardItems.length(); i++)
+		{
+			JSONObject rawRewardItem = rawRewardItems.getJSONObject(i);
+			String itemId = rawRewardItem.getString("itemId");
+			int points = rawRewardItem.getInt("points");
+			rewardItems.put(itemId, points);
+		}
+		vendor.setRewardItems(rewardItems);
+
 		return vendor;
 	}
 
@@ -452,26 +470,24 @@ public class Parser
 		// Get the fragments.
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
-		/*
-		for (int i = 0; i < rawFragments.length(); i++)
-		{
-			System.out.println("getorder14");
-			JSONObject rawFragment = rawFragments.getJSONObject(i);
-			System.out.println("getorder15");
-			Fragment fragment = getFragment(rawFragment);
-			System.out.println("getorder16");
-			fragments.add(fragment);
-			System.out.println("getorder17");
-		}
-
-		System.out.println("getorder18");
-		*/
 		Order order = new Order(orderId, vendor, patron, fragments, Order.getIntStatus(status), station,
 			funder, tip, coupons, comment);
 		return order;
 	}
 
-	public static Code getCode(JSONObject rawCode)throws JSONException, ParseException
+	public static List<Code> getCodes(JSONArray rawCodes) throws JSONException, ParseException
+	{
+		List<Code> codes = new ArrayList<Code>();
+		for (int i = 0; i < rawCodes.length(); i++)
+		{
+			JSONObject rawCode = rawCodes.getJSONObject(i);
+			Code code = getCode(rawCode);
+			codes.add(code);
+		}
+		return codes;
+	}
+
+	public static Code getCode(JSONObject rawCode) throws JSONException, ParseException
 	{
 		String timeReceived = rawCode.getString("timestamp");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);

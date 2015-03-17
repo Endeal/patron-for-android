@@ -56,24 +56,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		Fragment oldFragment = Globals.getFragments().get(row);
 		Fragment fragment = new Fragment(oldFragment.getId(), oldFragment.getItem(),
 			oldFragment.getSelections(), oldFragment.getSupplements(), oldFragment.getQuantity());
-
-		if (oldFragment.getItem().getSupplements() != null && oldFragment.getItem().getSupplements().size() > 0)
-		{
-			System.out.println("OG Supplements:" + oldFragment.getItem().getSupplements());
-			System.out.println("Copy Supplements:" + fragment.getItem().getSupplements());
-			System.out.println("OG Additions:" + oldFragment.getSupplements().size());
-			System.out.println("Copy Additions:" + fragment.getSupplements().size());
-
-			Supplement tempSupplement = oldFragment.getItem().getSupplements().get(0);
-			List<Supplement> tempSupplements = new ArrayList<Supplement>();
-			tempSupplements.add(tempSupplement);
-			oldFragment.setSupplements(tempSupplements);
-
-			System.out.println("2OG Supplements:" + oldFragment.getItem().getSupplements());
-			System.out.println("2Copy Supplements:" + fragment.getItem().getSupplements());
-			System.out.println("2OG Additions:" + oldFragment.getSupplements().size());
-			System.out.println("2Copy Additions:" + fragment.getSupplements().size());
-		}
+			
 
 		Item item = fragment.getItem();
 		ArrayList<Selection> selections = new ArrayList<Selection>();

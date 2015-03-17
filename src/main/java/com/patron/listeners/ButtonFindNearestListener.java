@@ -23,7 +23,8 @@ public class ButtonFindNearestListener implements OnClickListener
             activity, view, "buttonFindNearest");
         Bundle bundle = options.toBundle();
         Intent intent = new Intent(activity, FlashMenu.class);
-        ActivityCompat.startActivity(activity, intent, bundle);
+        //ActivityCompat.startActivity(activity, intent, bundle);
+        view.getContext().startActivity(intent);
         activity.finish();
     }
 }

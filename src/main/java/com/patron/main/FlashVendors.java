@@ -42,15 +42,15 @@ public class FlashVendors extends Activity
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.locationsListNavigation);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
+		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
 
         // Refreshing the page.
         final ApiExecutor apiExecutor = new ApiExecutor();
         int startOffset = (int)Globals.convertDpToPixel(10, this);
         int endOffset = (int)Globals.convertDpToPixel(50, this);
         swipeRefreshLayoutVendors.setProgressViewOffset(false, startOffset, endOffset);
-		swipeRefreshLayoutVendors.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-			android.R.color.holo_orange_light, android.R.color.holo_red_light);
+				swipeRefreshLayoutVendors.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+						android.R.color.holo_orange_light, android.R.color.holo_red_light);
         final OnVendorRefreshListener vendorRefreshListener = new OnVendorRefreshListener(listVendors, buttonFindNearest);
         apiExecutor.getVendors(vendorRefreshListener);
         swipeRefreshLayoutVendors.setOnRefreshListener(new OnRefreshListener() {
