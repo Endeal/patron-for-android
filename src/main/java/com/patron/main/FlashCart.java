@@ -68,10 +68,15 @@ public class FlashCart extends Activity
 								// Funder
 								String number;
 								if (Globals.getOrder().getFunder() == null)
+								{
 									number = "?";
+									buttonPayment.setText("Payment:\n" + number);
+								}
 								else
+								{
                 	number = Globals.getOrder().getFunder().getNumber();
-                buttonPayment.setText("Payment:\n" + number.substring(number.length() - 4));
+                	buttonPayment.setText("Payment:\n" + number.substring(number.length() - 4));
+								}
 
 								// Tip
                 buttonTip.setText("Tip:\n$" + Globals.getOrder().getTip().toString());

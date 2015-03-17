@@ -26,7 +26,13 @@ import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
 
+import com.balancedpayments.android.Balanced;
+import com.balancedpayments.android.Card;
+import com.balancedpayments.android.BankAccount;
+import com.balancedpayments.android.exception.*;
+
 import com.patron.R;
+import com.patron.system.ApiExecutor;
 import com.patron.system.Loadable;
 import com.patron.db.AddCardConnector;
 
@@ -46,9 +52,10 @@ public class FlashAddCard extends Activity implements Loadable
 	{
 		super.onCreate(savedInstanceState);
 		this.screen = null;
-		if (savedInstanceState != null)
+		Bundle extras = getIntent().getExtras();
+		if (extras != null)
 		{
-			String value = savedInstanceState.getString("activity");
+			String value = extras.getString("activity");
 			this.screen = value;
 		}
 		setContentView(R.layout.layout_add_card);
@@ -115,21 +122,12 @@ public class FlashAddCard extends Activity implements Loadable
 		final EditText fieldCode = (EditText)findViewById(R.id.addCardEditTextCode);
 		final Spinner fieldExpirationMonth = (Spinner)findViewById(R.id.addCardSpinnerExpirationMonth);
 		final Spinner fieldExpirationYear = (Spinner)findViewById(R.id.addCardSpinnerExpirationYear);
-		/*
-		final EditText fieldAddress = (EditText)findViewById(R.id.addCardFieldAddress);
-		final EditText fieldState = (EditText)findViewById(R.id.addCardFieldState);
-		final EditText fieldCity = (EditText)findViewById(R.id.addCardFieldCity);
-		final EditText fieldPostalCode = (EditText)findViewById(R.id.addCardFieldPostalCode);*/
 		final Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
 
 		// Set field's to mock data.
 		fieldName.setText("James Whiteman");
 		fieldNumber.setText("4833160029475107");
-		fieldCode.setText("768");/*
-		fieldAddress.setText("1500 Ralston Avenue");
-		fieldState.setText("CA");
-		fieldCity.setText("Belmont");
-		fieldPostalCode.setText("94002");*/
+		fieldCode.setText("768");
 
 		// Spinner actions
 		fieldExpirationMonth.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -171,15 +169,15 @@ public class FlashAddCard extends Activity implements Loadable
 					String number = fieldNumber.getText().toString();
 					String code = fieldCode.getText().toString();
 					int month = FlashAddCard.expirationMonth;
-					int year = FlashAddCard.expirationYear;/*
-					String address = fieldAddress.getText().toString();
-					String state = fieldState.getText().toString();
-					String city = fieldCity.getText().toString();
-					String postalCode = fieldPostalCode.getText().toString();*/
+					int year = FlashAddCard.expirationYear;
 
 					// Add the card to the user.
+					ApiExecutor executor = new ApiExecutor();
+					executor.addCard(name, number, code, month, year, view.getContext());
+					/*
 					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month, year);
 					connector.execute(view.getContext());
+					*/
 				}
 			}
 		});

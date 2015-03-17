@@ -43,6 +43,7 @@ public class ListViewFunders extends ListView
         String[] from = {"number", "bankName", "type"};
         int[] to = {R.id.paymentListItemTextNumber,R.id.paymentListItemTextBankName,
             R.id.paymentListItemTextType};
+        if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0)
         for (int i = 0; i < Globals.getUser().getFunders().size(); i++)
         {
             Map<String, String> mapping = new HashMap<String, String>();

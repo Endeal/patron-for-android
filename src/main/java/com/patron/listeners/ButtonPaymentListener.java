@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.patron.bind.PaymentBinder;
 import com.patron.model.Funder;
@@ -33,6 +34,13 @@ public class ButtonPaymentListener implements OnClickListener
 
     public void onClick(View view)
     {
+        // Cancel out if there are no funders.
+        if (Globals.getUser().getFunders() == null || Globals.getUser().getFunders().size() == 0)
+        {
+          Toast.makeText(view.getContext(), "You have no payment options.", Toast.LENGTH_SHORT).show();
+          return;
+        }
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
         final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.dialog_payment, null);

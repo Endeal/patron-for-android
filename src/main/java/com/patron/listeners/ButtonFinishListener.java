@@ -94,10 +94,10 @@ public class ButtonFinishListener implements OnClickListener
                 }
             }
         };
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
         // Add card dialog
-        if (Globals.getUser().getFunders() == null || Globals.getUser().getFunders().size() == 0)
+        if (Globals.getOrder().getFunder() == null)
         {
             builder.setMessage("You have to add a debit/credit card to place an order. Add one now?").
                 setPositiveButton("Yes", addCardListener).setNegativeButton("No", addCardListener).show();

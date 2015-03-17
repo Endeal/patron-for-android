@@ -73,8 +73,6 @@ public class AddCardConnector extends AsyncTask<Context, Void, String>
 			String json = gson.toJson(response);
 			Map<String, Object> cardResponse = (Map<String, Object>) ((ArrayList)response.get("cards")).get(0);
 			cardHref = cardResponse.get("href").toString();
-        	System.out.println("Card:" + cardHref);
-        	System.out.println("URL:" + ListLinks.LINK_ADD_CARD);
 
 			// Associate the card to the customer.
 			HttpClient client = new DefaultHttpClient();
