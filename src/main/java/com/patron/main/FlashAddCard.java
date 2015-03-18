@@ -31,6 +31,7 @@ import com.balancedpayments.android.Card;
 import com.balancedpayments.android.BankAccount;
 import com.balancedpayments.android.exception.*;
 
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.R;
 import com.patron.system.ApiExecutor;
 import com.patron.system.Loadable;
@@ -66,12 +67,7 @@ public class FlashAddCard extends Activity implements Loadable
 	@Override
 	public void beginLoading()
 	{
-		progressIndicator = new ProgressBar(this);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-		params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		layout.addView(progressIndicator, params);
-		submitting = true;
+
 	}
 
 	@Override
@@ -162,22 +158,39 @@ public class FlashAddCard extends Activity implements Loadable
 			{
 				if (!submitting)
 				{
-					beginLoading();
+					// Show the loading graphic
+					progressIndicator = new ProgressBar(view.getContext());
+					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+					layout.addView(progressIndicator, params);
+					submitting = true;
 
 					// Get the data from the form.
-					String name = fieldName.getText().toString();
-					String number = fieldNumber.getText().toString();
-					String code = fieldCode.getText().toString();
-					int month = FlashAddCard.expirationMonth;
-					int year = FlashAddCard.expirationYear;
+					final String name = fieldName.getText().toString();
+					final String number = fieldNumber.getText().toString();
+					final String code = fieldCode.getText().toString();
+					final int month = FlashAddCard.expirationMonth;
+					final int year = FlashAddCard.expirationYear;
+					final View v = view;
 
 					// Add the card to the user.
-					ApiExecutor executor = new ApiExecutor();
-					executor.addCard(name, number, code, month, year, view.getContext());
-					/*
-					AddCardConnector connector = new AddCardConnector(getActivity(), name, number, code, month, year);
-					connector.execute(view.getContext());
-					*/
+					Thread thread = new Thread(new Runnable() {
+						@Override
+						public void run()
+						{
+							ApiExecutor executor = new ApiExecutor();
+							executor.addCard(name, number, code, month, year, v.getContext(), new OnApiExecutedListener() {
+								@Override
+								public void onExecuted()
+								{
+									submitting = false;
+									layout.removeView(progressIndicator);
+								}
+							});
+						}
+					});
+	        thread.start();
 				}
 			}
 		});

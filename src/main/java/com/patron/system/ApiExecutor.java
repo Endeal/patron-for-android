@@ -42,6 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.NullPointerException;
 import java.lang.Math;
 import java.lang.Runnable;
+import java.lang.Thread;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -595,7 +596,8 @@ public class ApiExecutor
         callback();
     }
 
-    public void addCard(String name, String number, String code, int month, int year, final Context context, final OnApiExecutedListener... listeners)
+    public void addCard(final String name, final String number, final String code,
+        final int month, final int year, final Context context, final OnApiExecutedListener... listeners)
     {
       Balanced balanced = new Balanced(context);
       String cardHref = null;
@@ -632,6 +634,7 @@ public class ApiExecutor
               if (data == null || data.entrySet() == null)
               {
                 Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                callback(listeners);
                 return;
               }
                 for (Map.Entry<URI, byte[]> entry : data.entrySet())
