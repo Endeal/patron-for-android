@@ -79,12 +79,12 @@
    	<!-- Submission button -->
 
    	<Button
-   		  android:id="@+id/addCardButtonSubmit"
+        android:id="@+id/addCardButtonSubmit"
         style="@style/ButtonMedium"
-   		  android:layout_width="wrap_content"
-   		  android:layout_height="wrap_content"
-   		  android:layout_centerHorizontal="true"
-   		  android:layout_below="@+id/addCardSpinnerExpirationYear"
-   		  android:layout_margin="10dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>
