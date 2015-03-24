@@ -35,13 +35,17 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.facebook.widget.LoginButton;
+import com.facebook.*;
+import com.facebook.widget.*;
+import com.facebook.model.*;
+import com.facebook.Session.StatusCallback;
 
 import com.patron.db.LoginConnector;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnTaskCompletedListener;
 import com.patron.lists.ListLinks;
 import com.patron.R;
+import com.patron.social.FacebookFragment;
 import com.patron.social.OnSocialTaskCompletedListener;
 import com.patron.social.SocialExecutor;
 import static com.patron.social.SocialExecutor.Network;
@@ -68,140 +72,102 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FlashLogin extends FragmentActivity
 {
-	private boolean submitting;
-    private Button buttonSubmit;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
-	private ProgressBar progressBar;
-    private SocialExecutor socialExecutor;
-    private GoogleApiClient googleClient;
-    private ConnectionResult connectionResult;
-    private static final int RC_SIGN_IN = 0;
-	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+
+    private FacebookFragment fragment;
+    private UiLifecycleHelper helper;
+
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state, Exception exception)
+        {
+            onSessionStateChange(session, state, exception);
+        }
+    };
+
+    private FacebookDialog.Callback dialogCallback = new FacebookDialog.Callback() {
+        @Override
+        public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data)
+        {
+            System.out.println(error.toString());
+        }
+
+        @Override
+        public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data)
+        {
+            System.out.println("Success");
+        }
+    };
 
 	// Activity methods
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_login);
-        buttonSubmit = (Button)findViewById(R.id.loginButtonSubmit);
+        helper = new UiLifecycleHelper(this, callback);
+        helper.onCreate(savedInstanceState);
+        if (savedInstanceState == null)
+        {
+            fragment = new FacebookFragment();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, fragment).commit();
+        }
+        else
+        {
+            fragment = (FacebookFragment)getSupportFragmentManager().findFragmentById(android.R.id.content);
+        }
+    }
 
-		// Get the layout elements.
-        editTextEmail = (EditText)findViewById(R.id.loginEditTextEmail);
-        editTextPassword = (EditText)findViewById(R.id.loginEditTextPassword);
-		buttonSubmit = (Button)findViewById(R.id.loginButtonSubmit);
-        Button buttonResetPassword = (Button)findViewById(R.id.loginButtonResetPassword);
-        Button buttonCreateAccount = (Button)findViewById(R.id.loginButtonCreateAccount);
-		Button buttonFacebook = (Button)findViewById(R.id.loginButtonFacebook);
-		Button buttonTwitter = (Button)findViewById(R.id.loginButtonTwitter);
-		Button buttonGooglePlus = (Button)findViewById(R.id.loginButtonGoogle);
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        helper.onResume();
+    }
 
-        // Prepopulate Login info
-        editTextEmail.setText("mpacquiao@gmail.com");
-        editTextPassword.setText("batman");
-        submitting = false;
-
-        // Login button actions
-        buttonSubmit.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                if (!submitting)
-                {
-                    submitting = true;
-                    final Activity activity = (Activity)view.getContext();
-                    String email = editTextEmail.getText().toString();
-                    String password = editTextPassword.getText().toString();
-                    ApiExecutor executor = new ApiExecutor();
-                    executor.loginPatron(email, password, new OnApiExecutedListener() {
-                        @Override
-                        public void onExecuted()
-                        {
-                            if (!Globals.hasUser())
-                            {
-                                Toast.makeText(activity, "Failed to log in.", Toast.LENGTH_SHORT).show();
-                                submitting = false;
-                                return;
-                            }
-                            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                activity, buttonSubmit, "loginButton");
-                            Bundle bundle = options.toBundle();
-                            Intent intent = new Intent(activity, FlashMenu.class);
-                            //ActivityCompat.startActivity(activity, intent, bundle);
-														activity.startActivity(intent);
-                            activity.finish();
-                        }
-                    });
-                }
-            }
-        });
-
-        // Reset password button actions
-        buttonResetPassword.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                Builder builder = new Builder(view.getContext(), R.style.DialogMain);
-                View dialogRequestPasswordView = inflater.inflate(R.layout.dialog_request_password, null);
-                builder.setView(dialogRequestPasswordView);
-                final AlertDialog dialogRequestPassword = builder.create();
-                dialogRequestPassword.show();
-            }
-        });
-
-        // Create account button actions
-        buttonCreateAccount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(view.getContext(), FlashCreateAccount.class);
-                startActivity(intent);
-            }
-        });
-
-        // Login with Google+
-        socialExecutor = new SocialExecutor(this, savedInstanceState, Network.GOOGLE_PLUS, Network.FACEBOOK, Network.TWITTER);
-        buttonGooglePlus.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                socialExecutor.signIn(Network.GOOGLE_PLUS, null);
-            }
-        });
-
-        // Login with Facebook
-        buttonFacebook.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                socialExecutor.signIn(Network.FACEBOOK, null);
-            }
-        });
-
-        // Login with Twitter
-        buttonTwitter.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                socialExecutor.signIn(Network.TWITTER, new OnSocialTaskCompletedListener() {
-                    @Override
-                    public void onComplete()
-                    {
-                        socialExecutor.getEmail(Network.TWITTER);
-                    }
-                });
-            }
-        });
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        helper.onSaveInstanceState(outState);
     }
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
         super.onActivityResult(requestCode, resultCode, data);
+        helper.onActivityResult(requestCode, resultCode, data, dialogCallback);
+
+        /*
+        super.onActivityResult(requestCode, resultCode, data);
         socialExecutor.onActivityResult(requestCode, resultCode, data);
+        */
 	}
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        helper.onPause();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        helper.onDestroy();
+    }
+
+    private void onSessionStateChange(Session session, SessionState state, Exception exception)
+    {
+        if (session.isOpened())
+        {
+            System.out.println("ACCESS TOKEN:" + session.getAccessToken());
+        }
+        else if (session.isClosed())
+        {
+            System.out.println("LOGGED OUT OF FACEBOOK");
+        }
+
+    }
 
 	// Calligraphy
 	@Override

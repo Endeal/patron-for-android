@@ -29,6 +29,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class FlashSettings extends FragmentActivity
 {
+    private TextView textViewFacebook;
+    private TextView textViewTwitter;
+    private TextView textViewGooglePlus;
+    private Button buttonFacebook;
+    private Button buttonTwitter;
+    private Button buttonGooglePlus;
+    private Button buttonAddCard;
+    private Button buttonAddBankAccount;
+    private Button buttonLogout;
+    private SocialExecutor executor;
+
 	// Activity methods.
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,22 +55,47 @@ public class FlashSettings extends FragmentActivity
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.SETTINGS);
 
         // Check if networks are signed in.
-        final SocialExecutor executor = new SocialExecutor(this, savedInstanceState, Network.FACEBOOK,
+        executor = new SocialExecutor(this, savedInstanceState, Network.FACEBOOK,
                 Network.TWITTER, Network.GOOGLE_PLUS);
+
+        // Edit the social network text to correct status.
+        textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
+        textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
+        textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
+        buttonFacebook = (Button)findViewById(R.id.settingsButtonNetworkFacebook);
+        buttonTwitter = (Button)findViewById(R.id.settingsButtonNetworkTwitter);
+        buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
+        buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
+        buttonAddBankAccount = (Button)findViewById(R.id.settingsButtonAddBankAccount);
+        buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
+
+        update();
+    }
+
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+	}
+
+  // TextView methods
+  public void viewPrivacyPolicy(View view)
+  {
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+    startActivity(intent);
+  }
+
+  public void viewTermsOfService(View view)
+  {
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yahoo.com"));
+    startActivity(intent);
+  }
+
+  public void update()
+  {
         boolean facebookSignedIn = executor.signedIn(Network.FACEBOOK);
         boolean twitterSignedIn = executor.signedIn(Network.TWITTER);
         boolean googlePlusSignedIn = executor.signedIn(Network.GOOGLE_PLUS);
-
-        // Edit the social network text to correct status.
-        TextView textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
-        TextView textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
-        TextView textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
-        Button buttonFacebook = (Button)findViewById(R.id.settingsButtonNetworkFacebook);
-        Button buttonTwitter = (Button)findViewById(R.id.settingsButtonNetworkTwitter);
-        Button buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
-        Button buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
-        Button buttonAddBankAccount = (Button)findViewById(R.id.settingsButtonAddBankAccount);
-        Button buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
 
         // Identify the correct text for the social network statuses.
         String textFacebook = "";
@@ -69,6 +105,21 @@ public class FlashSettings extends FragmentActivity
         {
             textFacebook = "Facebook: " + executor.getEmail(Network.FACEBOOK);
             buttonFacebook.setBackgroundResource(R.drawable.button_remove);
+            buttonFacebook.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    final Context context = view.getContext();
+                    executor.signOut(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed out of Facebook", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
+                }
+            });
         }
         else
         {
@@ -78,14 +129,15 @@ public class FlashSettings extends FragmentActivity
                 @Override
                 public void onClick(View view)
                 {
-                  final View buttonView = view;
-                  executor.signIn(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
-                    @Override
-                    public void onComplete()
-                    {
-                      Toast.makeText(buttonView.getContext(), "Signed in with Facebook.", Toast.LENGTH_SHORT).show();
-                    }
-                  });
+                    final Context context = view.getContext();
+                    executor.signIn(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed in with Facebook", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
                 }
             });
         }
@@ -94,6 +146,21 @@ public class FlashSettings extends FragmentActivity
         {
             textTwitter = "Twitter: Connected";
             buttonTwitter.setBackgroundResource(R.drawable.button_remove);
+            buttonTwitter.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    final Context context = view.getContext();
+                    executor.signOut(Network.TWITTER, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed out of Twitter", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
+                }
+            });
         }
         else
         {
@@ -103,14 +170,15 @@ public class FlashSettings extends FragmentActivity
                 @Override
                 public void onClick(View view)
                 {
-                  final View buttonView = view;
-                  executor.signIn(Network.TWITTER, new OnSocialTaskCompletedListener() {
-                    @Override
-                    public void onComplete()
-                    {
-                      Toast.makeText(buttonView.getContext(), "Signed in with Twitter.", Toast.LENGTH_SHORT).show();
-                    }
-                  });
+                    final Context context = view.getContext();
+                    executor.signIn(Network.TWITTER, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed in with Twitter", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
                 }
             });
         }
@@ -118,6 +186,21 @@ public class FlashSettings extends FragmentActivity
         if (googlePlusSignedIn)
         {
             textGooglePlus = "Google+: " + executor.getEmail(Network.GOOGLE_PLUS);
+            buttonGooglePlus.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view)
+                {
+                    final Context context = view.getContext();
+                    executor.signOut(Network.GOOGLE_PLUS, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed out of Google+", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
+                }
+            });
         }
         else
         {
@@ -126,14 +209,15 @@ public class FlashSettings extends FragmentActivity
                 @Override
                 public void onClick(View view)
                 {
-                  final View buttonView = view;
-                  executor.signIn(Network.GOOGLE_PLUS, new OnSocialTaskCompletedListener() {
-                    @Override
-                    public void onComplete()
-                    {
-                      Toast.makeText(buttonView.getContext(), "Signed in with Google+.", Toast.LENGTH_SHORT).show();
-                    }
-                  });
+                    final Context context = view.getContext();
+                    executor.signIn(Network.GOOGLE_PLUS, new OnSocialTaskCompletedListener() {
+                        @Override
+                        public void onComplete()
+                        {
+                            Toast.makeText(context, "Signed in with Google+", Toast.LENGTH_SHORT).show();
+                            update();
+                        }
+                    });
                 }
             });
         }
@@ -182,25 +266,6 @@ public class FlashSettings extends FragmentActivity
                 activity.startActivity(intent);
             }
         });
-    }
-
-	@Override
-	protected void attachBaseContext(Context newBase)
-	{
-		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
-	}
-
-  // TextView methods
-  public void viewPrivacyPolicy(View view)
-  {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
-    startActivity(intent);
-  }
-
-  public void viewTermsOfService(View view)
-  {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yahoo.com"));
-    startActivity(intent);
   }
 
 }

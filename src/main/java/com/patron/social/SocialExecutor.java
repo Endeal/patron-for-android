@@ -6,14 +6,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.facebook.internal.SessionTracker;
+import com.facebook.model.GraphUser;
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
+import com.facebook.SharedPreferencesTokenCachingStrategy;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
@@ -50,6 +58,7 @@ import io.fabric.sdk.android.Fabric;
 
 import java.io.IOException;
 import java.lang.NullPointerException;
+import java.lang.Runnable;
 import java.util.Arrays;
 
 public class SocialExecutor
@@ -69,6 +78,7 @@ public class SocialExecutor
     // Facebook
     private LoginButton facebookButton;
     private UiLifecycleHelper facebookHelper;
+    private FacebookFragment facebookFragment;
 
     // Twitter
     private TwitterLoginButton twitterButton;
@@ -80,11 +90,11 @@ public class SocialExecutor
         GOOGLE_PLUS
     }
 
-    public SocialExecutor(FragmentActivity fragmentActivity, Bundle bundle, Network... networks)
+    public SocialExecutor(FragmentActivity activity, Bundle bundle, Network... networks)
     {
         googleSigningIn = false;
         googleIntentInProgress = false;
-        this.activity = fragmentActivity;
+        this.activity = activity;
         this.bundle = bundle;
 
         // Google+
@@ -92,30 +102,17 @@ public class SocialExecutor
         // Facebook
         if (Arrays.asList(networks).contains(Network.FACEBOOK))
         {
-            facebookButton = new LoginButton(activity);
-            FacebookFragment mainFragment = null;
+            facebookFragment = null;
             if (bundle == null)
             {
                 // Add the fragment on initial activity setup
-                mainFragment = new FacebookFragment();
-                //activity.getSupportFragmentManager().beginTransaction().add(android.R.id.content, mainFragment).commit();
-                facebookButton.setSessionStatusCallback(new Session.StatusCallback() {
-                    @Override
-                    public void call(Session session, SessionState state, Exception exception)
-                    {
-                        if (state == SessionState.OPENED)
-                        {
-                        }
-                        else
-                        {
-                        }
-                    }
-                });
+                facebookFragment = new FacebookFragment();
+                activity.getSupportFragmentManager().beginTransaction().add(android.R.id.content, facebookFragment).hide(facebookFragment).commit();
             }
             else
             {
                 // Or set the fragment from restored state info
-                mainFragment = (FacebookFragment)activity.getSupportFragmentManager().findFragmentById(android.R.id.content);
+                facebookFragment = (FacebookFragment)activity.getSupportFragmentManager().findFragmentById(android.R.id.content);
             }
             facebookHelper = new UiLifecycleHelper(activity, null);
             facebookHelper.onCreate(bundle);
@@ -296,7 +293,35 @@ public class SocialExecutor
         }
         if (network == Network.FACEBOOK)
         {
-            facebookButton.performClick();
+            activity.getSupportFragmentManager().beginTransaction().show(facebookFragment).commit();
+            facebookButton = new LoginButton(facebookFragment.getActivity());
+            facebookButton.setFragment(facebookFragment);
+            facebookButton.setReadPermissions(Arrays.asList("public_profile", "email", "birthday"));
+            Session session = Session.getActiveSession();
+            StatusCallback statusCallback = new StatusCallback() {
+                @Override
+                public void call(Session session, SessionState state, Exception exception)
+                {
+                    System.out.println("FACEBOOK CALLED BACK");
+                    if (state.isOpened())
+                    {
+                        System.out.println("LOGGED IN WITH FACEBOOK");
+                    }
+                    if (state.isClosed())
+                    {
+                        System.out.println("LOGGED OUT OF FACEBOOK");
+                    }
+                }
+            };
+            if (session != null)
+            {
+                session.openForRead(new Session.OpenRequest(facebookFragment).setPermissions(Arrays.asList("public_profile", "email", "birthday")).setCallback(statusCallback));
+
+            }
+            else
+            {
+                Session.openActiveSession(facebookFragment.getActivity(), facebookFragment, true, statusCallback);
+            }
         }
         if (network == Network.TWITTER)
         {
@@ -318,6 +343,11 @@ public class SocialExecutor
             });
             twitterButton.performClick();
         }
+    }
+
+    public void signOut(Network network, OnSocialTaskCompletedListener listener)
+    {
+
     }
 
     public String getFirstName(Network network)

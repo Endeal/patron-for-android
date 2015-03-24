@@ -79,7 +79,7 @@
     </style>
 
     <style name="StyleLoginButtonSubmit">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/loginButtonSubmit</item>
         <item name="android:textStyle">normal</item>
@@ -88,7 +88,7 @@
     </style>
 
     <style name="StyleLoginButtonResetPassword">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/loginButtonResetPassword</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonResetPasswordTextSize</item>
@@ -97,7 +97,7 @@
     </style>
 
     <style name="StyleLoginButtonCreateAccount">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/loginButtonCreateAccount</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonCreateAccountTextSize</item>
@@ -106,7 +106,7 @@
     </style>
 
     <style name="StyleLoginButtonFacebook">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/loginButtonFacebook</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonFacebookTextSize</item>
@@ -115,7 +115,7 @@
     </style>
 
     <style name="StyleLoginButtonTwitter">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/loginButtonTwitter</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonTwitterTextSize</item>
@@ -124,7 +124,7 @@
     </style>
 
     <style name="StyleLoginButtonGooglePlus">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/loginButtonGooglePlus</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/dimLoginButtonGooglePlusTextSize</item>
@@ -176,7 +176,7 @@
     </style>
 
     <style name="StyleCreateAccountButtonSubmit">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:text">@string/createAccountButtonSubmit</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:textSize">@dimen/dimCreateAccountButtonSubmitText</item>
@@ -598,7 +598,7 @@
 
     <!-- Reset Password Dialog -->
     <style name="StyleResetPasswordButtonSubmit">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/dialogResetPasswordButtonSubmit</item>
         <item name="android:textSize">24dp</item>
@@ -673,7 +673,7 @@
         <item name="android:background">#002919</item>
     </style>
     <style name="ButtonMain">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/loginButtonSubmit</item>
         <item name="android:textStyle">bold</item>
@@ -682,7 +682,7 @@
         <item name="android:padding">10dp</item>
     </style>
     <style name="ButtonMedium">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_main</item>
         <item name="android:text">@string/loginButtonSubmit</item>
         <item name="android:textStyle">bold</item>
@@ -728,28 +728,28 @@
         <item name="android:textAllCaps">false</item>
     </style>
     <style name="ButtonFacebook">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_facebook</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
     </style>
     <style name="ButtonTwitter">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_twitter</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
     </style>
     <style name="ButtonGooglePlus">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_google_plus</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
     </style>
     <style name="ButtonCheckout">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_checkout</item>
         <item name="android:textColor">#000000</item>
         <item name="android:textStyle">bold</item>
@@ -757,7 +757,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
     <style name="ButtonQuickReturn">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_select_vendor</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
@@ -782,7 +782,7 @@
     <style name="ButtonRemove">
     </style>
     <style name="ButtonOrder">
-        <item name="fontPath">fonts/Montserrat-Light.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Light.otf</item>
         <item name="android:background">@drawable/button_order</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#000000</item>
@@ -791,7 +791,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
     <style name="ButtonReview">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_review</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#000000</item>
@@ -799,7 +799,7 @@
         <item name="android:padding">0dp</item>
     </style>
     <style name="ButtonPay">
-        <item name="fontPath">fonts/Montserrat-Bold.ttf</item>
+        <item name="fontPath">fonts/Montserrat-Bold.otf</item>
         <item name="android:background">@drawable/button_pay</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#000000</item>
