@@ -10,8 +10,11 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,6 +31,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.patron.bind.CodeBinder;
 import com.patron.db.CodeConnector;
 import com.patron.listeners.DrawerNavigationListener;
+import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnCodesRefreshListener;
 import com.patron.lists.ListLinks;
 import com.patron.model.Code;
@@ -53,18 +59,49 @@ public class FlashCodes extends Activity implements Loadable
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_codes);
 
-		// Set the refresh listener.
-		ListView listCodes = (ListView)findViewById(R.id.codesListViewMain);
-		OnCodesRefreshListener listener = new OnCodesRefreshListener(listCodes);
-		ApiExecutor executor = new ApiExecutor();
-		executor.getCodes(listener);
 
 		// Set up the navigation drawer.
+        final SwipeRefreshLayout swipeRefreshLayoutCodes = (SwipeRefreshLayout) findViewById(R.id.codesSwipeRefreshLayoutCodes);
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.codesDrawerNavigation);
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.codesListNavigation);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.ORDERS);
+		ListView listCodes = (ListView)findViewById(R.id.codesListViewMain);
+
+        // Loading indicator
+        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.codesRelativeLayoutContent);
+        final ProgressBar progressIndicator = new ProgressBar(this);
+        progressIndicator.setBackgroundColor(Color.TRANSPARENT);
+        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        final OnApiExecutedListener removeViewListener = new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                swipeRefreshLayoutCodes.setRefreshing(false);
+                layout.removeView(progressIndicator);
+            }
+        };
+
+        // Manually refreshing
+		final ApiExecutor executor = new ApiExecutor();
+		final OnCodesRefreshListener listener = new OnCodesRefreshListener(listCodes);
+        swipeRefreshLayoutCodes.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+            android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeRefreshLayoutCodes.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh()
+            {
+                layout.addView(progressIndicator, params);
+                swipeRefreshLayoutCodes.setRefreshing(true);
+                executor.getCodes(listener, removeViewListener);
+            }
+        });
+
+		// Get codes initially.
+        layout.addView(progressIndicator, params);
+		executor.getCodes(listener, removeViewListener);
 	}
 
 	@Override

@@ -7,6 +7,7 @@
   android:layout_height="match_parent">
 
   <LinearLayout
+      android:id="@+id/loginLinearLayoutContent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -22,6 +23,7 @@
     <EditText
         android:id="@+id/loginEditTextEmail"
         style="@style/EditTextMainEmail"
+        android:hint="E-mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />
@@ -29,6 +31,7 @@
     <EditText
         android:id="@+id/loginEditTextPassword"
         style="@style/EditTextMainPassword"
+        android:hint="Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp" />

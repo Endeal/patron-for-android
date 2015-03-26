@@ -9,6 +9,7 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.graphics.Color;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Button;
@@ -32,18 +33,19 @@ import com.balancedpayments.android.BankAccount;
 import com.balancedpayments.android.exception.*;
 
 import com.patron.listeners.OnApiExecutedListener;
+import com.patron.model.Order;
+import com.patron.model.Funder;
 import com.patron.R;
 import com.patron.system.ApiExecutor;
+import com.patron.system.Globals;
 import com.patron.system.Loadable;
 import com.patron.db.AddCardConnector;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashAddCard extends Activity implements Loadable
+public class FlashAddCard extends Activity
 {
 	private boolean submitting = false;
-	private RelativeLayout layout;
-	private ProgressBar progressIndicator;
 	public static int expirationMonth = 1;
 	public static int expirationYear = 1970;
 	private String screen;
@@ -60,58 +62,7 @@ public class FlashAddCard extends Activity implements Loadable
 			this.screen = value;
 		}
 		setContentView(R.layout.layout_add_card);
-		layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
-		init();
-	}
 
-	@Override
-	public void beginLoading()
-	{
-
-	}
-
-	@Override
-	public void load()
-	{
-	}
-
-	@Override
-	public void endLoading()
-	{
-		layout.removeView(progressIndicator);
-		submitting = false;
-	}
-
-	@Override
-	public void update()
-	{
-		Intent intent;
-		if (screen != null && screen.equals("cart"))
-		{
-			intent = new Intent(this, FlashCart.class);
-		}
-		else
-		{
-			intent = new Intent(this, FlashSettings.class);
-		}
-		startActivity(intent);
-	}
-
-	@Override
-	public void message(String msg)
-	{
-		final String message = msg;
-		runOnUiThread(new Runnable() {
-  			public void run()
-  			{
-    			Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-  			}
-		});
-	}
-
-	// Button actions
-	public void init()
-	{
 		// Get the layout elements.
 		final EditText fieldName = (EditText)findViewById(R.id.addCardEditTextName);
 		final EditText fieldNumber = (EditText)findViewById(R.id.addCardEditTextNumber);
@@ -119,6 +70,13 @@ public class FlashAddCard extends Activity implements Loadable
 		final Spinner fieldExpirationMonth = (Spinner)findViewById(R.id.addCardSpinnerExpirationMonth);
 		final Spinner fieldExpirationYear = (Spinner)findViewById(R.id.addCardSpinnerExpirationYear);
 		final Button buttonSubmit = (Button)findViewById(R.id.addCardButtonSubmit);
+		final RelativeLayout layout = (RelativeLayout)findViewById(R.id.addCardLayoutMain);
+
+        // Loading indicator
+        final ProgressBar progressIndicator = new ProgressBar(this);
+        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        progressIndicator.setBackgroundColor(Color.TRANSPARENT);
 
 		// Set field's to mock data.
 		fieldName.setText("James Whiteman");
@@ -159,11 +117,7 @@ public class FlashAddCard extends Activity implements Loadable
 				if (!submitting)
 				{
 					// Show the loading graphic
-					progressIndicator = new ProgressBar(view.getContext());
-					RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-					params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-					params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-					layout.addView(progressIndicator, params);
+                    layout.addView(progressIndicator, params);
 					submitting = true;
 
 					// Get the data from the form.
@@ -175,30 +129,34 @@ public class FlashAddCard extends Activity implements Loadable
 					final View v = view;
 
 					// Add the card to the user.
-					Thread thread = new Thread(new Runnable() {
-						@Override
-						public void run()
-						{
-							ApiExecutor executor = new ApiExecutor();
-							executor.addCard(name, number, code, month, year, v.getContext(), new OnApiExecutedListener() {
-								@Override
-								public void onExecuted()
-								{
-									submitting = false;
-									layout.removeView(progressIndicator);
-								}
-							});
-						}
-					});
-	        thread.start();
+                    final Context context = v.getContext();
+                    ApiExecutor executor = new ApiExecutor();
+                    executor.addCard(name, number, code, month, year, context, new OnApiExecutedListener() {
+                        @Override
+                        public void onExecuted()
+                        {
+                            submitting = false;
+                            layout.removeView(progressIndicator);
+                            // Set default funder to the newly added if the order has none.
+                            if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0 && Globals.getOrder().getFunder() == null)
+                            {
+                                Globals.getOrder().setFunder(Globals.getUser().getFunders().get(0));
+                            }
+                            Intent intent;
+                            if (screen != null && screen.equals("cart"))
+                            {
+                                intent = new Intent(context, FlashCart.class);
+                            }
+                            else
+                            {
+                                intent = new Intent(context, FlashSettings.class);
+                            }
+                            startActivity(intent);
+                        }
+                    });
 				}
 			}
 		});
-	}
-
-	public FlashAddCard getActivity()
-	{
-		return this;
 	}
 
 	@Override

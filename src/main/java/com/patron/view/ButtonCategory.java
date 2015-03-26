@@ -58,9 +58,11 @@ public class ButtonCategory extends ButtonFilter implements OnClickListener
     setAllCaps(false);
     float width = Globals.convertDpToPixel(60, getContext());
     float height = Globals.convertDpToPixel(60, getContext());
+    float marginPx = Globals.convertDpToPixel(5, getContext());
+    int margin = (int)marginPx;
     LayoutParams params = new LayoutParams((int)width, (int)height);
     params.gravity = Gravity.CENTER;
-    params.setMargins(10, 10, 10, 10);
+    params.setMargins(margin, margin, margin, margin);
     setLayoutParams(params);
     setText(category.getName());
     setOnClickListener(this);

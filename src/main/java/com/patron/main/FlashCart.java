@@ -58,33 +58,40 @@ public class FlashCart extends Activity
         final Button buttonReview = (Button) findViewById(R.id.cartButtonReview);
 
         // Set button text.
+        final Context context = this;
         OnApiExecutedListener buttonRefreshListener = new OnApiExecutedListener() {
             @Override
             public void onExecuted()
             {
-								// Station
+                if (Globals.getOrder() == null || Globals.getOrder().getFragments() == null || Globals.getOrder().getFragments().size() == 0)
+                {
+                    Intent intent = new Intent(context, FlashMenu.class);
+                    context.startActivity(intent);
+                    return;
+                }
+                // Station
                 buttonStation.setText("Station:\n" + Globals.getOrder().getStation().getName());
 
-								// Funder
-								String number;
-								if (Globals.getOrder().getFunder() == null)
-								{
-									number = "?";
-									buttonPayment.setText("Payment:\n" + number);
-								}
-								else
-								{
+                // Funder
+                String number;
+                if (Globals.getOrder().getFunder() == null)
+                {
+                    number = "?";
+                    buttonPayment.setText("Payment:\n" + number);
+                }
+                else
+                {
                 	number = Globals.getOrder().getFunder().getNumber();
                 	buttonPayment.setText("Payment:\n" + number.substring(number.length() - 4));
-								}
+                }
 
-								// Tip
+                // Tip
                 buttonTip.setText("Tip:\n$" + Globals.getOrder().getTip().toString());
 
-								// Vouchers
+                // Vouchers
                 buttonCoupon.setText("Vouchers:\n" + Globals.getOrder().getCoupons().size());
 
-								// Comment
+                // Comment
                 String commented = "No";
                 if (Globals.getOrder().getComment().length() > 0)
                 {

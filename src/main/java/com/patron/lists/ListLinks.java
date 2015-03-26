@@ -30,8 +30,8 @@ public class ListLinks
 	public static final String API_ADD_ACCOUNT = BASE_URL + "account/addPatron.php";
 	public static final String API_REMOVE_ACCOUNT = BASE_URL + "account/removePatron.php";
 	public static final String API_UPDATE_ACCOUNT = BASE_URL + "account/updatePatron.php";
+	public static final String API_RESET_PASSWORD = BASE_URL + "account/requestPassword.php";
 	public static final String API_LOGIN_PATRON = BASE_URL + "account/login.php";
-	public static final String API_REQUEST_PASSWORD = BASE_URL + "account/requestPassword.php";
 	public static final String API_GET_ITEMS = BASE_URL + "get/getItems.php";
 	public static final String API_GET_VENDORS = BASE_URL + "get/getVendors.php";
 	public static final String API_GET_CATEGORIES = BASE_URL + "get/getCategories.php";

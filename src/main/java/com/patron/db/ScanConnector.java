@@ -58,6 +58,7 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 			ArrayList<NameValuePair> postData = new ArrayList<NameValuePair>();
 			NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
 			NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+            NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
 			NameValuePair orderId = null;
 			if (order != null)
 			{
@@ -65,6 +66,7 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 			}
 			postData.add(email);
 			postData.add(password);
+            postData.add(oauth);
 			postData.add(orderId);
 			post.setEntity(new UrlEncodedFormEntity(postData));
 			response = client.execute(post);
@@ -112,7 +114,7 @@ public class ScanConnector extends AsyncTask<URL, Void, Bitmap>
 		// Return codes.
 		return image;
 	}
-	
+
 	@Override
 	protected void onPostExecute(Bitmap bitmap)
 	{

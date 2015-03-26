@@ -184,8 +184,12 @@ public class Parser
 		String state = rawVendor.getString("state");
 		String zip = rawVendor.getString("zip");
 		String phone = rawVendor.getString("phone");
-		double latitude = rawVendor.getDouble("latitude");
-		double longitude = rawVendor.getDouble("longitude");
+        double latitude = 0.0;
+        double longitude = 0.0;
+        if (rawVendor.getString("latitude") == null)
+            latitude = rawVendor.getDouble("latitude");
+        if (rawVendor.getString("longitude") == null)
+            longitude = rawVendor.getDouble("longitude");
 		JSONArray rawStations = rawVendor.getJSONArray("stations");
 		JSONArray rawRewardItems = rawVendor.getJSONArray("rewardItems");
 		JSONArray rawRewardOptions = rawVendor.getJSONArray("rewardOptions");
@@ -436,42 +440,63 @@ public class Parser
 
 	public static Order getOrder(JSONObject rawOrder) throws JSONException
 	{
+        System.out.println("GO1");
 		String orderId = rawOrder.getString("orderId");
+        System.out.println("GO2");
 		JSONObject rawVendor = rawOrder.getJSONObject("vendor");
+        System.out.println("GO3");
 		JSONObject rawStation = rawOrder.getJSONObject("station");
+        System.out.println("GO4");
 		JSONObject rawUser = rawOrder.getJSONObject("patron");
+        System.out.println("GO5");
 		int status = rawOrder.getInt("status");
+        System.out.println("GO6");
 		BigDecimal tip = new BigDecimal(rawOrder.getString("tip"));
+        System.out.println("GO7");
 		String comment = rawOrder.getString("comment");
+        System.out.println("GO8");
 		List<Object> coupons = null;
+        System.out.println("GO9");
 		JSONObject rawFunder = rawOrder.getJSONObject("funder");
-		String funderId = rawFunder.getString("id");
+        System.out.println("GO10");
 
 		// Get the vendor
 		Vendor vendor = Parser.getVendor(rawVendor);
+        System.out.println("GO11");
 
 		// Get the user
 		User patron = Parser.getUser(rawUser);
+        System.out.println("GO12");
 
 		// Get the station
 		Station station = Parser.getStation(rawStation);
+        System.out.println("GO13");
 
 		// Get the funder
 		Funder funder = null;
-		if (rawFunder.getString("href").toLowerCase().contains("cards"))
+        System.out.println("GO14");
+		if (rawFunder.getString("href").toLowerCase().contains("/cards/"))
 		{
+        System.out.println("GO15");
 			funder = Parser.getCard(rawFunder);
+        System.out.println("GO16");
 		}
 		else
 		{
+        System.out.println("GO17");
 			funder = Parser.getBankAccount(rawFunder);
+        System.out.println("GO18");
 		}
+        System.out.println("GO19");
 
 		// Get the fragments.
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
+        System.out.println("GO20");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
+        System.out.println("GO21");
 		Order order = new Order(orderId, vendor, patron, fragments, Order.getIntStatus(status), station,
 			funder, tip, coupons, comment);
+        System.out.println("GO22");
 		return order;
 	}
 

@@ -25,6 +25,7 @@ import com.patron.model.Selection;
 import com.patron.model.Fragment;
 import com.patron.model.Item;
 import com.patron.R;
+import com.patron.system.Globals;
 import com.patron.system.Loadable;
 
 public class CartProductBinder implements ViewBinder
@@ -122,6 +123,9 @@ public class CartProductBinder implements ViewBinder
 					spinner.setAdapter(arrayAdapter);
 					LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 							LayoutParams.WRAP_CONTENT);
+					float marginBottom = Globals.convertDpToPixel(10, view.getContext());
+					float marginRight = Globals.convertDpToPixel(10, view.getContext());
+                    params.setMargins(0, 0, (int)marginBottom, (int)marginRight);
 					params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 					if (lastSpinner == null)
 					{

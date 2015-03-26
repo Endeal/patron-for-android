@@ -1,5 +1,6 @@
 package com.patron.listeners;
 
+import android.content.Context;
 import android.content.Intent;
 import android.widget.SimpleAdapter;
 import android.widget.ListView;
@@ -8,6 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
 
 import com.patron.bind.CodeBinder;
+import com.patron.main.FlashMenu;
 import com.patron.main.FlashScan;
 import com.patron.model.Code;
 import com.patron.model.Order;
@@ -32,6 +34,14 @@ public class OnCodesRefreshListener implements OnApiExecutedListener
   public void onExecuted()
   {
     List<Code> codes = Globals.getCodes();
+
+    if (codes == null || codes.size() == 0)
+    {
+        Context context = listCodes.getContext();
+        Intent intent = new Intent(context, FlashMenu.class);
+        context.startActivity(intent);
+    }
+
     List<Map<String, String>> codesMap = new ArrayList<Map<String, String>>();
 
     String[] from = {"textTime",

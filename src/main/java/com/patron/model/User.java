@@ -25,6 +25,7 @@ public class User
 	private List<Funder> funders;
     private List<String> vendors;
     private List<String> items;
+    private static String provider = "";
 
 	public User(String id, String firstName, String lastName, String birthday,
 		String balancedId, String facebookId, String twitterId, String googlePlusId,
@@ -164,6 +165,11 @@ public class User
         this.items = items;
     }
 
+    public static void setProvider(String provider)
+    {
+        User.provider = provider;
+    }
+
 	// Getters
 
 	public String getId()
@@ -250,5 +256,10 @@ public class User
     public List<String> getItems()
     {
         return items;
+    }
+
+    public String getProvider()
+    {
+        return User.provider;
     }
 }

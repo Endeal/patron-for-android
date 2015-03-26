@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.main.FlashCodes;
@@ -57,10 +58,13 @@ public class ListItemNavigationListener implements OnItemClickListener
                 }
                 break;
             case 2: // Vouchers
+                Toast.makeText(context, "You do not have any vouchers", Toast.LENGTH_SHORT).show();
+                /*
                 if (hierarchy != Hierarchy.VOUCHERS)
                 {
                     intent = new Intent(context, FlashVouchers.class);
                 }
+                */
                 break;
             default:
                 if (hierarchy != Hierarchy.SETTINGS)

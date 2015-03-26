@@ -14,7 +14,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:layout_margin="10dip"
+    android:layout_margin="10dp"
     android:layout_toRightOf="@+id/cartListItemButtonRemove" />
 
 <Spinner
@@ -23,6 +23,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
     android:layout_toLeftOf="@+id/cartListItemTextPrice"
+    android:layout_margin="10dp"
     android:entries="@array/array_quantity" />
 
 <TextView
@@ -32,7 +33,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true"
-    android:layout_margin="10dip" />
+    android:layout_margin="10dp" />
 
 <!-- Center Row -->
 

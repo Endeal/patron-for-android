@@ -1,12 +1,10 @@
 package com.patron.model;
 
-import java.lang.Cloneable;
-import java.lang.CloneNotSupportedException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fragment implements Cloneable
+public class Fragment
 {
 	// Properties
 	private String id;
@@ -26,32 +24,14 @@ public class Fragment implements Cloneable
 		setQuantity(quantity);
 	}
 
-	// Cloneable
-	public Fragment clone() throws CloneNotSupportedException
-	{
-		String newId = new String(getId());
-		Item newItem = item.clone();
-		List<Selection> newSelections = new ArrayList<Selection>();
-		List<Supplement> newSupplements = new ArrayList<Supplement>();
-		int newQuantity = new Integer(getQuantity());
-
-		// Fill Selections
-		for (int i = 0; i < getSelections().size(); i++)
-		{
-			Selection newSelection = getSelections().get(i).clone();
-			newSelections.add(newSelection);
-		}
-
-		// Fill Supplements
-		for (int i = 0; i < getSupplements().size(); i++)
-		{
-			Supplement newSupplement = getSupplements().get(i).clone();
-			newSupplements.add(newSupplement);
-		}
-
-		Fragment fragment = new Fragment(newId, newItem, newSelections, newSupplements, newQuantity);
-		return fragment;
-	}
+    public Fragment(Fragment fragment)
+    {
+        setId(fragment.getId());
+        setItem(fragment.getItem());
+        setSelections(fragment.getSelections());
+        setSupplements(fragment.getSupplements());
+        setQuantity(fragment.getQuantity());
+    }
 
 	// Convenience
 	public boolean hasSupplement(Supplement supplement)

@@ -7,33 +7,33 @@
    	<!-- Input fields -->
 
    	<EditText
-   		  android:id="@+id/addCardEditTextName"
+        android:id="@+id/addCardEditTextName"
         style="@style/EditTextMainName"
         android:hint="Full Name"
-   		  android:layout_width="match_parent"
-   		  android:layout_height="wrap_content"
-   		  android:layout_alignParentLeft="true"
-   		  android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_margin="10dp" />
 
    	<EditText
-   		  android:id="@+id/addCardEditTextNumber"
+        android:id="@+id/addCardEditTextNumber"
         style="@style/EditTextMainNumber"
         android:hint="Card Number (1111222233334444)"
-   		  android:layout_width="match_parent"
-   		  android:layout_height="wrap_content"
-   		  android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/addCardEditTextName"
-       android:layout_margin="10dp" />
+        android:layout_margin="10dp" />
 
    	<EditText
-   		  android:id="@+id/addCardEditTextCode"
+        android:id="@+id/addCardEditTextCode"
         style="@style/EditTextMainNumber"
         android:hint="CVV Code (123)"
-   		  android:layout_width="match_parent"
-   		  android:layout_height="wrap_content"
-   		  android:layout_alignParentLeft="true"
-   		  android:layout_below="@+id/addCardEditTextNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/addCardEditTextNumber"
         android:layout_margin="10dp" />
 
     <TextView
@@ -57,22 +57,22 @@
         android:layout_margin="10dp" />
 
    	<Spinner
-   		  android:id="@+id/addCardSpinnerExpirationMonth"
-   		  android:entries="@array/array_card_expiration_months"
-   		  android:layout_width="wrap_content"
-   		  android:layout_height="wrap_content"
-   		  android:layout_alignParentRight="true"
-   		  android:layout_alignBaseline="@+id/addCardTextViewExpirationMonth"
+        android:id="@+id/addCardSpinnerExpirationMonth"
+        android:entries="@array/array_card_expiration_months"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextViewExpirationMonth"
         android:layout_toRightOf="@+id/addCardTextViewExpirationMonth"
         android:layout_margin="10dp" />
 
    	<Spinner
-   		  android:id="@+id/addCardSpinnerExpirationYear"
-   		  android:entries="@array/array_card_expiration_years"
-   		  android:layout_width="wrap_content"
-   		  android:layout_height="wrap_content"
-   		  android:layout_alignParentRight="true"
-   		  android:layout_alignBaseline="@+id/addCardTextViewExpirationYear"
+        android:id="@+id/addCardSpinnerExpirationYear"
+        android:entries="@array/array_card_expiration_years"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/addCardTextViewExpirationYear"
         android:layout_toRightOf="@+id/addCardTextViewExpirationYear"
         android:layout_margin="10dp" />
 
@@ -80,11 +80,10 @@
 
    	<Button
         android:id="@+id/addCardButtonSubmit"
-        style="@style/ButtonMedium"
-        android:layout_width="wrap_content"
+        style="@style/ButtonMain"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp" />
+        android:layout_margin="20dp" />
 
 </RelativeLayout>

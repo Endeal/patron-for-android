@@ -64,7 +64,7 @@ import java.util.Arrays;
 public class SocialExecutor
 {
     // Social Executor
-    private FragmentActivity activity;
+    private Activity activity;
     private Bundle bundle;
 
     // Google+
@@ -78,7 +78,11 @@ public class SocialExecutor
     // Facebook
     private LoginButton facebookButton;
     private UiLifecycleHelper facebookHelper;
-    private FacebookFragment facebookFragment;
+    private static String facebookId;
+    private static String facebookUsername;
+    private static String facebookEmail;
+    private static String facebookFirstName;
+    private static String facebookLastName;
 
     // Twitter
     private TwitterLoginButton twitterButton;
@@ -90,7 +94,7 @@ public class SocialExecutor
         GOOGLE_PLUS
     }
 
-    public SocialExecutor(FragmentActivity activity, Bundle bundle, Network... networks)
+    public SocialExecutor(Activity activity, Bundle bundle, Network... networks)
     {
         googleSigningIn = false;
         googleIntentInProgress = false;
@@ -102,17 +106,21 @@ public class SocialExecutor
         // Facebook
         if (Arrays.asList(networks).contains(Network.FACEBOOK))
         {
-            facebookFragment = null;
+            facebookButton = new LoginButton(activity);
             if (bundle == null)
             {
-                // Add the fragment on initial activity setup
-                facebookFragment = new FacebookFragment();
-                activity.getSupportFragmentManager().beginTransaction().add(android.R.id.content, facebookFragment).hide(facebookFragment).commit();
-            }
-            else
-            {
-                // Or set the fragment from restored state info
-                facebookFragment = (FacebookFragment)activity.getSupportFragmentManager().findFragmentById(android.R.id.content);
+                facebookButton.setSessionStatusCallback(new Session.StatusCallback() {
+                    @Override
+                    public void call(Session session, SessionState state, Exception exception)
+                    {
+                        if (state == SessionState.OPENED)
+                        {
+                        }
+                        else
+                        {
+                        }
+                    }
+                });
             }
             facebookHelper = new UiLifecycleHelper(activity, null);
             facebookHelper.onCreate(bundle);
@@ -202,7 +210,7 @@ public class SocialExecutor
         return false;
     }
 
-    public void signIn(Network network, OnSocialTaskCompletedListener listener)
+    public void signIn(Network network, final OnSocialTaskCompletedListener listener)
     {
         if (network == Network.GOOGLE_PLUS)
         {
@@ -293,46 +301,76 @@ public class SocialExecutor
         }
         if (network == Network.FACEBOOK)
         {
-            activity.getSupportFragmentManager().beginTransaction().show(facebookFragment).commit();
-            facebookButton = new LoginButton(facebookFragment.getActivity());
-            facebookButton.setFragment(facebookFragment);
-            facebookButton.setReadPermissions(Arrays.asList("public_profile", "email", "birthday"));
-            Session session = Session.getActiveSession();
             StatusCallback statusCallback = new StatusCallback() {
                 @Override
                 public void call(Session session, SessionState state, Exception exception)
                 {
-                    System.out.println("FACEBOOK CALLED BACK");
                     if (state.isOpened())
                     {
-                        System.out.println("LOGGED IN WITH FACEBOOK");
+                        final Session requestSession = session;
+                        Request request = Request.newMeRequest(requestSession, new Request.GraphUserCallback() {
+                            @Override
+                            public void onCompleted(GraphUser user, Response response)
+                            {
+                                if (response.getError() != null)
+                                {
+                                    Toast.makeText(activity, "Error making graph request", Toast.LENGTH_SHORT).show();
+                                }
+                                if (requestSession != Session.getActiveSession())
+                                {
+                                    Toast.makeText(activity, "Invalid Facebook session", Toast.LENGTH_SHORT).show();
+                                }
+                                if (user == null)
+                                {
+                                    Toast.makeText(activity, "Failed to get Facebook user.", Toast.LENGTH_SHORT).show();
+                                }
+                                facebookId = user.getId();
+                                SocialExecutor.facebookUsername = user.getUsername();
+                                facebookEmail = user.asMap().get("email").toString();
+                                facebookFirstName = user.asMap().get("first_name").toString();
+                                facebookLastName = user.asMap().get("last_name").toString();
+                                listener.onComplete();
+                            }
+                        });
+                        request.executeAsync();
                     }
-                    if (state.isClosed())
+                    else if (state.isClosed())
                     {
-                        System.out.println("LOGGED OUT OF FACEBOOK");
+                        facebookId = null;
+                        facebookEmail = null;
+                        facebookFirstName = null;
+                        facebookLastName = null;
+                        listener.onComplete();
                     }
                 }
             };
+            Session session = Session.getActiveSession();
             if (session != null)
             {
-                session.openForRead(new Session.OpenRequest(facebookFragment).setPermissions(Arrays.asList("public_profile", "email", "birthday")).setCallback(statusCallback));
-
+                if (!session.isOpened() && !session.isClosed())
+                {
+                    session.openForRead(new Session.OpenRequest(activity).setPermissions(Arrays.asList("public_profile", "email", "user_birthday")).setCallback(statusCallback));
+                }
+                else
+                {
+                    FacebookFragment facebookFragment = new FacebookFragment();
+                    Session.openActiveSession(activity, true, Arrays.asList("public_profile", "email", "user_birthday"), statusCallback);
+                }
             }
             else
             {
-                Session.openActiveSession(facebookFragment.getActivity(), facebookFragment, true, statusCallback);
+                Toast.makeText(activity, "Facebook session not set, restart to use.", Toast.LENGTH_SHORT).show();
             }
         }
         if (network == Network.TWITTER)
         {
-            final OnSocialTaskCompletedListener socialTaskCompletedListener = listener;
             twitterButton.setCallback(new Callback<TwitterSession>() {
                 @Override
                 public void success(Result<TwitterSession> result) {
                    Toast.makeText(activity, "Signed in with Twitter.", Toast.LENGTH_SHORT).show();
-                   if (socialTaskCompletedListener != null)
+                   if (listener != null)
                     {
-                       socialTaskCompletedListener.onComplete();
+                       listener.onComplete();
                     }
                }
 
@@ -347,17 +385,36 @@ public class SocialExecutor
 
     public void signOut(Network network, OnSocialTaskCompletedListener listener)
     {
+        if (network == Network.FACEBOOK)
+        {
+            Session session = Session.getActiveSession();
+            if (session != null)
+            {
+                session.closeAndClearTokenInformation();
+                listener.onComplete();
+            }
+        }
 
     }
 
     public String getFirstName(Network network)
     {
-        return "";
+        return facebookFirstName;
     }
 
     public String getLastName(Network network)
     {
-        return "";
+        return facebookLastName;
+    }
+
+    public String getId(Network network)
+    {
+        return facebookId;
+    }
+
+    public String getUsername(Network network)
+    {
+        return SocialExecutor.facebookUsername;
     }
 
     public String getEmail(Network network)
@@ -379,6 +436,10 @@ public class SocialExecutor
                     Toast.makeText(activity, "No e-mail address received.", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+        else if (network == Network.FACEBOOK)
+        {
+            return facebookEmail;
         }
         return "";
     }

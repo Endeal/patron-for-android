@@ -20,6 +20,7 @@ import com.patron.R;
 import com.patron.social.OnSocialTaskCompletedListener;
 import com.patron.social.SocialExecutor;
 import static com.patron.social.SocialExecutor.Network;
+import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.patron.view.ListViewFunders;
 import com.patron.view.NavigationListView;
@@ -81,13 +82,13 @@ public class FlashSettings extends FragmentActivity
   // TextView methods
   public void viewPrivacyPolicy(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/privacy-policy"));
     startActivity(intent);
   }
 
   public void viewTermsOfService(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yahoo.com"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/terms-of-service"));
     startActivity(intent);
   }
 
@@ -103,7 +104,7 @@ public class FlashSettings extends FragmentActivity
         String textGooglePlus = "";
         if (facebookSignedIn)
         {
-            textFacebook = "Facebook: " + executor.getEmail(Network.FACEBOOK);
+            textFacebook = "Facebook: " + executor.getUsername(Network.FACEBOOK);
             buttonFacebook.setBackgroundResource(R.drawable.button_remove);
             buttonFacebook.setOnClickListener(new OnClickListener() {
                 @Override
@@ -134,8 +135,17 @@ public class FlashSettings extends FragmentActivity
                         @Override
                         public void onComplete()
                         {
-                            Toast.makeText(context, "Signed in with Facebook", Toast.LENGTH_SHORT).show();
-                            update();
+                            String id = executor.getId(Network.FACEBOOK);
+                            String token = executor.getAccessToken(Network.FACEBOOK);
+                            ApiExecutor api = new ApiExecutor();
+                            api.login(id, token, "fb", new OnApiExecutedListener() {
+                                @Override
+                                public void onExecuted()
+                                {
+                                    Toast.makeText(context, "Signed out of Facebook", Toast.LENGTH_SHORT).show();
+                                    update();
+                                }
+                            });
                         }
                     });
                 }

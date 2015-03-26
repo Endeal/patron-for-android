@@ -68,8 +68,45 @@
         android:text="@string/createAccountButtonSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/createAccountTextViewBirthday"
+        android:layout_alignParentBottom="true"
         android:layout_margin="30dp" />
+
+    <LinearLayout
+        android:id="@+id/createAccountLinearLayoutLegal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/createAccountButtonSubmit"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/createAccountTextViewPrivacyPolicy"
+            style="@style/TextViewLegal"
+            android:text="Privacy Policy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="viewPrivacyPolicy"
+            android:clickable="true" />
+
+        <TextView
+            android:id="@+id/createAccountTextViewTermsOfService"
+            style="@style/TextViewLegal"
+            android:text="Terms of Service"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="viewTermsOfService"
+            android:clickable="true" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/createAccountTextViewAgreement"
+        style="@style/TextViewLegal"
+        android:text="By clicking submit, you agree to the following:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/createAccountLinearLayoutLegal"/>
 
 </RelativeLayout>

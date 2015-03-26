@@ -8,6 +8,7 @@ package com.patron.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
@@ -28,8 +29,10 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -77,30 +80,45 @@ public class FlashMenu extends Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_menu);
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.layout_menu);
 
-		// Set up the drawer layout.
-		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
+    // Set up the drawer layout.
+    DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
     DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
-		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-		final NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
+    drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+    final NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
+    listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
 
-		// Find the views.
-		ListView listMenu = (ListView) findViewById(R.id.menuListItems);
+    // Find the views.
+    ListView listMenu = (ListView) findViewById(R.id.menuListItems);
     LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menuLayoutTypes);
     Button buttonSelectVendor = (Button) findViewById(R.id.menuButtonSelectVendor);
-		Button buttonCheckout = (Button) findViewById(R.id.menuButtonCheckout);
+    Button buttonCheckout = (Button) findViewById(R.id.menuButtonCheckout);
     ButtonSearch buttonSearch = (ButtonSearch) findViewById(R.id.menuButtonSearch);
-		ButtonFavorites buttonFavorites = (ButtonFavorites) findViewById(R.id.menuButtonFavorites);
-		final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
-		swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-			android.R.color.holo_orange_light, android.R.color.holo_red_light);
+    ButtonFavorites buttonFavorites = (ButtonFavorites) findViewById(R.id.menuButtonFavorites);
+    final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
+    swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+        android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
+    // Set up loading indicator
+    final RelativeLayout layout = (RelativeLayout)findViewById(R.id.menuLayoutContent);
+    final ProgressBar progressIndicator = new ProgressBar(this);
+    progressIndicator.setBackgroundColor(Color.TRANSPARENT);
+    final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+    params.addRule(RelativeLayout.CENTER_IN_PARENT);
 
     // Listener to refresh the page on fetching the items for the vendor.
     final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems,
             listMenu, linearLayout, buttonSelectVendor);
+    final OnApiExecutedListener removeIndicatorListener = new OnApiExecutedListener() {
+        @Override
+        public void onExecuted()
+        {
+            swipeRefreshLayoutItems.setRefreshing(false);
+            layout.removeView(progressIndicator);
+        }
+    };
 
         // Update the items on manual refresh.
         final ApiExecutor apiExecutor = new ApiExecutor();
@@ -111,6 +129,8 @@ public class FlashMenu extends Activity
             @Override
             public void onRefresh()
             {
+                // Add a loading indicator.
+                layout.addView(progressIndicator, params);
                 if (Globals.getVendor() == null)
                 {
                     apiExecutor.selectNearestVendor(swipeRefreshLayoutItems.getContext(), new OnApiExecutedListener() {
@@ -131,20 +151,21 @@ public class FlashMenu extends Activity
                               swipeRefreshLayoutItems.setRefreshing(false);
                               return;
                             }
-                            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
-                            swipeRefreshLayoutItems.setRefreshing(false);
+                            swipeRefreshLayoutItems.setRefreshing(true);
+                            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
                         }
                     });
                 }
                 else
                 {
-                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
-                    swipeRefreshLayoutItems.setRefreshing(false);
+                    swipeRefreshLayoutItems.setRefreshing(true);
+                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
                 }
             }
         });
 
         // Update the items upon activity creation.
+        layout.addView(progressIndicator, params);
         if (Globals.getVendor() == null)
         {
             apiExecutor.selectNearestVendor(this, new OnApiExecutedListener() {
@@ -154,10 +175,11 @@ public class FlashMenu extends Activity
                   if (Globals.getVendor() != null)
                   {
                     listNavigation.getTextViewHeader().setText(Globals.getVendor().getName() + "\n" + Globals.getPoints(Globals.getVendor().getId()) + " Points");
-                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
+                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
                   }
                   else
                   {
+                      removeIndicatorListener.onExecuted();
                     Activity activity = (Activity)swipeRefreshLayoutItems.getContext();
                     /*Activity activity = (Activity)view.getContext();
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -173,7 +195,7 @@ public class FlashMenu extends Activity
         }
         else
         {
-            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener);
+            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
         }
 
         // Set up listeners

@@ -1,6 +1,10 @@
 package com.patron.listeners;
 
-import java.lang.CloneNotSupportedException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.List;
 import java.math.BigDecimal;
@@ -54,9 +58,27 @@ public class ListItemMenuAddListener implements OnItemClickListener
 
 		// Gets the item for this given row.
 		Fragment oldFragment = Globals.getFragments().get(row);
-		Fragment fragment = new Fragment(oldFragment.getId(), oldFragment.getItem(),
-			oldFragment.getSelections(), oldFragment.getSupplements(), oldFragment.getQuantity());
-			
+        //final Fragment fragment = (Fragment)deepClone(oldFragment);
+        final Fragment fragment = oldFragment;
+
+        // Debug supplements bug
+        List<Fragment> fragments = new ArrayList<Fragment>();
+        if (Globals.getOrder() != null)
+        {
+            fragments = Globals.getOrder().getFragments();
+            if (fragments != null)
+            for (int i = 0; i < fragments.size(); i++)
+            {
+                Fragment temp = fragments.get(i);
+                System.out.print("Item:" + temp.getItem().getName() + " has ");
+                for (int j = 0; j < temp.getSupplements().size(); j++)
+                {
+                    Supplement supp = temp.getSupplements().get(j);
+                    System.out.print(supp.getName() + ",");
+                }
+                System.out.println(" initially");
+            }
+        }
 
 		Item item = fragment.getItem();
 		ArrayList<Selection> selections = new ArrayList<Selection>();
@@ -84,7 +106,6 @@ public class ListItemMenuAddListener implements OnItemClickListener
 
 		// Adds the fragment that was just created to the order.
 		Order order = Globals.getOrder();
-		List<Fragment> fragments = null;
 		if (order == null)
 		{
 			// Create default order info
@@ -139,17 +160,42 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		{
 			fragments = order.getFragments();
 		}
-		else
-		{
-			fragments = new ArrayList<Fragment>();
-		}
 		fragments.add(fragment);
 		order.setFragments(fragments);
 		Globals.setOrder(order);
+        for (int i = 0; i < fragments.size(); i++)
+        {
+            Fragment temp = fragments.get(i);
+            System.out.print("Item:" + temp.getItem().getName() + " has ");
+            for (int j = 0; j < temp.getSupplements().size(); j++)
+            {
+                Supplement supp = temp.getSupplements().get(j);
+                System.out.print(supp.getName() + ",");
+            }
+            System.out.println(" posthumously");
+        }
 
 		// Creates a Toast that informs the user that the drink has been added to the tab.
 		Toast toast = Toast.makeText(v.getContext(),
 				"Added " + item.getName() + " to order", Toast.LENGTH_SHORT);
 		toast.show();
 	}
+
+    public static Object deepClone(Object object)
+    {
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return ois.readObject();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+ }
 }

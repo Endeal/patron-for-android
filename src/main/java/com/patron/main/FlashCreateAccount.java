@@ -2,12 +2,15 @@ package com.patron.main;
 
 import java.lang.Exception;
 import java.util.Calendar;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ProgressBar;
@@ -51,6 +54,19 @@ public class FlashCreateAccount extends Activity implements Loadable
 		setContentView(R.layout.layout_create_account);
 		init();
 	}
+
+  // TextView methods
+  public void viewPrivacyPolicy(View view)
+  {
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/privacy-policy"));
+    startActivity(intent);
+  }
+
+  public void viewTermsOfService(View view)
+  {
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/terms-of-service"));
+    startActivity(intent);
+  }
 
 	@Override
 	public void beginLoading()
@@ -103,11 +119,13 @@ public class FlashCreateAccount extends Activity implements Loadable
 		fieldConfirm = (EditText)findViewById(R.id.createAccountEditTextConfirm);
 
 		// Prepopulate fields.
+        /*
 		fieldFirstName.setText("John");
 		fieldLastName.setText("Miller9");
 		fieldEmail.setText("johnmiller9@gmail.com");
 		fieldPassword.setText("batman");
 		fieldConfirm.setText("batman");
+        */
 
 		// Set the default birthday text.
 		final Calendar date = Calendar.getInstance();
@@ -159,12 +177,28 @@ public class FlashCreateAccount extends Activity implements Loadable
 					activity.endLoading();
 					return;
 				}
+                if (fieldFirstName.getText().toString().length() == 0 || fieldLastName.getText().toString().length() == 0 ||
+                        fieldEmail.getText().toString().length() == 0 || fieldPassword.getText().toString().length() == 0)
+                {
+                    Toast.makeText(view.getContext(), "Please fill out all of the fields", Toast.LENGTH_SHORT).show();
+                    activity.endLoading();
+                    return;
+                }
+                // Validate e-mail format.
+                Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
+                Matcher m = p.matcher(fieldEmail.getText().toString());
+                boolean matchFound = m.matches();
+                if (!matchFound)
+                {
+                    Toast.makeText(view.getContext(), "Please enter a valid e-mail address", Toast.LENGTH_SHORT).show();
+                    activity.endLoading();
+                    return;
+                }
 
 				final RelativeLayout layout = (RelativeLayout)findViewById(R.id.createAccountLayoutMain);
 
 				RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-				params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-				params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+				params.addRule(RelativeLayout.CENTER_IN_PARENT);
 				layout.addView(progressIndicator, params);
 				submitting = true;
 
