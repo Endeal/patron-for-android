@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.appboy.Appboy;
+
 import com.patron.listeners.ButtonFindNearestListener;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.OnApiExecutedListener;
@@ -58,8 +60,14 @@ public class FlashVendors extends Activity
             @Override
             public void onExecuted()
             {
-                swipeRefreshLayoutVendors.setRefreshing(false);
                 layout.removeView(progressIndicator);
+            }
+        };
+        final OnApiExecutedListener stopRefreshListener = new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                swipeRefreshLayoutVendors.setRefreshing(false);
             }
         };
 
@@ -77,15 +85,26 @@ public class FlashVendors extends Activity
             @Override
             public void onRefresh()
             {
-                layout.addView(progressIndicator, params);
                 swipeRefreshLayoutVendors.setRefreshing(true);
-                apiExecutor.getVendors(vendorRefreshListener, removeViewListener);
+                apiExecutor.getVendors(vendorRefreshListener, stopRefreshListener);
             }
         });
 
         // Find nearest vendor button.
         buttonFindNearest.setOnClickListener(new ButtonFindNearestListener());
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashVendors.this).openSession(FlashVendors.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashVendors.this).closeSession(FlashVendors.this);
+    }
 
 	@Override
 	protected void attachBaseContext(Context newBase)

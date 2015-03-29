@@ -75,12 +75,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/settingsTextViewNetworkGooglePlus"
                 android:orientation="horizontal"
-                android:weightSum="2" >
+                android:weightSum="1" >
 
                 <Button
                     android:id="@+id/settingsButtonAddCard"
                     style="@style/ButtonMedium"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/settingsButtonAddCard"
@@ -90,8 +90,9 @@
                     android:id="@+id/settingsButtonAddBankAccount"
                     style="@style/ButtonMedium"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:text="@string/settingsButtonAddBankAccount"
                     android:layout_margin="5dp"/>
 
@@ -143,7 +144,7 @@
                 android:weightSum="2" >
 
                 <Button
-                    android:id="@+id/settingsButtonUpdateProfile"
+                    android:id="@+id/settingsButtonUpdateAccount"
                     style="@style/ButtonMedium"
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"

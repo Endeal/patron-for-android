@@ -4,98 +4,128 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:background="@drawable/login_background">
 
-  <LinearLayout
-      android:id="@+id/loginLinearLayoutContent"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+  <RelativeLayout
+      android:id="@+id/loginRelativeLayoutLoading"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#00FFFFFF">
 
-    <TextView
-        android:id="@+id/loginTextViewTitle"
-        style="@style/StyleLoginTextViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp" />
-
-    <EditText
-        android:id="@+id/loginEditTextEmail"
-        style="@style/EditTextMainEmail"
-        android:hint="E-mail"
+      <LinearLayout
+          android:id="@+id/loginLinearLayoutContent"
+          android:background="#00FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/loginEditTextPassword"
-        style="@style/EditTextMainPassword"
-        android:hint="Password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
-
-    <Button
-        android:id="@+id/loginButtonSubmit"
-        style="@style/ButtonMedium"
-        android:text="@string/loginButtonSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
-
-    <LinearLayout
-        android:id="@+id/loginLinearLayoutAccountControls"
-        style="@style/LayoutTransparent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/loginButtonResetPassword"
-            style="@style/ButtonMedium"
-            android:text="@string/loginButtonResetPassword"
+        <LinearLayout
+            android:id="@+id/loginLinearLayoutTitle"
+            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp">
+
+            <ImageView
+                android:id="@+id/loginImageViewLogo"
+                android:src="@drawable/logo_app"
+                android:background="#00FFFFFF"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:id="@+id/loginTextViewTitle"
+                style="@style/StyleLoginTextViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_margin="5dp" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/loginEditTextEmail"
+            style="@style/EditTextMainEmail"
+            android:hint="E-mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <EditText
+            android:id="@+id/loginEditTextPassword"
+            style="@style/EditTextMainPassword"
+            android:hint="Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
         <Button
-            android:id="@+id/loginButtonCreateAccount"
+            android:id="@+id/loginButtonSubmit"
             style="@style/ButtonMedium"
-            android:text="@string/loginButtonCreateAccount"
-            android:layout_width="wrap_content"
+            android:text="@string/loginButtonSubmit"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="5dp" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/loginLinearLayoutAccountControls"
+            style="@style/LayoutTransparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-    <Button
-        android:id="@+id/loginButtonFacebook"
-        style="@style/ButtonFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/loginButtonFacebook" />
+            <Button
+                android:id="@+id/loginButtonResetPassword"
+                style="@style/ButtonMedium"
+                android:text="@string/loginButtonResetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
 
-    <Button
-        android:id="@+id/loginButtonTwitter"
-        style="@style/ButtonTwitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/loginButtonTwitter" />
+            <Button
+                android:id="@+id/loginButtonCreateAccount"
+                style="@style/ButtonMedium"
+                android:text="@string/loginButtonCreateAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
 
-    <Button
-        android:id="@+id/loginButtonGoogle"
-        style="@style/ButtonGooglePlus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/loginButtonGooglePlus" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/loginButtonFacebook"
+            style="@style/ButtonFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/loginButtonFacebook" />
+
+        <Button
+            android:id="@+id/loginButtonTwitter"
+            style="@style/ButtonTwitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/loginButtonTwitter" />
+
+        <Button
+            android:id="@+id/loginButtonGoogle"
+            style="@style/ButtonGooglePlus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/loginButtonGooglePlus" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
   </ScrollView>

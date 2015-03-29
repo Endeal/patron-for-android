@@ -1,5 +1,6 @@
 package com.patron.system;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +11,9 @@ import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.widget.Toast;
 
+import com.appboy.Appboy;
+
 import com.balancedpayments.android.Balanced;
-//import com.balancedpayments.android.Card;
-//import com.balancedpayments.android.BankAccount;
 import com.balancedpayments.android.exception.*;
 
 import com.google.gson.Gson;
@@ -22,6 +23,7 @@ import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnTaskCompletedListener;
 import com.patron.listeners.UserLocationListener;
 import com.patron.lists.ListLinks;
+import com.patron.main.FlashLogin;
 import com.patron.model.BankAccount;
 import com.patron.model.Card;
 import com.patron.model.Code;
@@ -36,6 +38,7 @@ import com.patron.system.ApiTask;
 import com.patron.system.Globals;
 import com.patron.system.Parser;
 import com.patron.system.Patron;
+import com.patron.view.QustomDialogBuilder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -147,14 +150,20 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                    String rawResponse = "";
                     try
                     {
-                      System.out.println("login3");
+                      if (data == null || data.entrySet() == null)
+                      {
+                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        callback(listeners);
+                        return;
+                      }
                         for (Map.Entry<URI, byte[]> entry : data.entrySet())
                         {
-                            System.out.println("login4");
                             String rawUri = entry.getKey().toString();
                             String rawUser = new String(entry.getValue());
+                            rawResponse = rawUser;
                             if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
                             {
                                 User user = Parser.getUser(new JSONObject(rawUser));
@@ -167,14 +176,16 @@ public class ApiExecutor
                     catch (NetworkOnMainThreadException e)
                     {
                         e.printStackTrace();
+                        Toast.makeText(Patron.getContext(), "Failed to login, please restart and try again", Toast.LENGTH_SHORT).show();
                     }
                     catch (JSONException e)
                     {
                         e.printStackTrace();
+                        Toast.makeText(Patron.getContext(), rawResponse, Toast.LENGTH_SHORT).show();
                     }
                     catch (NullPointerException e)
                     {
-                        Toast.makeText(Patron.getContext(), "Failed to login.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Patron.getContext(), "Failed to login", Toast.LENGTH_SHORT).show();
                     }
                     callback(listeners);
                 }
@@ -220,6 +231,12 @@ public class ApiExecutor
                     @Override
                     public void onComplete(Map<URI, byte[]> data)
                     {
+                      if (data == null || data.entrySet() == null)
+                      {
+                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        callback(listeners);
+                        return;
+                      }
                         for (Map.Entry<URI, byte[]> entry : data.entrySet())
                         {
                             String response = new String(entry.getValue());
@@ -293,6 +310,12 @@ public class ApiExecutor
             @Override
             public void onComplete(Map<URI, byte[]> data)
             {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                 try
                 {
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
@@ -372,10 +395,15 @@ public class ApiExecutor
                               }
                             }
                         };
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         if (Globals.getVendor() != null)
-                        builder.setMessage("Are you at " + Globals.getVendor().getName() + "?").setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener).show();
+                        {
+                            QustomDialogBuilder builder = new QustomDialogBuilder(context);
+                            builder = builder.setMessage("Are you at " + Globals.getVendor().getName() + "?");
+                            builder = builder.setMessageColor("#FFFFFF");
+                            AlertDialog.Builder newBuilder = builder.setPositiveButton("Yes", dialogClickListener);
+                            newBuilder = newBuilder.setNegativeButton("No", dialogClickListener);
+                            newBuilder.show();
+                        }
                     }
 
                 }
@@ -446,6 +474,12 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                     try
                     {
                         for (Map.Entry<URI, byte[]> entry : data.entrySet())
@@ -568,41 +602,37 @@ public class ApiExecutor
             jsonOrder.getAsJsonObject().addProperty("oauth", Globals.getUser().getProvider());
             jsonOrder.getAsJsonObject().addProperty("deviceType", "1");
             String postData = gson.toJson(jsonOrder);
+            System.out.println(postData);
             request.setEntity(new StringEntity(postData));
             ApiTask apiTask = new ApiTask();
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
-                    System.out.println("ao1");
+                    if (data == null || data.entrySet() == null)
+                    {
+                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        callback(listeners);
+                        return;
+                    }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
-                        System.out.println("ao2");
                         String rawUri = entry.getKey().toString();
-                        System.out.println("ao3");
                         String rawOrder = new String(entry.getValue());
-                        System.out.println("ao4");
                         System.out.println("prepended string:" + rawOrder);
                         rawOrder = rawOrder.replaceAll("\\n", "");
-                        System.out.println("ao5");
                         if (rawUri.equals(ListLinks.API_ADD_ORDER))
                         {
-                            System.out.println("ao6");
                             if (rawOrder.equals("1"))
                             {
-                                System.out.println("ao7");
+                                Globals.setOrder(null);
                                 Toast.makeText(context, "Successfully placed order.", Toast.LENGTH_SHORT).show();
-                                System.out.println("ao8");
                                 callback(listeners);
-                                System.out.println("ao9");
                             }
                             else
                             {
-                                System.out.println("ao10");
-                                System.out.println(rawOrder);
-                                System.out.println("ao11");
                                 Toast.makeText(context, rawOrder, Toast.LENGTH_SHORT).show();
-                                System.out.println("ao12");
+                                callback(listeners);
                             }
                         }
                     }
@@ -631,6 +661,8 @@ public class ApiExecutor
     public void addCard(final String name, final String number, final String code,
         final int month, final int year, final Context context, final OnApiExecutedListener... listeners)
     {
+        final StringBuilder success = new StringBuilder();
+        final StringBuilder message = new StringBuilder();
         // AsyncTask for balanced.
         final StringBuilder builder = new StringBuilder();
         class BalancedTask extends ApiTask {
@@ -655,27 +687,22 @@ public class ApiExecutor
                     Map<String, Object> cardResponse = (Map<String, Object>) ((ArrayList)response.get("cards")).get(0);
                     String href = cardResponse.get("href").toString();
                     builder.append(href);
+                    success.append("1");
                 }
                 catch (CreationFailureException e)
                 {
                     e.printStackTrace();
-                    Toast.makeText(context, "Failed to create card information.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Failed to create card information.", Toast.LENGTH_SHORT).show();
+                    message.append("Failed to create card information");
                     callback(listeners);
                 }
                 catch (FundingInstrumentNotValidException e)
                 {
                     e.printStackTrace();
-                    Toast.makeText(context, "Invalid credit/debit card.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Invalid credit/debit card.", Toast.LENGTH_SHORT).show();
+                    message.append("Invalid credit/debit card");
                     callback(listeners);
                 }
-                /*
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                    Toast.makeText(context, "Encoding error.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                }
-                */
                 return null;
             }
         }
@@ -683,6 +710,11 @@ public class ApiExecutor
             @Override
             protected void onPostExecute(Map<URI, byte[]> balancedResult)
             {
+                if (!success.toString().equals("1"))
+                {
+                    Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 try
                 {
                     // Associate the card to the customer.
@@ -818,9 +850,85 @@ public class ApiExecutor
         callback();
     }
 
-    public void updateProfile(Map<String, String> data)
+    public void updateAccount(final String email, final String password, String firstName, String lastName, final OnApiExecutedListener... listeners)
     {
-        callback();
+        final String url = ListLinks.API_UPDATE_ACCOUNT;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair pairCurrentEmail = new BasicNameValuePair("currentEmail", Globals.getUser().getEmail());
+        NameValuePair pairCurrentPassword = new BasicNameValuePair("currentPassword", Globals.getUser().getPassword());
+        NameValuePair pairOauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair pairEmail = new BasicNameValuePair("email", email);
+        NameValuePair pairPassword = new BasicNameValuePair("password", password);
+        NameValuePair pairFirstName = new BasicNameValuePair("firstName", firstName);
+        NameValuePair pairLastName = new BasicNameValuePair("lastName", lastName);
+        pairs.add(pairCurrentEmail);
+        pairs.add(pairCurrentPassword);
+        pairs.add(pairOauth);
+        pairs.add(pairEmail);
+        pairs.add(pairPassword);
+        pairs.add(pairFirstName);
+        pairs.add(pairLastName);
+        ApiTask apiTask = new ApiTask();
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        String rawUser = new String(entry.getValue());
+                        if (rawUri.equals(url))
+                        {
+                            try
+                            {
+                                User user = Parser.getUser(new JSONObject(rawUser));
+                                if (!Globals.getProvider().equals("fb") &&
+                                    !Globals.getProvider().equals("tw") &&
+                                    !Globals.getProvider().equals("gp"))
+                                {
+                                    user.setEmail(email);
+                                    user.setPassword(password);
+                                }
+                                Globals.setUser(user);
+                            }
+                            catch (NetworkOnMainThreadException e)
+                            {
+                                e.printStackTrace();
+                                Toast.makeText(Patron.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                                Toast.makeText(Patron.getContext(), rawUser, Toast.LENGTH_SHORT).show();
+                            }
+                            catch (NullPointerException e)
+                            {
+                                e.printStackTrace();
+                                Toast.makeText(Patron.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        callback(listeners);
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          e.printStackTrace();
+          callback(listeners);
+        }
     }
 
     public void addFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
@@ -844,6 +952,12 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
@@ -892,6 +1006,12 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
@@ -940,6 +1060,12 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
@@ -988,6 +1114,12 @@ public class ApiExecutor
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
+                  if (data == null || data.entrySet() == null)
+                  {
+                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    callback(listeners);
+                    return;
+                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();

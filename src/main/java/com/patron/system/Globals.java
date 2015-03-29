@@ -8,6 +8,8 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 
@@ -234,4 +236,108 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 		{
 			return buttonFilter;
 		}
+
+	public static void setEmail(String email)
+	{
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+        	Editor editor = sharedPreferences.edit();
+        	editor.putString("email", email);
+        	editor.commit();
+    	}
+    	catch (Exception e)
+    	{
+            e.printStackTrace();
+    	}
+	}
+
+	public static void setPassword(String password)
+	{
+		try
+		{
+            String encryptedPassword;
+            Context context = Patron.getContext();
+            SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+            if (password == null)
+            {
+                encryptedPassword = null;
+            }
+            else
+            {
+                encryptedPassword = FlashCipher.encrypt(password);
+            }
+	        Editor editor = sharedPreferences.edit();
+	        editor.putString("password", encryptedPassword);
+	        editor.commit();
+	    }
+	    catch (Exception e)
+	    {
+            e.printStackTrace();
+	    }
+	}
+
+	public static void setProvider(String provider)
+	{
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+        	Editor editor = sharedPreferences.edit();
+        	editor.putString("provider", provider);
+        	editor.commit();
+    	}
+    	catch (Exception e)
+    	{
+            e.printStackTrace();
+    	}
+	}
+
+	public static String getEmail()
+	{
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+			String email = sharedPreferences.getString("email", "");
+	        return email;
+	    }
+	    catch (Exception e)
+	    {
+	    	return null;
+	    }
+	}
+
+	public static String getPassword()
+	{
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+			String password = sharedPreferences.getString("password", "");
+	        password = FlashCipher.decrypt(password);
+	        return password;
+	    }
+	    catch (Exception e)
+	    {
+	    	return null;
+	    }
+	}
+
+	public static String getProvider()
+	{
+		try
+		{
+			Context context = Patron.getContext();
+			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
+			String provider = sharedPreferences.getString("provider", "");
+	        return provider;
+	    }
+	    catch (Exception e)
+	    {
+	    	return null;
+	    }
+	}
+
 }

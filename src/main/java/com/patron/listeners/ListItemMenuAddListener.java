@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.IndexOutOfBoundsException;
 import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,68 +44,53 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		// Get the spinners.
 		ArrayList<Spinner> spinnerAttributes = new ArrayList<Spinner>();
 		Spinner spinnerQuantity = (Spinner) relativeLayout.getChildAt(1);
-		if (relativeLayout.getChildCount() > 5)
-		{
-			for (int i = 0; i < relativeLayout.getChildCount(); i++)
-			{
-				View view = (View)relativeLayout.getChildAt(i);
-				if (view.getTag() != null && view.getTag().equals("attribute"))
-				{
-					Spinner spinner = (Spinner)view;
-					spinnerAttributes.add(spinner);
-				}
-			}
-		}
-
-		// Gets the item for this given row.
-		Fragment oldFragment = Globals.getFragments().get(row);
-        //final Fragment fragment = (Fragment)deepClone(oldFragment);
-        final Fragment fragment = oldFragment;
-
-        // Debug supplements bug
-        List<Fragment> fragments = new ArrayList<Fragment>();
-        if (Globals.getOrder() != null)
+        for (int i = 0; i < relativeLayout.getChildCount(); i++)
         {
-            fragments = Globals.getOrder().getFragments();
-            if (fragments != null)
-            for (int i = 0; i < fragments.size(); i++)
+            View view = (View)relativeLayout.getChildAt(i);
+            if (view.getTag() != null && view.getTag().equals("attribute"))
             {
-                Fragment temp = fragments.get(i);
-                System.out.print("Item:" + temp.getItem().getName() + " has ");
-                for (int j = 0; j < temp.getSupplements().size(); j++)
-                {
-                    Supplement supp = temp.getSupplements().get(j);
-                    System.out.print(supp.getName() + ",");
-                }
-                System.out.println(" initially");
+                Spinner spinner = (Spinner)view;
+                spinnerAttributes.add(spinner);
             }
         }
 
+		// Gets the item for this given row.
+		Fragment oldFragment = Globals.getFragments().get(row);
+        final Fragment fragment = (Fragment)deepClone(oldFragment);
+
+        // Get the selections for the item.
 		Item item = fragment.getItem();
 		ArrayList<Selection> selections = new ArrayList<Selection>();
-		for (int i = 0; i < spinnerAttributes.size(); i++)
-		{
-			Spinner spinner = spinnerAttributes.get(i);
-			int selectedOption = spinner.getSelectedItemPosition();
-			if (item.getAttributes() != null && !item.getAttributes().isEmpty())
-			{
-				Attribute attribute = item.getAttributes().get(i);
-				if (attribute.getOptions() != null && !attribute.getOptions().isEmpty())
-				{
-					Option option = attribute.getOptions().get(selectedOption);
-					Selection selection = new Selection(attribute, option);
-					selections.add(selection);
-				}
-			}
-		}
-		int quantity = spinnerQuantity.getSelectedItemPosition() + 1;
-		fragment.setSelections(selections);
-		fragment.setQuantity(quantity);
-		/*
-		Fragment fragment = new Fragment(null, item, selections,
-				supplements, quantity);*/
+        try
+        {
+            for (int i = 0; i < spinnerAttributes.size(); i++)
+            {
+                Spinner spinner = spinnerAttributes.get(i);
+                int selectedOption = spinner.getSelectedItemPosition();
+                if (item.getAttributes() != null && !item.getAttributes().isEmpty())
+                {
+                    Attribute attribute = item.getAttributes().get(i);
+                    if (attribute.getOptions() != null && !attribute.getOptions().isEmpty())
+                    {
+                        Option option = attribute.getOptions().get(selectedOption);
+                        Selection selection = new Selection(attribute, option);
+                        selections.add(selection);
+                    }
+                }
+            }
+            int quantity = spinnerQuantity.getSelectedItemPosition() + 1;
+            fragment.setSelections(selections);
+            fragment.setQuantity(quantity);
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(v.getContext(), "Failed to add item to order", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 		// Adds the fragment that was just created to the order.
+        List<Fragment> fragments = new ArrayList<Fragment>();
 		Order order = Globals.getOrder();
 		if (order == null)
 		{
@@ -138,22 +124,16 @@ public class ListItemMenuAddListener implements OnItemClickListener
                     }
                 }
 			}
-			try
-			{
-				Vendor vendor = (Vendor)Globals.getVendor().clone();
-				vendor.setItems(null);
-				vendor.setFilteredItems(null);
-				vendor.setRecommendations(null);
-				order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
-					station, funder, tip, coupons, comment);
-                BigDecimal price = order.getPrice();
-                BigDecimal newTip = price.multiply(new BigDecimal(defaultTip));
-                order.setTip(newTip);
-			}
-			catch (CloneNotSupportedException e)
-			{
-				e.printStackTrace();
-			}
+
+            Vendor vendor = new Vendor(Globals.getVendor());
+            vendor.setItems(null);
+            vendor.setFilteredItems(null);
+            vendor.setRecommendations(null);
+            order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
+                station, funder, tip, coupons, comment);
+            BigDecimal price = order.getPrice();
+            BigDecimal newTip = price.multiply(new BigDecimal(defaultTip));
+            order.setTip(newTip);
 		}
 		if (order.getFragments() != null &&
 				!order.getFragments().isEmpty())
@@ -163,21 +143,9 @@ public class ListItemMenuAddListener implements OnItemClickListener
 		fragments.add(fragment);
 		order.setFragments(fragments);
 		Globals.setOrder(order);
-        for (int i = 0; i < fragments.size(); i++)
-        {
-            Fragment temp = fragments.get(i);
-            System.out.print("Item:" + temp.getItem().getName() + " has ");
-            for (int j = 0; j < temp.getSupplements().size(); j++)
-            {
-                Supplement supp = temp.getSupplements().get(j);
-                System.out.print(supp.getName() + ",");
-            }
-            System.out.println(" posthumously");
-        }
 
 		// Creates a Toast that informs the user that the drink has been added to the tab.
-		Toast toast = Toast.makeText(v.getContext(),
-				"Added " + item.getName() + " to order", Toast.LENGTH_SHORT);
+		Toast toast = Toast.makeText(v.getContext(), "Added " + item.getName() + " to order", Toast.LENGTH_SHORT);
 		toast.show();
 	}
 

@@ -19,6 +19,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
 import android.support.v4.app.ActivityCompat;
@@ -35,7 +36,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.appboy.Appboy;
 
 import com.facebook.widget.LoginButton;
 
@@ -43,6 +47,7 @@ import com.patron.db.LoginConnector;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.OnTaskCompletedListener;
 import com.patron.lists.ListLinks;
+import com.patron.model.User;
 import com.patron.R;
 import com.patron.social.OnSocialTaskCompletedListener;
 import com.patron.social.SocialExecutor;
@@ -78,6 +83,9 @@ public class FlashLogin extends Activity
     private SocialExecutor socialExecutor;
     private GoogleApiClient googleClient;
     private ConnectionResult connectionResult;
+    private String email;
+    private String password;
+    private String provider;
     private static final int RC_SIGN_IN = 0;
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
@@ -100,58 +108,76 @@ public class FlashLogin extends Activity
 		Button buttonGooglePlus = (Button)findViewById(R.id.loginButtonGoogle);
 
         // Loading indicator
-        final LinearLayout layout = (LinearLayout)findViewById(R.id.loginLinearLayoutContent);
+        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.loginRelativeLayoutLoading);
         final ProgressBar progressIndicator = new ProgressBar(this);
-        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,200);
-        params.gravity = Gravity.CENTER;
+        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
         progressIndicator.setLayoutParams(params);
+        progressIndicator.setBackgroundColor(Color.TRANSPARENT);
 
         // Prepopulate Login info
-        /*
-        editTextEmail.setText("mpacquiao@gmail.com");
-        editTextPassword.setText("batman");
-        */
         submitting = false;
+
+        // Login listener.
+        final OnApiExecutedListener listener = new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                // Add a loading indicator.
+                final Activity activity = (Activity)layout.getContext();
+                ApiExecutor executor = new ApiExecutor();
+                executor.login(email, password, provider, new OnApiExecutedListener() {
+                    @Override
+                    public void onExecuted()
+                    {
+                        layout.removeView(progressIndicator);
+                        submitting = false;
+                        if (!Globals.hasUser())
+                        {
+                            Toast.makeText(activity, "Failed to log in.", Toast.LENGTH_SHORT).show();
+                            submitting = false;
+                            return;
+                        }
+                        Globals.getUser().setProvider(provider);
+                        Appboy.getInstance(FlashLogin.this).changeUser(Globals.getEmail());
+                        Intent intent = new Intent(activity, FlashMenu.class);
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+                });
+            }
+        };
 
         // Login button actions
         buttonSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                if (!submitting)
-                {
-                    submitting = true;
-
-                    // Add a loading indicator.
-					layout.addView(progressIndicator);
-
-                    final Activity activity = (Activity)view.getContext();
-                    String email = editTextEmail.getText().toString();
-                    String password = editTextPassword.getText().toString();
-                    ApiExecutor executor = new ApiExecutor();
-                    executor.login(email, password, "", new OnApiExecutedListener() {
-                        @Override
-                        public void onExecuted()
-                        {
-                            layout.removeView(progressIndicator);
-                            if (!Globals.hasUser())
-                            {
-                                Toast.makeText(activity, "Failed to log in.", Toast.LENGTH_SHORT).show();
-                                submitting = false;
-                                return;
-                            }
-                            Globals.getUser().setProvider("");
-                            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                activity, buttonSubmit, "loginButton");
-                            Bundle bundle = options.toBundle();
-                            Intent intent = new Intent(activity, FlashMenu.class);
-                            activity.startActivity(intent);
-                            activity.finish();
-                        }
-                    });
-                }
+                if (submitting)
+                    return;
+                submitting = true;
+                layout.addView(progressIndicator, params);
+                email = editTextEmail.getText().toString();
+                password = editTextPassword.getText().toString();
+                provider = "";
+                listener.onExecuted();
             }
         });
+
+        // Automatically log in the user if credentials are saved.
+        if (Globals.getEmail() != null && Globals.getPassword() != null &&
+                !Globals.getEmail().equals("") && !Globals.getPassword().equals(""))
+        {
+            email = Globals.getEmail();
+            password = Globals.getPassword();
+            provider = Globals.getProvider();
+            System.out.println("CRED-EMAIL:" + email);
+            System.out.println("CRED-PASS:" + password);
+            System.out.println("CRED-PROV:" + provider);
+            submitting = true;
+            layout.addView(progressIndicator, params);
+            listener.onExecuted();
+        }
 
         // Reset password button actions
         buttonResetPassword.setOnClickListener(new OnClickListener() {
@@ -163,20 +189,19 @@ public class FlashLogin extends Activity
                 View dialogRequestPasswordView = inflater.inflate(R.layout.dialog_request_password, null);
                 builder.setView(dialogRequestPasswordView);
                 final AlertDialog dialogRequestPassword = builder.create();
-                EditText editTextDialogResetPasswordEmail = (EditText)dialogRequestPasswordView.findViewById(R.id.dialogResetPasswordEditTextEmail);
+                final EditText editTextDialogResetPasswordEmail = (EditText)dialogRequestPasswordView.findViewById(R.id.dialogResetPasswordEditTextEmail);
                 Button buttonDialogResetPasswordSubmit = (Button)dialogRequestPasswordView.findViewById(R.id.dialogResetPasswordButtonSubmit);
-                final String email = editTextDialogResetPasswordEmail.getText().toString();
                 buttonDialogResetPasswordSubmit.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View buttonView)
                     {
                         ApiExecutor executor = new ApiExecutor();
                         final Context context = buttonView.getContext();
+                        String email = editTextDialogResetPasswordEmail.getText().toString();
                         executor.resetPassword(email, new OnApiExecutedListener() {
                             @Override
                             public void onExecuted()
                             {
-                                Toast.makeText(context, "New password e-mailed", Toast.LENGTH_SHORT).show();
                             }
                         });
                         dialogRequestPassword.dismiss();
@@ -212,35 +237,20 @@ public class FlashLogin extends Activity
             @Override
             public void onClick(View view)
             {
-                if (submitting == true)
+                if (submitting)
                     return;
                 submitting = true;
+                layout.addView(progressIndicator, params);
                 final Context context = view.getContext();
                 final Activity activity = (Activity)context;
                 socialExecutor.signIn(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
                     @Override
                     public void onComplete()
                     {
-                        String id = socialExecutor.getId(Network.FACEBOOK);
-                        String token = socialExecutor.getAccessToken(Network.FACEBOOK);
-                        ApiExecutor executor = new ApiExecutor();
-                        executor.login(id, token, "fb", new OnApiExecutedListener() {
-                            @Override
-                            public void onExecuted()
-                            {
-                                if (!Globals.hasUser())
-                                {
-                                    Toast.makeText(context, "Failed to log in.", Toast.LENGTH_SHORT).show();
-                                    submitting = false;
-                                    return;
-                                }
-                                Globals.getUser().setProvider("fb");
-                                Intent intent = new Intent(context, FlashMenu.class);
-                                context.startActivity(intent);
-                                activity.finish();
-                                submitting = false;
-                            }
-                        });
+                        email = socialExecutor.getId(Network.FACEBOOK);
+                        password = socialExecutor.getAccessToken(Network.FACEBOOK);
+                        provider = "fb";
+                        listener.onExecuted();
                     }
                 });
             }
@@ -260,6 +270,18 @@ public class FlashLogin extends Activity
                 });
             }
         });
+    }
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashLogin.this).openSession(FlashLogin.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashLogin.this).closeSession(FlashLogin.this);
     }
 
 	@Override

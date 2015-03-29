@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
+import com.appboy.Appboy;
+
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.R;
 import com.patron.system.Globals;
@@ -44,6 +46,18 @@ public class FlashVouchers extends Activity
 		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.VOUCHERS);
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashVouchers.this).openSession(FlashVouchers.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashVouchers.this).closeSession(FlashVouchers.this);
+    }
 
 	@Override
 	protected void attachBaseContext(Context newBase)

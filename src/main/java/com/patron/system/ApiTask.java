@@ -44,8 +44,8 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 				this.listener = null;
 				this.mocking = false;
 				this.mockData = null;
-				this.connectionTimeout = 10000;
-				this.socketTimeout = 10000;
+				this.connectionTimeout = 20000;
+				this.socketTimeout = 20000;
 		}
 
 		public ApiTask(OnTaskCompletedListener listener)
@@ -53,8 +53,8 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 			this.listener = listener;
 			this.mocking = false;
 			this.mockData = null;
-			this.connectionTimeout = 10000;
-			this.socketTimeout = 10000;
+			this.connectionTimeout = 20000;
+			this.socketTimeout = 20000;
 		}
 
 	public void setOnTaskCompletedListener(OnTaskCompletedListener listener)
@@ -161,12 +161,12 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 		}
         catch (UnknownHostException e)
         {
-				System.out.println("task13");
+            System.out.println("task13");
             e.printStackTrace();
         }
 		catch (UnsupportedEncodingException e)
 		{
-		System.out.println("task14");
+            System.out.println("task14");
 			e.printStackTrace();
 		}
 		catch (ClientProtocolException e)
@@ -176,7 +176,7 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 		}
 		catch (IOException e)
 		{
-		System.out.println("task16");
+            System.out.println("task16");
 			e.printStackTrace();
 		}
 

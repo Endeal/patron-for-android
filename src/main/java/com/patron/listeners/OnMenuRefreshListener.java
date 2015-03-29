@@ -80,7 +80,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         }
         else if (Globals.getVendor().getFilteredItems().size() <= 0)
         {
-            Toast.makeText(activity, "No items for this filter.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity, "No items for this filter.", Toast.LENGTH_SHORT).show();
         }
 
         List<Map<String, Fragment>> products = new ArrayList<Map<String, Fragment>>();

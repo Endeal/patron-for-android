@@ -21,6 +21,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appboy.Appboy;
+
 import com.patron.db.ScanConnector;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.lists.ListLinks;
@@ -60,6 +62,18 @@ public class FlashScan extends Activity implements Loadable
 		beginLoading();
 	}
 
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashScan.this).openSession(FlashScan.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashScan.this).closeSession(FlashScan.this);
+    }
+
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -92,12 +106,6 @@ public class FlashScan extends Activity implements Loadable
     {
     	super.onWindowFocusChanged(hasFocus);
     }
-
-	@Override
-	protected void attachBaseContext(Context newBase)
-	{
-		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
-	}
 
 	// Loading
 	public void beginLoading()
@@ -160,6 +168,11 @@ public class FlashScan extends Activity implements Loadable
 					String text = order.getOrderText();
 					TextView textView = (TextView)viewScan.findViewById(R.id.scanTextOrder);
 					textView.setText(text);
+
+                    // Set the status text.
+                    text = Order.getStatusText(order.getStatus());
+                    TextView textViewStatus = (TextView)viewScan.findViewById(R.id.scanTextViewStatus);
+                    textViewStatus.setText(text);
 				}
 			});
 		}
@@ -178,5 +191,12 @@ public class FlashScan extends Activity implements Loadable
 	{
 		Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
 		toast.show();
+	}
+
+	// Calligraphy
+	@Override
+	protected void attachBaseContext(Context newBase)
+	{
+		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
 	}
 }

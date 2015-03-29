@@ -1,11 +1,12 @@
 package com.patron.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Supplement implements Cloneable
+public class Supplement implements Serializable
 {
 	// Properties
 	private String id;

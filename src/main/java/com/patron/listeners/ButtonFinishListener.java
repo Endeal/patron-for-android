@@ -24,6 +24,7 @@ import com.patron.system.ApiExecutor;
 import com.patron.system.Globals;
 import com.patron.system.Patron;
 import com.patron.view.DialogLoading;
+import com.patron.view.QustomDialogBuilder;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -69,6 +70,8 @@ public class ButtonFinishListener implements OnClickListener
 
                     // Show loading dialog
                     final DialogLoading loadingDialog = new DialogLoading(view.getContext());
+                    loadingDialog.setCancelable(false);
+                    loadingDialog.setCanceledOnTouchOutside(false);
                     loadingDialog.show();
 
                     ApiExecutor apiExecutor = new ApiExecutor();
@@ -94,20 +97,26 @@ public class ButtonFinishListener implements OnClickListener
                 }
             }
         };
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-
+        QustomDialogBuilder builder = new QustomDialogBuilder(view.getContext());
+        builder = builder.setMessageColor("#FFFFFF");
+        AlertDialog.Builder newBuilder;
+        String dialogMessage = "";
         // Add card dialog
         if (Globals.getOrder().getFunder() == null)
         {
-            builder.setMessage("You have to add a debit/credit card to place an order. Add one now?").
-                setPositiveButton("Yes", addCardListener).setNegativeButton("No", addCardListener).show();
+            dialogMessage = "You have to add a debit/credit card to place an order. Add one now?";
+            newBuilder = builder.setPositiveButton("Yes", addCardListener);
+            newBuilder = builder.setPositiveButton("Yes", addCardListener).setNegativeButton("No", addCardListener);
         }
 
         // Place order dialog
         else
         {
-          builder.setMessage("Are you sure you want to place this order?").setPositiveButton("Yes", placeOrderListener)
-              .setNegativeButton("No", placeOrderListener).show();
+            dialogMessage = "Are you sure you want to place this order?";
+            newBuilder = builder.setPositiveButton("Yes", placeOrderListener);
+            newBuilder = newBuilder.setNegativeButton("No", placeOrderListener);
         }
+        builder = builder.setMessage(dialogMessage);
+        newBuilder.show();
 	}
 }

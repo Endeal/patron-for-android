@@ -1,5 +1,6 @@
 package com.patron.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Item
+public class Item implements Serializable
 {
+    private static final long serialVersionUID = 752647290209837L;
+
 	// Properties
 	private String id;
 	private String name;

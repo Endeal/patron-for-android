@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.appboy.Appboy;
+
 import com.patron.system.Loadable;
 import com.patron.lists.ListLinks;
 import com.patron.db.CreateAccountConnector;
@@ -54,6 +56,18 @@ public class FlashCreateAccount extends Activity implements Loadable
 		setContentView(R.layout.layout_create_account);
 		init();
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashCreateAccount.this).openSession(FlashCreateAccount.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashCreateAccount.this).closeSession(FlashCreateAccount.this);
+    }
 
   // TextView methods
   public void viewPrivacyPolicy(View view)
@@ -149,7 +163,7 @@ public class FlashCreateAccount extends Activity implements Loadable
 						FlashCreateAccount.day = day;
 					}
 				};
-				DatePickerDialog dialog = new DatePickerDialog(view.getContext(), listener,
+				DatePickerDialog dialog = new DatePickerDialog(view.getContext(), R.style.ThemeSelectDate, listener,
 					FlashCreateAccount.year, FlashCreateAccount.month, FlashCreateAccount.day);
 				dialog.show();
 			}

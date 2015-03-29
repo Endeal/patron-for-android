@@ -1,12 +1,13 @@
 package com.patron.model;
 
+import java.io.Serializable;
 import java.lang.Cloneable;
 import java.lang.CloneNotSupportedException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Category
+public class Category implements Serializable
 {
 	// Properties
 	private String id;
@@ -19,19 +20,17 @@ public class Category
 		setName(name);
 	}
 
+    public Category(Category category)
+    {
+        setId(category.getId());
+        setName(category.getName());
+    }
+
     public Category(JSONObject rawCategory) throws JSONException
     {
         setId(rawCategory.getString("categoryId"));
         setName(rawCategory.getString("name"));
     }
-
-		public Category clone() throws CloneNotSupportedException
-		{
-			String newId = new String(getId());
-			String newName = new String(getName());
-			Category newCategory = new Category(newId, newName);
-			return newCategory;
-		}
 
 	// Setters
 	public void setId(String id)

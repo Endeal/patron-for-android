@@ -28,6 +28,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.appboy.Appboy;
+
 import com.patron.bind.CodeBinder;
 import com.patron.db.CodeConnector;
 import com.patron.listeners.DrawerNavigationListener;
@@ -79,8 +81,14 @@ public class FlashCodes extends Activity implements Loadable
             @Override
             public void onExecuted()
             {
-                swipeRefreshLayoutCodes.setRefreshing(false);
                 layout.removeView(progressIndicator);
+            }
+        };
+        final OnApiExecutedListener stopRefreshListener = new OnApiExecutedListener() {
+            @Override
+            public void onExecuted()
+            {
+                swipeRefreshLayoutCodes.setRefreshing(false);
             }
         };
 
@@ -93,9 +101,8 @@ public class FlashCodes extends Activity implements Loadable
             @Override
             public void onRefresh()
             {
-                layout.addView(progressIndicator, params);
                 swipeRefreshLayoutCodes.setRefreshing(true);
-                executor.getCodes(listener, removeViewListener);
+                executor.getCodes(listener, stopRefreshListener);
             }
         });
 
@@ -103,6 +110,18 @@ public class FlashCodes extends Activity implements Loadable
         layout.addView(progressIndicator, params);
 		executor.getCodes(listener, removeViewListener);
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashCodes.this).openSession(FlashCodes.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashCodes.this).closeSession(FlashCodes.this);
+    }
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu)

@@ -20,14 +20,23 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.view.animation.Animation;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.HorizontalScrollView;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
@@ -45,6 +54,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.lang.Runnable;
+
+import com.appboy.Appboy;
 
 import com.patron.bind.NavigationBinder;
 import com.patron.bind.ProductBinder;
@@ -67,6 +78,7 @@ import com.patron.system.Loadable;
 import com.patron.view.ButtonCategory;
 import com.patron.view.ButtonFavorites;
 import com.patron.view.ButtonSearch;
+import com.patron.view.HorizontalScrollViewFilters;
 import com.patron.view.NavigationListView;
 import static com.patron.view.NavigationListView.Hierarchy;
 
@@ -115,8 +127,14 @@ public class FlashMenu extends Activity
         @Override
         public void onExecuted()
         {
-            swipeRefreshLayoutItems.setRefreshing(false);
             layout.removeView(progressIndicator);
+        }
+    };
+    final OnApiExecutedListener stopRefreshListener = new OnApiExecutedListener() {
+        @Override
+        public void onExecuted()
+        {
+            swipeRefreshLayoutItems.setRefreshing(false);
         }
     };
 
@@ -130,7 +148,7 @@ public class FlashMenu extends Activity
             public void onRefresh()
             {
                 // Add a loading indicator.
-                layout.addView(progressIndicator, params);
+                swipeRefreshLayoutItems.setRefreshing(true);
                 if (Globals.getVendor() == null)
                 {
                     apiExecutor.selectNearestVendor(swipeRefreshLayoutItems.getContext(), new OnApiExecutedListener() {
@@ -151,15 +169,13 @@ public class FlashMenu extends Activity
                               swipeRefreshLayoutItems.setRefreshing(false);
                               return;
                             }
-                            swipeRefreshLayoutItems.setRefreshing(true);
-                            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
+                            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, stopRefreshListener);
                         }
                     });
                 }
                 else
                 {
-                    swipeRefreshLayoutItems.setRefreshing(true);
-                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
+                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, stopRefreshListener);
                 }
             }
         });
@@ -216,11 +232,89 @@ public class FlashMenu extends Activity
                 activity.finish();
             }
         });
+
+        // Create animation to show horizontal movement
+        final ImageView imageViewHelpCategories = (ImageView) findViewById(R.id.menuImageViewHelpCategories);
+        int images[] = { R.drawable.help_categories};
+        animate(imageViewHelpCategories, images, 0,true);
+
+        // Get rid of helper image once scrolled enough.
+        HorizontalScrollViewFilters scrollViewFilters = (HorizontalScrollViewFilters)findViewById(R.id.menuHorizontalScrollViewTypes);
+        scrollViewFilters.setImage(imageViewHelpCategories);
 	}
 
     public List<Button> getButtonCategories()
     {
         return buttonCategories;
+    }
+
+
+
+
+  private void animate(final ImageView imageView, final int images[], final int imageIndex, final boolean forever) {
+
+  //imageView <-- The View which displays the images
+  //images[] <-- Holds R references to the images to display
+  //imageIndex <-- index of the first image to show in images[]
+  //forever <-- If equals true then after the last image it starts all over again with the first image resulting in an infinite loop. You have been warned.
+
+      if (imageView.getVisibility() == View.GONE)
+      {
+          return;
+      }
+
+    int fadeInDuration = 1000; // Configure time values here
+    int timeBetween = 10;
+    int fadeOutDuration = 1000;
+
+    imageView.setVisibility(View.INVISIBLE);    //Visible or invisible by default - this will apply when the animation ends
+    imageView.setImageResource(images[imageIndex]);
+
+    Animation fadeIn = new AlphaAnimation(0, 1);
+    fadeIn.setInterpolator(new DecelerateInterpolator()); // add this
+    fadeIn.setDuration(fadeInDuration);
+
+    Animation fadeOut = new AlphaAnimation(1, 0);
+    fadeOut.setInterpolator(new AccelerateInterpolator()); // and this
+    fadeOut.setStartOffset(fadeInDuration + timeBetween);
+    fadeOut.setDuration(fadeOutDuration);
+
+    AnimationSet animation = new AnimationSet(false); // change to false
+    animation.addAnimation(fadeIn);
+    animation.addAnimation(fadeOut);
+    animation.setRepeatCount(1);
+    imageView.setAnimation(animation);
+
+    animation.setAnimationListener(new AnimationListener() {
+        public void onAnimationEnd(Animation animation) {
+            if (images.length - 1 > imageIndex) {
+                animate(imageView, images, imageIndex + 1,forever); //Calls itself until it gets to the end of the array
+            }
+            else {
+                if (forever == true){
+                animate(imageView, images, 0,forever);  //Calls itself to start the animation all over again in a loop if forever = true
+                }
+            }
+        }
+        public void onAnimationRepeat(Animation animation) {
+            // TODO Auto-generated method stub
+        }
+        public void onAnimationStart(Animation animation) {
+            // TODO Auto-generated method stub
+        }
+    });
+}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashMenu.this).openSession(FlashMenu.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashMenu.this).closeSession(FlashMenu.this);
     }
 
 	// Calligraphy

@@ -86,6 +86,7 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
     private void sortVendors()
     {
       List<Vendor> vendors = new ArrayList<Vendor>();
+      // Put favorites on top
       for (int i = 0; i < Globals.getVendors().size(); i++)
       {
           Vendor currentLocation = Globals.getVendors().get(i);
@@ -94,6 +95,8 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
             vendors.add(currentLocation);
           }
       }
+
+      // Sort the rest by distance
       for (int i = 0; i < Globals.getVendors().size(); i++)
       {
         Vendor currentLocation = Globals.getVendors().get(i);

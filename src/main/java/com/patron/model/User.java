@@ -9,8 +9,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Base64;
 
-import com.patron.system.Patron;
 import com.patron.system.FlashCipher;
+import com.patron.system.Globals;
+import com.patron.system.Patron;
 
 public class User
 {
@@ -94,35 +95,17 @@ public class User
 
 	public void setEmail(String email)
 	{
-		try
-		{
-			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
-        	Editor editor = sharedPreferences.edit();
-        	editor.putString("email", email);
-        	editor.commit();
-    	}
-    	catch (Exception e)
-    	{
-
-    	}
+        Globals.setEmail(email);
 	}
 
 	public void setPassword(String password)
 	{
-		try
-		{
-			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
-			String encryptedPassword = FlashCipher.encrypt(password);
-	        Editor editor = sharedPreferences.edit();
-	        editor.putString("password", encryptedPassword);
-	        editor.commit();
-	    }
-	    catch (Exception e)
-	    {
+        Globals.setPassword(password);
+	}
 
-	    }
+	public void setProvider(String provider)
+	{
+        Globals.setProvider(provider);
 	}
 
 	public void setBirthday(String birthday)
@@ -165,11 +148,6 @@ public class User
         this.items = items;
     }
 
-    public static void setProvider(String provider)
-    {
-        User.provider = provider;
-    }
-
 	// Getters
 
 	public String getId()
@@ -189,33 +167,17 @@ public class User
 
 	public String getEmail()
 	{
-		try
-		{
-			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
-			String email = sharedPreferences.getString("email", "");
-	        return email;
-	    }
-	    catch (Exception e)
-	    {
-	    	return null;
-	    }
+        return Globals.getEmail();
 	}
 
 	public String getPassword()
 	{
-		try
-		{
-			Context context = Patron.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("com.patron", Context.MODE_PRIVATE);
-			String password = sharedPreferences.getString("password", "");
-	        password = FlashCipher.decrypt(password);
-	        return password;
-	    }
-	    catch (Exception e)
-	    {
-	    	return null;
-	    }
+        return Globals.getPassword();
+	}
+
+	public String getProvider()
+	{
+        return Globals.getProvider();
 	}
 
 	public String getBirthday()
@@ -256,10 +218,5 @@ public class User
     public List<String> getItems()
     {
         return items;
-    }
-
-    public String getProvider()
-    {
-        return User.provider;
     }
 }

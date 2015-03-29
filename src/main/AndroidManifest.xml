@@ -8,10 +8,8 @@
         android:targetSdkVersion="22" />
 
 	<!-- Permissions -->
-    <!--
-	<permission android:name="com.patron.main.permission.UA_DATA" android:protectionLevel="signature" />
-	<uses-permission android:name="com.patron.main.permission.UA_DATA" />
--->
+	<permission android:name="com.patron.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.patron.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -26,8 +24,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <!-- OPTIONAL - This permission is only necessary if your app has multiple processes -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+
 
     <!-- IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
          to match your app's package name + ".permission.C2D_MESSAGE". -->
@@ -55,7 +56,12 @@
             android:value="@string/appId"/>
 
         <!-- Intent Receivers -->
-        <receiver android:name="com.patron.system.FlashIntentReceiver" />
+        <receiver android:name="com.patron.system.FlashIntentReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.patron.intent.APPBOY_PUSH_RECEIVED" />
+                <action android:name="com.patron.intent.APPBOY_NOTIFICATION_OPENED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Appsee -->
         <service android:name="com.appsee.AppseeBackgroundUploader" />
@@ -87,11 +93,20 @@
             </intent-filter>
         </receiver>
 
+        <!-- Appboy -->
+        <receiver android:name="com.appboy.AppboyGcmReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.patron" />
+            </intent-filter>
+        </receiver>
+
         <!-- The Login Screen Activity -->
         <activity
             android:name="com.patron.main.FlashLogin"
             android:label="@string/appName"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter android:label="@string/appName">
@@ -104,7 +119,7 @@
         <activity
             android:name="com.patron.main.FlashHome"
             android:label="@string/titleActivityHome"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
@@ -112,7 +127,7 @@
         <activity
             android:name="com.patron.main.FlashVouchers"
             android:label="@string/titleActivityVouchers"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashLogin">
             <meta-data
@@ -124,7 +139,7 @@
         <activity
             android:name="com.patron.main.FlashCreateAccount"
             android:label="@string/titleActivityCreateAccount"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.patron.main.FlashLogin">
@@ -137,7 +152,7 @@
         <activity
             android:name="com.patron.main.FlashPayment"
             android:label="@string/titleActivityPayment"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.patron.main.FlashProfile">
@@ -150,7 +165,7 @@
         <activity
             android:name="com.patron.main.FlashAddCard"
             android:label="@string/titleActivityAddCard"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.patron.main.FlashPayment">
@@ -163,7 +178,7 @@
         <activity
             android:name="com.patron.main.FlashAddBankAccount"
             android:label="@string/titleActivityAddBank"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="com.patron.main.FlashPayment">
@@ -176,7 +191,7 @@
         <activity
             android:name="com.patron.main.FlashRemovePayment"
             android:label="@string/titleActivityRemovePayment"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashProfile">
             <meta-data
@@ -188,7 +203,7 @@
         <activity
             android:name="com.patron.main.FlashMenu"
             android:label="@string/titleActivityMenu"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
             <meta-data
@@ -200,7 +215,7 @@
         <activity
             android:name="com.patron.main.FlashCart"
             android:label="@string/titleActivityCart"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashMenu">
             <meta-data
@@ -212,7 +227,7 @@
         <activity
             android:name="com.patron.main.FlashVendors"
             android:label="@string/titleActivityLocations"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
             <meta-data
@@ -224,7 +239,7 @@
         <activity
             android:name="com.patron.main.FlashCodes"
             android:label="@string/titleActivityCodes"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
             <meta-data
@@ -236,7 +251,7 @@
         <activity
             android:name="com.patron.main.FlashScan"
             android:label="@string/titleActivityScan"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashCodes">
             <meta-data
@@ -248,7 +263,7 @@
         <activity
             android:name="com.patron.main.FlashSearchVendors"
             android:label="@string/titleActivitySearchVendors"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashVendors">
             <meta-data
@@ -260,7 +275,7 @@
         <activity
             android:name="com.patron.main.FlashSearchItems"
             android:label="@string/titleActivitySearchItems"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashMenu">
             <meta-data
@@ -272,7 +287,7 @@
         <activity
             android:name="com.patron.main.FlashSettings"
             android:label="@string/titleActivitySettings"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
             <meta-data
@@ -284,7 +299,7 @@
         <activity
             android:name="com.patron.main.FlashHelp"
             android:label="@string/titleActivityHelp"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashHome">
             <meta-data
@@ -308,7 +323,7 @@
         <activity
             android:name="com.twitter.sdk.android.core.identity.OAuthActivity"
             android:label="@string/titleActivityTwitter"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashLogin">
             <meta-data
@@ -320,7 +335,7 @@
         <activity
             android:name="com.twitter.sdk.android.core.identity.ShareEmailActivity"
             android:label="@string/titleActivityTwitterShareEmail"
-            android:theme="@style/Theme.Main"
+            android:theme="@style/ThemeMain"
             android:screenOrientation="portrait"
             android:parentActivityName="com.patron.main.FlashLogin">
             <meta-data

@@ -1,14 +1,13 @@
 package com.patron.model;
 
-import java.lang.Cloneable;
-import java.lang.CloneNotSupportedException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Option implements Cloneable
+public class Option implements Serializable
 {
 	// Properties
 	private String id;
@@ -25,6 +24,14 @@ public class Option implements Cloneable
 		setSupply(supply);
 	}
 
+    public Option(Option option)
+    {
+        setId(option.getId());
+        setName(option.getName());
+        setPrice(option.getPrice());
+        setSupply(option.getSupply());
+    }
+
     public Option(JSONObject rawOption) throws JSONException
     {
         setId(rawOption.getString("optionId"));
@@ -32,17 +39,6 @@ public class Option implements Cloneable
         setPrice(new BigDecimal(rawOption.getString("price")));
         setSupply(rawOption.getInt("supply"));
     }
-
-	public Option clone() throws CloneNotSupportedException
-	{
-		String newId = new String(getId());
-		String newName = new String(getName());
-		BigDecimal newPrice = new BigDecimal(getPrice().toString());
-		int newSupply = new Integer(getSupply());
-
-		Option newOption = new Option(newId, newName, newPrice, newSupply);
-		return newOption;
-	}
 
 	// Setters
 	public void setId(String id)

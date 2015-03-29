@@ -25,28 +25,28 @@ public class UserLocationListener implements LocationListener
     @Override
     public void onLocationChanged(Location location)
     {
-        Toast.makeText(context, "Location changed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Location changed", Toast.LENGTH_SHORT).show();
         apiExecutor.callback(listeners);
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle bundle)
     {
-        Toast.makeText(context, "Status changed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Status changed", Toast.LENGTH_SHORT).show();
         apiExecutor.callback(listeners);
     }
 
     @Override
     public void onProviderEnabled(String provider)
     {
-        Toast.makeText(context, "Provider enabled", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Provider enabled", Toast.LENGTH_SHORT).show();
         apiExecutor.callback(listeners);
     }
 
     @Override
     public void onProviderDisabled(String provider)
     {
-        Toast.makeText(context, "Provider disabled", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Provider disabled", Toast.LENGTH_SHORT).show();
         apiExecutor.callback(listeners);
     }
 }

@@ -89,7 +89,7 @@ public class NavigationListView extends ListView
         if (Globals.getVendor() != null)
         {
             int points = Globals.getPoints(Globals.getVendor().getId());
-            if (points == -1)
+            if (points < 0)
             {
                 points = 0;
             }

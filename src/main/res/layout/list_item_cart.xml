@@ -8,14 +8,30 @@
 
 <!-- First Row -->
 
-<TextView
-    android:id="@+id/cartListItemTextName"
-    style="@style/TextViewListItemName"
+<LinearLayout
+    android:id="@+id/cartListItemLinearLayoutMiddle"
+    android:orientation="vertical"
+    android:layout_toRightOf="@+id/cartListItemButtonRemove"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_margin="10dp"
-    android:layout_toRightOf="@+id/cartListItemButtonRemove" />
+    android:layout_centerVertical="true">
+
+    <TextView
+        android:id="@+id/cartListItemTextName"
+        style="@style/TextViewListItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/cartListItemButtonSupplements"
+        style="@style/ButtonSupplements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp" />
+
+</LinearLayout>
 
 <Spinner
     android:id="@+id/cartListItemSpinnerQuantity"
@@ -45,17 +61,5 @@
     android:layout_alignParentLeft="true"
     android:layout_centerVertical="true"
     android:layout_margin="5dip" />
-
-<!-- Bottom Row -->
-
-<TextView
-    android:id="@+id/cartListItemTextCategories"
-    style="@style/TextViewListItemDescription"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/cartListItemButtonRemove"
-    android:layout_below="@+id/cartListItemTextName"
-    android:layout_marginLeft="10dp"
-    android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

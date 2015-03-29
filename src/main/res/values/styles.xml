@@ -807,6 +807,24 @@
         <item name="android:padding">0dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
+    <style name="EditTextDarkEmail">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    <style name="EditTextDarkPassword">
+        <item name="fontPath">fonts/Quicksand-Regular.otf</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
     <style name="EditTextMainName">
         <item name="fontPath">fonts/Quicksand-Regular.otf</item>
         <item name="android:inputType">textCapWords</item>
@@ -905,6 +923,13 @@
         <item name="android:padding">10dp</item>
     </style>
     <style name="TextViewPercent">
+    </style>
+    <style name="TextViewStatus">
+        <item name="fontPath">fonts/Quicksand-Bold.otf</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#DD3333</item>
+        <item name="android:padding">3dp</item>
     </style>
     <style name="TextViewListItemName">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>

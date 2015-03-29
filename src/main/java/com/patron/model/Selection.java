@@ -1,10 +1,8 @@
 package com.patron.model;
 
-import java.lang.Cloneable;
-import java.lang.CloneNotSupportedException;
 import java.io.Serializable;
 
-public class Selection implements Serializable, Cloneable
+public class Selection implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -15,17 +13,15 @@ public class Selection implements Serializable, Cloneable
 	// Constructor
 	public Selection(Attribute attribute, Option option)
 	{
-		this.attribute = attribute;
-		this.option = option;
+        setAttribute(attribute);
+        setOption(option);
 	}
 
-	public Selection clone() throws CloneNotSupportedException
-	{
-		Attribute newAttribute = getAttribute().clone();
-		Option newOption = getOption().clone();
-		Selection newSelection = new Selection(newAttribute, newOption);
-		return newSelection;
-	}
+    public Selection(Selection selection)
+    {
+        setAttribute(selection.getAttribute());
+        setOption(selection.getOption());
+    }
 
 	// Setters
 	public void setAttribute(Attribute attribute)

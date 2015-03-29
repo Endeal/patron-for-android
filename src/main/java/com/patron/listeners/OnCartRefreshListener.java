@@ -36,15 +36,15 @@ public class OnCartRefreshListener implements OnApiExecutedListener
         String[] from = {"name",
                 "price",
                 "quantity",
-                "categories",
                 "buttonRemove",
+                "supplements",
                 "layout"};
 
         int[] to = {R.id.cartListItemTextName,
                 R.id.cartListItemTextPrice,
                 R.id.cartListItemSpinnerQuantity,
-                R.id.cartListItemTextCategories,
                 R.id.cartListItemButtonRemove,
+                R.id.cartListItemButtonSupplements,
                 R.id.cartListItemLayout};
 
         for (int i = 0; i < Globals.getOrder().getFragments().size(); i++)
@@ -54,8 +54,8 @@ public class OnCartRefreshListener implements OnApiExecutedListener
             mapping.put("name", fragment);
             mapping.put("price", fragment);
             mapping.put("quantity", fragment);
-            mapping.put("categories", fragment);
             mapping.put("buttonRemove", fragment);
+            mapping.put("supplements", fragment);
             mapping.put("layout", fragment);
             products.add(mapping);
         }

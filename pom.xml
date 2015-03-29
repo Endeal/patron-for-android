@@ -106,6 +106,20 @@
         <type>aar</type>
     </dependency>
 
+      <!-- Appboy Android SDK -->
+    <dependency>
+        <groupId>com.appboy</groupId>
+        <artifactId>android-sdk-ui</artifactId>
+        <version>1.6.2</version>
+        <type>aar</type>
+        <exclusions>
+            <exclusion>
+                <groupId>com.android.support</groupId>
+                <artifactId>support-v4</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
     <!-- Facebook -->
     <dependency>
         <groupId>com.facebook.android</groupId>
@@ -160,7 +174,7 @@
     <dependency>
       <groupId>com.android.support</groupId>
       <artifactId>support-v4</artifactId>
-      <version>21.0.3</version>
+      <version>22.0.0</version>
       <type>aar</type>
       <scope>compile</scope>
       <exclusions>
@@ -174,7 +188,7 @@
     <dependency>
       <groupId>com.android.support</groupId>
       <artifactId>appcompat-v7</artifactId>
-      <version>21.0.3</version>
+      <version>22.0.0</version>
       <type>aar</type>
       <exclusions>
         <exclusion>

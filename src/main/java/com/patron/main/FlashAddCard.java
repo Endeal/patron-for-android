@@ -27,6 +27,8 @@ import android.view.LayoutInflater;
 import android.app.AlertDialog;
 import android.widget.EditText;
 
+import com.appboy.Appboy;
+
 import com.balancedpayments.android.Balanced;
 import com.balancedpayments.android.Card;
 import com.balancedpayments.android.BankAccount;
@@ -79,9 +81,11 @@ public class FlashAddCard extends Activity
         progressIndicator.setBackgroundColor(Color.TRANSPARENT);
 
 		// Set field's to mock data.
+        /*
 		fieldName.setText("James Whiteman");
 		fieldNumber.setText("4833160029475107");
 		fieldCode.setText("768");
+        */
 
 		// Spinner actions
 		fieldExpirationMonth.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -136,9 +140,9 @@ public class FlashAddCard extends Activity
                         public void onExecuted()
                         {
                             submitting = false;
-                            layout.removeView(progressIndicator);
                             // Set default funder to the newly added if the order has none.
-                            if (Globals.getUser().getFunders() != null && Globals.getUser().getFunders().size() > 0 && Globals.getOrder().getFunder() == null)
+                            if (Globals.getOrder() != null && Globals.getUser().getFunders() != null &&
+                                Globals.getUser().getFunders().size() > 0 && Globals.getOrder().getFunder() == null)
                             {
                                 Globals.getOrder().setFunder(Globals.getUser().getFunders().get(0));
                             }
@@ -158,6 +162,18 @@ public class FlashAddCard extends Activity
 			}
 		});
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashAddCard.this).openSession(FlashAddCard.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashAddCard.this).closeSession(FlashAddCard.this);
+    }
 
 	@Override
 	protected void attachBaseContext(Context newBase)

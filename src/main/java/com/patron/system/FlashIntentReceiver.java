@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.appboy.AppboyGcmReceiver;
+
 import com.patron.db.DataConnector;
 import com.patron.main.FlashScan;
+import com.patron.main.FlashCodes;
 
-public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
+public class FlashIntentReceiver extends BroadcastReceiver
 {
 	private String orderId;
 	private String msg;
@@ -18,10 +21,11 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 	public void onReceive(Context context, Intent intent)
 	{
 		this.context = context;
-		/*
 		this.orderId = intent.getExtras().getString("orderId");
 		String action = intent.getAction();
-
+        Intent scanIntent = new Intent(context, FlashCodes.class);
+        context.startActivity(scanIntent);
+        /*
 		// if a notification is received ...
 		if (action.equals(PushManager.ACTION_PUSH_RECEIVED))
 		{
@@ -51,28 +55,23 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 		}
 		else if (action.equals(PushManager.ACTION_REGISTRATION_FINISHED))
 		{
-			//beginLoading();
 			System.out.println(msg + ": 3");
-			// to log the APID ...
 			Log.i("Log", "Registration complete. APID:"
 					+ intent.getStringExtra(PushManager.EXTRA_APID)
 					+ ". Valid: "
 					+ intent.getBooleanExtra(
 							PushManager.EXTRA_REGISTRATION_VALID, false));
 
-			// if registration is successful ...
 			if(intent.getBooleanExtra(PushManager.EXTRA_REGISTRATION_VALID, false))
 			{
-				// Do whatever you want ....
 			}
 			else
 			{
-				// register again ...
 			}
 		}
-		*/
+        */
 	}
-
+/*
 	public void beginLoading()
 	{
 		load();
@@ -129,4 +128,5 @@ public class FlashIntentReceiver extends BroadcastReceiver implements Loadable
 	{
 
 	}
+    */
 }

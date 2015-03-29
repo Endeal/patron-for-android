@@ -3,10 +3,13 @@ package com.patron.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Fragment
+public class Fragment implements Serializable
 {
-	// Properties
+    private static final long serialVersionUID = 7526472945622987L;
+
+    // Properties
 	private String id;
 	private Item item;
 	private List<Selection> selections;

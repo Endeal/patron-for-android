@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.appboy.Appboy;
+
 import com.patron.listeners.ButtonCommentListener;
 import com.patron.listeners.ButtonFinishListener;
 import com.patron.listeners.ButtonPaymentListener;
@@ -124,6 +126,18 @@ public class FlashCart extends Activity
             }
         });
 	}
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashCart.this).openSession(FlashCart.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashCart.this).closeSession(FlashCart.this);
+    }
 
 	@Override
 	protected void attachBaseContext(Context newBase)

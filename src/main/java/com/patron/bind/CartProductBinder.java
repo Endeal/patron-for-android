@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.patron.listeners.ButtonRemoveListener;
+import com.patron.listeners.ButtonSupplementsListener;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.listeners.SpinnerAttributeListener;
 import com.patron.listeners.SpinnerQuantityListener;
@@ -56,22 +57,22 @@ public class CartProductBinder implements ViewBinder
 			return true;
 		}
 
-		// Set the categories text and font.
-		else if (view.getId() == R.id.cartListItemTextCategories)
+        // Set the supplements button
+		else if (view.getId() == R.id.cartListItemButtonSupplements)
 		{
 			Fragment fragment = (Fragment)data;
+			Button button = (Button)view;
 			Item item = fragment.getItem();
-			String name = "";
-			for (int i = 0; i < item.getCategories().size(); i++)
+			if (item.getSupplements() != null && item.getSupplements().size() > 0)
 			{
-				if (!name.equals(""))
-					name = name + "\n";
-				name = name + item.getCategories().get(i).getName();
+				ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
+				button.setOnClickListener(listener);
+				button.setVisibility(View.VISIBLE);
 			}
-			Typeface typeface = Typeface.createFromAsset(view.getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
-			TextView text = (TextView) view;
-			text.setTypeface(typeface);
-			text.setText(name);
+			else
+			{
+				button.setVisibility(View.GONE);
+			}
 			return true;
 		}
 

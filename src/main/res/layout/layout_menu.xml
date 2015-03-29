@@ -20,7 +20,7 @@
             android:layout_alignParentRight="true" />
 
         <!-- The scroll view for the categories -->
-        <HorizontalScrollView
+        <com.patron.view.HorizontalScrollViewFilters
             android:id="@+id/menuHorizontalScrollViewTypes"
             style="@style/LayoutCategories"
             android:layout_width="wrap_content"
@@ -55,7 +55,18 @@
 
                 </LinearLayout>
 
-        </HorizontalScrollView>
+
+        </com.patron.view.HorizontalScrollViewFilters>
+
+        <ImageView
+            android:id="@+id/menuImageViewHelpCategories"
+            android:background="#00FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_toLeftOf="@+id/menuButtonCheckout"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:elevation="10dp" />
 
         <!-- The main list of items -->
         <android.support.v4.widget.SwipeRefreshLayout

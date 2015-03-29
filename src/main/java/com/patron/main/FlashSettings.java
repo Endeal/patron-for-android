@@ -13,6 +13,9 @@ import android.widget.Toast;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.appboy.Appboy;
+
+import com.patron.listeners.ButtonUpdateAccountListener;
 import com.patron.listeners.DrawerNavigationListener;
 import com.patron.listeners.ListItemSettingsFunderListener;
 import com.patron.listeners.OnApiExecutedListener;
@@ -38,6 +41,7 @@ public class FlashSettings extends FragmentActivity
     private Button buttonGooglePlus;
     private Button buttonAddCard;
     private Button buttonAddBankAccount;
+    private Button buttonUpdateAccount;
     private Button buttonLogout;
     private SocialExecutor executor;
 
@@ -68,9 +72,22 @@ public class FlashSettings extends FragmentActivity
         buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
         buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
         buttonAddBankAccount = (Button)findViewById(R.id.settingsButtonAddBankAccount);
+        buttonUpdateAccount = (Button)findViewById(R.id.settingsButtonUpdateAccount);
         buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
 
         update();
+    }
+
+    public void onStart()
+    {
+        super.onStart();
+        Appboy.getInstance(FlashSettings.this).openSession(FlashSettings.this);
+    }
+
+    public void onStop()
+    {
+        super.onStop();
+        Appboy.getInstance(FlashSettings.this).closeSession(FlashSettings.this);
     }
 
 	@Override
@@ -266,10 +283,14 @@ public class FlashSettings extends FragmentActivity
                 activity.startActivity(intent);
             }
         });
+        buttonUpdateAccount.setOnClickListener(new ButtonUpdateAccountListener(null));
         buttonLogout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view)
             {
+                Globals.setEmail(null);
+                Globals.setPassword(null);
+                Globals.setProvider(null);
                 Globals.setUser(null);
                 Activity activity = (Activity)view.getContext();
                 Intent intent = new Intent(activity, FlashLogin.class);

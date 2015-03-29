@@ -1,6 +1,5 @@
 package com.patron.model;
 
-import java.lang.Cloneable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +16,15 @@ public class Vendor
 	private String state;
 	private String zip;
 	private String phone;
-	private Double taxRate;
+	private double taxRate;
 	private double latitude;
 	private double longitude;
+    private String facebook;
+    private String twitter;
+    private String googlePlus;
+    private int facebookPoints;
+    private int twitterPoints;
+    private int googlePlusPoints;
 
 	private List<Item> items;
 	private List<Item> filteredItems;
@@ -33,14 +38,16 @@ public class Vendor
 
 	public Vendor()
 	{
-		name = "Jack & Jill's";
+		name = "";
 		items = new ArrayList<Item>();
 	}
 
 	public Vendor(String id, String name, String address, String city,
 			String state, String zip, String phone, List<Item> items,
 			List<Item> recommendations, List<Station> stations,
-			double latitude, double longitude)
+			double taxRate, double latitude, double longitude,
+            String facebook, String twitter, String googlePlus,
+            int facebookPoints, int twitterPoints, int googlePlusPoints)
 	{
 		setId(id);
 		setName(name);
@@ -54,17 +61,32 @@ public class Vendor
 		setStations(stations);
 		setLatitude(latitude);
 		setLongitude(longitude);
-		setTaxRate(0.0833);
+		setTaxRate(taxRate);
+        setFacebook(facebook);
+        setTwitter(twitter);
+        setGooglePlus(googlePlus);
+        setFacebookPoints(facebookPoints);
+        setTwitterPoints(twitterPoints);
+        setGooglePlusPoints(googlePlusPoints);
 	}
 
-	// CLONEABLE
-	public Vendor clone() throws CloneNotSupportedException
-	{
-		Vendor vendor = new Vendor(this.id, this.name, this.address, this.city,
-			this.state, this.zip, this.phone, this.items, this.recommendations,
-			this.stations, this.latitude, this.longitude);
-		return vendor;
-	}
+    public Vendor(Vendor vendor)
+    {
+        setId(vendor.getId());
+        setName(vendor.getName());
+        setAddress(vendor.getAddress());
+        setCity(vendor.getCity());
+        setState(vendor.getState());
+        setZip(vendor.getZip());
+        setPhone(vendor.getPhone());
+        setItems(vendor.getItems());
+        setRecommendations(vendor.getRecommendations());
+        setStations(vendor.getStations());
+        setLatitude(vendor.getLatitude());
+        setLongitude(vendor.getLongitude());
+        setTaxRate(vendor.getTaxRate());
+    }
+
 
 	// SETTER METHODS
 	public void setId(String id)
@@ -152,6 +174,36 @@ public class Vendor
 		this.rewardSupplements = rewardSupplements;
 	}
 
+    public void setFacebook(String facebook)
+    {
+        this.facebook = facebook;
+    }
+
+    public void setTwitter(String twitter)
+    {
+        this.twitter = twitter;
+    }
+
+    public void setGooglePlus(String googlePlus)
+    {
+        this.googlePlus = googlePlus;
+    }
+
+    public void setFacebookPoints(int facebookPoints)
+    {
+        this.facebookPoints = facebookPoints;
+    }
+
+    public void setTwitterPoints(int twitterPoints)
+    {
+        this.twitterPoints = twitterPoints;
+    }
+
+    public void setGooglePlusPoints(int googlePlusPoints)
+    {
+        this.googlePlusPoints = googlePlusPoints;
+    }
+
 	// ACCESSOR METHODS
 
 	public String getId()
@@ -238,4 +290,34 @@ public class Vendor
 	{
 		return rewardSupplements;
 	}
+
+    public String getFacebook()
+    {
+        return facebook;
+    }
+
+    public String getTwitter()
+    {
+        return twitter;
+    }
+
+    public String getGooglePlus()
+    {
+        return googlePlus;
+    }
+
+    public int getFacebookPoints()
+    {
+        return facebookPoints;
+    }
+
+    public int getTwitterPoints()
+    {
+        return twitterPoints;
+    }
+
+    public int getGooglePlusPoints()
+    {
+        return googlePlusPoints;
+    }
 }
