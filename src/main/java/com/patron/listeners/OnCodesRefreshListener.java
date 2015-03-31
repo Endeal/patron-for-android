@@ -33,7 +33,7 @@ public class OnCodesRefreshListener implements OnApiExecutedListener
   @Override
   public void onExecuted()
   {
-    List<Code> codes = Globals.getCodes();
+    List<Order> codes = Globals.getOrders();
 
     if (codes == null || codes.size() == 0)
     {
@@ -60,10 +60,10 @@ public class OnCodesRefreshListener implements OnApiExecutedListener
     for (int i = 0; i < codes.size(); i++)
     {
       Map<String, String> mapping = new HashMap<String, String>();
-      Code code = codes.get(i);
-      mapping.put("textTime", code.getTimestampText());
-      mapping.put("textStatus", Order.getStatusText(code.getOrder().getStatus()));
-      mapping.put("textOrders", code.getOrder().getOrderText());
+      Order order = codes.get(i);
+      mapping.put("textTime", order.getTime());
+      mapping.put("textStatus", Order.getStatusText(order.getStatus()));
+      mapping.put("textOrders", order.getOrderText());
       codesMap.add(mapping);
     }
 

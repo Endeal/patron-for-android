@@ -1,5 +1,7 @@
 package com.patron.system;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
@@ -142,15 +144,22 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
                 data.put(request.getURI(), bytes);
                 System.out.println("task11");
                 String encoding = new String(bytes);
-                System.out.print("encoded data:");
-                int maxLogSize = 500;
-                for(int j = 0; j <= encoding.length() / maxLogSize; j++) {
-                    int start = j * maxLogSize;
-                    int end = (j+1) * maxLogSize;
-                    end = end > encoding.length() ? encoding.length() : end;
-                    System.out.print(encoding.substring(start, end));
+
+                String TAG = "PATRON";
+                if (encoding.length() > 4000) {
+                    Log.v(TAG, "encoding.length = " + encoding.length());
+                    int chunkCount = encoding.length() / 4000;     // integer division
+                    for (int j = 0; j <= chunkCount; j++) {
+                        int max = 4000 * (j + 1);
+                        if (max >= encoding.length()) {
+                            Log.v(TAG, "chunk " + j + " of " + chunkCount + ":" + encoding.substring(4000 * j));
+                        } else {
+                            Log.v(TAG, "chunk " + j + " of " + chunkCount + ":" + encoding.substring(4000 * j, max));
+                        }
+                    }
+                } else {
+                    Log.v(TAG, encoding.toString());
                 }
-                System.out.println("");
             }
             return data;
         }

@@ -54,10 +54,11 @@ public class Order
     private BigDecimal tax;
 	private List<Object> coupons;
 	private String comment;
+    private String time;
 
 	// Constructor
 	public Order(String id, Vendor vendor, User patron, List<Fragment> fragments, Status status, Station station,
-		Funder funder, BigDecimal tip, List<Object> coupons, String comment)
+		Funder funder, BigDecimal tip, List<Object> coupons, String comment, String time)
 	{
 		setId(id);
 		setVendor(vendor);
@@ -71,6 +72,7 @@ public class Order
 		setTip(tip);
 		setCoupons(coupons);
 		setComment(comment);
+        setTime(time);
 	}
 
 	// Main Methods
@@ -220,6 +222,17 @@ public class Order
 		return s;
 	}
 
+    /*
+	public String getTimeText()
+	{
+        DateTimeZone timezone = DateTimeZone.getDefault();
+        long offset = timezone.getOffset(getTime());
+        DateTime date = new DateTime(getTime() + offset);
+        String s = date.toString("hh:mma, E MM/dd/yyyy");
+        return s;
+	}
+    */
+
 	// Setters
 	public void setId(String id)
 	{
@@ -281,6 +294,11 @@ public class Order
 		this.comment = comment;
 	}
 
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
+
 	// Getters
 	public String getId()
 	{
@@ -341,4 +359,9 @@ public class Order
 	{
 		return comment;
 	}
+
+    public String getTime()
+    {
+        return time;
+    }
 }

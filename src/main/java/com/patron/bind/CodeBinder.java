@@ -29,9 +29,13 @@ public class CodeBinder implements SimpleAdapter.ViewBinder
             {
                 text.setTextColor(Color.GREEN);
             }
-            if (!string.toLowerCase().equals("waiting"))
+            else if (!string.toLowerCase().equals("waiting"))
             {
                 text.setTextColor(Color.YELLOW);
+            }
+            else
+            {
+                text.setTextColor(Color.RED);
             }
 			text.setText(string);
 			return true;

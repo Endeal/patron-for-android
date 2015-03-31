@@ -36,7 +36,7 @@ public class Globals
 	private static List<Vendor> vendors = new ArrayList<Vendor>();
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
 	private static List<Category> categories = new ArrayList<Category>();
-	private static List<Code> codes = new ArrayList<Code>();
+	private static List<Order> orders = new ArrayList<Order>();
 	private static List<Fragment> fragments = new ArrayList<Fragment>();
 	private static Order order;
 	private static String deviceId;
@@ -109,9 +109,9 @@ public class Globals
 		Globals.categories = categories;
 	}
 
-	public static void setCodes(List<Code> codes)
+	public static void setOrders(List<Order> orders)
 	{
-		Globals.codes = codes;
+		Globals.orders = orders;
 	}
 
 	public static void setFragments(List<Fragment> fragments)
@@ -185,9 +185,9 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 		return categories;
 	}
 
-	public static List<Code> getCodes()
+	public static List<Order> getOrders()
 	{
-		return codes;
+		return orders;
 	}
 
 	public static List<Fragment> getFragments()

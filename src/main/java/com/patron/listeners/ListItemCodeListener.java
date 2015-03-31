@@ -22,6 +22,7 @@ public class ListItemCodeListener implements OnItemClickListener
 {
 	public void onItemClick(AdapterView<?> adapter, View view, int item, long row)
 	{
+        /*
 		InputStream is = null;
 		try
 		{
@@ -37,7 +38,7 @@ public class ListItemCodeListener implements OnItemClickListener
 			e.printStackTrace();
 		}
         Drawable d = Drawable.createFromStream(is, "QR Code");
-        
+
         // Display the code
         final ImageView code = new ImageView(view.getContext());
         LinearLayout linearlayout2 = (LinearLayout) view.getParent().getParent();
@@ -45,7 +46,7 @@ public class ListItemCodeListener implements OnItemClickListener
         lv.setVisibility(View.GONE);
         code.setImageDrawable(d);
         linearlayout2.addView(code, new LayoutParams(linearlayout2.getWidth(),
-        		linearlayout2.getWidth()));
+        linearlayout2.getWidth()));
         code.setOnClickListener(new OnClickListener() {
 			public void onClick(View view)
 			{
@@ -53,5 +54,6 @@ public class ListItemCodeListener implements OnItemClickListener
 				lv.setVisibility(View.VISIBLE);
 			}
         });
+        */
 	}
 }

@@ -71,7 +71,6 @@ public class FlashSettings extends FragmentActivity
         buttonTwitter = (Button)findViewById(R.id.settingsButtonNetworkTwitter);
         buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
         buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
-        buttonAddBankAccount = (Button)findViewById(R.id.settingsButtonAddBankAccount);
         buttonUpdateAccount = (Button)findViewById(R.id.settingsButtonUpdateAccount);
         buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
 
@@ -274,15 +273,6 @@ public class FlashSettings extends FragmentActivity
                 activity.startActivity(intent);
             }
         });
-        buttonAddBankAccount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Activity activity = (Activity)view.getContext();
-                Intent intent = new Intent(activity, FlashAddBankAccount.class);
-                activity.startActivity(intent);
-            }
-        });
         buttonUpdateAccount.setOnClickListener(new ButtonUpdateAccountListener(null));
         buttonLogout.setOnClickListener(new OnClickListener() {
             @Override
@@ -291,6 +281,7 @@ public class FlashSettings extends FragmentActivity
                 Globals.setEmail(null);
                 Globals.setPassword(null);
                 Globals.setProvider(null);
+                Globals.setOrder(null);
                 Globals.setUser(null);
                 Activity activity = (Activity)view.getContext();
                 Intent intent = new Intent(activity, FlashLogin.class);

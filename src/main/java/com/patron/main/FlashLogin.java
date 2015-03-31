@@ -138,8 +138,9 @@ public class FlashLogin extends Activity
                             submitting = false;
                             return;
                         }
+                        //Appboy.getInstance(FlashLogin.this).changeUser(Globals.getUser().getId());
+                        //System.out.println("APPBOY USER SET:" + Globals.getUser().getId() + ";");
                         Globals.getUser().setProvider(provider);
-                        Appboy.getInstance(FlashLogin.this).changeUser(Globals.getEmail());
                         Intent intent = new Intent(activity, FlashMenu.class);
                         activity.startActivity(intent);
                         activity.finish();

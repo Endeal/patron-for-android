@@ -13,8 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.patron.listeners.DrawerNavigationListener;
-import com.patron.main.FlashCodes;
-import com.patron.main.FlashHelp;
+import com.patron.main.FlashOrders;
 import com.patron.main.FlashMenu;
 import com.patron.main.FlashVouchers;
 import com.patron.main.FlashSettings;
@@ -54,7 +53,7 @@ public class ListItemNavigationListener implements OnItemClickListener
             case 1: // Orders
                 if (hierarchy != Hierarchy.ORDERS)
                 {
-                    intent = new Intent(context, FlashCodes.class);
+                    intent = new Intent(context, FlashOrders.class);
                 }
                 break;
             case 2: // Vouchers

@@ -176,7 +176,7 @@
     <string name="titleActivityRemovePayment">Remove Payment</string>
     <string name="titleActivityMenu">Buy</string>
     <string name="titleActivityCart">Cart</string>
-    <string name="titleActivityCodes">Codes</string>
+    <string name="titleActivityOrders">Orders</string>
     <string name="titleActivityScan">Scan</string>
     <string name="titleActivityFavorites">Favorites</string>
     <string name="titleActivityLocations">Vendors</string>

@@ -130,7 +130,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
             vendor.setFilteredItems(null);
             vendor.setRecommendations(null);
             order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
-                station, funder, tip, coupons, comment);
+                station, funder, tip, coupons, comment, "");
             BigDecimal price = order.getPrice();
             BigDecimal newTip = price.multiply(new BigDecimal(defaultTip));
             order.setTip(newTip);

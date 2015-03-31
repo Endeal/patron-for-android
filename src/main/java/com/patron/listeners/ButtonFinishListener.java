@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.patron.listeners.OnApiExecutedListener;
 import com.patron.main.FlashAddCard;
 import com.patron.main.FlashCart;
-import com.patron.main.FlashCodes;
+import com.patron.main.FlashOrders;
 import com.patron.model.Funder;
 import com.patron.R;
 import com.patron.system.ApiExecutor;
@@ -83,7 +83,7 @@ public class ButtonFinishListener implements OnClickListener
                             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                                 activity, view, "buttonFinish");
                             Bundle bundle = options.toBundle();
-                            Intent intent = new Intent(activity, FlashCodes.class);
+                            Intent intent = new Intent(activity, FlashOrders.class);
                             //ActivityCompat.startActivity(activity, intent, bundle);
                             activity.startActivity(intent);
                             loadingDialog.dismiss();

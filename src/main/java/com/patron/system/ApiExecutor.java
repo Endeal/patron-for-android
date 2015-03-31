@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -517,7 +519,7 @@ public class ApiExecutor
         }
     }
 
-    public void getCodes(final OnApiExecutedListener... listeners)
+    public void getOrders(final OnApiExecutedListener... listeners)
     {
         final String url = ListLinks.API_GET_CODES;
         HttpPost request = new HttpPost(url);
@@ -551,8 +553,8 @@ public class ApiExecutor
                             try
                             {
                               JSONArray rawCodes = new JSONArray(response);
-                              List<Code> codes = Parser.getCodes(rawCodes);
-                              Globals.setCodes(codes);
+                              List<Order> orders = Parser.getOrders(rawCodes);
+                              Globals.setOrders(orders);
                               callback(listeners);
                             }
                             catch (JSONException e)
@@ -580,9 +582,56 @@ public class ApiExecutor
         }
     }
 
-    public void getScan(Code code)
+    public void getScan(Order order, final OnApiExecutedListener... listeners)
     {
-        callback();
+        final String url = ListLinks.API_GET_SCAN;
+        HttpPost request = new HttpPost(url);
+        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
+        NameValuePair provider = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair orderId = new BasicNameValuePair("orderId", order.getId());
+        pairs.add(email);
+        pairs.add(password);
+        pairs.add(provider);
+        pairs.add(orderId);
+        ApiTask apiTask = new ApiTask();
+        try
+        {
+            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    if (data == null || data.entrySet() == null)
+                    {
+                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        callback(listeners);
+                        return;
+                    }
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        if (rawUri.equals(url))
+                        {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(entry.getValue(), 0, entry.getValue().length);
+                            if (bitmap == null)
+                            {
+                                Toast.makeText(Patron.getContext(), "Failed to retrieve QR code", Toast.LENGTH_SHORT).show();
+                            }
+                            Globals.setScan(bitmap);
+                        }
+                        callback(listeners);
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (UnsupportedEncodingException e)
+        {
+          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          callback(listeners);
+        }
     }
 
     public void addOrder(Order order, Context tempContext, OnApiExecutedListener... tempListeners)
@@ -600,7 +649,7 @@ public class ApiExecutor
             jsonOrder.getAsJsonObject().addProperty("email", Globals.getUser().getEmail());
             jsonOrder.getAsJsonObject().addProperty("password", Globals.getUser().getPassword());
             jsonOrder.getAsJsonObject().addProperty("oauth", Globals.getUser().getProvider());
-            jsonOrder.getAsJsonObject().addProperty("deviceType", "1");
+            jsonOrder.getAsJsonObject().addProperty("type", "app");
             String postData = gson.toJson(jsonOrder);
             System.out.println(postData);
             request.setEntity(new StringEntity(postData));

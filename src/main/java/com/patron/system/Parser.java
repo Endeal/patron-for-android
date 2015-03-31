@@ -455,6 +455,7 @@ public class Parser
 		int status = rawOrder.getInt("status");
 		BigDecimal tip = new BigDecimal(rawOrder.getString("tip"));
 		String comment = rawOrder.getString("comment");
+        String time = rawOrder.getString("time");
 		List<Object> coupons = null;
 		JSONObject rawFunder = rawOrder.getJSONObject("funder");
 
@@ -482,20 +483,20 @@ public class Parser
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
 		Order order = new Order(orderId, vendor, patron, fragments, Order.getIntStatus(status), station,
-			funder, tip, coupons, comment);
+			funder, tip, coupons, comment, time);
 		return order;
 	}
 
-	public static List<Code> getCodes(JSONArray rawCodes) throws JSONException, ParseException
+	public static List<Order> getOrders(JSONArray rawOrders) throws JSONException, ParseException
 	{
-		List<Code> codes = new ArrayList<Code>();
-		for (int i = 0; i < rawCodes.length(); i++)
+		List<Order> orders = new ArrayList<Order>();
+		for (int i = 0; i < rawOrders.length(); i++)
 		{
-			JSONObject rawCode = rawCodes.getJSONObject(i);
-			Code code = getCode(rawCode);
-			codes.add(code);
+			JSONObject rawOrder = rawOrders.getJSONObject(i);
+			Order order = getOrder(rawOrder);
+			orders.add(order);
 		}
-		return codes;
+		return orders;
 	}
 
 	public static Code getCode(JSONObject rawCode) throws JSONException, ParseException
