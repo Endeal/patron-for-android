@@ -19,7 +19,7 @@
 
             <ListView
                 android:id="@+id/vendorsListViewVendors"
-                style="@style/StyleLocationList"
+                style="@style/ListViewMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
@@ -38,7 +38,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.patron.view.NavigationListView
+    <me.endeal.patron.view.NavigationListView
         android:id="@+id/locationsListNavigation"
         android:layout_width="240dp"
         android:layout_height="match_parent"

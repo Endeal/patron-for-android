@@ -1,8 +1,8 @@
 #!/bin/bash
 SET SOURCE_PATH="C:\Users\James\OneDrive\Create\Mobile\Patron\Project\src\java"
 SET DEBUG_PORT=8700
-SET PACKAGE_NAME=com.patron.main
-SET ACTIVITY=com.patron.main.FlashLogin
+SET PACKAGE_NAME=me.endeal.patron.main
+SET ACTIVITY=me.endeal.patron.main.FlashLogin
 adb shell am start -e debug true -a android.intent.action.MAIN -c android.intent.category.LAUNCHER -n %PACKAGE_NAME%/%ACTIVITY%
 start "" get_app_ports.bat
 TIMEOUT 3

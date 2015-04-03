@@ -9,18 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <!-- The checkout button -->
-        <Button
-            android:id="@+id/menuButtonCheckout"
-            style="@style/ButtonCheckout"
-            android:text="@string/menuButtonCheckout"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true" />
-
         <!-- The scroll view for the categories -->
-        <com.patron.view.HorizontalScrollViewFilters
+        <me.endeal.patron.view.HorizontalScrollViewFilters
             android:id="@+id/menuHorizontalScrollViewTypes"
             style="@style/LayoutCategories"
             android:layout_width="wrap_content"
@@ -37,7 +27,7 @@
                 android:orientation="horizontal" >
 
                 <!-- The buttons for selecting each drink type -->
-                <com.patron.view.ButtonSearch
+                <me.endeal.patron.view.ButtonSearch
                     android:id="@+id/menuButtonSearch"
                     style="@style/ButtonSearch"
                     android:layout_width="60dp"
@@ -45,7 +35,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp" />
 
-                <com.patron.view.ButtonFavorites
+                <me.endeal.patron.view.ButtonFavorites
                     android:id="@+id/menuButtonFavorites"
                     style="@style/ButtonFavorites"
                     android:layout_width="60dp"
@@ -56,7 +46,7 @@
                 </LinearLayout>
 
 
-        </com.patron.view.HorizontalScrollViewFilters>
+        </me.endeal.patron.view.HorizontalScrollViewFilters>
 
         <ImageView
             android:id="@+id/menuImageViewHelpCategories"
@@ -78,7 +68,7 @@
 
             <ListView
                 android:id="@+id/menuListItems"
-                style="@style/StyleMenuListItems"
+                style="@style/ListViewMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
@@ -86,6 +76,16 @@
             </ListView>
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!-- The checkout button -->
+        <Button
+          android:id="@+id/menuButtonCheckout"
+          style="@style/ButtonCheckout"
+          android:text="@string/menuButtonCheckout"
+          android:layout_width="90dp"
+          android:layout_height="90dp"
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentRight="true" />
 
         <Button
             android:id="@+id/menuButtonSelectVendor"
@@ -112,7 +112,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.patron.view.NavigationListView
+    <me.endeal.patron.view.NavigationListView
         android:id="@+id/menuListNavigation"
         android:layout_width="240dp"
         android:layout_height="match_parent"

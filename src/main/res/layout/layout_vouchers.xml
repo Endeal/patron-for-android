@@ -24,7 +24,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.patron.view.NavigationListView
+    <me.endeal.patron.view.NavigationListView
         android:id="@+id/vouchersListNavigation"
         android:layout_width="240dp"
         android:layout_height="match_parent"

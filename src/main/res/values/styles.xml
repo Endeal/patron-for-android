@@ -449,8 +449,8 @@
 
     <!-- Favorites Screen Styles -->
     <style name="StyleFavoritesListItems">
-        <item name="android:divider">#000000</item>
-        <item name="android:dividerHeight">@dimen/dimFavoritesListItemsDividerHeight</item>
+        <item name="android:divider">#202020</item>
+        <item name="android:dividerHeight">2dp</item>
     </style>
 
     <!--  Locations Screen Styles -->
@@ -674,8 +674,8 @@
     <!-- ListViews -->
     <style name="ListViewMain">
         <item name="android:background">#252525</item>
-        <item name="android:divider">#000000</item>
-        <item name="android:dividerHeight">3dp</item>
+        <item name="android:divider">#202020</item>
+        <item name="android:dividerHeight">2dp</item>
     </style>
 
     <!-- Buttons -->
@@ -901,10 +901,10 @@
     <!-- TextViews -->
     <style name="TextViewTitleBig">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">50sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:padding">5dp</item>
     </style>
     <style name="TextViewTitleSmall">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>

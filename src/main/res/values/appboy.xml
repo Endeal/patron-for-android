@@ -4,4 +4,5 @@
     <bool name="com_appboy_push_gcm_messaging_registration_enabled">true</bool>
     <string name="com_appboy_push_gcm_sender_id">841072843599</string>
     <drawable name="com_appboy_push_small_notification_icon">@drawable/logo_app</drawable>
+    <integer name="com_appboy_default_notification_accent_color">0xb3cdff</integer>
 </resources>

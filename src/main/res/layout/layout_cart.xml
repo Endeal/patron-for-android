@@ -7,11 +7,13 @@
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@+id/LayoutMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <ListView
             android:id="@+id/cartListItems"
+            style="@style/ListViewMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -19,6 +21,7 @@
 
         <LinearLayout
             android:id="@+id/cartLayoutControls"
+            style="@+id/LayoutMain"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +98,7 @@
     </RelativeLayout>
 
     <!-- The navigation drawer -->
-    <com.patron.view.NavigationListView
+    <me.endeal.patron.view.NavigationListView
         android:id="@+id/cartListNavigation"
         android:layout_width="240dp"
         android:layout_height="match_parent"
