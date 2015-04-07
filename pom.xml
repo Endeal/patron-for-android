@@ -4,10 +4,10 @@
   <!-- Application Settings -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.endeal.patron</groupId>
-  <artifactId>Patron</artifactId>
+  <artifactId>Flash-Pay</artifactId>
   <version>1.0.0</version>
   <packaging>apk</packaging>
-  <name>Patron</name>
+  <name>Flash Pay</name>
 
   <!-- Repositories -->
   <repositories>
@@ -96,7 +96,7 @@
     <dependency>
         <groupId>com.appboy</groupId>
         <artifactId>android-sdk-ui</artifactId>
-        <version>1.6.2</version>
+        <version>1.7.0</version>
         <type>aar</type>
         <exclusions>
             <exclusion>
@@ -104,6 +104,13 @@
                 <artifactId>support-v4</artifactId>
             </exclusion>
         </exclusions>
+    </dependency>
+
+    <!-- Stripe Android SDK -->
+    <dependency>
+        <groupId>com.stripe</groupId>
+        <artifactId>stripe-android</artifactId>
+        <version>1.0.0</version>
     </dependency>
 
     <!-- Facebook -->
@@ -249,6 +256,16 @@
           <!-- platform or api level (api level 4 = platform 1.6) -->
           <platform>22</platform>
         </sdk>
+        <sign>
+            <debug>false</debug>
+        </sign>
+        <zipalign>
+            <verbose>true</verbose>
+            <inputApk>${project.build.directory}/${project.artifactId}.apk</inputApk>
+            <outputApk>${project.build.directory}/${project.artifactId}-signed-aligned.apk
+            </outputApk>
+            <skip>false</skip>
+        </zipalign>
         <!--
             <dexOptimize>false</dexOptimize>
             <dex>
@@ -257,7 +274,45 @@
             </dex>
             -->
       </configuration>
+        <executions>
+            <execution>
+                <id>alignApk</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>zipalign</goal>
+                </goals>
+            </execution>
+        </executions>
     </plugin>
+
+    <!-- Jarsigner Plugin -->
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-jarsigner-plugin</artifactId>
+<executions>
+    <execution>
+        <id>signing</id>
+        <goals>
+            <goal>sign</goal>
+            <goal>verify</goal>
+        </goals>
+        <phase>package</phase>
+        <inherited>true</inherited>
+        <configuration>
+            <removeExistingSignatures>true</removeExistingSignatures>
+            <archiveDirectory/>
+            <includes>
+                <include>${project.build.directory}/${project.artifactId}.apk</include>
+            </includes>
+            <keystore>patron-release.keystore</keystore>
+            <alias>jameswhiteman</alias>
+            <storepass>L5W49e270XRe4711H185Y6R0q32KWCZG</storepass>
+            <keypass>froggy17</keypass>
+            <verbose>true</verbose>
+        </configuration>
+    </execution>
+</executions>
+</plugin>
 
     <!-- CheckStyle Maven Plugin -->
     <plugin>
@@ -286,36 +341,6 @@
         <build>
             <directory>bin\classes</directory>
             <plugins>
-                <!-- Maven Jarsigner Plugin -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jarsigner-plugin</artifactId>
-                    <version>1.2</version>
-                    <executions>
-                        <execution>
-                            <id>signing</id>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                            <phase>package</phase>
-                            <inherited>true</inherited>
-                            <configuration>
-                                <archiveDirectory></archiveDirectory>
-                                <includes>
-                                    <include>target/*.apk</include>
-                                </includes>
-                                <keystore>C:\Users\James\OneDrive\Tools\Keys\jameswhiteman.keystore</keystore>
-                                <storepass>getliquoredupandtakehertothepeachtreedance_2007</storepass>
-                                <keypass>littleboston_1911</keypass>
-                                <alias>patron-production</alias>
-                                <arguments>
-                                  <argument>-sigalg</argument><argument>MD5withRSA</argument>
-                                  <argument>-digestalg</argument><argument>SHA1</argument>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    </plugin>
         <!-- Android Maven Plugin Configuration -->
         <plugin>
           <groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -333,6 +358,7 @@
       </plugins>
     </build>
   </profile>
+
 </profiles>
 
 </project>

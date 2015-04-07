@@ -901,7 +901,7 @@
     <!-- TextViews -->
     <style name="TextViewTitleBig">
         <item name="fontPath">fonts/Quicksand-Bold.otf</item>
-        <item name="android:textSize">50sp</item>
+        <item name="android:textSize">45sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:padding">5dp</item>

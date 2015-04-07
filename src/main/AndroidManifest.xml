@@ -26,6 +26,7 @@
         android:icon="@drawable/logo_app"
         android:name="me.endeal.patron.system.Patron"
         android:allowClearUserData="true"
+        android:debuggable="false"
         android:enabled="true"
         android:label="@string/appName"
         android:allowBackup="true">

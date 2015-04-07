@@ -79,7 +79,7 @@ public class FlashVendors extends Activity
         int endOffset = (int)Globals.convertDpToPixel(50, this);
         swipeRefreshLayoutVendors.setProgressViewOffset(false, startOffset, endOffset);
 				swipeRefreshLayoutVendors.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-						android.R.color.holo_orange_light, android.R.color.holo_red_light);
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
         final OnVendorRefreshListener vendorRefreshListener = new OnVendorRefreshListener(listVendors, buttonFindNearest);
         layout.addView(progressIndicator, params);
         apiExecutor.getVendors(vendorRefreshListener, removeViewListener);

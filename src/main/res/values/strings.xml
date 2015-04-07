@@ -19,7 +19,7 @@
     <string name="homeImageButtonDescriptionProfile">Profile</string>
 
     <!-- Login Screen -->
-    <string name="loginTextViewTitle">Patron</string>
+    <string name="loginTextViewTitle">Flash Pay</string>
     <string name="loginEditTextEmail">E-mail Address</string>
     <string name="loginEditTextPassword">Password</string>
     <string name="loginButtonSubmit">Submit</string>
@@ -159,15 +159,15 @@
     <string name="removePaymentListItemTextAddress"></string>
 
     <!-- Miscellaneous -->
-    <string name="app_title">Patron</string>
-    <string name="app_name">Patron</string>
-    <string name="appName">Patron</string>
+    <string name="app_title">Flash Pay</string>
+    <string name="app_name">Flash Pay</string>
+    <string name="appName">Flash Pay</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
     <string name="appId">648356855200728</string>
 
     <!-- Activity Titles -->
-    <string name="titleActivityHome">Patron</string>
+    <string name="titleActivityHome">Flash Pay</string>
     <string name="titleActivityLogin">Login</string>
     <string name="titleActivityCreateAccount">Create Account</string>
     <string name="titleActivityPayment">Payment</string>
