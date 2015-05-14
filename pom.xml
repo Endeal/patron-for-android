@@ -111,6 +111,7 @@
         <groupId>com.stripe</groupId>
         <artifactId>stripe-android</artifactId>
         <version>1.0.0</version>
+        <type>aar</type>
     </dependency>
 
     <!-- Facebook -->

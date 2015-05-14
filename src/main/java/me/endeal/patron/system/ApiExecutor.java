@@ -17,6 +17,7 @@ import com.balancedpayments.android.Balanced;
 import com.balancedpayments.android.exception.*;
 
 import com.stripe.android.*;
+import com.stripe.android.model.Token;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -56,6 +57,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.stripe.exception.AuthenticationException;
 
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
@@ -204,10 +207,6 @@ public class ApiExecutor
             apiTask.execute(request);
         }
         catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -529,10 +528,6 @@ public class ApiExecutor
             });
             apiTask.execute(request);
         }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
         catch (IOException e)
         {
             e.printStackTrace();
@@ -709,11 +704,6 @@ public class ApiExecutor
             });
             apiTask.execute(request);
         }
-        catch (UnsupportedEncodingException e)
-        {
-            failureToast.show();
-            e.printStackTrace();
-        }
         catch (IOException e)
         {
             failureToast.show();
@@ -730,10 +720,20 @@ public class ApiExecutor
     public void addCard(final String name, final String number, final String code,
         final int month, final int year, final Context context, final OnApiExecutedListener... listeners)
     {
-        Card card = new Card(number, month, year, code);
+        com.stripe.android.model.Card card = new com.stripe.android.model.Card(number, month, year, code);
         card.validateNumber();
         card.validateCVC();
-        Stripe stripe = new Stripe(ListKeys.STRIPE_PUBLIC_KEY);
+        Stripe stripe = null;
+        try
+        {
+            stripe = new Stripe(ListKeys.STRIPE_PUBLIC_KEY);
+        }
+        catch (AuthenticationException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(Patron.getContext(), "Failed to authenticate card data", Toast.LENGTH_SHORT).show();
+            return;
+        }
         stripe.createToken(card, new TokenCallback() {
                 public void onSuccess(Token token) {
                     String tokenId = token.getId();
@@ -787,7 +787,7 @@ public class ApiExecutor
                 }
                 public void onError(Exception error) {
                     error.printStackTrace();
-                    Toast.makeText(getContext(), error.getLocalizedString(getContext()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Patron.getContext(), "An unknown error has occurred", Toast.LENGTH_LONG).show();
                 }
             }
         );

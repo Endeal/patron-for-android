@@ -69,7 +69,7 @@ public class ButtonFavorites extends ButtonFilter implements OnClickListener
   @Override
   public void onClick(View view)
   {
-      if (Globals.getVendor() == null || Globals.getItems() == null || Globals.getItems().size() == 0)
+      if (Globals.getVendor() == null || Globals.getVendor().getItems() == null || Globals.getVendor().getItems().size() == 0)
           return;
     if (getChecked())
     {

@@ -159,9 +159,7 @@
     <string name="removePaymentListItemTextAddress"></string>
 
     <!-- Miscellaneous -->
-    <string name="app_title">Flash Pay</string>
-    <string name="app_name">Flash Pay</string>
-    <string name="appName">Flash Pay</string>
+    <string name="globalAppName">Patron</string>
     <string name="hello_world">Hello world!</string>
     <string name="tab">\u0009</string>
     <string name="appId">648356855200728</string>

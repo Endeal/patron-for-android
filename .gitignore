@@ -1,4 +1,7 @@
 target/
+build/
+gen/
+bin/
 src/main/res/values/appboy.xml
 src/main/java/me/endeal/patron/lists/ListKeys.java
 patron-release.keystore
