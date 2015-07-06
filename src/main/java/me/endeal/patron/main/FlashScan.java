@@ -36,7 +36,7 @@ import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
 import me.endeal.patron.system.Loadable;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 import me.endeal.patron.view.NavigationListView;
 import static me.endeal.patron.view.NavigationListView.Hierarchy;
 

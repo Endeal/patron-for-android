@@ -22,7 +22,7 @@ import me.endeal.patron.model.Funder;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 import me.endeal.patron.view.DialogLoading;
 import me.endeal.patron.view.QustomDialogBuilder;
 
@@ -61,7 +61,7 @@ public class ButtonFinishListener implements OnClickListener
                 case DialogInterface.BUTTON_POSITIVE:
 
                     // Save the tip and payment method
-                    Context context = Patron.getContext();
+                    Context context = PatronApplication.getContext();
                     SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
                     Editor editor = sharedPreferences.edit();
                     editor.putString("tip", Globals.getOrder().getTipPercent().toString());

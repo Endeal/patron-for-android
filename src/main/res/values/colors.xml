@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="dark">#1F1F1F</color>
@@ -21,7 +22,6 @@
     <color name="colorCreateAccountSubmit">#000000</color>
     <color name="colorCreateAccountInputHint">#777777</color>
 
-    <!-- Buttons -->
     <color name="colorButtonMainEnabled">#55CC88</color>
     <color name="colorButtonMainDisabled">#333333</color>
     <color name="colorButtonMainPressed">#119944</color>
@@ -42,13 +42,11 @@
     <color name="colorButtonGooglePlusPressed">#FF6866</color>
     <color name="colorButtonGooglePlusFocused">#FF6866</color>
 
-    <!-- Dialogs -->
     <color name="colorButtonCancel">#000000</color>
     <color name="colorButtonDone">#000000</color>
     <color name="colorDialogTitle">#FFFFFF</color>
     <color name="colorEditTextHint">#999999</color>
 
-    <!-- Theme -->
     <color name="colorThemeMainPrimary">#302E2F</color>
     <color name="colorThemeMainPrimaryDark">#101E0F</color>
     <color name="colorThemeMainAccent">#008865</color>
@@ -58,11 +56,30 @@
     <color name="colorThemeMainSwitchThumbNormal">#888888</color>
 
     <color name="colorThemeMainBackground">#252525</color>
-    <!--
     <color name="colorThemeMainWindowBackground">#222925</color>
-    -->
     <color name="colorThemeMainWindowBackground">#00FFFFFF</color>
     <color name="colorThemeMainColorBackground">#252525</color>
     <color name="colorThemeMainText">#FFFFFF</color>
+    -->
+    <color name="title">#FFFFFF</color>
+    <color name="subtitle">#AAAAAA</color>
+    <color name="price">#0DDE1B</color>
+    <color name="placeholder">#CCCCCC</color>
+    <color name="darkPlaceholder">#888888</color>
+    <color name="label">#000000</color>
+    <color name="background">#E3E3E3</color>
+    <color name="scrim">#666666</color>
+    <color name="card">#FFFFFF</color>
+    <color name="favoriteIcon">#F57373</color>
+    <color name="nutritionIcon">#50B55F</color>
+    <color name="accent">#FFCF30</color>
+    <color name="accentSecondary">#FFF047</color>
+    <color name="primary">#8485E3</color>
+    <color name="primaryDark">#6566AB</color>
+    <color name="ready">#00AB1A</color>
+    <color name="waiting">#E01F1F</color>
+    <color name="returned">#E6E210</color>
+    <color name="complete">#000000</color>
+    <color name="snackbarBackground">#2E2E2E</color>
 
 </resources>

@@ -11,7 +11,6 @@ import android.widget.LinearLayout.LayoutParams;
 import me.endeal.patron.listeners.ToggleButtonSupplementListener;
 import me.endeal.patron.lists.ListFonts;
 import me.endeal.patron.R;
-import me.endeal.patron.model.Supplement;
 
 import java.text.NumberFormat;
 
@@ -19,6 +18,7 @@ public class SupplementBinder implements SimpleAdapter.ViewBinder
 {
     public boolean setViewValue(View view, Object data, String textRepresentation)
     {
+        /*
         ToggleButtonSupplementListener listener = (ToggleButtonSupplementListener)data;
         Supplement supplement = listener.getSupplement();
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
@@ -35,6 +35,7 @@ public class SupplementBinder implements SimpleAdapter.ViewBinder
         {
           button.setBackgroundResource(R.drawable.button_supplement_unpressed);
         }
+        */
         return true;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import me.endeal.patron.model.Price;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
 
@@ -50,7 +51,9 @@ public class ButtonTipListener implements OnClickListener
         seekBarPercent.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                BigDecimal value = Globals.getOrder().getPrice().multiply(new BigDecimal((progress / 100.0) + ""));
+                BigDecimal value = new BigDecimal(Globals.getOrder().getPrice().getValue() / 100);
+                value = value.multiply(new BigDecimal((progress / 100.0) + ""));
+                //BigDecimal value = Globals.getOrder().getPrice().multiply(new BigDecimal((progress / 100.0) + ""));
                 value = value.setScale(2, BigDecimal.ROUND_DOWN);
                 fieldCustom.setText(value.toString());
                 textPercent.setText(progress + "%");
@@ -61,17 +64,17 @@ public class ButtonTipListener implements OnClickListener
         buttonDone.setOnClickListener(new OnClickListener() {
             public void onClick(View view)
             {
-                BigDecimal tip;
+                Price tip;
                 try
                 {
                     double d = Double.parseDouble(fieldCustom.getText().toString());
-                    tip = new BigDecimal(d);
+                    int value = (int) d * 100;
+                    tip = new Price(value, "USD");
                 }
                 catch(NumberFormatException nfe)
                 {
-                    tip = new BigDecimal("0.00");
+                    tip = new Price(0, "USD");
                 }
-                tip = tip.setScale(2, BigDecimal.ROUND_DOWN);
                 Globals.getOrder().setTip(tip);
                 listener.onExecuted();
                 dialog.dismiss();

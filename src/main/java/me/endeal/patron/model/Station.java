@@ -1,7 +1,11 @@
 package me.endeal.patron.model;
 
-public class Station
+import java.io.Serializable;
+
+public class Station implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private String id;
 	private String name;
 

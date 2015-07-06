@@ -93,10 +93,10 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 				@Override
 				public void onExecuted()
 				{
-					toggle.setChecked(Globals.getUser().hasFavoriteItem(item.getId()));
+					//toggle.setChecked(Globals.getUser().hasFavoriteItem(item.getId()));
 				}
 			});
-			toggle.setChecked(Globals.getUser().hasFavoriteItem(item.getId()));
+			//toggle.setChecked(Globals.getUser().hasFavoriteItem(item.getId()));
 			return true;
 		}
 
@@ -106,6 +106,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			Fragment fragment = (Fragment)data;
 			Button button = (Button)view;
 			Item item = fragment.getItem();
+            /*
 			if (item.getSupplements() != null && item.getSupplements().size() > 0)
 			{
 				ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
@@ -116,6 +117,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			{
 				button.setVisibility(View.GONE);
 			}
+            */
 			return true;
 		}
 

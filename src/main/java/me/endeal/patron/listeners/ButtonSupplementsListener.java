@@ -13,7 +13,6 @@ import me.endeal.patron.bind.SupplementBinder;
 import me.endeal.patron.R;
 import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Supplement;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class ButtonSupplementsListener implements OnClickListener
   @Override
   public void onClick(View view)
   {
+      /*
     final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
     final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     View dialogView = inflater.inflate(R.layout.dialog_supplements, null);
@@ -69,5 +69,6 @@ public class ButtonSupplementsListener implements OnClickListener
         }
     });
     dialog.show();
+    */
   }
 }

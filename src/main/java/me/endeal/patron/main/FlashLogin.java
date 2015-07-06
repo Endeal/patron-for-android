@@ -22,11 +22,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.NetworkOnMainThreadException;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +51,7 @@ import com.facebook.widget.LoginButton;
 import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.listeners.OnTaskCompletedListener;
 import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.social.OnSocialTaskCompletedListener;
 import me.endeal.patron.social.SocialExecutor;
@@ -74,13 +77,14 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashLogin extends Activity
+public class FlashLogin extends AppCompatActivity
 {
 	private boolean submitting;
     private Button buttonSubmit;
     private EditText editTextEmail;
     private EditText editTextPassword;
 	private ProgressBar progressBar;
+    private CoordinatorLayout coordinatorLayout;
     private SocialExecutor socialExecutor;
     private GoogleApiClient googleClient;
     private ConnectionResult connectionResult;
@@ -95,6 +99,7 @@ public class FlashLogin extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+        //getSupportActionBar().hide();
         final Activity activity = this;
 		//Appsee.start("41ea93b81fd7435b8e8d20ea2ba36b66");
 		setContentView(R.layout.layout_login);
@@ -109,6 +114,7 @@ public class FlashLogin extends Activity
 		Button buttonFacebook = (Button)findViewById(R.id.loginButtonFacebook);
 		Button buttonTwitter = (Button)findViewById(R.id.loginButtonTwitter);
 		Button buttonGooglePlus = (Button)findViewById(R.id.loginButtonGoogle);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.loginCoordinatorLayoutMain);
 
         // Loading indicator
         final RelativeLayout layout = (RelativeLayout)findViewById(R.id.loginRelativeLayoutLoading);
@@ -134,6 +140,7 @@ public class FlashLogin extends Activity
                     {
                         layout.removeView(progressIndicator);
                         submitting = false;
+                        /*
                         if (Globals.getUser() == null)
                         {
                             return;
@@ -141,6 +148,7 @@ public class FlashLogin extends Activity
                         Appboy.getInstance(FlashLogin.this).changeUser(Globals.getUser().getId());
                         Appsee.setUserId(Globals.getUser().getId());
                         Globals.getUser().setProvider(provider);
+                        */
                         Intent intent = new Intent(activity, FlashMenu.class);
                         activity.startActivity(intent);
                         activity.finish();
@@ -184,42 +192,28 @@ public class FlashLogin extends Activity
             {
                 if (submitting)
                     return;
-                System.out.println("reset1");
                 LayoutInflater inflater = LayoutInflater.from(activity);
-                System.out.println("reset2");
-                Builder builder = new Builder(activity, R.style.DialogMain);
-                System.out.println("reset3");
+                Builder builder = new Builder(activity);
                 View dialogRequestPasswordView = inflater.inflate(R.layout.dialog_request_password, null);
-                System.out.println("reset4");
                 builder.setView(dialogRequestPasswordView);
-                System.out.println("reset5");
                 final AlertDialog dialogRequestPassword = builder.create();
-                System.out.println("reset6");
                 final EditText editTextDialogResetPasswordEmail = (EditText)dialogRequestPasswordView.findViewById(R.id.dialogResetPasswordEditTextEmail);
-                System.out.println("reset7");
                 Button buttonDialogResetPasswordSubmit = (Button)dialogRequestPasswordView.findViewById(R.id.dialogResetPasswordButtonSubmit);
-                System.out.println("reset8");
                 buttonDialogResetPasswordSubmit.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View buttonView)
                     {
-                System.out.println("reset9");
                         ApiExecutor executor = new ApiExecutor();
-                System.out.println("reset10");
                         String email = editTextDialogResetPasswordEmail.getText().toString();
-                System.out.println("reset11");
                         executor.resetPassword(email, new OnApiExecutedListener() {
                             @Override
                             public void onExecuted()
                             {
-                System.out.println("reset13");
                             }
                         });
                         dialogRequestPassword.dismiss();
-                System.out.println("reset14");
                     }
                 });
-                System.out.println("reset15");
                 dialogRequestPassword.show();
             }
         });

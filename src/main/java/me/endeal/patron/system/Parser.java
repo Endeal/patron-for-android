@@ -1,5 +1,7 @@
 package me.endeal.patron.system;
 
+import com.google.gson.Gson;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -22,19 +24,25 @@ import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
 import me.endeal.patron.model.Option;
 import me.endeal.patron.model.Order;
+import me.endeal.patron.model.Patron;
+import me.endeal.patron.model.Price;
+import me.endeal.patron.model.Retrieval;
 import me.endeal.patron.model.Selection;
-import me.endeal.patron.model.Supplement;
-import me.endeal.patron.model.User;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Card;
-import me.endeal.patron.model.BankAccount;
 import me.endeal.patron.model.Funder;
 
 public class Parser
 {
-	public static User getUser(JSONObject rawUser) throws JSONException
+	public static Patron getUser(JSONObject rawUser) throws JSONException
 	{
+        /*
+        Gson gson = new Gson();
+        String userJson = rawUser.toString();
+        User user = gson.fromJson(userJson, User.class);
+        return user;
+
 		String patronId = rawUser.getString("patronId");
 		String firstName = rawUser.getString("firstName");
 		String lastName = rawUser.getString("lastName");
@@ -84,6 +92,8 @@ public class Parser
         }
 		return new User(patronId, firstName, lastName, birthday, balancedId,
 			facebookId, twitterId, googlePlusId, funders, vendors, items);
+            */
+        return null;
 	}
 
 	public static List<Card> getCards(JSONArray rawCards) throws JSONException
@@ -121,6 +131,7 @@ public class Parser
 		return card;
 	}
 
+    /*
 	public static List<BankAccount> getBankAccounts(JSONArray rawBankAccounts) throws JSONException
 	{
 		List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
@@ -132,7 +143,9 @@ public class Parser
 		}
 		return bankAccounts;
 	}
+    */
 
+    /*
 	public static BankAccount getBankAccount(JSONObject rawBankAccount) throws JSONException
 	{
 		JSONObject rawLinks = rawBankAccount.getJSONObject("links");
@@ -155,6 +168,7 @@ public class Parser
 			address, city, state, postalCode, href, createdAt, creditable, debitable);
 		return bankAccount;
 	}
+    */
 
 	public static List<Vendor> getVendors(JSONArray rawVendors)
 	{
@@ -177,6 +191,7 @@ public class Parser
 
 	public static Vendor getVendor(JSONObject rawVendor) throws JSONException
 	{
+        /*
 		String vendorId = rawVendor.getString("vendorId");
 		String name = rawVendor.getString("name");
 		String address = rawVendor.getString("address");
@@ -202,11 +217,12 @@ public class Parser
 		JSONArray rawRewardOptions = rawVendor.getJSONArray("rewardOptions");
 		JSONArray rawRewardSupplements = rawVendor.getJSONArray("rewardSupplements");
 		List<Station> stations = getStations(rawStations);
-		Vendor vendor = new Vendor(vendorId, name, address, city, state,
-				zip, phone, null, null, stations, tax, latitude, longitude,
-                facebook, twitter, googlePlus, facebookPoints, twitterPoints, googlePlusPoints);
+        */
+        Gson gson = new Gson();
+        Vendor vendor = gson.fromJson(rawVendor.toString(), Vendor.class);
 
 		// 	Get reward items.
+        /*
 		Map<String, Integer> rewardItems = new HashMap<String, Integer>();
 		for (int i = 0; i < rawRewardItems.length(); i++)
 		{
@@ -216,6 +232,7 @@ public class Parser
 			rewardItems.put(itemId, points);
 		}
 		vendor.setRewardItems(rewardItems);
+        */
 
 		return vendor;
 	}
@@ -263,7 +280,7 @@ public class Parser
 	{
 		String itemId = rawItem.getString("itemId");
 		String name = rawItem.getString("name");
-		BigDecimal price = new BigDecimal(rawItem.getString("price"));
+		Price price = new Price((int)(Double.parseDouble(rawItem.getString("price")) * 100), "USD");
 		int maxSupplements = rawItem.getInt("maxSupplements");
 		int supply = rawItem.getInt("supply");
 		JSONArray rawCategories = rawItem.getJSONArray("categories");
@@ -271,11 +288,10 @@ public class Parser
 		JSONArray rawSupplements = rawItem.getJSONArray("supplements");
 		List<Category> categories = Parser.getCategories(rawCategories);
 		List<Attribute> attributes = Parser.getAttributes(rawAttributes);
-		List<Supplement> supplements = Parser.getSupplements(rawSupplements);
 
 		// Create the item
-		Item item = new Item(itemId, name, price, maxSupplements, supply,
-				categories, attributes, supplements);
+		Item item = new Item(itemId, name, price, categories, null,
+				attributes, null, supply);
 		return item;
 	}
 
@@ -355,14 +371,20 @@ public class Parser
 
 	public static Option getOption(JSONObject rawOption) throws JSONException
 	{
+        /*
 		String id = rawOption.getString("optionId");
 		String name = rawOption.getString("name");
 		BigDecimal price = new BigDecimal(rawOption.getString("price"));
 		int supply = rawOption.getInt("supply");
 		Option option = new Option(id, name, price, supply);
 		return option;
+        */
+        Gson gson = new Gson();
+        Option option = gson.fromJson(rawOption.toString(), Option.class);
+        return option;
 	}
 
+    /*
 	public static List<Supplement> getSupplements(JSONArray rawSupplements) throws JSONException
 	{
 		List<Supplement> supplements = new ArrayList<Supplement>();
@@ -384,6 +406,7 @@ public class Parser
 		Supplement supplement = new Supplement(id, name, price, supply);
 		return supplement;
 	}
+    */
 
 	public static List<Fragment> getFragments(JSONArray rawFragments) throws JSONException
 	{
@@ -420,6 +443,7 @@ public class Parser
 		}
 
 		// Get the supplements.
+        /*
 		JSONArray rawSupplements = rawFragment.getJSONArray("supplements");
 		List<Supplement> supplements = new ArrayList<Supplement>();
 		if (rawSupplements != null && rawSupplements.length() > 0)
@@ -431,8 +455,9 @@ public class Parser
 				supplements.add(supplement);
 			}
 		}
+        */
 
-		Fragment fragment = new Fragment(fragmentId, item, selections, supplements, quantity);
+		Fragment fragment = new Fragment(fragmentId, item, null, selections, quantity);
 		return fragment;
 	}
 
@@ -453,9 +478,9 @@ public class Parser
 		JSONObject rawStation = rawOrder.getJSONObject("station");
 		JSONObject rawUser = rawOrder.getJSONObject("patron");
 		int status = rawOrder.getInt("status");
-		BigDecimal tip = new BigDecimal(rawOrder.getString("tip"));
+		Price tip = new Price((int)(Double.parseDouble(rawOrder.getString("tip")) * 100), "USD");
 		String comment = rawOrder.getString("comment");
-        String time = rawOrder.getString("time");
+        long time = Long.parseLong(rawOrder.getString("time"));
 		List<Object> coupons = null;
 		JSONObject rawFunder = rawOrder.getJSONObject("funder");
 
@@ -463,7 +488,7 @@ public class Parser
 		Vendor vendor = Parser.getVendor(rawVendor);
 
 		// Get the user
-		User patron = Parser.getUser(rawUser);
+		Patron patron = Parser.getUser(rawUser);
 
 		// Get the station
 		Station station = Parser.getStation(rawStation);
@@ -476,14 +501,15 @@ public class Parser
 		}
 		else
 		{
-			funder = Parser.getBankAccount(rawFunder);
+            funder = null;
 		}
 
 		// Get the fragments.
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
-		Order order = new Order(orderId, vendor, patron, fragments, Order.getIntStatus(status), station,
-			funder, tip, coupons, comment, time);
+        Retrieval retrieval = new Retrieval("pickup", null, null, null);
+        Order order = new Order(orderId, fragments, null, tip, comment, retrieval, time,
+                Order.getIntStatus(status), funder, vendor, null);
 		return order;
 	}
 

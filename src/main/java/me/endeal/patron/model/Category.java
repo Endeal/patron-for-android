@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 public class Category implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
 	// Properties
 	private String id;
 	private String name;

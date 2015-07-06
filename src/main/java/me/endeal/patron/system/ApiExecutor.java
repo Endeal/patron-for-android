@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -28,20 +27,21 @@ import me.endeal.patron.listeners.UserLocationListener;
 import me.endeal.patron.lists.ListLinks;
 import me.endeal.patron.lists.ListKeys;
 import me.endeal.patron.main.FlashLogin;
-import me.endeal.patron.model.BankAccount;
 import me.endeal.patron.model.Card;
 import me.endeal.patron.model.Code;
 import me.endeal.patron.model.Funder;
 import static me.endeal.patron.model.Funder.Type;
 import me.endeal.patron.model.Item;
+import me.endeal.patron.model.Locale;
+import me.endeal.patron.model.Location;
 import me.endeal.patron.model.Order;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiTask;
 import me.endeal.patron.system.Globals;
 import me.endeal.patron.system.Parser;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 import me.endeal.patron.view.QustomDialogBuilder;
 
 import java.io.IOException;
@@ -80,6 +80,7 @@ public class ApiExecutor
 {
     private ApiTask apiTask;
     private Map<URI, byte[]> data;
+    private final Gson gson = new Gson();
 
     public ApiExecutor()
     {
@@ -90,7 +91,7 @@ public class ApiExecutor
     private void setMockData(ApiTask apiTask, String data, String link)
     {
         // Mock data for offline testing.
-        if (!Patron.DEBUGGING_OFFLINE)
+        if (!PatronApplication.DEBUGGING_OFFLINE)
         {
             return;
         }
@@ -164,7 +165,7 @@ public class ApiExecutor
                     {
                       if (data == null || data.entrySet() == null)
                       {
-                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                         callback(listeners);
                         return;
                       }
@@ -175,9 +176,11 @@ public class ApiExecutor
                             rawResponse = rawUser;
                             if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
                             {
-                                User user = Parser.getUser(new JSONObject(rawUser));
+                                Patron user = gson.fromJson(rawUser, Patron.class);
+                                /*
                                 user.setEmail(finalEmail);
                                 user.setPassword(finalPassword);
+                                */
                                 Globals.setUser(user);
                             }
                         }
@@ -185,16 +188,11 @@ public class ApiExecutor
                     catch (NetworkOnMainThreadException e)
                     {
                         e.printStackTrace();
-                        Toast.makeText(Patron.getContext(), "Failed to login, please restart and try again", Toast.LENGTH_SHORT).show();
-                    }
-                    catch (JSONException e)
-                    {
-                        e.printStackTrace();
-                        Toast.makeText(Patron.getContext(), rawResponse, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Failed to login, please restart and try again", Toast.LENGTH_SHORT).show();
                     }
                     catch (NullPointerException e)
                     {
-                        Toast.makeText(Patron.getContext(), "Failed to login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Failed to login", Toast.LENGTH_SHORT).show();
                     }
                     callback(listeners);
                 }
@@ -202,7 +200,7 @@ public class ApiExecutor
             String data = "{'patronId':'1','firstName':'James','lastName':'Whiteman','email':'jameswhiteman@outlook.com','birthday':'1993-09-14'," +
                 "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
             setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
-            apiTask.setMocking(Patron.DEBUGGING_OFFLINE);
+            apiTask.setMocking(PatronApplication.DEBUGGING_OFFLINE);
             System.out.println("login11");
             apiTask.execute(request);
         }
@@ -212,25 +210,17 @@ public class ApiExecutor
         }
     }
 
-    public void createAccount(String firstName, String lastName, final String email, final String password, String birthday,
-            OnApiExecutedListener... tempListeners)
+    public void createAccount(Patron user, OnApiExecutedListener... tempListeners)
     {
             final OnApiExecutedListener[] listeners = tempListeners;
             HttpPost request = new HttpPost(ListLinks.API_ADD_ACCOUNT);
-            ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-			NameValuePair pairFirstName = new BasicNameValuePair("firstName", firstName);
-			NameValuePair pairLastName = new BasicNameValuePair("lastName", lastName);
-			NameValuePair pairEmail = new BasicNameValuePair("email", email);
-			NameValuePair pairPassword = new BasicNameValuePair("password", password);
-			NameValuePair pairBirthday = new BasicNameValuePair("birthday", birthday);
-			pairs.add(pairFirstName);
-			pairs.add(pairLastName);
-			pairs.add(pairEmail);
-			pairs.add(pairPassword);
-			pairs.add(pairBirthday);
+            request.setHeader("Content-type", "application/json");
+            request.setHeader("Accept", "application/json");
+            String postData = gson.toJson(user);
+            System.out.println(postData);
             try
             {
-                request.setEntity(new UrlEncodedFormEntity(pairs));
+                request.setEntity(new StringEntity(postData));
                 ApiTask apiTask = new ApiTask();
                 apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                     @Override
@@ -238,7 +228,7 @@ public class ApiExecutor
                     {
                       if (data == null || data.entrySet() == null)
                       {
-                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                         callback(listeners);
                         return;
                       }
@@ -248,16 +238,15 @@ public class ApiExecutor
                             for (Map.Entry<URI, byte[]> entry : data.entrySet())
                             {
                                 response = new String(entry.getValue());
-                                JSONObject rawUser = new JSONObject(response);
-                                User user = Parser.getUser(rawUser);
+                                Patron user = gson.fromJson(response, Patron.class);
                                 Globals.setUser(user);
-                                Toast.makeText(Patron.getContext(), "Successfully created account", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Successfully created account", Toast.LENGTH_SHORT).show();
                             }
                         }
                         catch (Exception e)
                         {
                             e.printStackTrace();
-                            Toast.makeText(Patron.getContext(), response, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PatronApplication.getContext(), response, Toast.LENGTH_SHORT).show();
                         }
                         callback(listeners);
                     }
@@ -267,7 +256,7 @@ public class ApiExecutor
             catch (Exception e)
             {
                 e.printStackTrace();
-                Toast.makeText(Patron.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatronApplication.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
             }
     }
 
@@ -288,7 +277,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -300,11 +289,11 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Password successfully reset.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Password successfully reset.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), response, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), response, Toast.LENGTH_SHORT).show();
                             }
                         }
                         callback(listeners);
@@ -315,7 +304,7 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
           e.printStackTrace();
           callback(listeners);
         }
@@ -333,7 +322,7 @@ public class ApiExecutor
             {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -383,7 +372,7 @@ public class ApiExecutor
                         long minTime = (long)1;
                         float minDistance = (float)1;
                         boolean canGetLocation = true;
-                        Location location = null;
+                        android.location.Location location = null;
                         UserLocationListener listener = new UserLocationListener(context, executor, listeners);
                         if (isGPSEnabled)
                         {
@@ -443,7 +432,7 @@ public class ApiExecutor
         });
     }
 
-    private void selectNearestLocation(Location location, Context context)
+    private void selectNearestLocation(android.location.Location location, Context context)
     {
       if (location != null)
       {
@@ -455,12 +444,12 @@ public class ApiExecutor
           for (int i = 0; i < vendors.size(); i++)
           {
               Vendor vendor = vendors.get(i);
-              double latDiff = Math.abs(vendor.getLatitude() - latitude);
-              double longDiff = Math.abs(vendor.getLongitude() - longitude);
+              double latDiff = Math.abs(vendor.getLocation().getLatitude() - latitude);
+              double longDiff = Math.abs(vendor.getLocation().getLongitude() - longitude);
               double newDistance = latDiff + longDiff;
               Vendor closestVendor = vendors.get(closest);
-              latDiff = Math.abs(closestVendor.getLatitude() - latitude);
-              longDiff = Math.abs(closestVendor.getLongitude() - longitude);
+              latDiff = Math.abs(closestVendor.getLocation().getLatitude() - latitude);
+              longDiff = Math.abs(closestVendor.getLocation().getLongitude() - longitude);
               double oldDistance = latDiff + longDiff;
               if (newDistance < oldDistance)
               {
@@ -479,10 +468,10 @@ public class ApiExecutor
     {
         final OnApiExecutedListener[] listeners = tempListeners;
         HttpPost request = new HttpPost(ListLinks.API_GET_ITEMS);
-        User user = Globals.getUser();
+        Patron user = Globals.getUser();
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", user.getEmail());
-        NameValuePair password = new BasicNameValuePair("password", user.getPassword());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//new BasicNameValuePair("email", user.getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//user.getPassword());
         NameValuePair vendor = new BasicNameValuePair("vendorId", vendorId);
         pairs.add(email);
         pairs.add(password);
@@ -497,7 +486,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -555,7 +544,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -574,7 +563,7 @@ public class ApiExecutor
                             }
                             catch (JSONException e)
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to get orders: " + response, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to get orders: " + response, Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                                 callback(listeners);
                             }
@@ -592,7 +581,7 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
           callback(listeners);
         }
     }
@@ -602,9 +591,9 @@ public class ApiExecutor
         final String url = ListLinks.API_GET_SCAN;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair provider = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair provider = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair orderId = new BasicNameValuePair("orderId", order.getId());
         pairs.add(email);
         pairs.add(password);
@@ -620,7 +609,7 @@ public class ApiExecutor
                 {
                     if (data == null || data.entrySet() == null)
                     {
-                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                         callback(listeners);
                         return;
                     }
@@ -632,7 +621,7 @@ public class ApiExecutor
                             Bitmap bitmap = BitmapFactory.decodeByteArray(entry.getValue(), 0, entry.getValue().length);
                             if (bitmap == null)
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to retrieve QR code", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to retrieve QR code", Toast.LENGTH_SHORT).show();
                             }
                             Globals.setScan(bitmap);
                         }
@@ -644,7 +633,7 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
           callback(listeners);
         }
     }
@@ -661,9 +650,9 @@ public class ApiExecutor
             request.setHeader("Accept", "application/json");
             Gson gson = new Gson();
             JsonElement jsonOrder = gson.toJsonTree(order);
-            jsonOrder.getAsJsonObject().addProperty("email", Globals.getUser().getEmail());
-            jsonOrder.getAsJsonObject().addProperty("password", Globals.getUser().getPassword());
-            jsonOrder.getAsJsonObject().addProperty("oauth", Globals.getUser().getProvider());
+            jsonOrder.getAsJsonObject().addProperty("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+            jsonOrder.getAsJsonObject().addProperty("password", "froggy");//Globals.getUser().getPassword());
+            jsonOrder.getAsJsonObject().addProperty("oauth", "endeal");//Globals.getUser().getProvider());
             jsonOrder.getAsJsonObject().addProperty("type", "app");
             String postData = gson.toJson(jsonOrder);
             System.out.println(postData);
@@ -675,7 +664,7 @@ public class ApiExecutor
                 {
                     if (data == null || data.entrySet() == null)
                     {
-                        Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                         callback(listeners);
                         return;
                     }
@@ -731,7 +720,7 @@ public class ApiExecutor
         catch (AuthenticationException e)
         {
             e.printStackTrace();
-            Toast.makeText(Patron.getContext(), "Failed to authenticate card data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PatronApplication.getContext(), "Failed to authenticate card data", Toast.LENGTH_SHORT).show();
             return;
         }
         stripe.createToken(card, new TokenCallback() {
@@ -743,9 +732,9 @@ public class ApiExecutor
                         final String url = ListLinks.API_ADD_CARD;
                         HttpPost request = new HttpPost(url);
                         ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-                        pairs.add(new BasicNameValuePair("email", Globals.getUser().getEmail()));
-                        pairs.add(new BasicNameValuePair("password", Globals.getUser().getPassword()));
-                        pairs.add(new BasicNameValuePair("oauth", Globals.getUser().getProvider()));
+                        pairs.add(new BasicNameValuePair("email", "jameswhiteman@outlook.com"));//Globals.getUser().getEmail()));
+                        pairs.add(new BasicNameValuePair("password", "froggy"));//Globals.getUser().getPassword()));
+                        pairs.add(new BasicNameValuePair("oauth", "endeal"));//Globals.getUser().getProvider()));
                         pairs.add(new BasicNameValuePair("card", tokenId));
                         request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
                         apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
@@ -754,7 +743,7 @@ public class ApiExecutor
                             {
                               if (data == null || data.entrySet() == null)
                               {
-                                Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                                 callback(listeners);
                                 return;
                               }
@@ -773,7 +762,8 @@ public class ApiExecutor
                                           Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                                         }
                                     }
-                                    login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                                    //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                                    login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
                                 }
                             }
                         });
@@ -782,12 +772,12 @@ public class ApiExecutor
                     catch (UnsupportedEncodingException e)
                     {
                         e.printStackTrace();
-                        Toast.makeText(Patron.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PatronApplication.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
                     }
                 }
                 public void onError(Exception error) {
                     error.printStackTrace();
-                    Toast.makeText(Patron.getContext(), "An unknown error has occurred", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PatronApplication.getContext(), "An unknown error has occurred", Toast.LENGTH_LONG).show();
                 }
             }
         );
@@ -804,9 +794,9 @@ public class ApiExecutor
         final String url = link;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair instrument = new BasicNameValuePair(key, funder.getHref());
         pairs.add(email);
         pairs.add(password);
@@ -822,7 +812,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -834,13 +824,14 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Removed funding instrument.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Removed funding instrument.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to remove funding instrument: " + response, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to remove funding instrument: " + response, Toast.LENGTH_SHORT).show();
                             }
-                            login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
                         }
                         else
                         {
@@ -863,24 +854,14 @@ public class ApiExecutor
         callback();
     }
 
-    public void addBankAccount(Map<String, String> data)
-    {
-        callback();
-    }
-
-    public void removeBankAccount(BankAccount bankAccount)
-    {
-        callback();
-    }
-
     public void updateAccount(final String email, final String password, String firstName, String lastName, final OnApiExecutedListener... listeners)
     {
         final String url = ListLinks.API_UPDATE_ACCOUNT;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair pairCurrentEmail = new BasicNameValuePair("currentEmail", Globals.getUser().getEmail());
-        NameValuePair pairCurrentPassword = new BasicNameValuePair("currentPassword", Globals.getUser().getPassword());
-        NameValuePair pairOauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair pairCurrentEmail = new BasicNameValuePair("currentEmail", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair pairCurrentPassword = new BasicNameValuePair("currentPassword", "froggy");//Globals.getUser().getPassword());
+        NameValuePair pairOauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair pairEmail = new BasicNameValuePair("email", email);
         NameValuePair pairPassword = new BasicNameValuePair("password", password);
         NameValuePair pairFirstName = new BasicNameValuePair("firstName", firstName);
@@ -902,7 +883,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -914,30 +895,27 @@ public class ApiExecutor
                         {
                             try
                             {
-                                User user = Parser.getUser(new JSONObject(rawUser));
+                                Patron user = gson.fromJson(rawUser, Patron.class);
                                 if (!Globals.getProvider().equals("fb") &&
                                     !Globals.getProvider().equals("tw") &&
                                     !Globals.getProvider().equals("gp"))
                                 {
+                                    /*
                                     user.setEmail(email);
                                     user.setPassword(password);
+                                    */
                                 }
                                 Globals.setUser(user);
                             }
                             catch (NetworkOnMainThreadException e)
                             {
                                 e.printStackTrace();
-                                Toast.makeText(Patron.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
-                            }
-                            catch (JSONException e)
-                            {
-                                e.printStackTrace();
-                                Toast.makeText(Patron.getContext(), rawUser, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
                             }
                             catch (NullPointerException e)
                             {
                                 e.printStackTrace();
-                                Toast.makeText(Patron.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
                             }
                         }
                         callback(listeners);
@@ -948,7 +926,7 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(Patron.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
           e.printStackTrace();
           callback(listeners);
         }
@@ -959,9 +937,9 @@ public class ApiExecutor
         final String url = ListLinks.API_ADD_FAVORITE_VENDOR;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
         pairs.add(email);
         pairs.add(password);
@@ -977,7 +955,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -989,13 +967,14 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
-                            login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
                         }
                     }
                 }
@@ -1013,9 +992,9 @@ public class ApiExecutor
         final String url = ListLinks.API_REMOVE_FAVORITE_VENDOR;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
         pairs.add(email);
         pairs.add(password);
@@ -1031,7 +1010,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -1043,13 +1022,14 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Removed favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Removed favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
                             }
-                            login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
                         }
                     }
                 }
@@ -1067,9 +1047,9 @@ public class ApiExecutor
         final String url = ListLinks.API_ADD_FAVORITE_ITEM;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
         pairs.add(email);
         pairs.add(password);
@@ -1085,7 +1065,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -1097,13 +1077,14 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Added favorite item.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Added favorite item.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to add favorite item.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to add favorite item.", Toast.LENGTH_SHORT).show();
                             }
-                            login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
                         }
                     }
                 }
@@ -1121,9 +1102,9 @@ public class ApiExecutor
         final String url = ListLinks.API_REMOVE_FAVORITE_ITEM;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", Globals.getUser().getProvider());
+        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
+        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
+        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
         NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
         pairs.add(email);
         pairs.add(password);
@@ -1139,7 +1120,7 @@ public class ApiExecutor
                 {
                   if (data == null || data.entrySet() == null)
                   {
-                    Toast.makeText(Patron.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
                     callback(listeners);
                     return;
                   }
@@ -1151,13 +1132,14 @@ public class ApiExecutor
                             String response = new String(entry.getValue());
                             if (response.equals("1"))
                             {
-                                Toast.makeText(Patron.getContext(), "Removed favorite item.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Removed favorite item.", Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                Toast.makeText(Patron.getContext(), "Failed to remove favorite item.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PatronApplication.getContext(), "Failed to remove favorite item.", Toast.LENGTH_SHORT).show();
                             }
-                            login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
+                            login("jameswhiteman@outlook.com", "froggy", "endeal");
                         }
                     }
                 }

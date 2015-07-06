@@ -1,94 +1,57 @@
 package me.endeal.patron.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import me.endeal.patron.model.Station;
-
-public class Vendor
+public class Vendor implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
 	private String id;
 	private String name;
-	private String address;
-	private String city;
-	private String state;
-	private String zip;
-	private String phone;
+    private String picture;
+    private Franchise franchise;
+    private Location location;
+    private Contact contact;
 	private double taxRate;
-	private double latitude;
-	private double longitude;
-    private String facebook;
-    private String twitter;
-    private String googlePlus;
+    private double range;
+    private int favorites;
     private int facebookPoints;
     private int twitterPoints;
     private int googlePlusPoints;
 
 	private List<Item> items;
 	private List<Item> filteredItems;
-	private List<Item> recommendations;
 	private List<Station> stations;
+    private List<Locale> locales;
+    private List<Query> queries;
 	private Map<String, Integer> rewardItems;
 	private Map<String, Integer> rewardOptions;
-	private Map<String, Integer> rewardSupplements;
 
-	// CONSTRUCTORS
-
-	public Vendor()
-	{
-		name = "";
-		items = new ArrayList<Item>();
-	}
-
-	public Vendor(String id, String name, String address, String city,
-			String state, String zip, String phone, List<Item> items,
-			List<Item> recommendations, List<Station> stations,
-			double taxRate, double latitude, double longitude,
-            String facebook, String twitter, String googlePlus,
-            int facebookPoints, int twitterPoints, int googlePlusPoints)
-	{
-		setId(id);
-		setName(name);
-		setAddress(address);
-		setCity(city);
-		setState(state);
-		setZip(zip);
-		setPhone(phone);
-		setItems(items);
-		setRecommendations(recommendations);
-		setStations(stations);
-		setLatitude(latitude);
-		setLongitude(longitude);
-		setTaxRate(taxRate);
-        setFacebook(facebook);
-        setTwitter(twitter);
-        setGooglePlus(googlePlus);
+    public Vendor(String id, String name, String picture, Franchise franchise, Location location, Contact contact,
+            double taxRate, double range, int favorites, int facebookPoints, int twitterPoints,
+            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales,
+            List<Query> queries)
+    {
+        setId(id);
+        setName(name);
+        setPicture(picture);
+        setFranchise(franchise);
+        setLocation(location);
+        setContact(contact);
+        setTaxRate(taxRate);
+        setRange(range);
+        setFavorites(favorites);
         setFacebookPoints(facebookPoints);
         setTwitterPoints(twitterPoints);
         setGooglePlusPoints(googlePlusPoints);
-	}
-
-    public Vendor(Vendor vendor)
-    {
-        setId(vendor.getId());
-        setName(vendor.getName());
-        setAddress(vendor.getAddress());
-        setCity(vendor.getCity());
-        setState(vendor.getState());
-        setZip(vendor.getZip());
-        setPhone(vendor.getPhone());
-        setItems(vendor.getItems());
-        setRecommendations(vendor.getRecommendations());
-        setStations(vendor.getStations());
-        setLatitude(vendor.getLatitude());
-        setLongitude(vendor.getLongitude());
-        setTaxRate(vendor.getTaxRate());
+        setItems(items);
+        setStations(stations);
+        setLocales(locales);
+        setQueries(queries);
     }
 
-
-	// SETTER METHODS
 	public void setId(String id)
 	{
 		this.id = id;
@@ -99,94 +62,39 @@ public class Vendor
 		this.name = name;
 	}
 
-	public void setAddress(String address)
-	{
-		this.address = address;
-	}
+    public void setPicture(String picture)
+    {
+        this.picture = picture;
+    }
 
-	public void setCity(String city)
-	{
-		this.city = city;
-	}
+    public void setFranchise(Franchise franchise)
+    {
+        this.franchise = franchise;
+    }
 
-	public void setState(String state)
-	{
-		this.state = state;
-	}
+    public void setLocation(Location location)
+    {
+        this.location = location;
+    }
 
-	public void setZip(String zip)
-	{
-		this.zip = zip;
-	}
-
-	public void setPhone(String phone)
-	{
-		this.phone = phone;
-	}
-
-	public void setLatitude(double latitude)
-	{
-		this.latitude = latitude;
-	}
-
-	public void setLongitude(double longitude)
-	{
-		this.longitude = longitude;
-	}
+    public void setContact(Contact contact)
+    {
+        this.contact = contact;
+    }
 
 	public void setTaxRate(double taxRate)
 	{
 		this.taxRate = taxRate;
 	}
 
-	public void setItems(List<Item> items)
-	{
-		this.items = items;
-	}
-
-	public void setFilteredItems(List<Item> filteredItems)
-	{
-		this.filteredItems = filteredItems;
-	}
-
-	public void setRecommendations(List<Item> recommendations)
-	{
-		this.recommendations = recommendations;
-	}
-
-	public void setStations(List<Station> stations)
-	{
-		this.stations = stations;
-	}
-
-	public void setRewardItems(Map<String, Integer> rewardItems)
-	{
-		this.rewardItems = rewardItems;
-	}
-
-	public void setRewardOptions(Map<String, Integer> rewardOptions)
-	{
-		this.rewardOptions = rewardOptions;
-	}
-
-	public void setRewardSupplements(Map<String, Integer> rewardSupplements)
-	{
-		this.rewardSupplements = rewardSupplements;
-	}
-
-    public void setFacebook(String facebook)
+    public void setRange(double range)
     {
-        this.facebook = facebook;
+        this.range = range;
     }
 
-    public void setTwitter(String twitter)
+    public void setFavorites(int favorites)
     {
-        this.twitter = twitter;
-    }
-
-    public void setGooglePlus(String googlePlus)
-    {
-        this.googlePlus = googlePlus;
+        this.favorites = favorites;
     }
 
     public void setFacebookPoints(int facebookPoints)
@@ -204,120 +112,133 @@ public class Vendor
         this.googlePlusPoints = googlePlusPoints;
     }
 
-	// ACCESSOR METHODS
+	public void setItems(List<Item> items)
+	{
+		this.items = items;
+	}
+
+	public void setFilteredItems(List<Item> filteredItems)
+	{
+		this.filteredItems = filteredItems;
+	}
+
+	public void setStations(List<Station> stations)
+	{
+		this.stations = stations;
+	}
+
+    public void setLocales(List<Locale> locales)
+    {
+        this.locales = locales;
+    }
+
+    public void setQueries(List<Query> queries)
+    {
+        this.queries = queries;
+    }
+
+	public void setRewardItems(Map<String, Integer> rewardItems)
+	{
+		this.rewardItems = rewardItems;
+	}
+
+	public void setRewardOptions(Map<String, Integer> rewardOptions)
+	{
+		this.rewardOptions = rewardOptions;
+	}
 
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public String getName()
 	{
-		return name;
+		return this.name;
 	}
 
-	public String getAddress()
-	{
-		return address;
-	}
+    public String getPicture()
+    {
+        return this.picture;
+    }
 
-	public String getCity()
-	{
-		return city;
-	}
+    public Franchise getFranchise()
+    {
+        return this.franchise;
+    }
 
-	public String getState()
-	{
-		return state;
-	}
+    public Location getLocation()
+    {
+        return this.location;
+    }
 
-	public String getZip()
-	{
-		return zip;
-	}
-
-	public String getPhone()
-	{
-		return phone;
-	}
-
-	public double getLatitude()
-	{
-		return latitude;
-	}
-
-	public double getLongitude()
-	{
-		return longitude;
-	}
+    public Contact getContact()
+    {
+        return this.contact;
+    }
 
 	public double getTaxRate()
 	{
-		return taxRate;
+		return this.taxRate;
 	}
 
-	public List<Item> getItems()
-	{
-		return items;
-	}
-
-	public List<Item> getFilteredItems()
-	{
-		return filteredItems;
-	}
-
-	public List<Item> getRecommendations()
-	{
-		return recommendations;
-	}
-
-	public List<Station> getStations()
-	{
-		return stations;
-	}
-
-	public Map<String, Integer> getRewardItems()
-	{
-		return rewardItems;
-	}
-
-	public Map<String, Integer> getRewardOptions()
-	{
-		return rewardOptions;
-	}
-
-	public Map<String, Integer> getRewardSupplements()
-	{
-		return rewardSupplements;
-	}
-
-    public String getFacebook()
+    public double getRange()
     {
-        return facebook;
+        return this.range;
     }
 
-    public String getTwitter()
+    public int getFavorites()
     {
-        return twitter;
-    }
-
-    public String getGooglePlus()
-    {
-        return googlePlus;
+        return this.favorites;
     }
 
     public int getFacebookPoints()
     {
-        return facebookPoints;
+        return this.facebookPoints;
     }
 
     public int getTwitterPoints()
     {
-        return twitterPoints;
+        return this.twitterPoints;
     }
 
     public int getGooglePlusPoints()
     {
-        return googlePlusPoints;
+        return this.googlePlusPoints;
     }
+
+	public List<Item> getItems()
+	{
+		return this.items;
+	}
+
+	public List<Item> getFilteredItems()
+	{
+		return this.filteredItems;
+	}
+
+	public List<Station> getStations()
+	{
+		return this.stations;
+	}
+
+    public List<Locale> getLocales()
+    {
+        return this.locales;
+    }
+
+    public List<Query> getQueries()
+    {
+        return this.queries;
+    }
+
+	public Map<String, Integer> getRewardItems()
+	{
+		return this.rewardItems;
+	}
+
+	public Map<String, Integer> getRewardOptions()
+	{
+		return this.rewardOptions;
+	}
 }

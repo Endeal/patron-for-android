@@ -28,6 +28,7 @@ import me.endeal.patron.listeners.ButtonReviewListener;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.listeners.OnCartRefreshListener;
+import me.endeal.patron.model.Retrieval;
 import me.endeal.patron.system.Globals;
 import me.endeal.patron.R;
 import me.endeal.patron.view.NavigationListView;
@@ -76,7 +77,7 @@ public class FlashCart extends Activity
                     return;
                 }
                 // Station
-                buttonStation.setText("Station:\n" + Globals.getOrder().getStation().getName());
+                buttonStation.setText("Station:\n" + Globals.getOrder().getRetrieval().getStation().getName());
 
                 // Funder
                 String number;
@@ -95,7 +96,7 @@ public class FlashCart extends Activity
                 buttonTip.setText("Tip:\n$" + Globals.getOrder().getTip().toString());
 
                 // Vouchers
-                buttonCoupon.setText("Vouchers:\n" + Globals.getOrder().getCoupons().size());
+                buttonCoupon.setText("Vouchers:\n" + Globals.getOrder().getVouchers().size());
 
                 // Comment
                 String commented = "No";

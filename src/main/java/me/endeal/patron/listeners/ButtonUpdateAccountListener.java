@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import me.endeal.patron.listeners.OnApiExecutedListener;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
@@ -30,7 +31,7 @@ public class ButtonUpdateAccountListener implements OnClickListener
     @Override
     public void onClick(View view)
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View dialogView = inflater.inflate(R.layout.dialog_update_account, null);
         builder.setView(dialogView);
@@ -53,8 +54,8 @@ public class ButtonUpdateAccountListener implements OnClickListener
                 ApiExecutor executor = new ApiExecutor();
                 String email = editTextEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
-                String firstName = Globals.getUser().getFirstName();
-                String lastName = Globals.getUser().getLastName();
+                String firstName = Globals.getUser().getIdentity().getFirstName();
+                String lastName = Globals.getUser().getIdentity().getLastName();
 
                 // Validate e-mail format.
                 Pattern p = Pattern.compile(".+@.+\\.[a-z]+");

@@ -88,7 +88,7 @@ public class ButtonFavorites extends ButtonFilter implements OnClickListener
       Item item = Globals.getVendor().getItems().get(i);
       for (int j = 0; j < Globals.getUser().getItems().size(); j++)
       {
-        String itemId = Globals.getUser().getItems().get(j);
+        String itemId = Globals.getUser().getItems().get(j).getId();
         if (itemId.equals(item.getId()))
         {
           items.add(item);

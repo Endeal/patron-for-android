@@ -7,9 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -33,8 +37,9 @@ import static me.endeal.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashSettings extends FragmentActivity
+public class FlashSettings extends AppCompatActivity
 {
+    /*
     private TextView textViewFacebook;
     private TextView textViewTwitter;
     private TextView textViewGooglePlus;
@@ -43,6 +48,8 @@ public class FlashSettings extends FragmentActivity
     private Button buttonGooglePlus;
     private Button buttonAddCard;
     private Button buttonAddBankAccount;
+    */
+    private Toolbar toolbar;
     private Button buttonUpdateAccount;
     private Button buttonLogout;
     private SocialExecutor executor;
@@ -53,19 +60,30 @@ public class FlashSettings extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_settings);
+        toolbar = (Toolbar)findViewById(R.id.settingsToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.settingsDrawerNavigation);
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.settingsListNavigation);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
 		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
-		drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+		//drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+        drawerLayoutNavigation.setDrawerListener(drawerToggle);
 		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.SETTINGS);
+        drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+        drawerToggle.syncState();
 
         // Check if networks are signed in.
+        /*
         executor = new SocialExecutor(this, savedInstanceState, Network.FACEBOOK,
                 Network.TWITTER, Network.GOOGLE_PLUS);
+                */
 
         // Edit the social network text to correct status.
+        /*
         textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
         textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
         textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
@@ -73,10 +91,18 @@ public class FlashSettings extends FragmentActivity
         buttonTwitter = (Button)findViewById(R.id.settingsButtonNetworkTwitter);
         buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
         buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
+        */
         buttonUpdateAccount = (Button)findViewById(R.id.settingsButtonUpdateAccount);
         buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
 
         update();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        return true;
     }
 
     public void onStart()
@@ -112,11 +138,14 @@ public class FlashSettings extends FragmentActivity
 
   public void update()
   {
+      /*
         boolean facebookSignedIn = executor.signedIn(Network.FACEBOOK);
         boolean twitterSignedIn = executor.signedIn(Network.TWITTER);
         boolean googlePlusSignedIn = executor.signedIn(Network.GOOGLE_PLUS);
+        */
 
         // Identify the correct text for the social network statuses.
+        /*
         String textFacebook = "";
         String textTwitter = "";
         String textGooglePlus = "";
@@ -275,6 +304,7 @@ public class FlashSettings extends FragmentActivity
                 activity.startActivity(intent);
             }
         });
+        */
         buttonUpdateAccount.setOnClickListener(new ButtonUpdateAccountListener(null));
         buttonLogout.setOnClickListener(new OnClickListener() {
             @Override

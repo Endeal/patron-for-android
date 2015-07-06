@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="appTitleTextSize">48sp</dimen>
+    <dimen name="raisedButtonTextSize">16sp</dimen>
+    <dimen name="raisedButtonElevation">8dp</dimen>
+    <dimen name="labelTextSize">16sp</dimen>
+    <dimen name="subtitleTextSize">12sp</dimen>
+    <dimen name="toolbarHeight">48dp</dimen>
+
     <dimen name="SpinnerPadding">6dp</dimen>
     <dimen name="ListItemSize">16dip</dimen>
 

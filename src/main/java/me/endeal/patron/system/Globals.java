@@ -23,7 +23,7 @@ import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
 import me.endeal.patron.model.Order;
 import me.endeal.patron.model.Vendor;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.view.ButtonFilter;
 
 public class Globals
@@ -31,7 +31,7 @@ public class Globals
 	private static final Logger logger = LoggerFactory.getLogger(Globals.class);
 
 	// Properties
-	private static User user;
+	private static Patron user;
 	private static Vendor vendor;
 	private static List<Vendor> vendors = new ArrayList<Vendor>();
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
@@ -45,6 +45,9 @@ public class Globals
 	private static Bitmap scan;
   private static Map<String, Integer> points = new HashMap<String, Integer>();
 	private static ButtonFilter buttonFilter;
+
+    // Login
+    private static String provider = "";
 
 	// MAIN METHODS
 	public static Item getItemById(String itemId)
@@ -79,7 +82,7 @@ public class Globals
     }
 
 	// Setters
-	public static void setUser(User user)
+	public static void setUser(Patron user)
 	{
 		Globals.user = user;
 	}
@@ -155,7 +158,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 }
 
 	// Getters
-	public static User getUser()
+	public static Patron getUser()
 	{
         /*
 		if (user == null)
@@ -244,7 +247,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	{
 		try
 		{
-			Context context = Patron.getContext();
+			Context context = PatronApplication.getContext();
 			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
         	Editor editor = sharedPreferences.edit();
         	editor.putString("email", email);
@@ -261,7 +264,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 		try
 		{
             String encryptedPassword;
-            Context context = Patron.getContext();
+            Context context = PatronApplication.getContext();
             SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
             if (password == null)
             {
@@ -285,7 +288,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	{
 		try
 		{
-			Context context = Patron.getContext();
+			Context context = PatronApplication.getContext();
 			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
         	Editor editor = sharedPreferences.edit();
         	editor.putString("provider", provider);
@@ -301,7 +304,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	{
 		try
 		{
-			Context context = Patron.getContext();
+			Context context = PatronApplication.getContext();
 			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
 			String email = sharedPreferences.getString("email", "");
 	        return email;
@@ -316,7 +319,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	{
 		try
 		{
-			Context context = Patron.getContext();
+			Context context = PatronApplication.getContext();
 			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
 			String password = sharedPreferences.getString("password", "");
 	        password = FlashCipher.decrypt(password);
@@ -332,7 +335,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 	{
 		try
 		{
-			Context context = Patron.getContext();
+			Context context = PatronApplication.getContext();
 			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
 			String provider = sharedPreferences.getString("provider", "");
 	        return provider;

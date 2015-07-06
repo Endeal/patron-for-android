@@ -13,7 +13,7 @@ import com.appboy.AppboyGcmReceiver;
 
 import me.endeal.patron.main.FlashScan;
 import me.endeal.patron.main.FlashLogin;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 
 public class FlashIntentReceiver extends BroadcastReceiver
 {

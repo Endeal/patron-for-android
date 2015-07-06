@@ -1,7 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:flashvip="http://schemas.android.com/apk/res-auto">
-      
-    <item android:id="@+id/menuItemHelp"
-        android:title="@string/menuItemHelp" />
-    
+      xmlns:patron="http://schemas.android.com/apk/res-auto">
+
+      <item android:id="@+id/add"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:title="Add"
+        patron:showAsAction="always"
+        android:orderInCategory="1"
+        android:menuCategory="secondary" />
+
 </menu>

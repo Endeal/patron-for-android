@@ -1,7 +1,58 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme" parent="android:Theme.Light" />
-    <style name="DarkTheme">255 255 255</style>
+    <style name="appTitle">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">@dimen/appTitleTextSize</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+    <style name="title">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+    <style name="subtitle">
+        <item name="android:textColor">@color/subtitle</item>
+        <item name="android:textSize">@dimen/subtitleTextSize</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+    <style name="label">
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+    <style name="raisedButton">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="android:elevation">@dimen/raisedButtonElevation</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+    <style name="flatButton" parent="android:Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+    <style name="lightEditText">
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textColorHint">@color/placeholder</item>
+        <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+    </style>
+    <style name="darkEditText">
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textColorHint">@color/darkPlaceholder</item>
+        <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+    </style>
+    <style name="drawerArrow" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/title</item>
+    </style>
+    <style name="dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
+    </style>
 
     <!-- Home Screen Styles -->
     <style name="StyleHomeTextUser">
@@ -313,7 +364,9 @@
     </style>
 
     <style name="StyleMenuHorizontalScrollViewTypes">
+        <!--
         <item name="android:background">@color/colorMenuHorizontalScrollViewTypes</item>
+        -->
     </style>
 
     <!-- Cart Screen Styles -->

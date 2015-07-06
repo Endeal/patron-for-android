@@ -1,185 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/settingsDrawerNavigation"
+    android:id="@+id/settingsLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/settingsLayoutMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/settingsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/primary"
+        android:minHeight="@dimen/toolbarHeight">
 
-            <!-- Settings Text -->
+        <TextView
+            android:id="@+id/settingsTextViewTitle"
+            style="@style/title"
+            android:text="@string/titleActivitySettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
-            <TextView
-                android:id="@+id/settingsTextViewNetworkFacebook"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="10dp"
-                android:text="@string/settingsTextViewNetworkFacebook" />
+    </android.support.v7.widget.Toolbar>
 
-            <TextView
-                android:id="@+id/settingsTextViewNetworkTwitter"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextViewNetworkFacebook"
-                android:layout_margin="10dp"
-                android:text="@string/settingsTextViewNetworkTwitter" />
-
-            <TextView
-                android:id="@+id/settingsTextViewNetworkGooglePlus"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/settingsTextViewNetworkTwitter"
-                android:layout_margin="10dp"
-                android:text="@string/settingsTextViewNetworkGooglePlus" />
-
-            <!-- Settings Checkboxes -->
-            <Button
-                android:id="@+id/settingsButtonNetworkFacebook"
-                style="@style/ButtonConnect"
-                android:visibility="gone"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextViewNetworkFacebook"
-                android:layout_marginRight="10dp" />
-
-            <Button
-                android:id="@+id/settingsButtonNetworkTwitter"
-                style="@style/ButtonConnect"
-                android:visibility="gone"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextViewNetworkTwitter"
-                android:layout_marginRight="10dp" />
-
-            <Button
-                android:id="@+id/settingsButtonNetworkGooglePlus"
-                style="@style/ButtonConnect"
-                android:visibility="gone"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/settingsTextViewNetworkGooglePlus"
-                android:layout_marginRight="10dp" />
-
-            <!-- Cards and Bank Accounts -->
-            <LinearLayout
-                android:id="@+id/settingsLinearLayoutFunders"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/settingsTextViewNetworkGooglePlus"
-                android:orientation="horizontal"
-                android:weightSum="1" >
-
-                <Button
-                    android:id="@+id/settingsButtonAddCard"
-                    style="@style/ButtonMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/settingsButtonAddCard"
-                    android:layout_margin="5dp"/>
-
-                <Button
-                    android:id="@+id/settingsButtonAddBankAccount"
-                    style="@style/ButtonMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:text="@string/settingsButtonAddBankAccount"
-                    android:layout_margin="5dp"/>
-
-            </LinearLayout>
-
-            <me.endeal.patron.view.ListViewFunders
-                android:id="@+id/settingsListViewFunders"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/settingsLinearLayoutFunders"
-                android:layout_above="@+id/settingsLinearLayoutLegal" />
-
-            <LinearLayout
-                android:id="@+id/settingsLinearLayoutLegal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/settingsLinearLayoutAccount"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <TextView
-                    android:id="@+id/settingsTextViewPrivacyPolicy"
-                    style="@style/TextViewLegal"
-                    android:text="Privacy Policy"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="viewPrivacyPolicy"
-                    android:clickable="true" />
-
-                <TextView
-                    android:id="@+id/settingsTextViewTermsOfService"
-                    style="@style/TextViewLegal"
-                    android:text="Terms of Service"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="viewTermsOfService"
-                    android:clickable="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/settingsLinearLayoutAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal"
-                android:weightSum="2" >
-
-                <Button
-                    android:id="@+id/settingsButtonUpdateAccount"
-                    style="@style/ButtonMedium"
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="Edit Account" />
-
-                <Button
-                    android:id="@+id/settingsButtonLogout"
-                    style="@style/ButtonMedium"
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/settingsButtonLogout" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    <!-- The navigation drawer -->
-    <me.endeal.patron.view.NavigationListView
-        android:id="@+id/settingsListNavigation"
-        android:layout_width="240dp"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/settingsDrawerNavigation"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
+        android:layout_below="@+id/settingsToolbar"
+        android:layout_alignParentBottom="true">
 
-</android.support.v4.widget.DrawerLayout>
+        <me.endeal.patron.view.ListViewFunders
+            android:id="@+id/settingsListViewFunders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settingsToolbar"
+            android:layout_above="@+id/settingsLinearLayoutLegal" />
+
+        <LinearLayout
+            android:id="@+id/settingsLinearLayoutLegal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/settingsLinearLayoutAccount"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <TextView
+                android:id="@+id/settingsTextViewPrivacyPolicy"
+                style="@style/subtitle"
+                android:text="Privacy Policy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="viewPrivacyPolicy"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/settingsTextViewTermsOfService"
+                style="@style/subtitle"
+                android:text="Terms of Service"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="viewTermsOfService"
+                android:clickable="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settingsLinearLayoutAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/settingsButtonUpdateAccount"
+                style="@style/flatButton"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Edit Account" />
+
+            <Button
+                android:id="@+id/settingsButtonLogout"
+                style="@style/flatButton"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="@string/settingsButtonLogout" />
+
+        </LinearLayout>
+
+        <!-- The navigation drawer -->
+        <me.endeal.patron.view.NavigationListView
+            android:id="@+id/settingsListNavigation"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="#111"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>

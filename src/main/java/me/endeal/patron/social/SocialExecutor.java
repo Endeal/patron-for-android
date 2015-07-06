@@ -41,7 +41,7 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusShare;
 import com.google.android.gms.plus.model.people.Person;
 
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;

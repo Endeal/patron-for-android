@@ -9,21 +9,18 @@ public class Fragment implements Serializable
 {
     private static final long serialVersionUID = 7526472945622987L;
 
-    // Properties
 	private String id;
 	private Item item;
+	private List<Option> options;
 	private List<Selection> selections;
-	private List<Supplement> supplements;
 	private int quantity;
 
-	// Constructor
-	public Fragment(String id, Item item, List<Selection> selections,
-			List<Supplement> supplements, int quantity)
+	public Fragment(String id, Item item, List<Option> options, List<Selection> selections, int quantity)
 	{
 		setId(id);
 		setItem(item);
+        setOptions(options);
 		setSelections(selections);
-		setSupplements(supplements);
 		setQuantity(quantity);
 	}
 
@@ -31,18 +28,18 @@ public class Fragment implements Serializable
     {
         setId(fragment.getId());
         setItem(fragment.getItem());
+        setOptions(fragment.getOptions());
         setSelections(fragment.getSelections());
-        setSupplements(fragment.getSupplements());
         setQuantity(fragment.getQuantity());
     }
 
 	// Convenience
-	public boolean hasSupplement(Supplement supplement)
+	public boolean hasOption(Option option)
 	{
-		for (int i = 0; i < supplements.size(); i++)
+		for (int i = 0; i < options.size(); i++)
 		{
-			Supplement has = supplements.get(i);
-			if (has.getId().equals(supplement.getId()))
+			Option has = options.get(i);
+			if (has.getId().equals(option.getId()))
 			{
 				return true;
 			}
@@ -51,21 +48,21 @@ public class Fragment implements Serializable
 	}
 
 	// Main Methods
-	public BigDecimal getPrice()
+	public Price getPrice()
 	{
-		BigDecimal total = new BigDecimal(0);
-		total = total.add(item.getPrice());
+        Price total = new Price(0, "USD");
+        total.add(item.getPrice());
 		if (selections != null && selections.size() > 0)
 		for (int i = 0; i < selections.size(); i++)
 		{
-			total = total.add(selections.get(i).getOption().getPrice());
+			total.add(selections.get(i).getOption().getPrice());
 		}
-		if (supplements != null && supplements.size() > 0)
-		for (int i = 0; i < supplements.size(); i++)
+		if (options != null && options.size() > 0)
+		for (int i = 0; i < options.size(); i++)
 		{
-			total = total.add(supplements.get(i).getPrice());
+			total.add(options.get(i).getPrice());
 		}
-		total = total.multiply(new BigDecimal(quantity));
+		total.multiply(quantity);
 		return total;
 	}
 
@@ -80,14 +77,14 @@ public class Fragment implements Serializable
 		this.item = item;
 	}
 
+    public void setOptions(List<Option> options)
+    {
+        this.options = options;
+    }
+
 	public void setSelections(List<Selection> selections)
 	{
 		this.selections = selections;
-	}
-
-	public void setSupplements(List<Supplement> supplements)
-	{
-		this.supplements = supplements;
 	}
 
 	public void setQuantity(int quantity)
@@ -98,26 +95,26 @@ public class Fragment implements Serializable
 	// Getters
 	public String getId()
 	{
-		return id;
+		return this.id;
 	}
 
 	public Item getItem()
 	{
-		return item;
+		return this.item;
 	}
+
+    public List<Option> getOptions()
+    {
+        return this.options;
+    }
 
 	public List<Selection> getSelections()
 	{
-		return selections;
-	}
-
-	public List<Supplement> getSupplements()
-	{
-		return supplements;
+		return this.selections;
 	}
 
 	public int getQuantity()
 	{
-		return quantity;
+		return this.quantity;
 	}
 }

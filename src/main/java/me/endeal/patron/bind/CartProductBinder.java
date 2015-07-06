@@ -63,6 +63,7 @@ public class CartProductBinder implements ViewBinder
 			Fragment fragment = (Fragment)data;
 			Button button = (Button)view;
 			Item item = fragment.getItem();
+            /*
 			if (item.getSupplements() != null && item.getSupplements().size() > 0)
 			{
 				ButtonSupplementsListener listener = new ButtonSupplementsListener(fragment);
@@ -73,6 +74,7 @@ public class CartProductBinder implements ViewBinder
 			{
 				button.setVisibility(View.GONE);
 			}
+            */
 			return true;
 		}
 

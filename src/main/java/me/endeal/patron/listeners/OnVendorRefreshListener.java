@@ -15,6 +15,8 @@ import com.felipecsl.quickreturn.library.widget.QuickReturnAdapter;
 import com.felipecsl.quickreturn.library.widget.QuickReturnTargetView;
 
 import me.endeal.patron.bind.VendorBinder;
+import me.endeal.patron.model.Contact;
+import me.endeal.patron.model.Location;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
@@ -73,11 +75,11 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
             Map<String, String> mapping = new HashMap<String, String>();
             Vendor currentLocation = Globals.getVendors().get(i);
             mapping.put("textName", currentLocation.getName());
-            mapping.put("textPhone", currentLocation.getPhone());
-            mapping.put("textAddress", currentLocation.getAddress() +
-                        ", " + currentLocation.getCity() +
-                        ", " + currentLocation.getState() +
-                        currentLocation.getZip());
+            mapping.put("textPhone", currentLocation.getContact().getPhone());
+            mapping.put("textAddress", currentLocation.getLocation().getAddress() +
+                        ", " + currentLocation.getLocation().getCity() +
+                        ", " + currentLocation.getLocation().getState() +
+                        currentLocation.getLocation().getZip());
             mapping.put("toggleButtonFavorite", "" + i);
             locations.add(mapping);
         }
@@ -85,6 +87,7 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
 
     private void sortVendors()
     {
+        /*
       List<Vendor> vendors = new ArrayList<Vendor>();
       // Put favorites on top
       for (int i = 0; i < Globals.getVendors().size(); i++)
@@ -106,5 +109,6 @@ public class OnVendorRefreshListener implements OnApiExecutedListener
         }
       }
       Globals.setVendors(vendors);
+    */
     }
 }

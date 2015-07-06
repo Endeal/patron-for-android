@@ -8,10 +8,11 @@ import me.endeal.patron.system.Globals;
 
 public class LocationSorter
 {
-	
+
 	public static List<Vendor> getByFavorites(List<Vendor> vendors, boolean ascending)
 	{
 		ArrayList<Vendor> newLocations = new ArrayList<Vendor>();
+        /*
 		if (vendors != null && !vendors.isEmpty())
 		{
 			for (int i = 0; i < vendors.size(); i++)
@@ -26,12 +27,14 @@ public class LocationSorter
 				}
 			}
 		}
+        */
 		return newLocations;
 	}
-	
+
 	public static List<Vendor> getBySearch(List<Vendor> vendors, CharSequence text)
 	{
 		ArrayList<Vendor> newVendors = new ArrayList<Vendor>();
+        /*
 		if (vendors != null && !vendors.isEmpty())
 		{
 			for (int i = 0; i < vendors.size(); i++)
@@ -48,6 +51,7 @@ public class LocationSorter
 				}
 			}
 		}
+        */
 		return newVendors;
 	}
 }

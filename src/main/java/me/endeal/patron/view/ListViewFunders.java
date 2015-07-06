@@ -9,7 +9,7 @@ import android.widget.SimpleAdapter;
 
 import me.endeal.patron.bind.PaymentBinder;
 import me.endeal.patron.model.Funder;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
 

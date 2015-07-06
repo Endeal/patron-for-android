@@ -8,6 +8,7 @@ public class SortTabDrinks
 {
 	public static ArrayList<Item> getByName(ArrayList<Item> items, boolean ascending)
 	{
+        /*
 		if (items != null & !items.isEmpty())
 		{
 			boolean changed = true;
@@ -29,11 +30,13 @@ public class SortTabDrinks
 				}
 			}
 		}
+        */
 		return items;
 	}
-	
+
 	public static ArrayList<Item> getByPrice(ArrayList<Item> items, boolean ascending)
 	{
+        /*
 		if (items != null & !items.isEmpty())
 		{
 			boolean changed = true;
@@ -57,11 +60,13 @@ public class SortTabDrinks
 				}
 			}
 		}
+        */
 		return items;
 	}
-	
-	/*public static ArrayList<Item> getByType(ArrayList<Item> items, boolean ascending)
+
+	public static ArrayList<Item> getByType(ArrayList<Item> items, boolean ascending)
 	{
+        /*
 		if (items != null & !items.isEmpty())
 		{
 			boolean changed = true;
@@ -83,6 +88,7 @@ public class SortTabDrinks
 				}
 			}
 		}
+        */
 		return items;
-	}*/
+	}
 }

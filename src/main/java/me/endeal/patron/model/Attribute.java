@@ -1,5 +1,7 @@
 package me.endeal.patron.model;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,12 @@ import org.json.JSONObject;
 
 public class Attribute implements Serializable
 {
-	// Properties
+    private static final long serialVersionUID = 1L;
+
 	private String id;
 	private String name;
 	private List<Option> options;
 
-	// Constructor
 	public Attribute(String id, String name, List<Option> options)
 	{
 		setId(id);
@@ -23,29 +25,6 @@ public class Attribute implements Serializable
 		setOptions(options);
 	}
 
-    public Attribute(Attribute attribute)
-    {
-        setId(attribute.getId());
-        setName(attribute.getName());
-        setOptions(attribute.getOptions());
-    }
-
-    public Attribute(JSONObject rawAttribute) throws JSONException
-    {
-        options = new ArrayList<Option>();
-
-        setId(rawAttribute.getString("attributeId"));
-        setName(rawAttribute.getString("name"));
-        JSONArray rawOptions = rawAttribute.getJSONArray("options");
-        for (int i = 0; i < rawOptions.length(); i++)
-        {
-            JSONObject rawOption = rawOptions.getJSONObject(i);
-            Option option = new Option(rawOption);
-            options.add(option);
-        }
-    }
-
-	// Setters
 	public void setId(String id)
 	{
 		this.id = id;
@@ -59,7 +38,6 @@ public class Attribute implements Serializable
 		this.options = options;
 	}
 
-	// Getters
 	public String getId()
 	{
 		return id;

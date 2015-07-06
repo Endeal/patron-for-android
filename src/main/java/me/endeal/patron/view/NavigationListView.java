@@ -26,7 +26,7 @@ import me.endeal.patron.bind.NavigationBinder;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.ListItemNavigationListener;
 import me.endeal.patron.lists.ListFonts;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
 
@@ -65,7 +65,7 @@ public class NavigationListView extends ListView
     public void init()
     {
         // Set background of list view.
-        setBackgroundColor(Color.parseColor("#000000"));
+        setBackgroundResource(R.color.background);
 
         // Add Header
         RelativeLayout relativeLayout = new RelativeLayout(getContext());
@@ -82,7 +82,6 @@ public class NavigationListView extends ListView
         imageViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         imageViewLayoutParams.setMargins(leftMargin, topMargin, 0, bottomMargin);
         imageView.setLayoutParams(imageViewLayoutParams);
-        relativeLayout.setBackgroundColor(Color.parseColor("#000000"));
 
         // Get the reward points for the vendor.
         textViewHeader = new TextView(relativeLayout.getContext());
@@ -95,8 +94,7 @@ public class NavigationListView extends ListView
             }
             textViewHeader.setText(Globals.getVendor().getName() + "\n" + points + " Points");
         }
-        textViewHeader.setTextColor(Color.parseColor("#FFFFFF"));
-        textViewHeader.setBackgroundColor(Color.TRANSPARENT);
+        textViewHeader.setBackgroundResource(R.color.background);
         textViewHeader.setGravity(Gravity.CENTER_VERTICAL);
         Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), ListFonts.FONT_MAIN_BOLD);
         textViewHeader.setTypeface(typeface);

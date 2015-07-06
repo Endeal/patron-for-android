@@ -25,7 +25,7 @@
 
     <application
         android:icon="@drawable/logo_app"
-        android:name="me.endeal.patron.system.Patron"
+        android:name="me.endeal.patron.system.PatronApplication"
         android:allowClearUserData="true"
         android:debuggable="false"
         android:enabled="true"
@@ -65,7 +65,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashLogin"
             android:label="@string/globalAppName"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter android:label="@string/globalAppName">
@@ -78,7 +78,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashVouchers"
             android:label="@string/titleActivityVouchers"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
             <meta-data
@@ -90,7 +90,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashCreateAccount"
             android:label="@string/titleActivityCreateAccount"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
@@ -103,7 +103,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashAddCard"
             android:label="@string/titleActivityAddCard"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName="me.endeal.patron.main.FlashPayment">
@@ -116,7 +116,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashMenu"
             android:label="@string/titleActivityMenu"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
         </activity>
 
@@ -124,7 +124,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashCart"
             android:label="@string/titleActivityCart"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashMenu">
             <meta-data
@@ -136,7 +136,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashVendors"
             android:label="@string/titleActivityLocations"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashMenu">
             <meta-data
@@ -148,7 +148,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashOrders"
             android:label="@string/titleActivityOrders"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
         </activity>
 
@@ -156,7 +156,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashScan"
             android:label="@string/titleActivityScan"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashCodes">
             <meta-data
@@ -168,7 +168,7 @@
         <activity
             android:name="me.endeal.patron.main.FlashSettings"
             android:label="@string/titleActivitySettings"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashHome">
             <meta-data
@@ -192,7 +192,7 @@
         <activity
             android:name="com.twitter.sdk.android.core.identity.OAuthActivity"
             android:label="@string/titleActivityTwitter"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
             <meta-data
@@ -205,7 +205,7 @@
             tools:replace="android:label"
             android:name="com.twitter.sdk.android.core.identity.ShareEmailActivity"
             android:label="@string/titleActivityTwitterShareEmail"
-            android:theme="@style/ThemeMain"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
             <meta-data

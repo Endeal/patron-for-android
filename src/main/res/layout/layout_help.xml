@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<!--
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-        <!-- Next & Previous Buttons -->
 
         <ImageButton
             android:id="@+id/helpImageButtonNext"
@@ -32,8 +31,6 @@
             android:contentDescription="@string/helpImageButtonPreviousContentDescription"
             android:src="@drawable/arrow_left" />
 
-        <!-- Page Indication Text -->
-
         <TextView
             android:id="@+id/helpTextPage"
             android:layout_width="wrap_content"
@@ -42,8 +39,6 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
             style="@style/StyleHelpTextPage" />
-
-        <!-- Help View Animator -->
 
         <ViewAnimator
             android:id="@+id/helpViewAnimatorMain"
@@ -178,7 +173,6 @@
 
     </RelativeLayout>
 
-    <!-- The navigation drawer -->
     <me.endeal.patron.view.NavigationListView
         android:id="@+id/helpListNavigation"
         android:layout_width="240dp"
@@ -188,5 +182,6 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:background="#111"/>
+-->
 
 </android.support.v4.widget.DrawerLayout>

@@ -34,7 +34,6 @@ import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.Category;
 import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Supplement;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.model.Attribute;
 import me.endeal.patron.model.Selection;
@@ -83,6 +82,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
             //Toast.makeText(activity, "No items for this filter.", Toast.LENGTH_SHORT).show();
         }
 
+        /*
         List<Map<String, Fragment>> products = new ArrayList<Map<String, Fragment>>();
         String[] from = {"name",
                 "price",
@@ -206,5 +206,6 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         final AbsListViewQuickReturnAttacher attacher = (AbsListViewQuickReturnAttacher) quickReturnAttacher;
         attacher.setOnItemClickListener(new ListItemMenuAddListener());
         //targetView.setPosition(QuickReturnTargetView.POSITION_BOTTOM);
+        */
     }
 }

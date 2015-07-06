@@ -18,6 +18,7 @@
 
 package me.endeal.patron.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.math.RoundingMode;
@@ -28,91 +29,81 @@ import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Card;
 import me.endeal.patron.model.Funder;
 import me.endeal.patron.model.Vendor;
-import me.endeal.patron.model.User;
 
 import com.google.gson.Gson;
 
-public class Order
+public class Order implements Serializable
 {
-	// Constants
+    private static final long serialVersionUID = 1L;
+
 	public enum Status
 	{
 		WAITING, READY, SCANNED, COMPLETED, REJECTED
 	}
 
-	// Properties
 	private String id;
-	private Vendor vendor;
-	private User patron;
-	private String deviceId;
-	private int deviceType;
 	private List<Fragment> fragments;
-	private Status status;
-	private Station station;
-	private Funder funder;
-	private BigDecimal tip;
-    private BigDecimal tax;
-	private List<Object> coupons;
+	private List<Voucher> vouchers;
+	private Price tip;
 	private String comment;
-    private String time;
+    private Retrieval retrieval;
+    private long time;
+	private Status status;
+	private Funder funder;
+	private Vendor vendor;
+    private String code;
 
-	// Constructor
-	public Order(String id, Vendor vendor, User patron, List<Fragment> fragments, Status status, Station station,
-		Funder funder, BigDecimal tip, List<Object> coupons, String comment, String time)
-	{
-		setId(id);
-		setVendor(vendor);
-		setPatron(patron);
-		setDeviceId(Globals.getDeviceId());
-		setDeviceType(1);
-		setFragments(fragments);
-		setStatus(status);
-		setStation(station);
-		setFunder(funder);
-		setTip(tip);
-		setCoupons(coupons);
-		setComment(comment);
+    public Order(String id, List<Fragment> fragments, List<Voucher> vouchers, Price tip, String comment,
+            Retrieval retrieval, long time, Status status, Funder funder, Vendor vendor, String code)
+    {
+        setId(id);
+        setFragments(fragments);
+        setVouchers(vouchers);
+        setTip(tip);
+        setComment(comment);
+        setRetrieval(retrieval);
         setTime(time);
-	}
+        setStatus(status);
+        setFunder(funder);
+        setVendor(vendor);
+        setCode(code);
+    }
 
 	// Main Methods
-	public BigDecimal getTotalPrice()
+	public Price getTotalPrice()
 	{
-		BigDecimal total = new BigDecimal(0);
+        Price total = new Price(0, "USD");
         if (fragments != null)
 		for (int i = 0; i < fragments.size(); i++)
 		{
-			total = total.add(fragments.get(i).getPrice());
+			total.add(fragments.get(i).getPrice());
 		}
-		total = total.add(getTax());
-		total = total.add(getTip());
-		total = total.setScale(2, RoundingMode.FLOOR);
+		total.add(getTax());
+		total.add(getTip());
 		return total;
 	}
 
-    public BigDecimal getPrice()
+    public Price getPrice()
     {
-		BigDecimal total = new BigDecimal(0);
+        Price total = new Price(0, "USD");
         if (fragments != null)
 		for (int i = 0; i < fragments.size(); i++)
 		{
-			total = total.add(fragments.get(i).getPrice());
+			total.add(fragments.get(i).getPrice());
 		}
-		total = total.setScale(2, RoundingMode.FLOOR);
 		return total;
     }
 
-    public BigDecimal getTax()
+    public Price getTax()
     {
-		BigDecimal total = new BigDecimal(0);
+        Price total = new Price(0, "USD");
         if (fragments != null)
 		for (int i = 0; i < fragments.size(); i++)
 		{
-			total = total.add(fragments.get(i).getPrice());
+			total.add(fragments.get(i).getPrice());
 		}
-        BigDecimal tax = total.multiply(new BigDecimal(Globals.getVendor().getTaxRate()));
-        tax = tax.setScale(2, RoundingMode.FLOOR);
-        return tax;
+        total.multiply(Globals.getVendor().getTaxRate());
+        return total;
     }
 
     public BigDecimal getTipPercent()
@@ -121,11 +112,12 @@ public class Order
         if (fragments != null)
         for (int i = 0; i < fragments.size(); i++)
         {
-            total = total.add(fragments.get(i).getPrice());
+            total = total.add(new BigDecimal(fragments.get(i).getPrice().getValue() / 100));
         }
-        if  (tip.compareTo(BigDecimal.ZERO) != 0)
+        if  (tip.getValue() > 0)
         {
-            return tip.divide(total, 2, BigDecimal.ROUND_HALF_EVEN);
+            BigDecimal tipPercent = new BigDecimal(tip.getValue() / 100);
+            return tipPercent.divide(total, 2, BigDecimal.ROUND_HALF_EVEN);
         }
         return new BigDecimal(0);
     }
@@ -222,41 +214,9 @@ public class Order
 		return s;
 	}
 
-    /*
-	public String getTimeText()
-	{
-        DateTimeZone timezone = DateTimeZone.getDefault();
-        long offset = timezone.getOffset(getTime());
-        DateTime date = new DateTime(getTime() + offset);
-        String s = date.toString("hh:mma, E MM/dd/yyyy");
-        return s;
-	}
-    */
-
-	// Setters
 	public void setId(String id)
 	{
 		this.id = id;
-	}
-
-	public void setVendor(Vendor vendor)
-	{
-		this.vendor = vendor;
-	}
-
-	public void setPatron(User patron)
-	{
-		this.patron = patron;
-	}
-
-	private void setDeviceId(String deviceId)
-	{
-		this.deviceId = deviceId;
-	}
-
-	private void setDeviceType(int deviceType)
-	{
-		this.deviceType = deviceType;
 	}
 
 	public void setFragments(List<Fragment> fragments)
@@ -264,29 +224,14 @@ public class Order
 		this.fragments = fragments;
 	}
 
-	public void setStatus(Status status)
+	public void setVouchers(List<Voucher> vouchers)
 	{
-		this.status = status;
+        this.vouchers = vouchers;
 	}
 
-	public void setStation(Station station)
-	{
-		this.station = station;
-	}
-
-	public void setFunder(Funder funder)
-	{
-		this.funder = funder;
-	}
-
-	public void setTip(BigDecimal tip)
+	public void setTip(Price tip)
 	{
 		this.tip = tip;
-	}
-
-	public void setCoupons(List<Object> coupons)
-	{
-		this.coupons = coupons;
 	}
 
 	public void setComment(String comment)
@@ -294,74 +239,89 @@ public class Order
 		this.comment = comment;
 	}
 
-    public void setTime(String time)
+    public void setRetrieval(Retrieval retrieval)
+    {
+        this.retrieval = retrieval;
+    }
+
+    public void setTime(long time)
     {
         this.time = time;
+    }
+
+	public void setStatus(Status status)
+	{
+		this.status = status;
+	}
+
+	public void setFunder(Funder funder)
+	{
+		this.funder = funder;
+	}
+
+	public void setVendor(Vendor vendor)
+	{
+		this.vendor = vendor;
+	}
+
+    public void setCode(String code)
+    {
+        this.code = code;
     }
 
 	// Getters
 	public String getId()
 	{
-		return id;
-	}
-
-	public Vendor getVendor()
-	{
-		return vendor;
-	}
-
-	public User getPatron()
-	{
-		return patron;
-	}
-
-	public String getDeviceId()
-	{
-		return deviceId;
-	}
-
-	public int getDeviceType()
-	{
-		return deviceType;
+		return this.id;
 	}
 
 	public List<Fragment> getFragments()
 	{
-		return fragments;
+		return this.fragments;
 	}
 
-	public Status getStatus()
-	{
-		return status;
-	}
+    public List<Voucher> getVouchers()
+    {
+        return this.vouchers;
+    }
 
-	public Station getStation()
+	public Price getTip()
 	{
-		return station;
-	}
-
-	public Funder getFunder()
-	{
-		return funder;
-	}
-
-	public BigDecimal getTip()
-	{
-		return tip;
-	}
-
-	public List<Object> getCoupons()
-	{
-		return coupons;
+		return this.tip;
 	}
 
 	public String getComment()
 	{
-		return comment;
+		return this.comment;
 	}
 
-    public String getTime()
+    public Retrieval getRetrieval()
     {
-        return time;
+        return this.retrieval;
+    }
+
+    public long getTime()
+    {
+        return this.time;
+    }
+
+	public Status getStatus()
+	{
+		return this.status;
+	}
+
+	public Funder getFunder()
+	{
+		return this.funder;
+	}
+
+	public Vendor getVendor()
+	{
+		return this.vendor;
+	}
+
+    public String getCode()
+    {
+        return this.code;
     }
 }

@@ -1,11 +1,10 @@
 
 package me.endeal.patron.listeners;
 
-import me.endeal.patron.model.User;
 import me.endeal.patron.model.Funder;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 import me.endeal.patron.view.QustomDialogBuilder;
 
 import java.util.List;
@@ -33,6 +32,7 @@ public class ListItemSettingsFunderListener implements OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
+        /*
         final Context context = view.getContext();
 
         // If removing, stop right there.
@@ -77,5 +77,6 @@ public class ListItemSettingsFunderListener implements OnItemClickListener
             newBuilder = newBuilder.setNegativeButton("No", dialogClickListener);
             newBuilder.show();
         }
+        */
     }
 }

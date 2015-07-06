@@ -8,6 +8,7 @@ public class SortServers
 {
 	public static ArrayList<Vendor> getByName(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -29,11 +30,13 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
-	
+
 	public static ArrayList<Vendor> getByAddress(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -55,11 +58,13 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
-	
+
 	public static ArrayList<Vendor> getByCity(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -81,11 +86,13 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
-	
+
 	public static ArrayList<Vendor> getByState(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -107,11 +114,13 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
-	
+
 	public static ArrayList<Vendor> getByZip(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -133,11 +142,13 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
-	
+
 	public static ArrayList<Vendor> getByPhone(ArrayList<Vendor> servers, boolean ascending)
 	{
+        /*
 		if (servers != null & !servers.isEmpty())
 		{
 			boolean changed = true;
@@ -159,6 +170,7 @@ public class SortServers
 				}
 			}
 		}
+        */
 		return servers;
 	}
 }

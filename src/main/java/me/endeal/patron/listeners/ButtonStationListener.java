@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import me.endeal.patron.model.Retrieval;
 import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
@@ -54,7 +55,7 @@ public class ButtonStationListener implements OnClickListener
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Station station = Globals.getVendor().getStations().get(position);
-                Globals.getOrder().setStation(station);
+                Globals.getOrder().getRetrieval().setStation(station);
                 listener.onExecuted();
                 dialog.dismiss();
             }

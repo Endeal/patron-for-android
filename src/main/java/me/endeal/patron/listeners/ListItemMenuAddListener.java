@@ -24,13 +24,14 @@ import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
 import me.endeal.patron.model.Option;
 import me.endeal.patron.model.Order;
+import me.endeal.patron.model.Price;
 import me.endeal.patron.model.Selection;
 import me.endeal.patron.model.Station;
-import me.endeal.patron.model.Supplement;
+import me.endeal.patron.model.Retrieval;
 import me.endeal.patron.model.Funder;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 
 public class ListItemMenuAddListener implements OnItemClickListener
 {
@@ -97,12 +98,12 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			// Create default order info
 			Station station = null;
 			Funder funder = null;
-			BigDecimal tip = new BigDecimal("0.00");
+            Price tip = new Price(0, "USD");
 			List<Object> coupons = new ArrayList<Object>();
 			String comment = "";
 
             // Get defaults from shared preferences.
-            Context context = Patron.getContext();
+            Context context = PatronApplication.getContext();
             SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
             String defaultPayment = sharedPreferences.getString("payment", "-1");
             String defaultTip = sharedPreferences.getString("tip", "0.00");
@@ -125,15 +126,10 @@ public class ListItemMenuAddListener implements OnItemClickListener
                 }
 			}
 
-            Vendor vendor = new Vendor(Globals.getVendor());
-            vendor.setItems(null);
-            vendor.setFilteredItems(null);
-            vendor.setRecommendations(null);
-            order = new Order(null, vendor, Globals.getUser(), fragments, Order.Status.WAITING,
-                station, funder, tip, coupons, comment, "");
-            BigDecimal price = order.getPrice();
-            BigDecimal newTip = price.multiply(new BigDecimal(defaultTip));
-            order.setTip(newTip);
+            long time = System.currentTimeMillis() / 1000;
+            Retrieval retrieval = new Retrieval("pickup", null, null, null);
+            order = new Order(null, fragments, null, tip, comment, retrieval, time,
+                    Order.Status.WAITING, funder, Globals.getVendor(), null);
 		}
 		if (order.getFragments() != null &&
 				!order.getFragments().isEmpty())

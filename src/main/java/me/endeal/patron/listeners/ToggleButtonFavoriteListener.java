@@ -51,6 +51,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
 	@Override
 	public void onClick(View buttonView)
 	{
+        /*
 				if (loading)
 					return;
 				ApiExecutor executor = new ApiExecutor();
@@ -109,6 +110,7 @@ public class ToggleButtonFavoriteListener implements OnClickListener
                 executor.addFavoriteVendor(vendor, listener, finishedListener);
             }
 		}
+        */
 	}
 
 }

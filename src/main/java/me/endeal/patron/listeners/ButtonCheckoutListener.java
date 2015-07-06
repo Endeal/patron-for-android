@@ -9,8 +9,9 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import me.endeal.patron.main.FlashCart;
+import me.endeal.patron.model.Price;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Patron;
+import me.endeal.patron.system.PatronApplication;
 
 import java.math.BigDecimal;
 
@@ -30,10 +31,11 @@ public class ButtonCheckoutListener implements OnClickListener
             !Globals.getOrder().getFragments().isEmpty())
 		{
             // Set the default tip.
-            Context context = Patron.getContext();
+            Context context = PatronApplication.getContext();
             SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
             String defaultTip = sharedPreferences.getString("tip", "0.00");
-            BigDecimal newTip = Globals.getOrder().getPrice().multiply(new BigDecimal(defaultTip)).setScale(2, BigDecimal.ROUND_DOWN);
+            //BigDecimal newTip = new BigDecimal("2");//Globals.getOrder().getPrice().multiply(new BigDecimal(defaultTip)).setScale(2, BigDecimal.ROUND_DOWN);
+            Price newTip = new Price(1000, "USD");
             Globals.getOrder().setTip(newTip);
 
 			Intent intent = new Intent(activity, FlashCart.class);

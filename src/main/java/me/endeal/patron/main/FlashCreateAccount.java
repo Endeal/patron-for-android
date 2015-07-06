@@ -8,19 +8,22 @@ import java.net.URL;
 import java.net.MalformedURLException;
 
 import android.app.Activity;
-import android.os.Bundle;
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.ProgressBar;
-import android.widget.DatePicker;
-import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.CoordinatorLayout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.content.Context;
-import android.view.LayoutInflater;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.appboy.Appboy;
@@ -29,14 +32,14 @@ import com.appsee.Appsee;
 
 import me.endeal.patron.lists.ListLinks;
 import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.User;
+import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashCreateAccount extends Activity
+public class FlashCreateAccount extends AppCompatActivity
 {
 	private boolean submitting = false;
 
@@ -46,6 +49,7 @@ public class FlashCreateAccount extends Activity
 	private EditText fieldPassword;
 	private EditText fieldConfirm;
     private RelativeLayout layout;
+    private CoordinatorLayout coordinatorLayout;
 	private ProgressBar progressIndicator;
 
 	public static int year;
@@ -68,6 +72,7 @@ public class FlashCreateAccount extends Activity
 		fieldPassword = (EditText)findViewById(R.id.createAccountEditTextPassword);
 		fieldConfirm = (EditText)findViewById(R.id.createAccountEditTextConfirm);
         layout = (RelativeLayout)findViewById(R.id.createAccountRelativeLayoutMain);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.createAccountCoordinatorLayoutMain);
 
 		Intent intent = getIntent();
 		String email = intent.getStringExtra("email");
@@ -103,7 +108,7 @@ public class FlashCreateAccount extends Activity
 						FlashCreateAccount.day = day;
 					}
 				};
-				DatePickerDialog dialog = new DatePickerDialog(view.getContext(), R.style.ThemeSelectDate, dateListener,
+				DatePickerDialog dialog = new DatePickerDialog(view.getContext(), dateListener,
 					FlashCreateAccount.year, FlashCreateAccount.month, FlashCreateAccount.day);
 				dialog.show();
 			}
@@ -156,6 +161,7 @@ public class FlashCreateAccount extends Activity
                 public void onExecuted()
                 {
                     layout.removeView(progressIndicator);
+                    /*
                     if (Globals.getUser() != null)
                     {
                         Globals.setEmail(email);
@@ -166,6 +172,7 @@ public class FlashCreateAccount extends Activity
                         Activity activity = (Activity)context;
                         activity.finish();
                     }
+                    */
                 }
             };
 
@@ -173,19 +180,19 @@ public class FlashCreateAccount extends Activity
             if (firstName.length() == 0 || lastName.length() == 0 ||
                     email.length() == 0 || password.length() == 0)
             {
-                Toast.makeText(context, "Please fill out all of the fields", Toast.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "Please fill out all the fields", Snackbar.LENGTH_SHORT).show();
                 listener.onExecuted();
                 return;
             }
             if (!password.equals(confirm))
             {
-                Toast.makeText(context, "The password and confirmation do not match.", Toast.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "The password and confirmation do not match", Snackbar.LENGTH_SHORT).show();
                 listener.onExecuted();
                 return;
             }
             if (password.length() < 6)
             {
-                Toast.makeText(context, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "Password must be at least 6 characters", Snackbar.LENGTH_SHORT).show();
                 listener.onExecuted();
                 return;
             }
@@ -194,7 +201,7 @@ public class FlashCreateAccount extends Activity
             boolean matchFound = m.matches();
             if (!matchFound)
             {
-                Toast.makeText(view.getContext(), "Please enter a valid e-mail address", Toast.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "Please enter a valid e-mail address", Snackbar.LENGTH_SHORT).show();
                 listener.onExecuted();
                 return;
             }
@@ -204,8 +211,8 @@ public class FlashCreateAccount extends Activity
             layout.addView(progressIndicator, params);
             submitting = true;
 
-            ApiExecutor api = new ApiExecutor();
-            api.createAccount(firstName, lastName, email, password, birthday, listener);
+            //ApiExecutor api = new ApiExecutor();
+            //api.createAccount(firstName, lastName, email, password, birthday, listener);
 		}
 	}
 

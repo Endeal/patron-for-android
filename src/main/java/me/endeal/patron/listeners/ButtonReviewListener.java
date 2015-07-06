@@ -40,13 +40,13 @@ public class ButtonReviewListener implements OnClickListener
         String text = "";
         Order order = Globals.getOrder();
         List<Fragment> fragments = order.getFragments();
-        BigDecimal sum = new BigDecimal(0);
+        Price sum = new Price(0, "USD");
         for (int i = 0; i < fragments.size(); i++)
         {
             Fragment fragment = fragments.get(i);
             Item item = fragment.getItem();
             String name = item.getName();
-            BigDecimal price = item.getPrice();
+            Price price = item.getPrice();
             int quantity = fragment.getQuantity();
             text = text + name + " ($" + price.toString() + ")";
             List<Selection> selections = fragment.getSelections();
@@ -57,24 +57,24 @@ public class ButtonReviewListener implements OnClickListener
                 Option option = selection.getOption();
                 text = text + "\n  " + option.getName() + "($" + option.getPrice().toString() + ")";
             }
-            List<Supplement> supplements = fragment.getSupplements();
+            List<Option> supplements = fragment.getOptions();
             if (supplements != null && supplements.size() > 0)
             for (int j = 0; j < supplements.size(); j++)
             {
-                Supplement supplement = supplements.get(j);
+                Option supplement = supplements.get(j);
                 text = text + "\n    " + supplement.getName() + "($" + supplement.getPrice().toString() + ")";
             }
-            sum = sum.add(fragment.getPrice());
+            sum.add(fragment.getPrice());
             text = text + "\n x " + quantity + " = $" + fragment.getPrice().toString() + " ($" + sum.toString() + ")";
             text = text + "\n\n";
         }
-        BigDecimal taxRate = new BigDecimal(Globals.getVendor().getTaxRate());
-        taxRate = taxRate.multiply(new BigDecimal(100));
-        taxRate = taxRate.setScale(2, RoundingMode.FLOOR);
+        double taxRate = Globals.getVendor().getTaxRate() * 100;
         text = text + "Tax: $" + order.getTax().toString() + " (" + taxRate + "% of $" + order.getPrice().toString() + ")";
-        text = text + "\n  = $" + sum.add(order.getTax());
+        sum.add(order.getTax());
+        text = text + "\n  = $" + sum.toString();
         text = text + "\n\nTip: $" + order.getTip().toString();
-        text = text + "\n  = $" + sum.add(order.getTax()).add(order.getTip());
+        sum.add(order.getTip());
+        text = text + "\n  = $" + sum.toString();
         text = text + "\n\nTotal: $" + order.getTotalPrice().toString();
         textViewMain.setText(text);
 

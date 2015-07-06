@@ -65,7 +65,7 @@ public class OnCodesRefreshListener implements OnApiExecutedListener
     {
       Map<String, String> mapping = new HashMap<String, String>();
       Order order = codes.get(i);
-      mapping.put("textTime", order.getTime());
+      mapping.put("textTime", order.getTime() + "");
       mapping.put("textStatus", Order.getStatusText(order.getStatus()));
       mapping.put("textOrders", order.getOrderText());
       codesMap.add(mapping);

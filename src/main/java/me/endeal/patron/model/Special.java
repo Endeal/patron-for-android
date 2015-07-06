@@ -36,40 +36,6 @@ public class Special
         setDays(days);
     }
 
-    // Parse object from JSON
-    public Special(JSONObject rawSpecial) throws JSONException
-    {
-        items = new ArrayList<Item>();
-        times = new HashMap<DateTime, DateTime>();
-        days = new ArrayList<Day>();
-        setId(rawSpecial.getString("specialId"));
-        setName(rawSpecial.getString("name"));
-        JSONArray rawItems = rawSpecial.getJSONArray("items");
-        JSONArray rawTimes = rawSpecial.getJSONArray("periods");
-        JSONArray rawDays = rawSpecial.getJSONArray("days");
-        for (int i = 0; i < rawItems.length(); i++)
-        {
-            JSONObject rawItem = rawItems.getJSONObject(i);
-            Item item = new Item(rawItem);
-            items.add(item);
-        }
-        for (int i = 0; i < rawTimes.length(); i++)
-        {
-            JSONObject rawTime = rawTimes.getJSONObject(i);
-            String rawStart = rawTime.getString("start");
-            String rawEnd = rawTime.getString("end");
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("HH:mm:ss");
-            DateTime start = formatter.parseLocalTime(rawStart).toDateTimeToday();
-            DateTime end = formatter.parseLocalTime(rawEnd).toDateTimeToday();
-        }
-        for (int i = 0; i < rawDays.length(); i++)
-        {
-            String rawDay = rawDays.getString(i);
-            Day day = parseDay(rawDay);
-            days.add(day);
-        }
-    }
-
     public Day parseDay(String day)
     {
         if (day.equals("Monday"))
