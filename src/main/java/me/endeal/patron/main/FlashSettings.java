@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -21,6 +22,7 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import me.endeal.patron.dialogs.CardDialog;
 import me.endeal.patron.listeners.ButtonUpdateAccountListener;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.ListItemSettingsFunderListener;
@@ -53,6 +55,7 @@ public class FlashSettings extends AppCompatActivity
     private Button buttonUpdateAccount;
     private Button buttonLogout;
     private SocialExecutor executor;
+    private DrawerNavigationListener drawerToggle;
 
 	// Activity methods.
     @Override
@@ -68,7 +71,7 @@ public class FlashSettings extends AppCompatActivity
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.settingsDrawerNavigation);
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.settingsListNavigation);
-        DrawerNavigationListener drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
+        drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
 		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.SETTINGS);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
@@ -101,6 +104,22 @@ public class FlashSettings extends AppCompatActivity
     {
         getMenuInflater().inflate(R.menu.menu_settings, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (drawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+
+        if (item.getItemId() == R.id.add)
+        {
+            CardDialog dialog = new CardDialog(this);
+            dialog.show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onStart()

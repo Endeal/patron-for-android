@@ -324,4 +324,48 @@ public class Order implements Serializable
     {
         return this.code;
     }
+
+    @Override
+    public String toString()
+    {
+        String text = "";
+        List<Fragment> fragments = getFragments();
+        Price sum = new Price(0, "USD");
+        for (int i = 0; i < fragments.size(); i++)
+        {
+            Fragment fragment = fragments.get(i);
+            Item item = fragment.getItem();
+            String name = item.getName();
+            Price price = item.getPrice();
+            int quantity = fragment.getQuantity();
+            text = text + name + " (" + price.toString() + ")";
+            List<Selection> selections = fragment.getSelections();
+            if (selections != null && selections.size() > 0)
+            for (int j = 0; j < selections.size(); j++)
+            {
+                Selection selection = selections.get(j);
+                Option option = selection.getOption();
+                text = text + "\n  " + option.getName() + "(" + option.getPrice().toString() + ")";
+            }
+            List<Option> supplements = fragment.getOptions();
+            if (supplements != null && supplements.size() > 0)
+            for (int j = 0; j < supplements.size(); j++)
+            {
+                Option supplement = supplements.get(j);
+                text = text + "\n    " + supplement.getName() + "(" + supplement.getPrice().toString() + ")";
+            }
+            sum.add(fragment.getPrice());
+            text = text + "\n x " + quantity + " = " + fragment.getPrice().toString() + " (" + sum.toString() + ")";
+            text = text + "\n\n";
+        }
+        double taxRate = getVendor().getTaxRate() * 100;
+        text = text + "Tax: " + getTax().toString() + " (" + taxRate + "% of " + getPrice().toString() + ")";
+        sum.add(getTax());
+        text = text + "\n  = " + sum.toString();
+        text = text + "\n\nTip: " + getTip().toString();
+        sum.add(getTip());
+        text = text + "\n  = " + sum.toString();
+        text = text + "\n\nTotal: " + getTotalPrice().toString();
+        return text;
+    }
 }

@@ -196,20 +196,12 @@ public class VendorViewHolder extends RecyclerView.ViewHolder
                     @Override
                     public void onClick(final View v)
                     {
-                        new AlertDialog.Builder(v.getContext())
-                                .setTitle("Auto-Locate Vendor")
-                                .setMessage("Are you at Starbucks?")
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    activity.finish();
-                                    /*
-                                    Globals.setVendor(vendor);
-                                    Intent intent = new Intent(v.getContext(), FlashMenu.class);
-                                    v.getContext().startActivity(intent);
-                                    */
-                                }
-                            }).setNegativeButton("No", null).show();
+                        activity.finish();
+                        /*
+                        Globals.setVendor(vendor);
+                        Intent intent = new Intent(v.getContext(), FlashMenu.class);
+                        v.getContext().startActivity(intent);
+                        */
                     }
                 });
 

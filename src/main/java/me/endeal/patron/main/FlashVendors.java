@@ -2,6 +2,7 @@ package me.endeal.patron.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -169,8 +171,21 @@ public class FlashVendors extends AppCompatActivity
         if (item.getItemId() == R.id.findNearest)
         {
             // Find Nearest Vendor
-            Intent intent = new Intent(this, FlashMenu.class);
-            startActivity(intent);
+            final Activity activity = this;
+            new AlertDialog.Builder(this)
+                    .setTitle("Auto-Locate Vendor")
+                    .setMessage("Are you at Starbucks?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        activity.finish();
+                        /*
+                        Globals.setVendor(vendor);
+                        Intent intent = new Intent(v.getContext(), FlashMenu.class);
+                        v.getContext().startActivity(intent);
+                        */
+                    }
+                }).setNegativeButton("No", null).show();
         }
         return super.onOptionsItemSelected(item);
     }

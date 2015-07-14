@@ -28,7 +28,6 @@ import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.dialogs.DialogOrderInfo;
 import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.Order;
 import me.endeal.patron.model.Locale;
@@ -130,10 +129,18 @@ public class OrderViewHolder extends RecyclerView.ViewHolder
                 // Set info button
                 info.setOnClickListener(new OnClickListener() {
                     @Override
-                    public void onClick(View view)
+                    public void onClick(final View view)
                     {
-                        Dialog dialog = new DialogOrderInfo(view.getContext(), true, null, null, order);
-                        dialog.show();
+                        new AlertDialog.Builder(view.getContext())
+                            .setTitle("Price Breakdown")
+                            .setMessage(order.toString())
+                            .setNegativeButton("Request Refund", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    Snackbar.make(view.getRootView(), "Refund for order successfully requested", Snackbar.LENGTH_SHORT).show();
+                                }
+                            }).setPositiveButton("Done", null).show();
                     }
                 });
 
