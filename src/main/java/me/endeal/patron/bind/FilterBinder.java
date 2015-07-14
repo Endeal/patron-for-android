@@ -14,6 +14,7 @@ public class FilterBinder implements SimpleAdapter.ViewBinder
 {
 	public boolean setViewValue(View view, Object data, String textRepresentation)
     {
+        /*
 		// Change the font and create the button.
 		if (view.getId() == R.id.menuLayoutTypes)
 		{
@@ -30,7 +31,9 @@ public class FilterBinder implements SimpleAdapter.ViewBinder
 			relativeLayout.addView(button);
 			return true;
 		}
+        */
 
-        return false;
+        //return false;
+        return true;
     }
 }

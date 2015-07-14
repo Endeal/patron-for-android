@@ -14,7 +14,8 @@
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primaryDark</item>
         <item name="android:colorAccent">@color/accent</item>
-        <item name="android:textColorPrimary">@color/title</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/label</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorButtonNormal">@color/accent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
@@ -23,6 +24,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowTitleSize">0dp</item>
         <item name="drawerArrowStyle">@style/drawerArrow</item>
+        <item name="popupMenuStyle">@style/menu</item>
 
         <!--
         <item name="colorControlNormal">@color/colorThemeMainControlNormal</item>

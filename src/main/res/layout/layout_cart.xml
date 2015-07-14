@@ -1,111 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cartDrawerNavigation"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:patron="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cartCoordinatorLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        style="@+id/LayoutMain"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/cartListItems"
-            style="@style/ListViewMain"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/cartToolbar"
+            style="@style/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@+id/cartLayoutControls" />
+            android:layout_alignParentTop="true">
 
-        <LinearLayout
-            android:id="@+id/cartLayoutControls"
-            style="@+id/LayoutMain"
-            android:orientation="horizontal"
+            <TextView
+                android:id="@+id/cartTextViewTitle"
+                style="@style/title"
+                android:text="@string/titleActivityCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.DrawerLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/cartDrawerNavigation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/cartLayoutFinish"
-            android:weightSum="5" >
-
-            <Button
-                android:id="@+id/cartButtonStation"
-                style="@style/ButtonOrder"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="0dp" />
-
-            <Button
-                android:id="@+id/cartButtonPayment"
-                style="@style/ButtonOrder"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="0dp" />
-
-            <Button
-                android:id="@+id/cartButtonTip"
-                style="@style/ButtonOrder"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="0dp" />
-
-            <Button
-                android:id="@+id/cartButtonCoupon"
-                style="@style/ButtonOrder"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="0dp" />
-
-            <Button
-                android:id="@+id/cartButtonComment"
-                style="@style/ButtonOrder"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="0dp" />
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/cartLayoutFinish"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/cartToolbar"
             android:layout_alignParentBottom="true" >
 
-            <Button
-                android:id="@+id/cartButtonFinish"
-                style="@style/ButtonPay"
-                android:text="@string/cartButtonFinish"
+            <ListView
+                android:id="@+id/cartListItems"
+                style="@style/ListViewMain"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:id="@+id/cartButtonReview"
-                style="@style/ButtonReview"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:elevation="10dp" />
+                android:layout_above="@+id/cartLayoutControls" />
 
-        </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/cartLayoutControls"
+                style="@+id/LayoutMain"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/cartLayoutFinish"
+                android:weightSum="5" >
+
+                <Button
+                    android:id="@+id/cartButtonStation"
+                    style="@style/ButtonOrder"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+                <Button
+                    android:id="@+id/cartButtonPayment"
+                    style="@style/ButtonOrder"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+                <Button
+                    android:id="@+id/cartButtonTip"
+                    style="@style/ButtonOrder"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+                <Button
+                    android:id="@+id/cartButtonCoupon"
+                    style="@style/ButtonOrder"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+                <Button
+                    android:id="@+id/cartButtonComment"
+                    style="@style/ButtonOrder"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="0dp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/cartLayoutFinish"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true" >
+
+                <Button
+                    android:id="@+id/cartButtonFinish"
+                    style="@style/ButtonPay"
+                    android:text="@string/cartButtonFinish"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/cartButtonReview"
+                    style="@style/ButtonReview"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="10dp"
+                    android:elevation="10dp" />
+
+            </RelativeLayout>
+
+
+            <!-- The navigation drawer -->
+            <me.endeal.patron.view.NavigationListView
+                android:id="@+id/cartListNavigation"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:background="#111"/>
+
+        </android.support.v4.widget.DrawerLayout>
 
     </RelativeLayout>
 
-    <!-- The navigation drawer -->
-    <me.endeal.patron.view.NavigationListView
-        android:id="@+id/cartListNavigation"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
-
-</android.support.v4.widget.DrawerLayout>
+</android.support.design.widget.CoordinatorLayout>

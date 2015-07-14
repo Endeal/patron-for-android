@@ -290,7 +290,7 @@ public class Parser
 		List<Attribute> attributes = Parser.getAttributes(rawAttributes);
 
 		// Create the item
-		Item item = new Item(itemId, name, price, categories, null,
+		Item item = new Item(itemId, name, "", "", price, categories, null,
 				attributes, null, supply);
 		return item;
 	}

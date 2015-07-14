@@ -1,7 +1,10 @@
-package me.endeal.patron.listeners;
+package me.endeal.patron.dialogs;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
@@ -17,28 +21,42 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class ButtonReviewListener implements OnClickListener
+public class DialogOrderInfo extends AlertDialog
 {
     private OnApiExecutedListener listener;
+    private Order order;
 
-    public ButtonReviewListener(OnApiExecutedListener listener)
+    public DialogOrderInfo(Context context)
     {
+        super(context);
+    }
+
+    public DialogOrderInfo(Context context, int theme)
+    {
+        super(context, theme);
+    }
+
+    public DialogOrderInfo(Context context, boolean cancelable, DialogInterface.OnCancelListener listener)
+    {
+        super(context, cancelable, listener);
+    }
+
+    public DialogOrderInfo(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener,
+            OnApiExecutedListener listener, Order order)
+    {
+        super(context, cancelable, cancelListener);
         this.listener = listener;
+        this.order = order;
     }
 
     @Override
-    public void onClick(View view)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext(), R.style.DialogMain);
-        final LayoutInflater inflater = (LayoutInflater)view.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View dialogView = inflater.inflate(R.layout.dialog_review, null);
-        builder.setView(dialogView);
-        TextView textViewMain = (TextView)dialogView.findViewById(R.id.dialogReviewTextViewMain);
-        Button buttonDone = (Button)dialogView.findViewById(R.id.dialogReviewButtonDone);
+        super.onCreate(savedInstanceState);
+        setTitle("Price Breakdown");
 
         // Set the price breakdown text.
         String text = "";
-        Order order = Globals.getOrder();
         List<Fragment> fragments = order.getFragments();
         Price sum = new Price(0, "USD");
         for (int i = 0; i < fragments.size(); i++)
@@ -76,16 +94,31 @@ public class ButtonReviewListener implements OnClickListener
         sum.add(order.getTip());
         text = text + "\n  = $" + sum.toString();
         text = text + "\n\nTotal: $" + order.getTotalPrice().toString();
-        textViewMain.setText(text);
 
-        final AlertDialog dialog = builder.create();
-        buttonDone.setOnClickListener(new OnClickListener() {
-            public void onClick(View view)
+        // Set the message
+        setMessage(text);
+
+        // Set done button
+        final Dialog dialog = this;
+        setButton(DialogInterface.BUTTON_NEUTRAL, "Done", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which)
             {
-                listener.onExecuted();
+                if (listener != null)
+                    listener.onExecuted();
                 dialog.dismiss();
             }
         });
-        dialog.show();
+
+        // Set refund button
+        setButton(DialogInterface.BUTTON_POSITIVE, "Request Refund", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which)
+            {
+                if (listener != null)
+                    listener.onExecuted();
+                dialog.dismiss();
+            }
+        });
     }
 }

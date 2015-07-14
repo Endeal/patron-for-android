@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,15 +44,16 @@ import static me.endeal.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashScan extends Activity
+public class FlashScan extends AppCompatActivity
 {
-    private Order order;
+    //private Order order;
 
 	// Activity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+        /*
 		//Appsee.start("41ea93b81fd7435b8e8d20ea2ba36b66");
 		setContentView(R.layout.layout_scan);
 		Bundle bundle = getIntent().getExtras();
@@ -190,8 +193,9 @@ public class FlashScan extends Activity
     {
         updateListener.onExecuted();
     }
+    */
 	}
-
+/*
     public void onStart()
     {
         super.onStart();
@@ -210,4 +214,5 @@ public class FlashScan extends Activity
 	{
 		super.attachBaseContext(new CalligraphyContextWrapper(newBase));
 	}
+    */
 }

@@ -8,16 +8,27 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class DrawerNavigationListener extends SimpleDrawerListener
+public class DrawerNavigationListener extends ActionBarDrawerToggle
 {
     private Activity activity;
     private Intent intent;
 
-    public DrawerNavigationListener(Activity activity)
+    public DrawerNavigationListener(Activity activity, DrawerLayout drawerLayout, int openDrawerContentDescRes, int closeDrawerContentDescRes)
     {
+        super(activity, drawerLayout, openDrawerContentDescRes, closeDrawerContentDescRes);
         this.activity = activity;
+        this.intent = null;
+    }
+
+    public DrawerNavigationListener(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes)
+    {
+        super(activity, drawerLayout, openDrawerContentDescRes, closeDrawerContentDescRes);
+        this.activity = activity;
+        this.intent = null;
     }
 
     public void setIntent(Intent intent)

@@ -32,12 +32,14 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 	public boolean setViewValue(View view, Object data, String textRepresentation)
     {
 		// Name text view
-		if (view.getId() == R.id.productListItemTextName)
+        /*
+		if (view.getId() == R.id.listItemItemTextViewName)
 		{
 			TextView text = (TextView) view;
 			Fragment fragment = (Fragment)data;
 			String itemId = fragment.getItem().getId();
 			String name = fragment.getItem().getName();
+            /*
 			if (Globals.getVendor().getRewardItems().get(itemId) != null)
 			{
 				name = name + "\n(+" + Globals.getVendor().getRewardItems().get(itemId).toString() + " points)";
@@ -46,16 +48,17 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			return true;
 		}
 		// Price text view
-		if (view.getId() == R.id.productListItemTextPrice)
+		if (view.getId() == R.id.listItemItemTextViewPrice)
 		{
 			TextView text = (TextView)view;
 			Fragment fragment = (Fragment)data;
 			Item item = fragment.getItem();
 			NumberFormat formatter = NumberFormat.getCurrencyInstance();
-			String price = formatter.format(item.getPrice());
+			String price = formatter.format(item.getPrice().getValue() / 100);
 			text.setText(price);
 			return true;
 		}
+            */
 
 		// Set the categories text view
 		/*
@@ -82,6 +85,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 		*/
 
 		// Favorite button
+        /*
 		else if (view.getId() == R.id.productListItemToggleButtonFavorite)
 		{
 			final ToggleButton toggle = (ToggleButton) view;
@@ -117,7 +121,6 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			{
 				button.setVisibility(View.GONE);
 			}
-            */
 			return true;
 		}
 
@@ -184,5 +187,7 @@ public class ProductBinder implements SimpleAdapter.ViewBinder
 			return true;
 		}
   return false;
+  */
+    return false;
   }
 }

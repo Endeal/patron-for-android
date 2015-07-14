@@ -1,6 +1,7 @@
 package me.endeal.patron.model;
 
 import java.io.Serializable;
+import java.lang.StringBuilder;
 import java.util.List;
 
 public class Location implements Serializable
@@ -82,5 +83,19 @@ public class Location implements Serializable
     public double getLatitude()
     {
         return this.latitude;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getAddress());
+        builder.append("\n");
+        builder.append(getCity());
+        builder.append(", ");
+        builder.append(getState());
+        builder.append(" ");
+        builder.append(getZip());
+        return builder.toString();
     }
 }

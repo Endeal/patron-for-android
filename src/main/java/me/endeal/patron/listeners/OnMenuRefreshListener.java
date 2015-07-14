@@ -2,7 +2,9 @@ package me.endeal.patron.listeners;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -22,14 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.felipecsl.quickreturn.library.AbsListViewQuickReturnAttacher;
-import com.felipecsl.quickreturn.library.QuickReturnAttacher;
-import com.felipecsl.quickreturn.library.widget.QuickReturnAdapter;
-import com.felipecsl.quickreturn.library.widget.QuickReturnTargetView;
-
+import me.endeal.patron.adapters.FragmentAdapter;
 import me.endeal.patron.bind.ProductBinder;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.listeners.OnMenuRefreshListener;
+import me.endeal.patron.decor.GridSpacingItemDecoration;
 import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.Category;
 import me.endeal.patron.model.Fragment;
@@ -47,25 +44,19 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
 {
     private FlashMenu activity;
     private SwipeRefreshLayout swipeRefreshLayoutItems;
-    private ListView listMenu;
-    private LinearLayout linearLayout;
-    private Button buttonSelectVendor;
-    private List<ButtonFilter> filters;
+    private RecyclerView recyclerView;
 
-    public OnMenuRefreshListener(SwipeRefreshLayout swipeRefreshLayoutItems,
-            ListView listMenu, LinearLayout linearLayout, Button buttonSelectVendor)
+    public OnMenuRefreshListener(SwipeRefreshLayout swipeRefreshLayoutItems, RecyclerView recyclerView)
     {
         this.activity = (FlashMenu)swipeRefreshLayoutItems.getContext();
         this.swipeRefreshLayoutItems = swipeRefreshLayoutItems;
-        this.listMenu = listMenu;
-        this.linearLayout = linearLayout;
-        this.buttonSelectVendor = buttonSelectVendor;
-        this.filters = new ArrayList<ButtonFilter>();
+        this.recyclerView = recyclerView;
     }
 
     @Override
     public void onExecuted()
     {
+        System.out.println("REFRESH MENU");
         // Set list of items to a list of drinks.
         if (Globals.getVendor() == null || Globals.getVendor().getFilteredItems() == null)
         {
@@ -82,22 +73,10 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
             //Toast.makeText(activity, "No items for this filter.", Toast.LENGTH_SHORT).show();
         }
 
-        /*
-        List<Map<String, Fragment>> products = new ArrayList<Map<String, Fragment>>();
-        String[] from = {"name",
-                "price",
-                "supplements",
-                "toggleButtonFavorite",
-                "layout"};
-        int[] to = {R.id.productListItemTextName,
-                R.id.productListItemTextPrice,
-                R.id.productListItemButtonSupplements,
-                R.id.productListItemToggleButtonFavorite,
-                R.id.productListItemLayout};
-
         // If the menu was refreshed, apply any filters
         if (swipeRefreshLayoutItems.isRefreshing())
         {
+            /*
           for (int i = 0; i < filters.size(); i++)
           {
             ButtonFilter filter = filters.get(i);
@@ -106,13 +85,12 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
               filter.setChecked(true);
             }
           }
+          */
         }
 
         List<Fragment> fragments = new ArrayList<Fragment>();
         for (int i = 0; i < Globals.getVendor().getFilteredItems().size(); i++)
         {
-            Map<String, Fragment> mapping = new HashMap<String, Fragment>();
-
             // Create default fragment
             Item item = Globals.getVendor().getFilteredItems().get(i);
             List<Selection> selections = new ArrayList<Selection>();
@@ -127,21 +105,16 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
                 selections.add(selection);
               }
             }
-            List<Supplement> supplements = new ArrayList<Supplement>();
-            Fragment fragment = new Fragment("", item, selections, supplements, 1);
+            List<Option> options = new ArrayList<Option>();
+            Fragment fragment = new Fragment("", item, options, selections, 1);
             fragments.add(fragment);
-
-            // Create Mappings
-            mapping.put("name", fragment);
-            mapping.put("price", fragment);
-            mapping.put("supplements", fragment);
-            mapping.put("toggleButtonFavorite", fragment);
-            mapping.put("layout", fragment);
-            products.add(mapping);
         }
         Globals.setFragments(fragments);
-        SimpleAdapter adapter = new SimpleAdapter(activity, products, R.layout.list_item_product, from, to);
-        adapter.setViewBinder(new ProductBinder());
+        FragmentAdapter adapter = new FragmentAdapter(recyclerView.getContext(), fragments);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
+        adapter.notifyDataSetChanged();
+        //Globals.filterCategories(Globals.getVendor().getItems());
 
         // Go over the views.
         // Go over the categories for each view.
@@ -149,6 +122,7 @@ public class OnMenuRefreshListener implements OnApiExecutedListener
         // We know the view should exist.
         // If no categoryId matches the view's categoryId...
         // We know the view should not exist.
+        /*
         boolean buttonShouldExist = false;
         for(int i = 0; i < linearLayout.getChildCount(); i++)
         {

@@ -3,19 +3,18 @@ package me.endeal.patron.model;
 import java.io.Serializable;
 import java.lang.Cloneable;
 import java.lang.CloneNotSupportedException;
+import java.lang.Comparable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Category implements Serializable
+public class Category implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
-	// Properties
 	private String id;
 	private String name;
 
-	// Constructor
 	public Category(String id, String name)
 	{
 		setId(id);
@@ -34,7 +33,16 @@ public class Category implements Serializable
         setName(rawCategory.getString("name"));
     }
 
-	// Setters
+    public int compareTo(Object object)
+    {
+        if (object instanceof Category)
+        {
+            Category category = (Category)object;
+            return category.getName().compareTo(getName());
+        }
+        return 0;
+    }
+
 	public void setId(String id)
 	{
 		this.id = id;

@@ -1,5 +1,6 @@
 package me.endeal.patron.model;
 
+import java.lang.StringBuilder;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,4 +118,39 @@ public class Fragment implements Serializable
 	{
 		return this.quantity;
 	}
+
+    @Override
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getQuantity() + " ");
+        builder.append(getItem().getName());
+        if (getSelections() != null && getSelections().size() > 0)
+        {
+            builder.append(" with ");
+            for (int i = 0; i < getSelections().size(); i++)
+            {
+                Selection selection = getSelections().get(i);
+                builder.append(selection.getOption().getName());
+                if (i < getSelections().size() - 1)
+                {
+                    builder.append(", ");
+                }
+            }
+        }
+        if (getOptions() != null && getOptions().size() > 0)
+        {
+            builder.append("\n  Added ");
+            for (int i = 0; i < getOptions().size(); i++)
+            {
+                Option option = getOptions().get(i);
+                builder.append(option.getName());
+                if (i < getOptions().size() - 1)
+                {
+                    builder.append(", ");
+                }
+            }
+        }
+        return builder.toString();
+    }
 }

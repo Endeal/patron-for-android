@@ -68,11 +68,9 @@ public class FlashSettings extends AppCompatActivity
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.settingsDrawerNavigation);
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.settingsListNavigation);
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
-		DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
-		//drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
+        DrawerNavigationListener drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
-		listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.SETTINGS);
+		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.SETTINGS);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
         drawerToggle.syncState();
 

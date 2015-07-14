@@ -14,6 +14,7 @@ public class Vendor implements Serializable
     private Franchise franchise;
     private Location location;
     private Contact contact;
+    private boolean selfServe;
 	private double taxRate;
     private double range;
     private int favorites;
@@ -31,7 +32,7 @@ public class Vendor implements Serializable
 
     public Vendor(String id, String name, String picture, Franchise franchise, Location location, Contact contact,
             double taxRate, double range, int favorites, int facebookPoints, int twitterPoints,
-            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales,
+            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales, boolean selfServe,
             List<Query> queries)
     {
         setId(id);
@@ -49,6 +50,7 @@ public class Vendor implements Serializable
         setItems(items);
         setStations(stations);
         setLocales(locales);
+        setSelfServe(selfServe);
         setQueries(queries);
     }
 
@@ -130,6 +132,11 @@ public class Vendor implements Serializable
     public void setLocales(List<Locale> locales)
     {
         this.locales = locales;
+    }
+
+    public void setSelfServe(boolean selfServe)
+    {
+        this.selfServe = selfServe;
     }
 
     public void setQueries(List<Query> queries)
@@ -225,6 +232,11 @@ public class Vendor implements Serializable
     public List<Locale> getLocales()
     {
         return this.locales;
+    }
+
+    public boolean getSelfServe()
+    {
+        return this.selfServe;
     }
 
     public List<Query> getQueries()

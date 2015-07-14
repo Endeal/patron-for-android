@@ -1,34 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vouchersDrawerNavigation"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:patron="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vouchersCoordinatorLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/vouchersTextViewMain"
-            style="@style/TextViewTitleBig"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/vouchersToolbar"
+            style="@style/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:background="#00FFFFFF"
-            android:text="@string/vouchersTextViewTitle" />
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/vouchersTextViewTitle"
+                style="@style/title"
+                android:text="@string/titleActivityVouchers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.DrawerLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/vouchersDrawerNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/vouchersToolbar"
+            android:layout_alignParentBottom="true" >
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/vouchersTextViewMain"
+                    style="@style/TextViewTitleBig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:background="#00FFFFFF"
+                    android:text="@string/vouchersTextViewTitle" />
+
+            </RelativeLayout>
+
+            <!-- The navigation drawer -->
+            <me.endeal.patron.view.NavigationListView
+                android:id="@+id/vouchersListNavigation"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:choiceMode="singleChoice" />
+
+        </android.support.v4.widget.DrawerLayout>
 
     </RelativeLayout>
 
-    <!-- The navigation drawer -->
-    <me.endeal.patron.view.NavigationListView
-        android:id="@+id/vouchersListNavigation"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice" />
-
-</android.support.v4.widget.DrawerLayout>
+</android.support.design.widget.CoordinatorLayout>

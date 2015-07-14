@@ -6,7 +6,17 @@
     <dimen name="raisedButtonElevation">8dp</dimen>
     <dimen name="labelTextSize">16sp</dimen>
     <dimen name="subtitleTextSize">12sp</dimen>
+    <dimen name="localeTextSize">48sp</dimen>
     <dimen name="toolbarHeight">48dp</dimen>
+    <dimen name="fabElevation">10dp</dimen>
+    <dimen name="fabSize">56dp</dimen>
+    <dimen name="menuPictureSize">150dp</dimen>
+    <dimen name="actionIconSize">50dp</dimen>
+    <dimen name="descriptionHeight">100dp</dimen>
+    <dimen name="tabHeight">48dp</dimen>
+    <dimen name="statusSize">35dp</dimen>
+    <dimen name="retrievalSize">35dp</dimen>
+    <dimen name="codeSize">250dp</dimen>
 
     <dimen name="SpinnerPadding">6dp</dimen>
     <dimen name="ListItemSize">16dip</dimen>

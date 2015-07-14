@@ -1,6 +1,7 @@
 package me.endeal.patron.model;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 
 public class Price implements Serializable
 {
@@ -52,7 +53,8 @@ public class Price implements Serializable
     @Override
     public String toString()
     {
-        double denominated = (double)(value / 100);
-        return denominated + "";
+        double denominated = (double)(value / 100.0);
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(denominated);
     }
 }

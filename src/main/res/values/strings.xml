@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="done">Done</string>
+
     <!-- Manifest -->
 
     <!-- Home Screen -->
@@ -180,6 +182,7 @@
     <string name="titleActivityScan">Scan</string>
     <string name="titleActivityFavorites">Favorites</string>
     <string name="titleActivityLocations">Vendors</string>
+    <string name="titleActivityVendors">Vendors</string>
     <string name="titleActivityVouchers">Vouchers</string>
     <string name="titleActivitySearchVendors">Search</string>
     <string name="titleActivitySearchItems">Search</string>

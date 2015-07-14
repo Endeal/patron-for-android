@@ -20,6 +20,16 @@
         <item name="android:textSize">@dimen/labelTextSize</item>
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
     </style>
+    <style name="price">
+        <item name="android:textColor">@color/price</item>
+        <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
+    <style name="locale">
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textSize">@dimen/localeTextSize</item>
+        <item name="fontPath">fonts/Roboto-Regular.ttf</item>
+    </style>
     <style name="raisedButton">
         <item name="android:textColor">@color/title</item>
         <item name="android:textSize">@dimen/raisedButtonTextSize</item>
@@ -52,6 +62,14 @@
         <item name="color">@color/title</item>
     </style>
     <style name="dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
+    </style>
+    <style name="toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="android:minHeight">@dimen/toolbarHeight</item>
+    </style>
+    <style name="menu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">true</item>
+        <item name="android:overlapAnchor">true</item>
     </style>
 
     <!-- Home Screen Styles -->

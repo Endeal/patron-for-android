@@ -15,11 +15,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.animation.Animation;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
@@ -64,14 +72,20 @@ import me.endeal.patron.bind.ProductBinder;
 import me.endeal.patron.listeners.ButtonCategoriesListener;
 import me.endeal.patron.listeners.ButtonCheckoutListener;
 import me.endeal.patron.listeners.ButtonFavoritesListener;
+import me.endeal.patron.listeners.ButtonFilterListener;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.ListItemMenuAddListener;
 import me.endeal.patron.listeners.OnMenuRefreshListener;
 import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.lists.ListFonts;
 import me.endeal.patron.lists.ListLinks;
+import me.endeal.patron.model.Attribute;
 import me.endeal.patron.model.Category;
 import me.endeal.patron.model.Item;
+import me.endeal.patron.model.Nutrition;
+import me.endeal.patron.model.Option;
+import me.endeal.patron.model.Price;
+import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
@@ -85,45 +99,98 @@ import static me.endeal.patron.view.NavigationListView.Hierarchy;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class FlashMenu extends Activity
+public class FlashMenu extends AppCompatActivity
 {
     private List<Button> buttonCategories;
+    private CoordinatorLayout coordinatorLayout;
+    private DrawerNavigationListener drawerToggle;
 
-	// Activity Methods
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_menu);
 
-        // Set up the drawer layout.
-        DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
-        DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
-        drawerLayoutNavigation.setDrawerListener(drawerNavigationListener);
-        final NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
-        listNavigation.setHierarchy(drawerNavigationListener, drawerLayoutNavigation, Hierarchy.BUY);
+        // Set up toolbar
+        Toolbar toolbar = (Toolbar)findViewById(R.id.menuToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		// Set up the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
+		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
+        drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
+		//DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
+		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.BUY);
+        drawerLayoutNavigation.setDrawerListener(drawerToggle);
+        drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+        drawerToggle.syncState();
 
         // Find the views.
-        ListView listMenu = (ListView) findViewById(R.id.menuListItems);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.menuLayoutTypes);
-        Button buttonSelectVendor = (Button) findViewById(R.id.menuButtonSelectVendor);
-        Button buttonCheckout = (Button) findViewById(R.id.menuButtonCheckout);
-        ButtonSearch buttonSearch = (ButtonSearch) findViewById(R.id.menuButtonSearch);
-        ButtonFavorites buttonFavorites = (ButtonFavorites) findViewById(R.id.menuButtonFavorites);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.menuCoordinatorLayoutMain);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.menuRecyclerViewItems);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
         final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
         swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
             android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.menuFloatingActionButtonFilter);
+        fab.setOnClickListener(new ButtonFilterListener());
+
+        // Add items
+        List<Item> items = new ArrayList<Item>();
+        List<Category> categories = new ArrayList<Category>();
+        List<Option> options = new ArrayList<Option>();
+        List<Attribute> attributes = new ArrayList<Attribute>();
+        Price price = new Price(200, "USD");
+        List<String> ingredients = new ArrayList<String>();
+        ingredients.add("Flour");
+        ingredients.add("Milk");
+        ingredients.add("High-Fructose Corn Syrup");
+        Nutrition nutrition = new Nutrition(22, 58, 82, 92, 22, 888, 90, ingredients, false, false, false, false,
+                false, false, false, false, false);
+        int supply = 52;
+        categories.add(new Category("827", "Domestic Beer"));
+        categories.add(new Category("273", "Solvent"));
+        categories.add(new Category("11234", "Fresco"));
+        options.add(new Option("3327", "Ice", new Price(10, "USD")));
+        List<Option> aOptions = new ArrayList<Option>();
+        aOptions.add(new Option("6764", "Grey Goose", new Price(400, "USD")));
+        aOptions.add(new Option("34455", "Absolute", new Price(325, "USD")));
+        attributes.add(new Attribute("2334", "Vodka", aOptions));
+        Item item = new Item("82639", "Corona", "A beverage.", "http://www.fuelyourcreativity.com/files/Screen-shot-2010-08-31-at-12.45.11-AM-600x336.jpg",
+                price, categories, options, attributes, nutrition, supply);
+        Item item2 = new Item("8263", "Your Mom", "Juicy!", "http://mikatorestaurant.com/images/Mojito-Cocktail1.jpg",
+                price, categories, options, attributes, nutrition, supply);
+        Item item3 = new Item("263", "Drinkypie", "It sure does taste.", "http://talentanarchy.com/wp-content/uploads/2013/06/apple-pie.jpg",
+                price, categories, options, attributes, nutrition, supply);
+        items.add(item);
+        items.add(item2);
+        items.add(item3);
+        for (int i = 0; i < 8; i++)
+        {
+            items.add(item2);
+        }
+        Vendor vendor = new Vendor("", "Mike's Place", "https://musicalcities.files.wordpress.com/2012/03/outside-arcade-low-res.jpg",
+                null, null, null, 0.0833, 4.0, 72, 25, 25, 25, items, null, null, false, null);
+        vendor.setItems(items);
+        vendor.setFilteredItems(items);
+        Globals.setVendor(vendor);
 
         // Set up loading indicator
-        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.menuLayoutContent);
+        /*
         final ProgressBar progressIndicator = new ProgressBar(this);
         progressIndicator.setBackgroundColor(Color.TRANSPARENT);
-        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        final CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(200,200);
+        CoordinatorLayout.Behavior behavior = new CoordinatorLayout.Behavior();
+        params.setBehavior(behavior);
+        */
 
         // Listener to refresh the page on fetching the items for the vendor.
-        final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems,
-                listMenu, linearLayout, buttonSelectVendor);
+        final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems, recyclerView);
+        refreshListener.onExecuted();
+        /*
         final OnApiExecutedListener removeIndicatorListener = new OnApiExecutedListener() {
             @Override
             public void onExecuted()
@@ -159,10 +226,10 @@ public class FlashMenu extends Activity
                             if (Globals.getVendor() == null)
                             {
                               Activity activity = (Activity)swipeRefreshLayoutItems.getContext();
-                              /*Activity activity = (Activity)view.getContext();
-                              ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                  activity, view, "findFailedSelectVendor");
-                              Bundle bundle = options.toBundle();*/
+                              //Activity activity = (Activity)view.getContext();
+                              //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                               //   activity, view, "findFailedSelectVendor");
+                              //Bundle bundle = options.toBundle();
                               Intent intent = new Intent(activity, FlashVendors.class);
                               //ActivityCompat.startActivity(activity, intent, bundle);
                               activity.startActivity(intent);
@@ -179,9 +246,11 @@ public class FlashMenu extends Activity
                 }
             }
         });
+    */
 
         // Update the items upon activity creation.
-        layout.addView(progressIndicator, params);
+        //layout.addView(progressIndicator, params);
+        /*
         if (Globals.getVendor() == null)
         {
             apiExecutor.selectNearestVendor(this, new OnApiExecutedListener() {
@@ -191,29 +260,27 @@ public class FlashMenu extends Activity
                   if (Globals.getVendor() != null)
                   {
                     listNavigation.getTextViewHeader().setText(Globals.getVendor().getName() + "\n" + Globals.getPoints(Globals.getVendor().getId()) + " Points");
-                    apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
+                    //apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
                   }
                   else
                   {
-                      removeIndicatorListener.onExecuted();
+                      //removeIndicatorListener.onExecuted();
                     Activity activity = (Activity)swipeRefreshLayoutItems.getContext();
-                    /*Activity activity = (Activity)view.getContext();
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity, view, "findFailedSelectVendor");
-                    Bundle bundle = options.toBundle();*/
                     Intent intent = new Intent(activity, FlashVendors.class);
                     //ActivityCompat.startActivity(activity, intent, bundle);
-                    activity.startActivity(intent);
+                    //activity.startActivity(intent);
                   }
                 }
             });
         }
         else
         {
-            apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
+            //apiExecutor.getItems(Globals.getVendor().getId(), refreshListener, removeIndicatorListener);
         }
+        */
 
         // Set up listeners
+        /*
         buttonSearch.setListener(refreshListener);
         buttonFavorites.setListener(refreshListener);
 		    buttonCheckout.setOnClickListener(new ButtonCheckoutListener(this));
@@ -239,69 +306,13 @@ public class FlashMenu extends Activity
         // Get rid of helper image once scrolled enough.
         HorizontalScrollViewFilters scrollViewFilters = (HorizontalScrollViewFilters)findViewById(R.id.menuHorizontalScrollViewTypes);
         scrollViewFilters.setImage(imageViewHelpCategories);
+        */
 	}
 
     public List<Button> getButtonCategories()
     {
         return buttonCategories;
     }
-
-
-
-
-  private void animate(final ImageView imageView, final int images[], final int imageIndex, final boolean forever) {
-
-  //imageView <-- The View which displays the images
-  //images[] <-- Holds R references to the images to display
-  //imageIndex <-- index of the first image to show in images[]
-  //forever <-- If equals true then after the last image it starts all over again with the first image resulting in an infinite loop. You have been warned.
-
-      if (imageView.getVisibility() == View.GONE)
-      {
-          return;
-      }
-
-    int fadeInDuration = 1000; // Configure time values here
-    int timeBetween = 10;
-    int fadeOutDuration = 1000;
-
-    imageView.setVisibility(View.INVISIBLE);    //Visible or invisible by default - this will apply when the animation ends
-    imageView.setImageResource(images[imageIndex]);
-
-    Animation fadeIn = new AlphaAnimation(0, 1);
-    fadeIn.setInterpolator(new DecelerateInterpolator()); // add this
-    fadeIn.setDuration(fadeInDuration);
-
-    Animation fadeOut = new AlphaAnimation(1, 0);
-    fadeOut.setInterpolator(new AccelerateInterpolator()); // and this
-    fadeOut.setStartOffset(fadeInDuration + timeBetween);
-    fadeOut.setDuration(fadeOutDuration);
-
-    AnimationSet animation = new AnimationSet(false); // change to false
-    animation.addAnimation(fadeIn);
-    animation.addAnimation(fadeOut);
-    animation.setRepeatCount(1);
-    imageView.setAnimation(animation);
-
-    animation.setAnimationListener(new AnimationListener() {
-        public void onAnimationEnd(Animation animation) {
-            if (images.length - 1 > imageIndex) {
-                animate(imageView, images, imageIndex + 1,forever); //Calls itself until it gets to the end of the array
-            }
-            else {
-                if (forever == true){
-                animate(imageView, images, 0,forever);  //Calls itself to start the animation all over again in a loop if forever = true
-                }
-            }
-        }
-        public void onAnimationRepeat(Animation animation) {
-            // TODO Auto-generated method stub
-        }
-        public void onAnimationStart(Animation animation) {
-            // TODO Auto-generated method stub
-        }
-    });
-}
 
     public void onStart()
     {
@@ -313,6 +324,32 @@ public class FlashMenu extends Activity
     {
         super.onStop();
         Appboy.getInstance(FlashMenu.this).closeSession(FlashMenu.this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (drawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+
+        // Handle your other action bar items...
+        if (item.getItemId() == R.id.vendors)
+        {
+            Intent intent = new Intent(this, FlashVendors.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 	// Calligraphy

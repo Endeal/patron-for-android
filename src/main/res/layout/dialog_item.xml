@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/dialogItemRelativeLayoutTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/dialogItemImageViewPicture"
+            android:scaleType="centerCrop"
+            android:background="@color/background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/dialogItemLinearLayoutControls"
+            android:layout_toLeftOf="@+id/dialogItemLinearLayoutControls"/>
+
+        <LinearLayout
+            android:id="@+id/dialogItemLinearLayoutControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/dialogItemImageButtonFavorite"
+                style="@style/flatButton"
+                android:tint="@color/favorite"
+                android:layout_width="@dimen/actionIconSize"
+                android:layout_height="@dimen/actionIconSize"
+                android:layout_margin="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_favorite_border_white_48dp" />
+
+            <ImageButton
+                android:id="@+id/dialogItemImageButtonNutrition"
+                style="@style/flatButton"
+                android:tint="@color/nutrition"
+                android:layout_width="@dimen/actionIconSize"
+                android:layout_height="@dimen/actionIconSize"
+                android:layout_margin="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_info_black_48dp" />
+
+            <Button
+                android:id="@+id/dialogItemButtonQuantity"
+                style="@style/flatButton"
+                android:layout_width="@dimen/actionIconSize"
+                android:layout_height="@dimen/actionIconSize"
+                android:layout_margin="5dp"
+                android:text="1" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/dialogItemTextViewName"
+                style="@style/label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/dialogItemTextViewPrice"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:id="@+id/dialogItemTextViewPrice"
+                style="@style/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="10dp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dialogItemTextViewDescription"
+            style="@style/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/dialogItemButtonCustomize"
+            style="@style/flatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Customize" />
+
+        <Button
+            android:id="@+id/dialogItemButtonAdd"
+            style="@style/flatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Add to Order" />
+
+    </LinearLayout>
+
+</LinearLayout>

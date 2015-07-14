@@ -10,6 +10,8 @@ public class Item implements Serializable
 
 	private String id;
 	private String name;
+    private String description;
+    private String picture;
 	private Price price;
 	private List<Category> categories;
     private List<Option> options;
@@ -17,11 +19,13 @@ public class Item implements Serializable
     private Nutrition nutrition;
 	private int supply;
 
-	public Item(String id, String name, Price price, List<Category> categories, List<Option> options,
-            List<Attribute> attributes, Nutrition nutrition, int supply)
+	public Item(String id, String name, String description, String picture, Price price, List<Category> categories,
+            List<Option> options, List<Attribute> attributes, Nutrition nutrition, int supply)
 	{
 		setId(id);
 		setName(name);
+        setDescription(description);
+        setPicture(picture);
 		setPrice(price);
 		setCategories(categories);
         setOptions(options);
@@ -39,6 +43,16 @@ public class Item implements Serializable
 	{
 		this.name = name;
 	}
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public void setPicture(String picture)
+    {
+        this.picture = picture;
+    }
 
 	public void setPrice(Price price)
 	{
@@ -79,6 +93,16 @@ public class Item implements Serializable
 	{
 		return this.name;
 	}
+
+    public String getDescription()
+    {
+        return this.description;
+    }
+
+    public String getPicture()
+    {
+        return this.picture;
+    }
 
 	public Price getPrice()
 	{

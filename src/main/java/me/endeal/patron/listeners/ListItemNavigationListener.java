@@ -68,8 +68,10 @@ public class ListItemNavigationListener implements OnItemClickListener
                 */
                 break;
             default:
+                System.out.println("SETTINGS NAV");
                 if (hierarchy != Hierarchy.SETTINGS)
                 {
+                    System.out.println("SUCCESSFUL");
                     intent = new Intent(context, FlashSettings.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }

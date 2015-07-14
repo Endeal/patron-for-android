@@ -1,5 +1,6 @@
 package me.endeal.patron.model;
 
+import java.lang.StringBuilder;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,10 +24,11 @@ public class Nutrition implements Serializable
     private boolean lactoseFree;
     private boolean gmoFree;
     private boolean nutFree;
+    private boolean alcoholic;
 
     public Nutrition(int calories, int fat, int protein, int sugar, int sodium, int carbs, int fiber,
             List<String> ingredients, boolean organic, boolean vegetarian, boolean vegan, boolean kosher,
-            boolean glutenFree, boolean lactoseFree, boolean gmoFree, boolean nutFree)
+            boolean glutenFree, boolean lactoseFree, boolean gmoFree, boolean nutFree, boolean alcoholic)
     {
         setCalories(calories);
         setFat(fat);
@@ -44,6 +46,7 @@ public class Nutrition implements Serializable
         setLactoseFree(lactoseFree);
         setGmoFree(gmoFree);
         setNutFree(nutFree);
+        setAlcoholic(alcoholic);
     }
 
     public void setCalories(int calories)
@@ -126,6 +129,11 @@ public class Nutrition implements Serializable
         this.nutFree = nutFree;
     }
 
+    public void setAlcoholic(boolean alcoholic)
+    {
+        this.alcoholic = alcoholic;
+    }
+
     public int getCalories()
     {
         return this.calories;
@@ -204,5 +212,62 @@ public class Nutrition implements Serializable
     public boolean getNutFree()
     {
         return this.nutFree;
+    }
+
+    public boolean getAlcoholic()
+    {
+        return this.alcoholic;
+    }
+
+    @Override
+    public String toString()
+    {
+       StringBuilder builder = new StringBuilder();
+        builder.append("Calories: " + getCalories() + "kCal\n");
+        builder.append("Fat: " + getFat() + "g\n");
+        builder.append("Protein: " + getProtein() + "g\n");
+        builder.append("Sugar: " + getSugar() + "g\n");
+        builder.append("Sodium: " + getSodium() + "g\n");
+        builder.append("Carbohydrates: " + getCarbs() + "g\n");
+        builder.append("Fiber: " + getFiber() + "g\n");
+
+        String organic = "No";
+        String vegetarian = "No";
+        String vegan = "No";
+        String kosher = "No";
+        String glutenFree = "No";
+        String nutFree = "No";
+        String alcoholic = "No";
+
+        if (getOrganic())
+            organic = "Yes";
+        if (getVegetarian())
+            vegetarian = "Yes";
+        if (getVegan())
+            vegan = "Yes";
+        if (getKosher())
+            kosher = "Yes";
+        if (getGlutenFree())
+            glutenFree = "Yes";
+        if (getNutFree())
+            nutFree = "Yes";
+        if (getAlcoholic())
+            alcoholic = "Yes";
+
+        builder.append("Organic: " + organic + "\n");
+        builder.append("Vegetarian: " + vegetarian + "\n");
+        builder.append("Vegan: " + vegan + "\n");
+        builder.append("Kosher: " + kosher + "\n");
+        builder.append("Gluten-Free: " + glutenFree + "\n");
+        builder.append("Nut-Free: " + nutFree + "\n");
+        builder.append("Alcoholic: " + alcoholic + "\n");
+        builder.append("Ingredients: ");
+        for (int i = 0; i < getIngredients().size(); i++)
+        {
+            builder.append(getIngredients().get(i));
+            if (i < getIngredients().size() - 1)
+                builder.append(", ");
+        }
+        return builder.toString();
     }
 }

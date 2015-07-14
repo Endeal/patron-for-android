@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialogOrderTextViewTitle"
+        style="@style/label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/dialogOrderImageViewCode"
+        android:visibility="gone"
+        android:scaleType="fitCenter"
+        android:layout_width="@dimen/codeSize"
+        android:layout_height="@dimen/codeSize"
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:id="@+id/dialogOrderTextViewDelivery"
+        style="@style/label"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/dialogOrderTextViewLocale"
+        style="@style/locale"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"/>
+
+    <RelativeLayout
+        android:id="@+id/dialogOrderRelativeLayoutInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialogOrderTextViewStatus"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp" />
+
+        <ImageButton
+            android:id="@+id/dialogOrderImageButtonInfo"
+            style="@style/flatButton"
+            android:tint="@color/accent"
+            android:scaleType="fitCenter"
+            android:layout_width="@dimen/actionIconSize"
+            android:layout_height="@dimen/actionIconSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_info_black_48dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dialogOrderRelativeLayoutShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialogOrderTextViewLocation"
+            style="@style/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp" />
+
+        <ImageButton
+            android:id="@+id/dialogOrderImageButtonShare"
+            style="@style/flatButton"
+            android:tint="@color/accent"
+            android:scaleType="fitCenter"
+            android:layout_width="@dimen/actionIconSize"
+            android:layout_height="@dimen/actionIconSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_share_black_48dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

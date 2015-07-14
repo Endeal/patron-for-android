@@ -1,9 +1,13 @@
 package me.endeal.patron.system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.Context;
 import android.content.Intent;
@@ -106,6 +110,47 @@ public class Globals
 	{
 		Globals.filteredVendors = filteredVendors;
 	}
+
+    public static void filterCategories(List<Item> items)
+    {
+        /*
+        // Add the categories from every item
+        Map<String, Category> map = new HashMap<String, Category>();
+        for (int i = 0; i < items.size(); i++)
+        {
+            Item item = items.get(i);
+            for (int j = 0; j < item.getCategories().size(); i++)
+            {
+                Category category = item.getCategories().get(j);
+                if (!map.containsKey(category.getId()))
+                {
+                    map.put(category.getId(), category);
+                }
+            }
+        }
+
+        // Set List of categories for vendor
+        List<Category> categories = new ArrayList<Category>();
+        for (Map.Entry<String, Category> entry : map.entrySet())
+        {
+            categories.add(entry.getValue());
+        }
+        Globals.setCategories(categories);
+        */
+        SortedSet<Category> set = new TreeSet<Category>();
+        for (int i = 0; i < items.size(); i++)
+        {
+            Item item = items.get(i);
+            for (int j = 0; j < item.getCategories().size(); i++)
+            {
+                Category category = item.getCategories().get(j);
+                set.add(category);
+            }
+        }
+        Category[] raw = Arrays.copyOf(set.toArray(), set.toArray().length, Category[].class);
+        List<Category> list = Arrays.asList(raw);
+        Globals.setCategories(list);
+    }
 
 	public static void setCategories(List<Category> categories)
 	{

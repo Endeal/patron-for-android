@@ -101,6 +101,7 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
   @Override
   public void setChecked(boolean checked)
   {
+      /*
     super.setChecked(checked);
     View rootView = ((Activity)getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
     editTextSearch = (EditText)rootView.findViewById(R.id.menuEditTextSearch);
@@ -150,5 +151,6 @@ public class ButtonSearch extends ButtonFilter implements OnClickListener
       InputMethodManager inputManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
       inputManager.hideSoftInputFromWindow(editTextSearch.getWindowToken(), 0);
     }
+    */
   }
 }
