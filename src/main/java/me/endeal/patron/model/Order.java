@@ -106,20 +106,23 @@ public class Order implements Serializable
         return total;
     }
 
-    public BigDecimal getTipPercent()
+    public int getTipPercent()
     {
-        BigDecimal total = new BigDecimal(0);
+        double value = 0;
         if (fragments != null)
         for (int i = 0; i < fragments.size(); i++)
         {
-            total = total.add(new BigDecimal(fragments.get(i).getPrice().getValue() / 100));
+            value += fragments.get(i).getPrice().getValue();
         }
         if  (tip.getValue() > 0)
         {
-            BigDecimal tipPercent = new BigDecimal(tip.getValue() / 100);
-            return tipPercent.divide(total, 2, BigDecimal.ROUND_HALF_EVEN);
+            double rawTip = (double)(tip.getValue());
+            double rawPercent = (rawTip / value);
+            double rawFullPercent = rawPercent * 100;
+            int fullPercent = (int)(rawFullPercent);
+            return fullPercent;
         }
-        return new BigDecimal(0);
+        return 0;
     }
 
 	public static Status getIntStatus(int i)

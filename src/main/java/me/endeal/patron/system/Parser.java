@@ -32,6 +32,7 @@ import me.endeal.patron.model.Vendor;
 import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Card;
 import me.endeal.patron.model.Funder;
+import static me.endeal.patron.model.Retrieval.Method;
 
 public class Parser
 {
@@ -507,7 +508,7 @@ public class Parser
 		// Get the fragments.
 		JSONArray rawFragments = rawOrder.getJSONArray("fragments");
 		List<Fragment> fragments = Parser.getFragments(rawFragments);
-        Retrieval retrieval = new Retrieval("pickup", null, null, null);
+        Retrieval retrieval = new Retrieval(Method.SelfServe, null, null, null);
         Order order = new Order(orderId, fragments, null, tip, comment, retrieval, time,
                 Order.getIntStatus(status), funder, vendor, null);
 		return order;

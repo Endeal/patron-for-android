@@ -14,7 +14,7 @@
             android:id="@+id/menuToolbar"
             style="@style/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/toolbarHeight"
             android:layout_alignParentTop="true">
 
             <TextView
@@ -23,6 +23,21 @@
                 android:text="@string/titleActivityMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <EditText
+                android:id="@+id/menuEditTextSearch"
+                style="@style/lightEditText"
+                android:hint="Search..."
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:visibility="gone"
+                android:scrollHorizontally="true"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10dp"
                 android:layout_gravity="center" />
 
         </android.support.v7.widget.Toolbar>

@@ -67,8 +67,10 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import me.endeal.patron.adapters.FragmentAdapter;
 import me.endeal.patron.bind.NavigationBinder;
 import me.endeal.patron.bind.ProductBinder;
+import me.endeal.patron.decor.GridSpacingItemDecoration;
 import me.endeal.patron.listeners.ButtonCategoriesListener;
 import me.endeal.patron.listeners.ButtonCheckoutListener;
 import me.endeal.patron.listeners.ButtonFavoritesListener;
@@ -79,13 +81,7 @@ import me.endeal.patron.listeners.OnMenuRefreshListener;
 import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.lists.ListFonts;
 import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Category;
-import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Nutrition;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Price;
-import me.endeal.patron.model.Vendor;
+import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
@@ -116,12 +112,12 @@ public class FlashMenu extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
 		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.menuListNavigation);
         drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
-		//DrawerNavigationListener drawerNavigationListener = new DrawerNavigationListener(this);
 		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.BUY);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
@@ -136,7 +132,6 @@ public class FlashMenu extends AppCompatActivity
         swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
             android.R.color.holo_orange_light, android.R.color.holo_red_light);
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.menuFloatingActionButtonFilter);
-        fab.setOnClickListener(new ButtonFilterListener());
 
         // Add items
         List<Item> items = new ArrayList<Item>();
@@ -154,18 +149,19 @@ public class FlashMenu extends AppCompatActivity
         categories.add(new Category("827", "Domestic Beer"));
         categories.add(new Category("273", "Solvent"));
         categories.add(new Category("11234", "Fresco"));
+        List<Category> categories2 = new ArrayList<Category>();
         options.add(new Option("3327", "Ice", new Price(10, "USD")));
         List<Option> aOptions = new ArrayList<Option>();
         aOptions.add(new Option("6764", "Grey Goose", new Price(400, "USD")));
         aOptions.add(new Option("34455", "Absolute", new Price(325, "USD")));
         attributes.add(new Attribute("2334", "Vodka", aOptions));
-        Item item = new Item("82639", "Corona", "A beverage.", "http://www.fuelyourcreativity.com/files/Screen-shot-2010-08-31-at-12.45.11-AM-600x336.jpg",
+        Item item1 = new Item("82639", "Corona", "A beverage.", "http://www.fuelyourcreativity.com/files/Screen-shot-2010-08-31-at-12.45.11-AM-600x336.jpg",
                 price, categories, options, attributes, nutrition, supply);
         Item item2 = new Item("8263", "Your Mom", "Juicy!", "http://mikatorestaurant.com/images/Mojito-Cocktail1.jpg",
-                price, categories, options, attributes, nutrition, supply);
+                price, categories2, options, attributes, nutrition, supply);
         Item item3 = new Item("263", "Drinkypie", "It sure does taste.", "http://talentanarchy.com/wp-content/uploads/2013/06/apple-pie.jpg",
                 price, categories, options, attributes, nutrition, supply);
-        items.add(item);
+        items.add(item1);
         items.add(item2);
         items.add(item3);
         for (int i = 0; i < 8; i++)
@@ -187,9 +183,38 @@ public class FlashMenu extends AppCompatActivity
         params.setBehavior(behavior);
         */
 
+        List<Fragment> fragments = new ArrayList<Fragment>();
+        for (int i = 0; i < Globals.getVendor().getFilteredItems().size(); i++)
+        {
+            // Create default fragment
+            Item item = Globals.getVendor().getFilteredItems().get(i);
+            List<Selection> selections = new ArrayList<Selection>();
+            if (item.getAttributes() != null && item.getAttributes().size() > 0)
+            for (int j = 0; j < item.getAttributes().size(); j++)
+            {
+              Attribute attribute = item.getAttributes().get(j);
+              if (attribute.getOptions() != null && attribute.getOptions().size() > 0)
+              {
+                Option option = attribute.getOptions().get(0);
+                Selection selection = new Selection(attribute, option);
+                selections.add(selection);
+              }
+            }
+            options = new ArrayList<Option>();
+            Fragment fragment = new Fragment("", item, options, selections, 1);
+            fragments.add(fragment);
+        }
+        Globals.setFragments(fragments);
+        FragmentAdapter adapter = new FragmentAdapter(recyclerView.getContext(), fragments);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
+
+        Globals.filterCategories(Globals.getVendor().getItems());
+        fab.setOnClickListener(new ButtonFilterListener(adapter));
+
         // Listener to refresh the page on fetching the items for the vendor.
         final OnApiExecutedListener refreshListener = new OnMenuRefreshListener(swipeRefreshLayoutItems, recyclerView);
-        refreshListener.onExecuted();
+        //refreshListener.onExecuted();
         /*
         final OnApiExecutedListener removeIndicatorListener = new OnApiExecutedListener() {
             @Override
@@ -309,6 +334,14 @@ public class FlashMenu extends AppCompatActivity
         */
 	}
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState)
+    {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+
     public List<Button> getButtonCategories()
     {
         return buttonCategories;
@@ -347,6 +380,16 @@ public class FlashMenu extends AppCompatActivity
         if (item.getItemId() == R.id.vendors)
         {
             Intent intent = new Intent(this, FlashVendors.class);
+            startActivity(intent);
+        }
+        else if (item.getItemId() == R.id.review)
+        {
+            if (Globals.getOrder() == null || Globals.getOrder().getFragments() == null || Globals.getOrder().getFragments().size() <= 0)
+            {
+                Snackbar.make(coordinatorLayout, "Your order is empty", Snackbar.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
+            }
+            Intent intent = new Intent(this, FlashCart.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

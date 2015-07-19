@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:patron="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/reviewCoordinatorLayoutMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/reviewToolbar"
+            style="@style/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbarHeight"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/reviewTextViewTitle"
+                style="@style/title"
+                android:text="@string/titleActivityMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/reviewDrawerNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/reviewToolbar"
+            android:layout_alignParentBottom="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/reviewTextViewTip"
+                            style="@style/label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:layout_gravity="center" />
+
+                        <EditText
+                            android:id="@+id/reviewEditTextTip"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                    <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                        android:id="@+id/reviewDiscreteSeekBarTip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        patron:dsb_progressColor="@color/accent"
+                        patron:dsb_trackColor="@color/accent"
+                        patron:dsb_indicatorColor="@color/accent"
+                        patron:dsb_min="0"
+                        patron:dsb_max="100" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
+
+                        <EditText
+                            android:id="@+id/reviewEditTextComment"
+                            android:hint="Comment (300 character max)..."
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/reviewImageButtonRetrieval"
+                            style="@style/flatButton"
+                            android:scaleType="fitCenter"
+                            android:tint="@color/primary"
+                            android:layout_width="@dimen/actionIconSize"
+                            android:layout_height="@dimen/actionIconSize"
+                            android:layout_margin="10dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"/>
+
+                        <Button
+                            android:id="@+id/reviewButtonRetrieval"
+                            style="@style/flatButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/reviewImageButtonRetrieval"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/reviewImageButtonVoucher"
+                            style="@style/flatButton"
+                            android:scaleType="fitCenter"
+                            android:tint="@color/primary"
+                            android:layout_width="@dimen/actionIconSize"
+                            android:layout_height="@dimen/actionIconSize"
+                            android:layout_margin="10dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_local_offer_black_48dp"/>
+
+                        <Button
+                            android:id="@+id/reviewButtonFunder"
+                            style="@style/flatButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/reviewImageButtonVoucher"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="10dp" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/reviewButtonTotal"
+                    style="@style/flatButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="28dp" />
+
+            </RelativeLayout>
+
+            <me.endeal.patron.view.NavigationListView
+                android:id="@+id/reviewListNavigation"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
+                android:background="#000000"/>
+
+        </android.support.v4.widget.DrawerLayout>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/reviewFloatingActionButtonPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="28dp"
+        android:src="@drawable/ic_credit_card_white_48dp"
+        patron:elevation="@dimen/fabElevation"
+        patron:borderWidth="0dp"
+        patron:fabSize="normal" />
+
+</android.support.design.widget.CoordinatorLayout>

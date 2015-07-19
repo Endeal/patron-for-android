@@ -39,6 +39,7 @@ public class DrawerNavigationListener extends ActionBarDrawerToggle
     @Override
     public void onDrawerClosed(View view)
     {
+        super.onDrawerClosed(view);
         if (intent != null)
         {
             Context context = view.getContext();
@@ -55,18 +56,18 @@ public class DrawerNavigationListener extends ActionBarDrawerToggle
     @Override
     public void onDrawerOpened(View view)
     {
-
+        super.onDrawerOpened(view);
     }
 
     @Override
     public void onDrawerSlide(View view, float offset)
     {
-
+        super.onDrawerSlide(view, offset);
     }
 
     @Override
     public void onDrawerStateChanged(int newState)
     {
-
+        super.onDrawerStateChanged(newState);
     }
 }

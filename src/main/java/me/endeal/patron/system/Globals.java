@@ -1,5 +1,11 @@
 package me.endeal.patron.system;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.IndexOutOfBoundsException;
+import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -85,6 +91,24 @@ public class Globals
         return Globals.user != null;
     }
 
+    public static Object deepClone(Object object)
+    {
+        try
+        {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return ois.readObject();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 	// Setters
 	public static void setUser(Patron user)
 	{
@@ -113,13 +137,12 @@ public class Globals
 
     public static void filterCategories(List<Item> items)
     {
-        /*
         // Add the categories from every item
         Map<String, Category> map = new HashMap<String, Category>();
         for (int i = 0; i < items.size(); i++)
         {
             Item item = items.get(i);
-            for (int j = 0; j < item.getCategories().size(); i++)
+            for (int j = 0; j < item.getCategories().size(); j++)
             {
                 Category category = item.getCategories().get(j);
                 if (!map.containsKey(category.getId()))
@@ -136,12 +159,11 @@ public class Globals
             categories.add(entry.getValue());
         }
         Globals.setCategories(categories);
-        */
         SortedSet<Category> set = new TreeSet<Category>();
         for (int i = 0; i < items.size(); i++)
         {
             Item item = items.get(i);
-            for (int j = 0; j < item.getCategories().size(); i++)
+            for (int j = 0; j < item.getCategories().size(); j++)
             {
                 Category category = item.getCategories().get(j);
                 set.add(category);

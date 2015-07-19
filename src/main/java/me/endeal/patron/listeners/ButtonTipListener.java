@@ -45,7 +45,7 @@ public class ButtonTipListener implements OnClickListener
             fieldCustom.setText(Globals.getOrder().getTip().toString());
         }
         seekBarPercent.setMax(100);
-        int percent = (int)(Globals.getOrder().getTipPercent().doubleValue() * 100);
+        int percent = Globals.getOrder().getTipPercent();
         seekBarPercent.setProgress(percent);
         textPercent.setText(percent + "%");
         seekBarPercent.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {

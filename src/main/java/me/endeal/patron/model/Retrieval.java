@@ -6,12 +6,16 @@ public class Retrieval implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private String method;
+    public static enum Method {
+        Pickup, Service, Delivery, SelfServe
+    }
+
+    private Method method;
     private Station station;
     private Locale locale;
     private Location location;
 
-    public Retrieval(String method, Station station, Locale locale, Location location)
+    public Retrieval(Method method, Station station, Locale locale, Location location)
     {
         setMethod(method);
         setStation(station);
@@ -19,7 +23,7 @@ public class Retrieval implements Serializable
         setLocation(location);
     }
 
-    public void setMethod(String method)
+    public void setMethod(Method method)
     {
         this.method = method;
     }
@@ -39,7 +43,7 @@ public class Retrieval implements Serializable
         this.location = location;
     }
 
-    public String getMethod()
+    public Method getMethod()
     {
         return this.method;
     }

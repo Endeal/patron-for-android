@@ -53,6 +53,7 @@ import me.endeal.patron.system.Loadable;
 import me.endeal.patron.view.NavigationListView;
 import static me.endeal.patron.view.NavigationListView.Hierarchy;
 import static me.endeal.patron.model.Order.Status;
+import static me.endeal.patron.model.Retrieval.Method;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -120,7 +121,7 @@ public class FlashOrders extends AppCompatActivity
         Price tip = new Price(223, "USD");
         long time = 1436843933;
         String comment = "Your mom!";
-        Retrieval retrieval = new Retrieval("pickup", new Station("287782", "Front Counter"), null, null);
+        Retrieval retrieval = new Retrieval(Method.Pickup, new Station("287782", "Front Counter"), null, null);
         Status status = Order.getIntStatus(0);
         Funder funder = new Card("92873", "VISA", "98729837962986", "05", "2016", "DEBIT", "Wells Fargo",
                 "144 Place Dr.", "Simi Valley", "CA", "93393", "google.com-href", "998723", false);

@@ -32,6 +32,7 @@ import me.endeal.patron.model.Funder;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.system.Globals;
 import me.endeal.patron.system.PatronApplication;
+import static me.endeal.patron.model.Retrieval.Method;
 
 public class ListItemMenuAddListener implements OnItemClickListener
 {
@@ -127,7 +128,7 @@ public class ListItemMenuAddListener implements OnItemClickListener
 			}
 
             long time = System.currentTimeMillis() / 1000;
-            Retrieval retrieval = new Retrieval("pickup", null, null, null);
+            Retrieval retrieval = new Retrieval(Method.Pickup, null, null, null);
             order = new Order(null, fragments, null, tip, comment, retrieval, time,
                     Order.Status.WAITING, funder, Globals.getVendor(), null);
 		}

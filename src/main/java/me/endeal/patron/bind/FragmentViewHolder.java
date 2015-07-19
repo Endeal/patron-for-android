@@ -36,15 +36,18 @@ import android.view.WindowManager;
 import com.squareup.picasso.Picasso;
 import io.karim.MaterialTabs;
 
+import java.util.ArrayList;
+
 import me.endeal.patron.fragments.CustomizeFragmentPagerAdapter;
 import me.endeal.patron.fragments.CustomizeViewPager;
 import me.endeal.patron.fragments.FragmentAttributes;
 import me.endeal.patron.fragments.FragmentOptions;
 import me.endeal.patron.main.FlashMenu;
-import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Fragment;
+import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
+import static me.endeal.patron.model.Order.Status;
+import static me.endeal.patron.model.Retrieval.Method;
 
 public class FragmentViewHolder extends RecyclerView.ViewHolder
 {
@@ -192,8 +195,30 @@ public class FragmentViewHolder extends RecyclerView.ViewHolder
                     @Override
                     public void onClick(View v)
                     {
+                        if (Globals.getOrder() == null)
+                        {
+                            Retrieval retrieval = null;
+                            if (Globals.getVendor().getStations() != null && Globals.getVendor().getStations().size() > 0)
+                                retrieval = new Retrieval(Method.Pickup, Globals.getVendor().getStations().get(0), null, null);
+                            else if (Globals.getVendor().getLocales() != null && Globals.getVendor().getLocales().size() > 0)
+                                retrieval = new Retrieval(Method.Service, null, Globals.getVendor().getLocales().get(0), null);
+                            else if (Globals.getVendor().getRange() > 0)
+                            {
+                                Location location = new Location("2773 Wanda Road", "Sandelberg", "CA", "97022", 99.83792, 62.29863);
+                                retrieval = new Retrieval(Method.Delivery, null, null, location);
+                            }
+                            else
+                                retrieval = new Retrieval(Method.SelfServe, null, null, null);
+                            Order order = new Order("92872", new ArrayList<Fragment>(), new ArrayList<Voucher>(), new Price(0, "USD"),
+                                "", retrieval, 1433833200, Status.WAITING, null, Globals.getVendor(),
+                                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/368px-QR_Code_Example.svg.png");
+                            Globals.setOrder(order);
+                        }
+
+                        final Fragment clone = (Fragment)Globals.deepClone(fragment);
+                        Globals.getOrder().getFragments().add(clone);
                         View coordinatorLayout = rootView.findViewById(R.id.menuCoordinatorLayoutMain);
-                        Snackbar.make(coordinatorLayout, fragment.getItem().getName() + " added to order", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(coordinatorLayout, clone.getItem().getName() + " added to order", Snackbar.LENGTH_SHORT).show();
                         dialogView.dismiss();
                     }
                 });

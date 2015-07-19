@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:patron="http://schemas.android.com/apk/res-auto">
+
+      <item android:id="@+id/edit"
+        android:icon="@drawable/ic_edit_white_48dp"
+        android:title="Edit Order"
+        patron:showAsAction="ifRoom" />
+
+</menu>

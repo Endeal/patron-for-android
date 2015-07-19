@@ -18,10 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import me.endeal.patron.bind.FragmentViewHolder;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Price;
+import me.endeal.patron.model.*;
 import me.endeal.patron.R;
+import me.endeal.patron.system.Globals;
 
 public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
 {
@@ -32,6 +31,11 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     {
         this.fragments = fragments;
         this.context = context;
+    }
+
+    public void setFragments(List<Fragment> fragments)
+    {
+        this.fragments = fragments;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     @Override
     public void onBindViewHolder(FragmentViewHolder fragmentViewHolder, int i)
     {
-        Fragment fragment = fragments.get(i);
+        Fragment fragment = Globals.getFragments().get(i);
         fragmentViewHolder.setFragment(fragment);
         fragmentViewHolder.getName().setText(fragment.getItem().getName());
         fragmentViewHolder.getPrice().setText(fragment.getItem().getPrice().toString());
@@ -55,6 +59,6 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     @Override
     public int getItemCount()
     {
-        return (null != fragments ? fragments.size() : 0);
+        return (null != Globals.getFragments() ? Globals.getFragments().size() : 0);
     }
 }

@@ -64,7 +64,7 @@ public class ButtonFinishListener implements OnClickListener
                     Context context = PatronApplication.getContext();
                     SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
                     Editor editor = sharedPreferences.edit();
-                    editor.putString("tip", Globals.getOrder().getTipPercent().toString());
+                    editor.putString("tip", Globals.getOrder().getTipPercent() + "");
                     editor.putString("funder", Globals.getOrder().getFunder().getId());
                     editor.commit();
 
