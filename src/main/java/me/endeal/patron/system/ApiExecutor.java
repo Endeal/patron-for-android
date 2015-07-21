@@ -26,7 +26,7 @@ import me.endeal.patron.listeners.OnTaskCompletedListener;
 import me.endeal.patron.listeners.UserLocationListener;
 import me.endeal.patron.lists.ListLinks;
 import me.endeal.patron.lists.ListKeys;
-import me.endeal.patron.main.FlashLogin;
+import me.endeal.patron.activity.LoginActivity;
 import me.endeal.patron.model.Card;
 import me.endeal.patron.model.Code;
 import me.endeal.patron.model.Funder;
@@ -181,7 +181,7 @@ public class ApiExecutor
                                 user.setEmail(finalEmail);
                                 user.setPassword(finalPassword);
                                 */
-                                Globals.setUser(user);
+                                Globals.setPatron(user);
                             }
                         }
                     }
@@ -239,7 +239,7 @@ public class ApiExecutor
                             {
                                 response = new String(entry.getValue());
                                 Patron user = gson.fromJson(response, Patron.class);
-                                Globals.setUser(user);
+                                Globals.setPatron(user);
                                 Toast.makeText(PatronApplication.getContext(), "Successfully created account", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -468,7 +468,7 @@ public class ApiExecutor
     {
         final OnApiExecutedListener[] listeners = tempListeners;
         HttpPost request = new HttpPost(ListLinks.API_GET_ITEMS);
-        Patron user = Globals.getUser();
+        Patron user = Globals.getPatron();
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
         NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//new BasicNameValuePair("email", user.getEmail());
         NameValuePair password = new BasicNameValuePair("password", "froggy");//user.getPassword());
@@ -528,9 +528,9 @@ public class ApiExecutor
         final String url = ListLinks.API_GET_CODES;
         HttpPost request = new HttpPost(url);
         List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getEmail());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getPassword());
-        NameValuePair provider = new BasicNameValuePair("oauth", Globals.getProvider());
+        NameValuePair email = new BasicNameValuePair("email", Globals.getCredential().getIdentifier());
+        NameValuePair password = new BasicNameValuePair("password", Globals.getCredential().getVerifier());
+        NameValuePair provider = new BasicNameValuePair("oauth", Globals.getCredential().getProvider());
         pairs.add(email);
         pairs.add(password);
         pairs.add(provider);
@@ -896,16 +896,16 @@ public class ApiExecutor
                             try
                             {
                                 Patron user = gson.fromJson(rawUser, Patron.class);
-                                if (!Globals.getProvider().equals("fb") &&
-                                    !Globals.getProvider().equals("tw") &&
-                                    !Globals.getProvider().equals("gp"))
+                                if (!Globals.getCredential().getProvider().equals("fb") &&
+                                    !Globals.getCredential().getProvider().equals("tw") &&
+                                    !Globals.getCredential().getProvider().equals("gp"))
                                 {
                                     /*
                                     user.setEmail(email);
                                     user.setPassword(password);
                                     */
                                 }
-                                Globals.setUser(user);
+                                Globals.setPatron(user);
                             }
                             catch (NetworkOnMainThreadException e)
                             {

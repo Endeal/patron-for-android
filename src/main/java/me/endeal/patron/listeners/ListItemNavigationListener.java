@@ -13,11 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.main.FlashOrders;
-import me.endeal.patron.main.FlashMenu;
-import me.endeal.patron.main.FlashVouchers;
-import me.endeal.patron.main.FlashSettings;
-import me.endeal.patron.main.FlashVendors;
+import me.endeal.patron.activity.*;
 import static me.endeal.patron.view.NavigationListView.Hierarchy;
 
 public class ListItemNavigationListener implements OnItemClickListener
@@ -47,14 +43,14 @@ public class ListItemNavigationListener implements OnItemClickListener
             case 0: // Buy
                 if (hierarchy != Hierarchy.BUY)
                 {
-                    intent = new Intent(context, FlashMenu.class);
+                    intent = new Intent(context, MenuActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 break;
             case 1: // Orders
                 if (hierarchy != Hierarchy.ORDERS)
                 {
-                    intent = new Intent(context, FlashOrders.class);
+                    intent = new Intent(context, OrdersActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 break;
@@ -68,11 +64,9 @@ public class ListItemNavigationListener implements OnItemClickListener
                 */
                 break;
             default:
-                System.out.println("SETTINGS NAV");
                 if (hierarchy != Hierarchy.SETTINGS)
                 {
-                    System.out.println("SUCCESSFUL");
-                    intent = new Intent(context, FlashSettings.class);
+                    intent = new Intent(context, SettingsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
                 break;

@@ -10,14 +10,19 @@ public class Identity implements Serializable
     private List<Credential> credentials;
     private long birthday;
     private List<Location> locations;
+    private List<String> vendors;
+    private List<String> items;
 
-    public Identity(String firstName, String lastName, List<Credential> credentials, long birthday, List<Location> locations)
+    public Identity(String firstName, String lastName, List<Credential> credentials, long birthday, List<Location> locations,
+            List<String> vendors, List<String> items)
     {
         setFirstName(firstName);
         setLastName(lastName);
         setCredentials(credentials);
         setBirthday(birthday);
         setLocations(locations);
+        setVendors(vendors);
+        setItems(items);
     }
 
     public void setFirstName(String firstName)
@@ -45,6 +50,16 @@ public class Identity implements Serializable
         this.locations = locations;
     }
 
+    public void setVendors(List<String> vendors)
+    {
+        this.vendors = vendors;
+    }
+
+    public void setItems(List<String> items)
+    {
+        this.items = items;
+    }
+
     public String getFirstName()
     {
         return this.firstName;
@@ -68,5 +83,15 @@ public class Identity implements Serializable
     public List<Location> getLocations()
     {
         return this.locations;
+    }
+
+    public List<String> getVendors()
+    {
+        return this.vendors;
+    }
+
+    public List<String> getItems()
+    {
+        return this.items;
     }
 }

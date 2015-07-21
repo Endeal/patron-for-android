@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/LayoutMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/dialogLoadingTextViewLoading"
-        android:background="#00FFFFFF"
+        style="@style/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:color="#FFFFFF"
         android:text="Placing Order..." />
 
     <ProgressBar
         android:id="@+id/dialogLoadingProgressBarLoading"
-        android:background="#00FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

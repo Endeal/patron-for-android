@@ -15,17 +15,21 @@ import android.graphics.Typeface;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.util.AttributeSet;
+
+import com.squareup.picasso.Picasso;
 
 import me.endeal.patron.bind.NavigationBinder;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.ListItemNavigationListener;
 import me.endeal.patron.lists.ListFonts;
+import me.endeal.patron.model.Identity;
 import me.endeal.patron.model.Patron;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
@@ -65,6 +69,7 @@ public class NavigationListView extends ListView
     public void init()
     {
         // Set background of list view.
+        setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         setBackgroundResource(R.color.background);
 
         // Add Header
@@ -83,16 +88,50 @@ public class NavigationListView extends ListView
         imageViewLayoutParams.setMargins(leftMargin, topMargin, 0, bottomMargin);
         imageView.setLayoutParams(imageViewLayoutParams);
 
-        // Get the reward points for the vendor.
-        textViewHeader = new TextView(relativeLayout.getContext());
+        // Add Footer
+        LinearLayout linearLayoutFooter = new LinearLayout(getContext());
+        linearLayoutFooter.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        RelativeLayout relativeLayoutFooter = new RelativeLayout(getContext());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        relativeLayoutFooter.setLayoutParams(params);
+        TextView  textViewFooter = new TextView(getContext());
+        textViewFooter.setTextAppearance(getContext(), R.style.subtitle);
+        int margin = (int)Globals.convertPixelsToDp(10, getContext());
+        LinearLayout.LayoutParams textViewFooterLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewFooterLayoutParams.setMargins(margin, margin, margin, margin);
+        textViewFooter.setLayoutParams(textViewFooterLayoutParams);
+        ImageView imageViewVendor = new ImageView(getContext());
+        imageViewVendor.setLayoutParams(params);
+        imageViewVendor.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if (Globals.getVendor() != null)
         {
-            int points = Globals.getPoints(Globals.getVendor().getId());
+            textViewFooter.setText(Globals.getVendor().getName());
+            RelativeLayout.LayoutParams textViewFooterParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            textViewFooterParams.addRule(RelativeLayout.ABOVE, imageViewVendor.getId());
+            textViewFooter.setLayoutParams(textViewFooterParams);
+            Picasso.with(getContext()).load(Globals.getVendor().getPicture()).into(imageViewVendor);
+        }
+        relativeLayoutFooter.addView(textViewFooter);
+        relativeLayoutFooter.addView(imageViewVendor);
+        linearLayoutFooter.addView(relativeLayoutFooter);
+        addFooterView(linearLayoutFooter);
+
+        // Get the reward points for the vendor.
+        textViewHeader = new TextView(relativeLayout.getContext());
+        textViewHeader.setTextAppearance(getContext(), R.style.label);
+        if (Globals.getVendor() != null && Globals.getPatron() != null && Globals.getPatron().getIdentity() != null)
+        {
+            //int points = Globals.getPoints(Globals.getVendor().getId());
+            int points = 0;
             if (points < 0)
             {
                 points = 0;
             }
-            textViewHeader.setText(Globals.getVendor().getName() + "\n" + points + " Points");
+            Identity identity = Globals.getPatron().getIdentity();
+            textViewHeader.setText(identity.getFirstName() + " " + identity.getLastName());
         }
         textViewHeader.setBackgroundResource(R.color.background);
         textViewHeader.setGravity(Gravity.CENTER_VERTICAL);

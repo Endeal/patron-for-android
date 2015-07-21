@@ -11,8 +11,8 @@ import android.util.Log;
 
 import com.appboy.AppboyGcmReceiver;
 
-import me.endeal.patron.main.FlashScan;
-import me.endeal.patron.main.FlashLogin;
+import me.endeal.patron.activity.LoginActivity;
+import me.endeal.patron.activity.OrdersActivity;
 import me.endeal.patron.system.PatronApplication;
 
 public class FlashIntentReceiver extends BroadcastReceiver
@@ -31,13 +31,13 @@ public class FlashIntentReceiver extends BroadcastReceiver
 
             if (orderId == null || orderId.length() == 0)
             {
-                Intent loginIntent = new Intent(context.getApplicationContext(), FlashLogin.class);
+                Intent loginIntent = new Intent(context.getApplicationContext(), LoginActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 context.startActivity(loginIntent);
                 return;
             }
 
-            Intent scanIntent = new Intent(context.getApplicationContext(), FlashScan.class);
+            Intent scanIntent = new Intent(context.getApplicationContext(), OrdersActivity.class);
             scanIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             scanIntent.putExtra("orderId", orderId);
             context.startActivity(scanIntent, extras);

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import java.util.List;
 
+import me.endeal.patron.dialogs.LocationDialog;
 import me.endeal.patron.model.Order;
 import me.endeal.patron.model.Locale;
 import me.endeal.patron.model.Location;
@@ -43,7 +44,7 @@ public class RetrievalButtonListener implements OnClickListener
     }
 
     @Override
-    public void onClick(View view)
+    public void onClick(final View view)
     {
         final Order order = Globals.getOrder();
         if (order.getRetrieval().getMethod() == Method.Pickup)
@@ -89,23 +90,37 @@ public class RetrievalButtonListener implements OnClickListener
         else if (order.getRetrieval().getMethod() == Method.Delivery)
         {
             final PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.START);
-            /*
-            for (int i = 0; i < order.getVendor().getStations().size(); i++)
+            int i = 0;
+            if (Globals.getPatron() != null && Globals.getPatron().getIdentity() != null &&
+                    Globals.getPatron().getIdentity().getLocations() != null)
+            for (i = 0; i < Globals.getPatron().getIdentity().getLocations().size(); i++)
             {
-                Station station = order.getVendor().getStations().get(i);
-                popup.getMenu().add(Menu.NONE, i, Menu.NONE, station.getName());
+                Location location = Globals.getPatron().getIdentity().getLocations().get(i);
+                popup.getMenu().add(Menu.NONE, i, Menu.NONE, location.toString());
             }
+            popup.getMenu().add(Menu.NONE, i + 1, Menu.NONE, "Add new location...");
             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem)
                 {
-                    Station station = order.getVendor().getStations().get(menuItem.getItemId());
-                    order.getRetrieval().setStation(station);
+                    int i = menuItem.getItemId();
+                    Location location = null;
+                    if (Globals.getPatron() != null && Globals.getPatron().getIdentity() != null &&
+                        Globals.getPatron().getIdentity().getLocations() != null &&
+                        i < Globals.getPatron().getIdentity().getLocations().size())
+                    {
+                        location = Globals.getPatron().getIdentity().getLocations().get(i);
+                        order.getRetrieval().setLocation(location);
+                    }
+                    else
+                    {
+                        LocationDialog dialog = new LocationDialog(view.getContext());
+                        dialog.show();
+                    }
                     popup.dismiss();
                     return true;
                 }
             });
-            */
             popup.show();
         }
         update();

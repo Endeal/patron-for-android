@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import me.endeal.patron.main.FlashMenu;
+import me.endeal.patron.activity.MenuActivity;
 import me.endeal.patron.system.Globals;
 
 public class ButtonFindNearestListener implements OnClickListener
@@ -22,7 +22,7 @@ public class ButtonFindNearestListener implements OnClickListener
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             activity, view, "buttonFindNearest");
         Bundle bundle = options.toBundle();
-        Intent intent = new Intent(activity, FlashMenu.class);
+        Intent intent = new Intent(activity, MenuActivity.class);
         //ActivityCompat.startActivity(activity, intent, bundle);
         view.getContext().startActivity(intent);
         activity.finish();

@@ -28,7 +28,6 @@ import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.Order;
 import me.endeal.patron.model.Locale;
 import me.endeal.patron.model.Location;

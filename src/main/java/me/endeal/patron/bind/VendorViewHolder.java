@@ -31,7 +31,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
-import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.Attribute;
 import me.endeal.patron.model.Contact;
 import me.endeal.patron.model.Fragment;
@@ -196,12 +195,8 @@ public class VendorViewHolder extends RecyclerView.ViewHolder
                     @Override
                     public void onClick(final View v)
                     {
-                        activity.finish();
-                        /*
                         Globals.setVendor(vendor);
-                        Intent intent = new Intent(v.getContext(), FlashMenu.class);
-                        v.getContext().startActivity(intent);
-                        */
+                        activity.finish();
                     }
                 });
 

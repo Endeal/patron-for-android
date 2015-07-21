@@ -26,7 +26,7 @@ import android.util.DisplayMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import me.endeal.patron.main.FlashLogin;
+import me.endeal.patron.model.Credential;
 import me.endeal.patron.model.Category;
 import me.endeal.patron.model.Code;
 import me.endeal.patron.model.Fragment;
@@ -34,14 +34,13 @@ import me.endeal.patron.model.Item;
 import me.endeal.patron.model.Order;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.model.Patron;
-import me.endeal.patron.view.ButtonFilter;
 
 public class Globals
 {
 	private static final Logger logger = LoggerFactory.getLogger(Globals.class);
 
 	// Properties
-	private static Patron user;
+	private static Patron patron;
 	private static Vendor vendor;
 	private static List<Vendor> vendors = new ArrayList<Vendor>();
 	private static List<Vendor> filteredVendors = new ArrayList<Vendor>();
@@ -49,15 +48,8 @@ public class Globals
 	private static List<Order> orders = new ArrayList<Order>();
 	private static List<Fragment> fragments = new ArrayList<Fragment>();
 	private static Order order;
-	private static String deviceId;
-	private static List<Vendor> favoriteVendors = new ArrayList<Vendor>();
-	private static List<Item> favoriteItems =  new ArrayList<Item>();
 	private static Bitmap scan;
-  private static Map<String, Integer> points = new HashMap<String, Integer>();
-	private static ButtonFilter buttonFilter;
-
-    // Login
-    private static String provider = "";
+    private static Credential credential;
 
 	// MAIN METHODS
 	public static Item getItemById(String itemId)
@@ -86,11 +78,6 @@ public class Globals
 	    return dp;
 	}
 
-    public static boolean hasUser()
-    {
-        return Globals.user != null;
-    }
-
     public static Object deepClone(Object object)
     {
         try
@@ -110,9 +97,9 @@ public class Globals
     }
 
 	// Setters
-	public static void setUser(Patron user)
+	public static void setPatron(Patron patron)
 	{
-		Globals.user = user;
+		Globals.patron = patron;
 	}
 
 	public static void setVendor(Vendor vendor)
@@ -194,41 +181,21 @@ public class Globals
 		Globals.order = order;
 	}
 
-	public static void setDeviceId(String deviceId)
-	{
-		Globals.deviceId = deviceId;
-	}
-
-	public static void setFavoriteVendors(List<Vendor> favoriteVendors)
-	{
-		Globals.favoriteVendors = favoriteVendors;
-	}
-
-	public static void setFavoriteItems(List<Item> favoriteItems)
-	{
-		Globals.favoriteItems = favoriteItems;
-	}
-
 	public static void setScan(Bitmap codeImage)
 	{
 		Globals.scan = codeImage;
 	}
 
-    public static void setPoints(Map<String, Integer> points)
+    public static void setCredential(Credential credential)
     {
-        Globals.points = points;
+        Globals.credential = credential;
     }
 
-public static void setButtonFilter(ButtonFilter buttonFilter)
-{
-	Globals.buttonFilter = buttonFilter;
-}
-
 	// Getters
-	public static Patron getUser()
+	public static Patron getPatron()
 	{
         /*
-		if (user == null)
+		if (patron == null)
 		{
 			Context context = Patron.getContext();
 			Intent intent = new Intent(context, FlashLogin.class);
@@ -236,7 +203,7 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 			context.startActivity(intent);
 		}
         */
-		return user;
+		return patron;
 	}
 
 	public static Vendor getVendor()
@@ -273,144 +240,13 @@ public static void setButtonFilter(ButtonFilter buttonFilter)
 		return order;
 	}
 
-	public static String getDeviceId()
-	{
-		return deviceId;
-	}
-
-	public static List<Vendor> getFavoriteVendors()
-	{
-		return favoriteVendors;
-	}
-
-	public static List<Item> getFavoriteItems()
-	{
-		return favoriteItems;
-	}
-
 	public static Bitmap getScan()
 	{
 		return scan;
 	}
 
-    public static Map<String, Integer> getPoints()
+    public static Credential getCredential()
     {
-        return points;
+        return credential;
     }
-
-    public static int getPoints(String vendorId)
-    {
-        if (points.get(vendorId) == null)
-            return -1;
-        return points.get(vendorId);
-    }
-
-		public static ButtonFilter getButtonFilter()
-		{
-			return buttonFilter;
-		}
-
-	public static void setEmail(String email)
-	{
-		try
-		{
-			Context context = PatronApplication.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-        	Editor editor = sharedPreferences.edit();
-        	editor.putString("email", email);
-        	editor.commit();
-    	}
-    	catch (Exception e)
-    	{
-            e.printStackTrace();
-    	}
-	}
-
-	public static void setPassword(String password)
-	{
-		try
-		{
-            String encryptedPassword;
-            Context context = PatronApplication.getContext();
-            SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-            if (password == null)
-            {
-                encryptedPassword = null;
-            }
-            else
-            {
-                encryptedPassword = FlashCipher.encrypt(password);
-            }
-	        Editor editor = sharedPreferences.edit();
-	        editor.putString("password", encryptedPassword);
-	        editor.commit();
-	    }
-	    catch (Exception e)
-	    {
-            e.printStackTrace();
-	    }
-	}
-
-	public static void setProvider(String provider)
-	{
-		try
-		{
-			Context context = PatronApplication.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-        	Editor editor = sharedPreferences.edit();
-        	editor.putString("provider", provider);
-        	editor.commit();
-    	}
-    	catch (Exception e)
-    	{
-            e.printStackTrace();
-    	}
-	}
-
-	public static String getEmail()
-	{
-		try
-		{
-			Context context = PatronApplication.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-			String email = sharedPreferences.getString("email", "");
-	        return email;
-	    }
-	    catch (Exception e)
-	    {
-	    	return null;
-	    }
-	}
-
-	public static String getPassword()
-	{
-		try
-		{
-			Context context = PatronApplication.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-			String password = sharedPreferences.getString("password", "");
-	        password = FlashCipher.decrypt(password);
-	        return password;
-	    }
-	    catch (Exception e)
-	    {
-	    	return null;
-	    }
-	}
-
-	public static String getProvider()
-	{
-		try
-		{
-			Context context = PatronApplication.getContext();
-			SharedPreferences sharedPreferences = context.getSharedPreferences("me.endeal.patron", Context.MODE_PRIVATE);
-			String provider = sharedPreferences.getString("provider", "");
-	        return provider;
-	    }
-	    catch (Exception e)
-	    {
-	    	return null;
-	    }
-	}
-
 }

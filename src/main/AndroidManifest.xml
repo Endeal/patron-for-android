@@ -63,7 +63,7 @@
 
         <!-- The Login Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashLogin"
+            android:name="me.endeal.patron.activity.LoginActivity"
             android:label="@string/globalAppName"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
@@ -76,19 +76,19 @@
 
         <!-- Vouchers Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashVouchers"
+            android:name="me.endeal.patron.activity.VouchersActivity"
             android:label="@string/titleActivityVouchers"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashLogin" />
+                android:value="me.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Create Account Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashCreateAccount"
+            android:name="me.endeal.patron.activity.CreateAccountActivity"
             android:label="@string/titleActivityCreateAccount"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
@@ -96,25 +96,12 @@
             android:parentActivityName="me.endeal.patron.main.FlashLogin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashLogin" />
-        </activity>
-
-        <!-- The Add Card Screen Activity -->
-        <activity
-            android:name="me.endeal.patron.main.FlashAddCard"
-            android:label="@string/titleActivityAddCard"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="me.endeal.patron.main.FlashPayment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashSettings" />
+                android:value="me.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Menu Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashMenu"
+            android:name="me.endeal.patron.activity.MenuActivity"
             android:label="@string/titleActivityMenu"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
@@ -122,58 +109,42 @@
 
         <!-- The Cart Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashCart"
+            android:name="me.endeal.patron.activity.ReviewActivity"
             android:label="@string/titleActivityCart"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashMenu">
+            android:parentActivityName="me.endeal.patron.activity.MenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashMenu" />
+                android:value="me.endeal.patron.activity.MenuActivity" />
         </activity>
 
         <!-- The Vendors Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashVendors"
+            android:name="me.endeal.patron.activity.VendorsActivity"
             android:label="@string/titleActivityLocations"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashMenu">
+            android:parentActivityName="me.endeal.patron.activity.MenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashMenu" />
+                android:value="me.endeal.patron.activity.MenuActivity" />
         </activity>
 
         <!-- The Orders Screen Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashOrders"
+            android:name="me.endeal.patron.activity.OrdersActivity"
             android:label="@string/titleActivityOrders"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
         </activity>
 
-        <!-- The Scan Screen Activity -->
-        <activity
-            android:name="me.endeal.patron.main.FlashScan"
-            android:label="@string/titleActivityScan"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashCodes">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashOrders" />
-        </activity>
-
         <!-- The Settings Activity -->
         <activity
-            android:name="me.endeal.patron.main.FlashSettings"
+            android:name="me.endeal.patron.activity.SettingsActivity"
             android:label="@string/titleActivitySettings"
             android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashHome">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashHome" />
+            android:screenOrientation="portrait">
         </activity>
 
         <!-- The Facebook Login Activity -->
@@ -182,10 +153,10 @@
             android:label="@string/titleActivityFacebook"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashLogin">
+            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashLogin" />
+                android:value="me.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Twitter Login Activity -->
@@ -194,10 +165,10 @@
             android:label="@string/titleActivityTwitter"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashLogin">
+            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashLogin" />
+                android:value="me.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Twitter Share E-mail Activity -->
@@ -207,10 +178,10 @@
             android:label="@string/titleActivityTwitterShareEmail"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashLogin">
+            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.main.FlashLogin" />
+                android:value="me.endeal.patron.activity.LoginActivity" />
         </activity>
 
     </application>

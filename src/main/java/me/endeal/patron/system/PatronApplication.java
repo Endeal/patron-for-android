@@ -6,7 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 
-import me.endeal.patron.main.FlashLogin;
+import me.endeal.patron.activity.LoginActivity;
 import me.endeal.patron.R;
 import me.endeal.patron.social.SocialExecutor;
 

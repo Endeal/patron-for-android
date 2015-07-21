@@ -42,7 +42,6 @@ import me.endeal.patron.fragments.CustomizeFragmentPagerAdapter;
 import me.endeal.patron.fragments.CustomizeViewPager;
 import me.endeal.patron.fragments.FragmentAttributes;
 import me.endeal.patron.fragments.FragmentOptions;
-import me.endeal.patron.main.FlashMenu;
 import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
