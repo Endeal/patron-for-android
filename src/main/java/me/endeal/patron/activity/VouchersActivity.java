@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.GridLayoutManager;
 import android.content.Intent;
-import android.widget.ImageButton;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.content.Context;
@@ -27,6 +31,9 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import com.squareup.picasso.Picasso;
+
+import me.endeal.patron.adapters.NavigationAdapter;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
@@ -37,6 +44,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class VouchersActivity extends AppCompatActivity
 {
+    private DrawerNavigationListener drawerToggle;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -49,11 +58,27 @@ public class VouchersActivity extends AppCompatActivity
 
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.vouchersDrawerNavigation);
-		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.vouchersListNavigation);
-        DrawerNavigationListener drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
+        drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
-		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.VOUCHERS);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+        final RecyclerView recyclerViewNavigation = (RecyclerView)findViewById(R.id.navigationRecyclerViewNavigation);
+        final TextView textViewDrawerTitle = (TextView)findViewById(R.id.navigationTextViewDrawerTitle);
+        final TextView textViewDrawerSubtitle = (TextView)findViewById(R.id.navigationTextViewDrawerSubtitle);
+        final ImageView imageViewDrawerVendor = (ImageView)findViewById(R.id.navigationImageViewDrawerVendor);
+        textViewDrawerTitle.setText(Globals.getPatron().getIdentity().getFirstName() + " " + Globals.getPatron().getIdentity().getLastName());
+        if (Globals.getVendor() != null)
+        {
+            textViewDrawerSubtitle.setText(Globals.getVendor().getName());
+            Picasso.with(this).load(Globals.getVendor().getPicture()).into(imageViewDrawerVendor);
+        }
+        else
+        {
+            textViewDrawerSubtitle.setText("No vendor selected");
+        }
+        NavigationAdapter navigationAdapter = new NavigationAdapter(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1);
+        recyclerViewNavigation.setLayoutManager(layoutManager);
+        recyclerViewNavigation.setAdapter(navigationAdapter);
         drawerToggle.syncState();
 	}
 

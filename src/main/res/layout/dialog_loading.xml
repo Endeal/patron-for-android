@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <TextView
@@ -9,19 +11,16 @@
         style="@style/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
         android:text="Placing Order..." />
 
     <ProgressBar
         android:id="@+id/dialogLoadingProgressBarLoading"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/dialogLoadingTextViewLoading"
         android:layout_margin="20dp"
-        android:indeterminate="true"
-        android:max="100" />
+        android:layout_gravity="center"
+        android:indeterminate="true" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -23,12 +23,13 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.util.DisplayMetrics;
 
+import com.google.gson.Gson;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import me.endeal.patron.model.Credential;
 import me.endeal.patron.model.Category;
-import me.endeal.patron.model.Code;
 import me.endeal.patron.model.Fragment;
 import me.endeal.patron.model.Item;
 import me.endeal.patron.model.Order;
@@ -188,7 +189,12 @@ public class Globals
 
     public static void setCredential(Credential credential)
     {
-        Globals.credential = credential;
+        Gson gson = new Gson();
+        SharedPreferences shared = PatronApplication.getContext().getSharedPreferences("patron", Context.MODE_PRIVATE);
+        String json = gson.toJson(credential);
+        Editor editor = shared.edit();
+        editor.putString("credential", json);
+        editor.commit();
     }
 
 	// Getters
@@ -247,6 +253,10 @@ public class Globals
 
     public static Credential getCredential()
     {
+        Gson gson = new Gson();
+        SharedPreferences shared = PatronApplication.getContext().getSharedPreferences("patron", Context.MODE_PRIVATE);
+        String json = shared.getString("credential", "");
+        Credential credential = gson.fromJson(json, Credential.class);
         return credential;
     }
 }

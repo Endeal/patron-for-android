@@ -30,7 +30,10 @@ import android.view.WindowManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
+import java.util.List;
 
+import me.endeal.patron.listeners.OnApiExecutedListener;
+import me.endeal.patron.model.ApiResult;
 import me.endeal.patron.model.Attribute;
 import me.endeal.patron.model.Contact;
 import me.endeal.patron.model.Fragment;
@@ -39,6 +42,7 @@ import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
+import me.endeal.patron.system.ApiExecutor;
 
 public class VendorViewHolder extends RecyclerView.ViewHolder
 {
@@ -59,13 +63,13 @@ public class VendorViewHolder extends RecyclerView.ViewHolder
         final Activity activity = (Activity)(view.getContext());
         view.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v)
+            public void onClick(final View view)
             {
-                final Dialog dialogView = new Dialog(v.getContext());
+                final Dialog dialogView = new Dialog(view.getContext());
                 dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialogView.setContentView(R.layout.dialog_vendor);
                 ImageView picture = (ImageView)dialogView.findViewById(R.id.dialogVendorImageViewPicture);
-                ImageButton favorite = (ImageButton)dialogView.findViewById(R.id.dialogVendorImageButtonFavorite);
+                final ImageButton favorite = (ImageButton)dialogView.findViewById(R.id.dialogVendorImageButtonFavorite);
                 ImageButton contact = (ImageButton)dialogView.findViewById(R.id.dialogVendorImageButtonContact);
                 ImageButton navigation = (ImageButton)dialogView.findViewById(R.id.dialogVendorImageButtonNavigate);
                 TextView title = (TextView)dialogView.findViewById(R.id.dialogVendorTextViewTitle);
@@ -73,14 +77,73 @@ public class VendorViewHolder extends RecyclerView.ViewHolder
                 Button select = (Button)dialogView.findViewById(R.id.dialogVendorButtonSelect);
 
                 // Set picture
-                Picasso.with(v.getContext()).load(vendor.getPicture()).into(picture);
+                Picasso.with(view.getContext()).load(vendor.getPicture()).into(picture);
 
                 // Set favorite
+                if (Globals.getPatron().getVendors().contains(vendor.getId()))
+                {
+                    favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                }
+                else
+                {
+                    favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                }
                 favorite.setOnClickListener(new OnClickListener() {
                     @Override
-                    public void onClick(View view)
+                    public void onClick(final View view)
                     {
-                        Snackbar.make(view.getRootView(), vendor.getName() + " added to favorites", Snackbar.LENGTH_SHORT).show();
+                        int found = -1;
+                        List<String> favorites = Globals.getPatron().getVendors();
+                        for (int i = 0; i < favorites.size(); i++)
+                        {
+                            if (favorites.get(i).equals(vendor.getId()))
+                            {
+                                found = i;
+                                break;
+                            }
+                        }
+                        // Add if not favorited
+                        if (found == -1)
+                        {
+                            favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                            favorites.add(vendor.getId());
+                        }
+                        // Remove if favorited
+                        else
+                        {
+                            favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                            favorites.remove(found);
+                        }
+                        Globals.getPatron().setVendors(favorites);
+                        // Update the patron
+                        ApiExecutor executor = new ApiExecutor();
+                        executor.updatePatron(Globals.getPatron(), new OnApiExecutedListener() {
+                            @Override
+                            public void onExecuted(ApiResult result)
+                            {
+                                if (result.getStatusCode() != 200)
+                                {
+                                    Snackbar.make(view.getRootView(), result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                    if (Globals.getPatron().getVendors().contains(vendor.getId()))
+                                    {
+                                        favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                                        Globals.getPatron().getVendors().remove(vendor.getId());
+                                    }
+                                    else
+                                    {
+                                        favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                                        Globals.getPatron().getVendors().add(vendor.getId());
+                                    }
+                                }
+                                else
+                                {
+                                    if (Globals.getPatron().getVendors().contains(vendor.getId()))
+                                        Snackbar.make(view.getRootView(), "Vendor successfully added to favorites", Snackbar.LENGTH_SHORT).show();
+                                    else
+                                        Snackbar.make(view.getRootView(), "Vendor successfully removed from favorites", Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 });
 

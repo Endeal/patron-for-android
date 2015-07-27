@@ -2,6 +2,7 @@ package me.endeal.patron.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -11,7 +12,17 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.stripe.android.model.Card;
+import com.stripe.android.model.Token;
+import com.stripe.android.Stripe;
+import com.stripe.android.TokenCallback;
+import com.stripe.exception.AuthenticationException;
+
+import me.endeal.patron.listeners.OnApiExecutedListener;
+import me.endeal.patron.lists.ListKeys;
+import me.endeal.patron.model.ApiResult;
 import me.endeal.patron.R;
+import me.endeal.patron.system.ApiExecutor;
 
 import org.joda.time.DateTime;
 
@@ -33,9 +44,8 @@ public class CardDialog extends Dialog
     {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_card);
-        EditText name = (EditText)findViewById(R.id.dialogCardEditTextName);
-        EditText number = (EditText)findViewById(R.id.dialogCardEditTextName);
-        EditText cvv = (EditText)findViewById(R.id.dialogCardEditTextName);
+        final EditText number = (EditText)findViewById(R.id.dialogCardEditTextNumber);
+        final EditText cvv = (EditText)findViewById(R.id.dialogCardEditTextCvv);
         final Button month = (Button)findViewById(R.id.dialogCardButtonMonth);
         final Button year = (Button)findViewById(R.id.dialogCardButtonYear);
         final Button submit = (Button)findViewById(R.id.dialogCardButtonSubmit);
@@ -93,9 +103,50 @@ public class CardDialog extends Dialog
         final Dialog dialog = this;
         submit.setOnClickListener(new android.view.View.OnClickListener() {
             @Override
-            public void onClick(View view)
+            public void onClick(final View view)
             {
-                dialog.dismiss();
+                final Card card = new Card(number.getText().toString(), Integer.parseInt(month.getText().toString()),
+                    Integer.parseInt(year.getText().toString()), cvv.getText().toString());
+                if (!card.validateCard())
+                {
+                    Snackbar.make(view.getRootView(), "Invalid card", Snackbar.LENGTH_SHORT).show();
+                }
+                Stripe stripe = null;
+                try
+                {
+                    stripe = new Stripe(ListKeys.STRIPE_PUBLIC_KEY);
+                    stripe.createToken(card, new TokenCallback() {
+                        public void onSuccess(Token token)
+                        {
+                            String tokenId = token.getId();
+                            System.out.println("Token:" + tokenId);
+                            ApiExecutor executor = new ApiExecutor();
+                            executor.addFunder(tokenId, new OnApiExecutedListener() {
+                                @Override
+                                public void onExecuted(ApiResult result)
+                                {
+                                    if (result.getStatusCode() == 201)
+                                    {
+                                        dialog.dismiss();
+                                    }
+                                    else
+                                        Snackbar.make(view.getRootView(), result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        public void onError(Exception error)
+                        {
+                            Snackbar.make(view.getRootView(), error.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                catch (AuthenticationException e)
+                {
+                    e.printStackTrace();
+                    Snackbar.make(view.getRootView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
     }

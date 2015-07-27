@@ -8,7 +8,7 @@ public class Item implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String _id;
 	private String name;
     private String description;
     private String picture;
@@ -36,7 +36,7 @@ public class Item implements Serializable
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	public void setName(String name)
@@ -86,7 +86,7 @@ public class Item implements Serializable
 
 	public String getId()
 	{
-		return this.id;
+		return this._id;
 	}
 
 	public String getName()

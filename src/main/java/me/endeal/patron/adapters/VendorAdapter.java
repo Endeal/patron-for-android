@@ -34,6 +34,11 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorViewHolder>
         this.vendors = vendors;
     }
 
+    public void setVendors(List<Vendor> vendors)
+    {
+        this.vendors = vendors;
+    }
+
     @Override
     public VendorViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
     {

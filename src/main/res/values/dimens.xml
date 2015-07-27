@@ -10,6 +10,7 @@
     <dimen name="localeTextSize">48sp</dimen>
     <dimen name="toolbarHeight">48dp</dimen>
     <dimen name="fabElevation">10dp</dimen>
+    <dimen name="fabLayoutElevation">15dp</dimen>
     <dimen name="fabSize">56dp</dimen>
     <dimen name="menuPictureSize">150dp</dimen>
     <dimen name="actionIconSize">50dp</dimen>

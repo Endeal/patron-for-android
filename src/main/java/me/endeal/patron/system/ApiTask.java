@@ -30,12 +30,15 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import me.endeal.patron.listeners.OnTaskCompletedListener;
+import me.endeal.patron.model.Credential;
+import me.endeal.patron.model.Vendor;
+import me.endeal.patron.system.Globals;
 
 import android.os.AsyncTask;
 
 public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 {
-		private OnTaskCompletedListener listener;
+    private OnTaskCompletedListener listener;
     private boolean mocking;
     private Map<URI, byte[]> mockData;
     private int connectionTimeout;
@@ -118,31 +121,34 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
             return this.mockData;
         }
 
-        System.out.println("task1");
+        // Add authentication headers
         final HttpParams params = new BasicHttpParams();
-        System.out.println("task2");
         HttpConnectionParams.setConnectionTimeout(params, getConnectionTimeout());
-        System.out.println("task3");
         HttpConnectionParams.setSoTimeout(params, getSocketTimeout());
-        System.out.println("task4");
         HttpClient client = new DefaultHttpClient(params);
-        System.out.println("task5");
 	    try
         {
             Map<URI, byte[]> data = new HashMap<URI, byte[]>();
-            System.out.println("task6");
             for (int i = 0; i < requests.length; i++)
             {
                 HttpUriRequest request = requests[i];
-                System.out.println("task7");
+                request.setHeader("Content-Type", "application/json");
+                request.setHeader("Accept", "application/json");
+                Credential credential = Globals.getCredential();
+                if (credential != null)
+                {
+                    request.addHeader("x-identity-identifier", credential.getIdentifier());
+                    request.addHeader("x-identity-verifier", credential.getVerifier());
+                    request.addHeader("x-identity-provider", credential.getProvider());
+                }
+                if (Globals.getVendor() != null && Globals.getVendor().getId() != null)
+                {
+                    request.addHeader("x-vendor-id", Globals.getVendor().getId());
+                }
                 HttpResponse response = client.execute(request);
-                System.out.println("task8");
                 HttpEntity entity = response.getEntity();
-                System.out.println("task9");
                 byte[] bytes = EntityUtils.toByteArray(entity);
-                System.out.println("task10");
                 data.put(request.getURI(), bytes);
-                System.out.println("task11");
                 String encoding = new String(bytes);
 
                 String TAG = "PATRON";
@@ -165,27 +171,22 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
         }
 		catch (NullPointerException e)
 		{
-			System.out.println("task12");
 			e.printStackTrace();
 		}
         catch (UnknownHostException e)
         {
-            System.out.println("task13");
             e.printStackTrace();
         }
 		catch (UnsupportedEncodingException e)
 		{
-            System.out.println("task14");
 			e.printStackTrace();
 		}
 		catch (ClientProtocolException e)
 		{
-		System.out.println("task15");
 			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-            System.out.println("task16");
 			e.printStackTrace();
 		}
 
@@ -195,12 +196,9 @@ public class ApiTask extends AsyncTask<HttpUriRequest, Void, Map<URI, byte[]>>
 	@Override
 	protected void onPostExecute(Map<URI, byte[]> data)
 	{
-		System.out.println("taskpost1");
 		if (listener != null)
 		{
-			System.out.println("taskpost2");
 			listener.onComplete(data);
-			System.out.println("taskpost3");
 		}
 	}
 }

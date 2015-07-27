@@ -27,20 +27,10 @@ import me.endeal.patron.listeners.UserLocationListener;
 import me.endeal.patron.lists.ListLinks;
 import me.endeal.patron.lists.ListKeys;
 import me.endeal.patron.activity.LoginActivity;
-import me.endeal.patron.model.Card;
-import me.endeal.patron.model.Code;
-import me.endeal.patron.model.Funder;
-import static me.endeal.patron.model.Funder.Type;
-import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Locale;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Patron;
-import me.endeal.patron.model.Vendor;
+import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiTask;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Parser;
 import me.endeal.patron.system.PatronApplication;
 import me.endeal.patron.view.QustomDialogBuilder;
 
@@ -124,7 +114,7 @@ public class ApiExecutor
         this.data = data;
     }
 
-    public void callback(OnApiExecutedListener... listeners)
+    public void callback(ApiResult result, OnApiExecutedListener... listeners)
     {
         if (listeners == null || listeners.length == 0)
         {
@@ -134,225 +124,214 @@ public class ApiExecutor
         {
           if (listener != null)
           {
-            listener.onExecuted();
+            listener.onExecuted(result);
           }
         }
     }
 
     // Login
-    public void login(String email, String password, String provider, final OnApiExecutedListener... listeners)
+    public void login(final Credential credential, final OnApiExecutedListener... listeners)
     {
-        final String finalEmail = email;
-        final String finalPassword = password;
         HttpPost request = new HttpPost(ListLinks.API_LOGIN_PATRON);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair pairEmail = new BasicNameValuePair("email", email);
-        NameValuePair pairPassword = new BasicNameValuePair("password", password);
-        NameValuePair pairOauth = new BasicNameValuePair("oauth", provider);
-        pairs.add(pairEmail);
-        pairs.add(pairPassword);
-        pairs.add(pairOauth);
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            ApiTask apiTask = new ApiTask();
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                    String rawResponse = "";
-                    try
-                    {
-                      if (data == null || data.entrySet() == null)
-                      {
-                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                        callback(listeners);
-                        return;
-                      }
-                        for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                        {
-                            String rawUri = entry.getKey().toString();
-                            String rawUser = new String(entry.getValue());
-                            rawResponse = rawUser;
-                            if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
-                            {
-                                Patron user = gson.fromJson(rawUser, Patron.class);
-                                /*
-                                user.setEmail(finalEmail);
-                                user.setPassword(finalPassword);
-                                */
-                                Globals.setPatron(user);
-                            }
-                        }
-                    }
-                    catch (NetworkOnMainThreadException e)
-                    {
-                        e.printStackTrace();
-                        Toast.makeText(PatronApplication.getContext(), "Failed to login, please restart and try again", Toast.LENGTH_SHORT).show();
-                    }
-                    catch (NullPointerException e)
-                    {
-                        Toast.makeText(PatronApplication.getContext(), "Failed to login", Toast.LENGTH_SHORT).show();
-                    }
-                    callback(listeners);
-                }
-            });
-            String data = "{'patronId':'1','firstName':'James','lastName':'Whiteman','email':'jameswhiteman@outlook.com','birthday':'1993-09-14'," +
-                "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
-            setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
-            apiTask.setMocking(PatronApplication.DEBUGGING_OFFLINE);
-            System.out.println("login11");
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void createAccount(Patron user, OnApiExecutedListener... tempListeners)
-    {
-            final OnApiExecutedListener[] listeners = tempListeners;
-            HttpPost request = new HttpPost(ListLinks.API_ADD_ACCOUNT);
-            request.setHeader("Content-type", "application/json");
-            request.setHeader("Accept", "application/json");
-            String postData = gson.toJson(user);
-            System.out.println(postData);
-            try
-            {
-                request.setEntity(new StringEntity(postData));
-                ApiTask apiTask = new ApiTask();
-                apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                    @Override
-                    public void onComplete(Map<URI, byte[]> data)
-                    {
-                      if (data == null || data.entrySet() == null)
-                      {
-                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                        callback(listeners);
-                        return;
-                      }
-                        String response = "Failed to create user.";
-                        try
-                        {
-                            for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                            {
-                                response = new String(entry.getValue());
-                                Patron user = gson.fromJson(response, Patron.class);
-                                Globals.setPatron(user);
-                                Toast.makeText(PatronApplication.getContext(), "Successfully created account", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                            Toast.makeText(PatronApplication.getContext(), response, Toast.LENGTH_SHORT).show();
-                        }
-                        callback(listeners);
-                    }
-                });
-                apiTask.execute(request);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-                Toast.makeText(PatronApplication.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
-            }
-    }
-
-    public void resetPassword(String userEmail, final OnApiExecutedListener... listeners)
-    {
-        final String url = ListLinks.API_RESET_PASSWORD;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", userEmail);
-        pairs.add(email);
-        ApiTask apiTask = new ApiTask();
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                    {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
-                        {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Password successfully reset.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), response, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        callback(listeners);
-                    }
-                }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
-          e.printStackTrace();
-          callback(listeners);
-        }
-    }
-
-    // Vendor Interaction
-    public void getVendors(OnApiExecutedListener... tempListeners)
-    {
-        final OnApiExecutedListener[] listeners = tempListeners;
-        HttpGet request = new HttpGet(ListLinks.API_GET_VENDORS);
+        Globals.setCredential(credential);
         ApiTask apiTask = new ApiTask();
         apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
             @Override
             public void onComplete(Map<URI, byte[]> data)
             {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
+                String rawResponse = "";
                 try
                 {
+                    if (data == null || data.entrySet() == null)
+                    {
+                        callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
+                        return;
+                    }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
-                        String rawVendors =  new String(entry.getValue());
-                        if (rawUri.equals(ListLinks.API_GET_VENDORS))
+                        String rawData = new String(entry.getValue());
+                        JSONObject json = new JSONObject(rawData);
+                        if (rawUri.equals(ListLinks.API_LOGIN_PATRON))
                         {
-                            List<Vendor> vendors = Parser.getVendors(new JSONArray(rawVendors));
-                            Globals.setVendors(vendors);
+                            if (json.getString("statusCode").equals("200"))
+                            {
+                                Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                Globals.setPatron(user);
+                            }
                         }
+                        callback(new ApiResult(200, "Sucessfully logged in", json.getString("data")), listeners);
                     }
-                    callback(listeners);
                 }
                 catch (JSONException e)
                 {
                     e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again laster", null), listeners);
+                }
+                catch (NetworkOnMainThreadException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(400, "Network request failed on main thread", null), listeners);
+                }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again laster", null), listeners);
+                }
+            }
+        });
+        String data = "{'patronId':'1','firstName':'James','lastName':'Whiteman','email':'jameswhiteman@outlook.com','birthday':'1993-09-14'," +
+            "'balancedId':'1','facebookId':'1','twitterId':'1','googlePlusId':'1','cards':{'cards':[]},'bankAccounts':{'bank_accounts':[]}}";
+        setMockData(apiTask, data, ListLinks.API_LOGIN_PATRON);
+        apiTask.setMocking(PatronApplication.DEBUGGING_OFFLINE);
+        apiTask.execute(request);
+    }
+
+    public void createAccount(final Patron patron, final OnApiExecutedListener... listeners)
+    {
+        HttpPost request = new HttpPost(ListLinks.API_ADD_ACCOUNT);
+        final String postData = gson.toJson(patron);
+        System.out.println(postData);
+        try
+        {
+            request.setEntity(new StringEntity(postData));
+            ApiTask apiTask = new ApiTask();
+            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+                @Override
+                public void onComplete(Map<URI, byte[]> data)
+                {
+                    if (data == null || data.entrySet() == null)
+                    {
+                        callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
+                        return;
+                    }
+                    try
+                    {
+                        for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                        {
+                            String response = new String(entry.getValue());
+                            JSONObject json = new JSONObject(response);
+                            if (!json.getString("statusCode").equals("201"))
+                            {
+                                callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), null), listeners);
+                                return;
+                            }
+                            patron.setId(json.getString("data"));
+                            Globals.setCredential(patron.getIdentity().getCredentials().get(0));
+                            Globals.setPatron(patron);
+                            callback(new ApiResult(201, "Successfully created account", response), listeners);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                    }
+                }
+            });
+            apiTask.execute(request);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            callback(new ApiResult(400, "Failed to create request", null), listeners);
+        }
+    }
+
+    public void resetPassword(Credential credential, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_RESET_PASSWORD;
+        Globals.setCredential(credential);
+        HttpPost request = new HttpPost(url);
+        ApiTask apiTask = new ApiTask();
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
+                {
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
+                    return;
+                }
+                for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                {
+                    String rawUri = entry.getKey().toString();
+                    if (rawUri.equals(url))
+                    {
+                        try
+                        {
+                            String response = new String(entry.getValue());
+                            JSONObject json = new JSONObject(response);
+                            if (json.getString("statusCode").equals("200"))
+                            {
+                                Toast.makeText(PatronApplication.getContext(), "Password successfully reset.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(PatronApplication.getContext(), json.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), json.getString("data")), listeners);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(503, "Bad response, try again laster", null), listeners);
+                        }
+                    }
                 }
             }
         });
         apiTask.execute(request);
     }
 
-    public void selectNearestVendor(Context tempContext, OnApiExecutedListener... tempListeners)
+    // Vendor Interaction
+    public void getVendors(final OnApiExecutedListener... listeners)
     {
-        final Context context = tempContext;
-        final OnApiExecutedListener[] listeners = tempListeners;
+        HttpGet request = new HttpGet(ListLinks.API_GET_VENDORS);
+        ApiTask apiTask = new ApiTask();
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
+                {
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
+                    return;
+                }
+                try
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        String rawResponse =  new String(entry.getValue());
+                        if (rawUri.equals(ListLinks.API_GET_VENDORS))
+                        {
+                            JSONObject json = new JSONObject(rawResponse);
+                            List<Vendor> vendors = new ArrayList<Vendor>();
+                            JSONArray rawVendors = json.getJSONArray("data");
+                            for (int i = 0; i < rawVendors.length(); i++)
+                            {
+                                JSONObject rawVendor = rawVendors.getJSONObject(i);
+                                Vendor vendor = gson.fromJson(rawVendor.toString(), Vendor.class);
+                                vendors.add(vendor);
+                            }
+                            Globals.setVendors(vendors);
+                            callback(new ApiResult(200, "Successfully retrieved vendors", rawVendors.toString()), listeners);
+                        }
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, please try again", null), listeners);
+                }
+            }
+        });
+        apiTask.execute(request);
+    }
+
+    public void selectNearestVendor(final Context context, final OnApiExecutedListener... listeners)
+    {
         final ApiExecutor executor = this;
         final Runnable runnable = new Runnable() {
             public void run()
@@ -365,7 +344,7 @@ public class ApiExecutor
                     if (isGPSEnabled == false && isNetworkEnabled == false)
                     {
                         // no network provider is enabled
-                        callback(listeners);
+                        callback(new ApiResult(400, "Both GPS and Network are disabled", null), listeners);
                     }
                     else
                     {
@@ -395,24 +374,33 @@ public class ApiExecutor
                               {
                                 case DialogInterface.BUTTON_POSITIVE:
                                   dialog.dismiss();
-                                  callback(listeners);
+                                  callback(new ApiResult(200, "Vendor found and selected", null), listeners);
                                   break;
                                 case DialogInterface.BUTTON_NEGATIVE:
                                   Globals.setVendor(null);
                                   dialog.dismiss();
-                                  callback(listeners);
+                                  callback(new ApiResult(202, "Vendor found but not selected", null), listeners);
                                   break;
                               }
                             }
                         };
                         if (Globals.getVendor() != null)
                         {
-                            QustomDialogBuilder builder = new QustomDialogBuilder(context);
-                            builder = builder.setMessage("Are you at " + Globals.getVendor().getName() + "?");
-                            builder = builder.setMessageColor("#FFFFFF");
-                            AlertDialog.Builder newBuilder = builder.setPositiveButton("Yes", dialogClickListener);
-                            newBuilder = newBuilder.setNegativeButton("No", dialogClickListener);
-                            newBuilder.show();
+                            AlertDialog alert = new AlertDialog.Builder(context)
+                                .setMessage("Are you at " + Globals.getVendor().getName() + "?")
+                                .setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener)
+                                .create();
+                            alert.setCancelable(false);
+                            alert.setCanceledOnTouchOutside(false);
+                            alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialogInterface)
+                                {
+                                    callback(new ApiResult(202, "Dismissed vendor auto-selection", null), listeners);
+                                }
+                            });
+                            alert.show();
                         }
                     }
 
@@ -420,12 +408,13 @@ public class ApiExecutor
                 catch (Exception e)
                 {
                     e.printStackTrace();
+                    callback(new ApiResult(500, "Failed to locate nearest vendor", null), listeners);
                 }
             }
         };
         getVendors(new OnApiExecutedListener() {
             @Override
-            public void onExecuted()
+            public void onExecuted(ApiResult result)
             {
                 runnable.run();
             }
@@ -464,126 +453,120 @@ public class ApiExecutor
       }
     }
 
-    public void getItems(String vendorId, OnApiExecutedListener... tempListeners)
+    public void getItems(final OnApiExecutedListener... listeners)
     {
-        final OnApiExecutedListener[] listeners = tempListeners;
-        HttpPost request = new HttpPost(ListLinks.API_GET_ITEMS);
-        Patron user = Globals.getPatron();
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//new BasicNameValuePair("email", user.getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//user.getPassword());
-        NameValuePair vendor = new BasicNameValuePair("vendorId", vendorId);
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(vendor);
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            ApiTask apiTask = new ApiTask();
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
+        HttpGet request = new HttpGet(ListLinks.API_GET_ITEMS);
+        ApiTask apiTask = new ApiTask();
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
                 {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                     return;
-                  }
-                    try
+                }
+                try
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
-                        for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                        String rawUri = entry.getKey().toString();
+                        String response = new String(entry.getValue());
+                        JSONObject json = new JSONObject(response);
+                        if (json.getString("statusCode").equals("200"))
                         {
-                            String rawUri = entry.getKey().toString();
-                            String rawItems = new String(entry.getValue());
+                            JSONArray rawItems = json.getJSONArray("data");
+                            List<Item> items = new ArrayList<Item>();
                             if (rawUri.equals(ListLinks.API_GET_ITEMS))
                             {
-                                List<Item> items = Parser.getItems(new JSONArray(rawItems));
+                                for (int i = 0; i < rawItems.length(); i++)
+                                {
+                                    JSONObject rawItem = rawItems.getJSONObject(i);
+                                    Item item = gson.fromJson(rawItem.toString(), Item.class);
+                                    items.add(item);
+                                }
                                 Globals.getVendor().setItems(items);
                                 Globals.getVendor().setFilteredItems(items);
                             }
-                            callback(listeners);
+                            callback(new ApiResult(200, "Successfully retrieved items", null), listeners);
+                        }
+                        else
+                        {
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), null), listeners);
                         }
                     }
-                    catch (NullPointerException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (JSONException e)
-                    {
-                        e.printStackTrace();
-                    }
                 }
-            });
-            apiTask.execute(request);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                }
+            }
+        });
+        apiTask.execute(request);
     }
 
     public void getOrders(final OnApiExecutedListener... listeners)
     {
-        final String url = ListLinks.API_GET_CODES;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", Globals.getCredential().getIdentifier());
-        NameValuePair password = new BasicNameValuePair("password", Globals.getCredential().getVerifier());
-        NameValuePair provider = new BasicNameValuePair("oauth", Globals.getCredential().getProvider());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(provider);
+        HttpGet request = new HttpGet(ListLinks.API_GET_ORDERS);
         ApiTask apiTask = new ApiTask();
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
                 {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                     return;
-                  }
+                }
+                try
+                {
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
+                        String response = new String(entry.getValue());
+                        JSONObject json = new JSONObject(response);
+                        if (json.getString("statusCode").equals("200"))
                         {
-                            String response = new String(entry.getValue());
-                            try
+                            JSONArray rawOrders = json.getJSONArray("data");
+                            List<Order> orders = new ArrayList<Order>();
+                            if (rawUri.equals(ListLinks.API_GET_ORDERS))
                             {
-                              JSONArray rawCodes = new JSONArray(response);
-                              List<Order> orders = Parser.getOrders(rawCodes);
-                              Globals.setOrders(orders);
-                              callback(listeners);
+                                for (int i = 0; i < rawOrders.length(); i++)
+                                {
+                                    JSONObject rawOrder = rawOrders.getJSONObject(i);
+                                    Order order = gson.fromJson(rawOrder.toString(), Order.class);
+                                    orders.add(order);
+                                    System.out.println("Added order");
+                                }
                             }
-                            catch (JSONException e)
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to get orders: " + response, Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
-                                callback(listeners);
-                            }
-                            catch (ParseException e)
-                            {
-                                e.printStackTrace();
-                                callback(listeners);
-                            }
+                            Globals.setOrders(orders);
+                            callback(new ApiResult(200, "Successfully retrieved orders", null), listeners);
                         }
-                        callback(listeners);
+                        else
+                        {
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), null), listeners);
+                        }
                     }
                 }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
-          callback(listeners);
-        }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                }
+            }
+        });
+        apiTask.execute(request);
     }
 
     public void getScan(Order order, final OnApiExecutedListener... listeners)
@@ -609,8 +592,7 @@ public class ApiExecutor
                 {
                     if (data == null || data.entrySet() == null)
                     {
-                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                        callback(listeners);
+                        callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                         return;
                     }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
@@ -625,7 +607,7 @@ public class ApiExecutor
                             }
                             Globals.setScan(bitmap);
                         }
-                        callback(listeners);
+                        callback(null, listeners);
                     }
                 }
             });
@@ -633,260 +615,85 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
-          callback(listeners);
+            Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
+            callback(null, listeners);
         }
     }
 
-    public void addOrder(Order order, Context tempContext, OnApiExecutedListener... tempListeners)
+    public void addOrder(final Order order, final OnApiExecutedListener... listeners)
     {
-        final OnApiExecutedListener[] listeners = tempListeners;
-        final Context context = tempContext;
-        final Toast failureToast = Toast.makeText(context, "Failed to place order.", Toast.LENGTH_SHORT);
+        HttpPost request = new HttpPost(ListLinks.API_ADD_ORDER);
+        String postData = gson.toJson(order);
+        System.out.println(postData);
         try
         {
-            HttpPut request = new HttpPut(ListLinks.API_ADD_ORDER);
-            request.setHeader("Content-type", "application/json");
-            request.setHeader("Accept", "application/json");
-            Gson gson = new Gson();
-            JsonElement jsonOrder = gson.toJsonTree(order);
-            jsonOrder.getAsJsonObject().addProperty("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-            jsonOrder.getAsJsonObject().addProperty("password", "froggy");//Globals.getUser().getPassword());
-            jsonOrder.getAsJsonObject().addProperty("oauth", "endeal");//Globals.getUser().getProvider());
-            jsonOrder.getAsJsonObject().addProperty("type", "app");
-            String postData = gson.toJson(jsonOrder);
-            System.out.println(postData);
             request.setEntity(new StringEntity(postData));
-            ApiTask apiTask = new ApiTask();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+            callback(new ApiResult(503, "This order cannot be encoded", null), listeners);
+            return;
+        }
+        ApiTask apiTask = new ApiTask();
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
+                {
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
+                    return;
+                }
+                try
+                {
+                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                    {
+                        String rawUri = entry.getKey().toString();
+                        String response = new String(entry.getValue());
+                        JSONObject json = new JSONObject(response);
+                        if (rawUri.equals(ListLinks.API_ADD_ORDER))
+                        {
+                            if (json.getString("statusCode").equals("201"))
+                            {
+                                Globals.setOrder(null);
+                                callback(new ApiResult(201, "Successfully placed order", json.getString("data")), listeners);
+                            }
+                            else
+                            {
+                                callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), null), listeners);
+                            }
+                        }
+                    }
+                }
+                catch(JSONException e)
+                {
+                    e.printStackTrace();
+                    callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                }
+            }
+        });
+        apiTask.execute(request);
+    }
+
+    public void updatePatron(final Patron patron, final OnApiExecutedListener... listeners)
+    {
+        final String url = ListLinks.API_UPDATE_ACCOUNT + patron.getId();
+        HttpPut request = new HttpPut(url);
+        final String postData = gson.toJson(patron);
+        ApiTask apiTask = new ApiTask();
+        try
+        {
+            request.setEntity(new StringEntity(postData));
             apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
                 @Override
                 public void onComplete(Map<URI, byte[]> data)
                 {
                     if (data == null || data.entrySet() == null)
                     {
-                        Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                        callback(listeners);
+                        callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                         return;
                     }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                    {
-                        String rawUri = entry.getKey().toString();
-                        String rawOrder = new String(entry.getValue());
-                        System.out.println("prepended string:" + rawOrder);
-                        rawOrder = rawOrder.replaceAll("\\n", "");
-                        if (rawUri.equals(ListLinks.API_ADD_ORDER))
-                        {
-                            if (rawOrder.equals("1"))
-                            {
-                                Globals.setOrder(null);
-                                Toast.makeText(context, "Successfully placed order.", Toast.LENGTH_SHORT).show();
-                                callback(listeners);
-                            }
-                            else
-                            {
-                                Toast.makeText(context, rawOrder, Toast.LENGTH_SHORT).show();
-                                callback(listeners);
-                            }
-                        }
-                    }
-                }
-            });
-            apiTask.execute(request);
-        }
-        catch (IOException e)
-        {
-            failureToast.show();
-            e.printStackTrace();
-        }
-    }
-
-    // Profile
-    public void createAccount(Map<String, String> data)
-    {
-        callback();
-    }
-
-    public void addCard(final String name, final String number, final String code,
-        final int month, final int year, final Context context, final OnApiExecutedListener... listeners)
-    {
-        com.stripe.android.model.Card card = new com.stripe.android.model.Card(number, month, year, code);
-        card.validateNumber();
-        card.validateCVC();
-        Stripe stripe = null;
-        try
-        {
-            stripe = new Stripe(ListKeys.STRIPE_PUBLIC_KEY);
-        }
-        catch (AuthenticationException e)
-        {
-            e.printStackTrace();
-            Toast.makeText(PatronApplication.getContext(), "Failed to authenticate card data", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        stripe.createToken(card, new TokenCallback() {
-                public void onSuccess(Token token) {
-                    String tokenId = token.getId();
-                    try
-                    {
-                        ApiTask apiTask = new ApiTask();
-                        final String url = ListLinks.API_ADD_CARD;
-                        HttpPost request = new HttpPost(url);
-                        ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-                        pairs.add(new BasicNameValuePair("email", "jameswhiteman@outlook.com"));//Globals.getUser().getEmail()));
-                        pairs.add(new BasicNameValuePair("password", "froggy"));//Globals.getUser().getPassword()));
-                        pairs.add(new BasicNameValuePair("oauth", "endeal"));//Globals.getUser().getProvider()));
-                        pairs.add(new BasicNameValuePair("card", tokenId));
-                        request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-                        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                            @Override
-                            public void onComplete(Map<URI, byte[]> data)
-                            {
-                              if (data == null || data.entrySet() == null)
-                              {
-                                Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                                callback(listeners);
-                                return;
-                              }
-                                for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                                {
-                                    String rawUri = entry.getKey().toString();
-                                    if (rawUri.equals(url))
-                                    {
-                                        String response = new String(entry.getValue());
-                                        if (response.equals("1"))
-                                        {
-                                          Toast.makeText(context, "Added card.", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
-                                          Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                    //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                                    login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
-                                }
-                            }
-                        });
-                        apiTask.execute(request);
-                    }
-                    catch (UnsupportedEncodingException e)
-                    {
-                        e.printStackTrace();
-                        Toast.makeText(PatronApplication.getContext(), "Failed to encode request", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                public void onError(Exception error) {
-                    error.printStackTrace();
-                    Toast.makeText(PatronApplication.getContext(), "An unknown error has occurred", Toast.LENGTH_LONG).show();
-                }
-            }
-        );
-    }
-
-    public void removeFunder(Funder funder, final OnApiExecutedListener... listeners)
-    {
-        String link = ListLinks.API_REMOVE_CARD;
-        String key = "card";
-        if (funder.getFunderType() == Funder.Type.BankAccount)
-        {
-            key = "bankAccount";
-        }
-        final String url = link;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair instrument = new BasicNameValuePair(key, funder.getHref());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(oauth);
-        pairs.add(instrument);
-        ApiTask apiTask = new ApiTask();
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                    {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
-                        {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Removed funding instrument.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to remove funding instrument: " + response, Toast.LENGTH_SHORT).show();
-                            }
-                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
-                        }
-                        else
-                        {
-                            callback(listeners);
-                        }
-                    }
-                }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-            callback(listeners);
-        }
-    }
-
-    public void removeCard(Map<String, String> data)
-    {
-        callback();
-    }
-
-    public void updateAccount(final String email, final String password, String firstName, String lastName, final OnApiExecutedListener... listeners)
-    {
-        final String url = ListLinks.API_UPDATE_ACCOUNT;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair pairCurrentEmail = new BasicNameValuePair("currentEmail", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair pairCurrentPassword = new BasicNameValuePair("currentPassword", "froggy");//Globals.getUser().getPassword());
-        NameValuePair pairOauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair pairEmail = new BasicNameValuePair("email", email);
-        NameValuePair pairPassword = new BasicNameValuePair("password", password);
-        NameValuePair pairFirstName = new BasicNameValuePair("firstName", firstName);
-        NameValuePair pairLastName = new BasicNameValuePair("lastName", lastName);
-        pairs.add(pairCurrentEmail);
-        pairs.add(pairCurrentPassword);
-        pairs.add(pairOauth);
-        pairs.add(pairEmail);
-        pairs.add(pairPassword);
-        pairs.add(pairFirstName);
-        pairs.add(pairLastName);
-        ApiTask apiTask = new ApiTask();
-        try
-        {
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
                     for (Map.Entry<URI, byte[]> entry : data.entrySet())
                     {
                         String rawUri = entry.getKey().toString();
@@ -895,30 +702,35 @@ public class ApiExecutor
                         {
                             try
                             {
-                                Patron user = gson.fromJson(rawUser, Patron.class);
-                                if (!Globals.getCredential().getProvider().equals("fb") &&
-                                    !Globals.getCredential().getProvider().equals("tw") &&
-                                    !Globals.getCredential().getProvider().equals("gp"))
+                                JSONObject json = new JSONObject(rawUser);
+                                if (json.getString("statusCode").equals("200"))
                                 {
-                                    /*
-                                    user.setEmail(email);
-                                    user.setPassword(password);
-                                    */
+                                    Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                    Globals.setPatron(user);
+                                    Globals.setCredential(user.getIdentity().getCredentials().get(0));
                                 }
-                                Globals.setPatron(user);
+                                callback(new ApiResult(Integer.parseInt(json.getString("statusCode")),
+                                                "Successfully updated patron", json.getString("data")), listeners);
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                                System.out.println("url:" + url);
+                                System.out.println("response:" + rawUser);
+                                System.out.println("post data:" + postData);
+                                callback(new ApiResult(503, "Bad response, try again later", null), listeners);
                             }
                             catch (NetworkOnMainThreadException e)
                             {
                                 e.printStackTrace();
-                                Toast.makeText(PatronApplication.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
+                                callback(new ApiResult(400, "Network request failed on main thread", null), listeners);
                             }
                             catch (NullPointerException e)
                             {
                                 e.printStackTrace();
-                                Toast.makeText(PatronApplication.getContext(), "Failed to retrieve updated info, please login again", Toast.LENGTH_SHORT).show();
+                                callback(new ApiResult(503, "Null response, try again later", null), listeners);
                             }
                         }
-                        callback(listeners);
                     }
                 }
             });
@@ -926,229 +738,118 @@ public class ApiExecutor
         }
         catch (UnsupportedEncodingException e)
         {
-          Toast.makeText(PatronApplication.getContext(), "Failed to encode request.", Toast.LENGTH_SHORT).show();
           e.printStackTrace();
-          callback(listeners);
+          callback(new ApiResult(400, "Failed to encode malformed request", null), listeners);
         }
     }
 
-    public void addFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
+    public void addFunder(final String tokenId, final OnApiExecutedListener... listeners)
     {
-        final String url = ListLinks.API_ADD_FAVORITE_VENDOR;
+        final String url = ListLinks.API_ADD_FUNDER;
         HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(oauth);
-        pairs.add(vendorId);
-        try
-        {
-            ApiTask apiTask = new ApiTask();
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
+        ApiTask apiTask = new ApiTask();
+        request.addHeader("x-stripe-token", tokenId);
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
                 {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                     return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                }
+                for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                {
+                    String rawUri = entry.getKey().toString();
+                    String rawUser = new String(entry.getValue());
+                    if (rawUri.equals(url))
                     {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
+                        try
                         {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
+                            JSONObject json = new JSONObject(rawUser);
+                            if (json.getString("statusCode").equals("201"))
                             {
-                                Toast.makeText(PatronApplication.getContext(), "Added favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                Globals.setPatron(user);
                             }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to add favorite vendor.", Toast.LENGTH_SHORT).show();
-                            }
-                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")),
+                                            "Successfully added funder to user", json.getString("data")), listeners);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                        }
+                        catch (NetworkOnMainThreadException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(400, "Network request failed on main thread", null), listeners);
+                        }
+                        catch (NullPointerException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(503, "Null response, try again later", null), listeners);
                         }
                     }
                 }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
+            }
+        });
+        apiTask.execute(request);
     }
 
-    public void removeFavoriteVendor(Vendor vendor, final OnApiExecutedListener... listeners)
+    public void removeFunder(final Funder funder, final OnApiExecutedListener... listeners)
     {
-        final String url = ListLinks.API_REMOVE_FAVORITE_VENDOR;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair vendorId = new BasicNameValuePair("vendorId", vendor.getId());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(oauth);
-        pairs.add(vendorId);
-        try
-        {
-            ApiTask apiTask = new ApiTask();
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
+        final String url = ListLinks.API_REMOVE_FUNDER + Globals.getPatron().getId();
+        System.out.println("url:" + url);
+        HttpDelete request = new HttpDelete(url);
+        request.addHeader("x-stripe-card", funder.getId());
+        System.out.println("funder-id:" + funder.getId());
+        ApiTask apiTask = new ApiTask();
+        apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
+            @Override
+            public void onComplete(Map<URI, byte[]> data)
+            {
+                if (data == null || data.entrySet() == null)
                 {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
+                    callback(new ApiResult(408, "Network error, check your internet connection", null), listeners);
                     return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                }
+                for (Map.Entry<URI, byte[]> entry : data.entrySet())
+                {
+                    String rawUri = entry.getKey().toString();
+                    String rawUser = new String(entry.getValue());
+                    if (rawUri.equals(url))
                     {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
+                        try
                         {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
+                            JSONObject json = new JSONObject(rawUser);
+                            if (json.getString("statusCode").equals("200"))
                             {
-                                Toast.makeText(PatronApplication.getContext(), "Removed favorite vendor.", Toast.LENGTH_SHORT).show();
+                                Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                Globals.setPatron(user);
                             }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to remove favorite vendor.", Toast.LENGTH_SHORT).show();
-                            }
-                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")),
+                                            "Successfully removed funder to user", json.getString("data")), listeners);
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(503, "Bad response, try again later", null), listeners);
+                        }
+                        catch (NetworkOnMainThreadException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(400, "Network request failed on main thread", null), listeners);
+                        }
+                        catch (NullPointerException e)
+                        {
+                            e.printStackTrace();
+                            callback(new ApiResult(503, "Null response, try again later", null), listeners);
                         }
                     }
                 }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void addFavoriteItem(Item item, final OnApiExecutedListener... listeners)
-    {
-        final String url = ListLinks.API_ADD_FAVORITE_ITEM;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(oauth);
-        pairs.add(itemId);
-        try
-        {
-            ApiTask apiTask = new ApiTask();
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                    {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
-                        {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Added favorite item.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to add favorite item.", Toast.LENGTH_SHORT).show();
-                            }
-                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                            login("jameswhiteman@outlook.com", "froggy", "endeal", listeners);
-                        }
-                    }
-                }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeFavoriteItem(Item item, final OnApiExecutedListener... listeners)
-    {
-        final String url = ListLinks.API_REMOVE_FAVORITE_ITEM;
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-        NameValuePair email = new BasicNameValuePair("email", "jameswhiteman@outlook.com");//Globals.getUser().getEmail());
-        NameValuePair password = new BasicNameValuePair("password", "froggy");//Globals.getUser().getPassword());
-        NameValuePair oauth = new BasicNameValuePair("oauth", "endeal");//Globals.getUser().getProvider());
-        NameValuePair itemId = new BasicNameValuePair("itemId", item.getId());
-        pairs.add(email);
-        pairs.add(password);
-        pairs.add(oauth);
-        pairs.add(itemId);
-        try
-        {
-            ApiTask apiTask = new ApiTask();
-            request.setEntity(new UrlEncodedFormEntity(pairs, "UTF-8"));
-            apiTask.setOnTaskCompletedListener(new OnTaskCompletedListener() {
-                @Override
-                public void onComplete(Map<URI, byte[]> data)
-                {
-                  if (data == null || data.entrySet() == null)
-                  {
-                    Toast.makeText(PatronApplication.getContext(), "Network error, check your internet connection.", Toast.LENGTH_SHORT).show();
-                    callback(listeners);
-                    return;
-                  }
-                    for (Map.Entry<URI, byte[]> entry : data.entrySet())
-                    {
-                        String rawUri = entry.getKey().toString();
-                        if (rawUri.equals(url))
-                        {
-                            String response = new String(entry.getValue());
-                            if (response.equals("1"))
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Removed favorite item.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Failed to remove favorite item.", Toast.LENGTH_SHORT).show();
-                            }
-                            //login(Globals.getUser().getEmail(), Globals.getUser().getPassword(), Globals.getUser().getProvider(), listeners);
-                            login("jameswhiteman@outlook.com", "froggy", "endeal");
-                        }
-                    }
-                }
-            });
-            apiTask.execute(request);
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        }
+            }
+        });
+        apiTask.execute(request);
     }
 }

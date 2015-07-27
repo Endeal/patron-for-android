@@ -12,6 +12,7 @@
     	android:gravity="center_horizontal"
         android:text="Add new credit/debit card to account" />
 
+    <!--
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.TextInputLayout>
+    -->
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -35,6 +37,10 @@
             android:id="@+id/dialogCardEditTextNumber"
             style="@style/darkEditText"
             android:hint="Card Number"
+            android:inputType="number"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -48,7 +54,11 @@
         <EditText
             android:id="@+id/dialogCardEditTextCvv"
             style="@style/darkEditText"
+            android:inputType="number"
             android:hint="CVV"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

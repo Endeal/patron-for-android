@@ -51,13 +51,7 @@
 
             </RelativeLayout>
 
-            <!-- The navigation drawer -->
-            <me.endeal.patron.view.NavigationListView
-                android:id="@+id/vouchersListNavigation"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:choiceMode="singleChoice" />
+            <include layout="@layout/fragment_navigation" />
 
         </android.support.v4.widget.DrawerLayout>
 

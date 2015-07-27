@@ -42,7 +42,7 @@
             android:value="@string/appId"/>
 
         <!-- Intent Receivers -->
-        <receiver android:name="me.endeal.patron.system.FlashIntentReceiver" android:exported="false">
+        <receiver android:name="me.endeal.patron.system.PatronIntentReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="me.endeal.patron.intent.APPBOY_PUSH_RECEIVED" />
                 <action android:name="me.endeal.patron.intent.APPBOY_NOTIFICATION_OPENED" />

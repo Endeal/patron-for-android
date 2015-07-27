@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:elevation="@dimen/fabLayoutElevation"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,28 +58,14 @@
                 android:layout_below="@+id/menuToolbar"
                 android:layout_alignParentBottom="true">
 
-                <RelativeLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/menuRecyclerViewItems"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/menuRecyclerViewItems"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </RelativeLayout>
+                    android:layout_height="match_parent" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
-            <me.endeal.patron.view.NavigationListView
-                android:id="@+id/menuListNavigation"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:background="#000000"/>
+            <include layout="@layout/fragment_navigation" />
 
         </android.support.v4.widget.DrawerLayout>
 

@@ -36,6 +36,7 @@ import me.endeal.patron.model.Station;
 import me.endeal.patron.model.Vendor;
 import me.endeal.patron.R;
 import me.endeal.patron.system.Globals;
+import static me.endeal.patron.model.Retrieval.Method;
 import static me.endeal.patron.model.Order.Status;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder
@@ -79,44 +80,31 @@ public class OrderViewHolder extends RecyclerView.ViewHolder
 
                 // Set dialog title
                 String textTitle = "";
-                if (order.getRetrieval().getMethod().equals("pickup"))
+                if (order.getRetrieval().getMethod() == Method.Pickup)
                 {
                     textTitle = "Pickup at " + order.getRetrieval().getStation().getName();
+                    code.setVisibility(View.VISIBLE);
+                    Picasso.with(v.getContext()).load(order.getCode()).into(code);
                 }
-                else if (order.getRetrieval().getMethod().equals("delivery"))
+                else if (order.getRetrieval().getMethod() == Method.Delivery)
                 {
                     textTitle = "Delivery to:";
+                    delivery.setVisibility(View.VISIBLE);
+                    delivery.setText(order.getRetrieval().getLocation().toString());
                 }
-                else if (order.getRetrieval().getMethod().equals("service"))
+                else if (order.getRetrieval().getMethod() == Method.Service)
                 {
                     textTitle = "Service at " + order.getRetrieval().getLocale().getName() + ":";
+                    service.setVisibility(View.VISIBLE);
+                    service.setText(order.getRetrieval().getLocale().getNumber() + "");
                 }
                 else
                 {
                     textTitle = "Self-Served";
-                }
-                title.setText(textTitle);
-
-                // Set code
-                if (order.getRetrieval().getMethod().equals("pickup") || order.getRetrieval().getMethod().equals("selfServe"))
-                {
                     code.setVisibility(View.VISIBLE);
                     Picasso.with(v.getContext()).load(order.getCode()).into(code);
                 }
-
-                // Set delivery text
-                if (order.getRetrieval().getMethod().equals("delivery"))
-                {
-                    delivery.setVisibility(View.VISIBLE);
-                    delivery.setText(order.getRetrieval().getLocation().toString());
-                }
-
-                // Set locale text
-                if (order.getRetrieval().getMethod().equals("service"))
-                {
-                    service.setVisibility(View.VISIBLE);
-                    service.setText(order.getRetrieval().getLocale().getNumber() + "");
-                }
+                title.setText(textTitle);
 
                 // Set status text
                 String textStatus = "Your order is " + Order.getStatusText(order.getStatus());

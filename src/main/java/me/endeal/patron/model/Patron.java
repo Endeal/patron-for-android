@@ -10,33 +10,37 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Base64;
 
-import me.endeal.patron.system.FlashCipher;
-//import me.endeal.patron.system.Patron;
-
 public class Patron implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-	private String id;
-    /*
-    private String email;
-    private Profile profile;
-    private static String provider = "";
-    */
-
+    private String _id;
+    private String stripeId;
     private Identity identity;
     private List<Funder> funders;
-    private List<Franchise> franchises;
-    private List<Vendor> vendors;
-    private List<Item> items;
+    private List<String> franchises;
+    private List<String> vendors;
+    private List<String> items;
 
-    public Patron(Identity identity, List<Funder> funders, List<Franchise> franchises, List<Vendor> vendors, List<Item> items)
+    public Patron(String id, String stripeId, Identity identity, List<Funder> funders, List<String> franchises, List<String> vendors, List<String> items)
     {
+        setId(id);
+        setStripeId(stripeId);
         setIdentity(identity);
         setFunders(funders);
         setFranchises(franchises);
         setVendors(vendors);
         setItems(items);
+    }
+
+    public void setId(String id)
+    {
+        this._id = id;
+    }
+
+    public void setStripeId(String stripeId)
+    {
+        this.stripeId = stripeId;
     }
 
     public void setIdentity(Identity identity)
@@ -49,19 +53,29 @@ public class Patron implements Serializable
         this.funders = funders;
     }
 
-    public void setFranchises(List<Franchise> franchises)
+    public void setFranchises(List<String> franchises)
     {
         this.franchises = franchises;
     }
 
-    public void setVendors(List<Vendor> vendors)
+    public void setVendors(List<String> vendors)
     {
         this.vendors = vendors;
     }
 
-    public void setItems(List<Item> items)
+    public void setItems(List<String> items)
     {
         this.items = items;
+    }
+
+    public String getId()
+    {
+        return this._id;
+    }
+
+    public String getStripeId()
+    {
+        return this.stripeId;
     }
 
     public Identity getIdentity()
@@ -74,58 +88,18 @@ public class Patron implements Serializable
         return this.funders;
     }
 
-    public List<Franchise> getFranchises()
+    public List<String> getFranchises()
     {
         return this.franchises;
     }
 
-    public List<Vendor> getVendors()
+    public List<String> getVendors()
     {
         return this.vendors;
     }
 
-    public List<Item> getItems()
+    public List<String> getItems()
     {
         return this.items;
     }
-
-    /*
-	public User(String id, String email, Profile profile)
-	{
-		setId(id);
-        setEmail(email);
-        setProfile(profile);
-	}
-
-	public void setId(String id)
-	{
-		this.id = id;
-	}
-
-	public void setEmail(String email)
-	{
-        this.email = email;
-	}
-
-    public void setProfile(Profile profile)
-    {
-        this.profile = profile;
-    }
-
-
-	public String getId()
-	{
-		return id;
-	}
-
-	public String getEmail()
-	{
-        return email;
-	}
-
-    public Profile getProfile()
-    {
-        return profile;
-    }
-    */
 }

@@ -42,6 +42,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
         this.orders = orders;
     }
 
+    public void setOrders(List<Order> orders)
+    {
+        this.orders = orders;
+    }
+
     @Override
     public OrderViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
     {

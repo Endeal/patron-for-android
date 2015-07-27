@@ -55,15 +55,7 @@
 
             </RelativeLayout>
 
-            <me.endeal.patron.view.NavigationListView
-                android:id="@+id/ordersListNavigation"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:background="#111"/>
+            <include layout="@layout/fragment_navigation" />
 
         </android.support.v4.widget.DrawerLayout>
 

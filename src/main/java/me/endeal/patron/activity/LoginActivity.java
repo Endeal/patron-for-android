@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,14 +52,15 @@ import com.facebook.widget.LoginButton;
 import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.listeners.OnTaskCompletedListener;
 import me.endeal.patron.lists.ListLinks;
+import me.endeal.patron.model.ApiResult;
 import me.endeal.patron.model.Patron;
+import me.endeal.patron.model.Credential;
 import me.endeal.patron.R;
 import me.endeal.patron.social.OnSocialTaskCompletedListener;
 import me.endeal.patron.social.SocialExecutor;
 import static me.endeal.patron.social.SocialExecutor.Network;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.Loadable;
 
 import org.apache.http.HttpEntity;
 
@@ -72,6 +74,8 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.ConnectionResult;
+
+import com.google.gson.Gson;
 
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
@@ -130,25 +134,28 @@ public class LoginActivity extends AppCompatActivity
         // Login listener.
         final OnApiExecutedListener listener = new OnApiExecutedListener() {
             @Override
-            public void onExecuted()
+            public void onExecuted(ApiResult result)
             {
                 // Add a loading indicator.
                 ApiExecutor executor = new ApiExecutor();
-                executor.login(email, password, provider, new OnApiExecutedListener() {
+                Credential credential = new Credential(email, password, provider);
+                executor.login(credential, new OnApiExecutedListener() {
                     @Override
-                    public void onExecuted()
+                    public void onExecuted(ApiResult result)
                     {
                         layout.removeView(progressIndicator);
                         submitting = false;
-                        /*
-                        if (Globals.getUser() == null)
+                        if (Globals.getPatron() == null)
                         {
+                            View contentView = activity.findViewById(android.R.id.content);
+                            Snackbar.make(contentView, "Failed to log in", Snackbar.LENGTH_SHORT).show();
+                            Globals.setCredential(null);
                             return;
                         }
-                        Appboy.getInstance(FlashLogin.this).changeUser(Globals.getUser().getId());
-                        Appsee.setUserId(Globals.getUser().getId());
-                        Globals.getUser().setProvider(provider);
-                        */
+                        Gson gson = new Gson();
+                        System.out.println(gson.toJson(Globals.getPatron()));
+                        Appboy.getInstance(LoginActivity.this).changeUser(Globals.getPatron().getId());
+                        Appsee.setUserId(Globals.getPatron().getId());
                         Intent intent = new Intent(activity, MenuActivity.class);
                         activity.startActivity(intent);
                         activity.finish();
@@ -162,14 +169,16 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                InputMethodManager inputMethodManager = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 if (submitting)
                     return;
                 submitting = true;
                 layout.addView(progressIndicator, params);
                 email = editTextEmail.getText().toString();
                 password = editTextPassword.getText().toString();
-                provider = "";
-                listener.onExecuted();
+                provider = "endeal";
+                listener.onExecuted(null);
             }
         });
 
@@ -182,7 +191,7 @@ public class LoginActivity extends AppCompatActivity
             provider = Globals.getCredential().getProvider();
             submitting = true;
             layout.addView(progressIndicator, params);
-            listener.onExecuted();
+            listener.onExecuted(null);
         }
 
         // Reset password button actions
@@ -205,9 +214,10 @@ public class LoginActivity extends AppCompatActivity
                     {
                         ApiExecutor executor = new ApiExecutor();
                         String email = editTextDialogResetPasswordEmail.getText().toString();
-                        executor.resetPassword(email, new OnApiExecutedListener() {
+                        Credential credential = new Credential(email, "", "endeal");
+                        executor.resetPassword(credential, new OnApiExecutedListener() {
                             @Override
-                            public void onExecuted()
+                            public void onExecuted(ApiResult result)
                             {
                             }
                         });
@@ -259,7 +269,7 @@ public class LoginActivity extends AppCompatActivity
                         email = socialExecutor.getId(Network.FACEBOOK);
                         password = socialExecutor.getAccessToken(Network.FACEBOOK);
                         provider = "fb";
-                        listener.onExecuted();
+                        listener.onExecuted(null);
                     }
                 });
             }

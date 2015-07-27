@@ -5,7 +5,7 @@
     <color name="title">#FFFFFF</color>
     <color name="subtitle">#AAAAAA</color>
     <color name="price">#0DDE1B</color>
-    <color name="placeholder">#CCCCCC</color>
+    <color name="placeholder">#808080</color>
     <color name="darkPlaceholder">#888888</color>
     <color name="label">#000000</color>
     <color name="background">#E3E3E3</color>

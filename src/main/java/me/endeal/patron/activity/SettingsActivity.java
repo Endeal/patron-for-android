@@ -3,13 +3,16 @@ package me.endeal.patron.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,11 +20,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import com.squareup.picasso.Picasso;
+
+import me.endeal.patron.adapters.FunderAdapter;
+import me.endeal.patron.adapters.NavigationAdapter;
 import me.endeal.patron.dialogs.CardDialog;
 import me.endeal.patron.listeners.UpdateAccountButtonListener;
 import me.endeal.patron.listeners.DrawerNavigationListener;
@@ -40,21 +49,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SettingsActivity extends AppCompatActivity
 {
-    /*
-    private TextView textViewFacebook;
-    private TextView textViewTwitter;
-    private TextView textViewGooglePlus;
-    private Button buttonFacebook;
-    private Button buttonTwitter;
-    private Button buttonGooglePlus;
-    private Button buttonAddCard;
-    private Button buttonAddBankAccount;
-    */
     private Toolbar toolbar;
     private Button buttonUpdateAccount;
     private Button buttonLogout;
     private SocialExecutor executor;
     private DrawerNavigationListener drawerToggle;
+    private FunderAdapter adapter;
 
 	// Activity methods.
     @Override
@@ -69,29 +69,38 @@ public class SettingsActivity extends AppCompatActivity
 
 		// Set up the navigation drawer.
 		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.settingsDrawerNavigation);
-		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.settingsListNavigation);
         drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
-		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.SETTINGS);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+        final RecyclerView recyclerViewNavigation = (RecyclerView)findViewById(R.id.navigationRecyclerViewNavigation);
+        final TextView textViewDrawerTitle = (TextView)findViewById(R.id.navigationTextViewDrawerTitle);
+        final TextView textViewDrawerSubtitle = (TextView)findViewById(R.id.navigationTextViewDrawerSubtitle);
+        final ImageView imageViewDrawerVendor = (ImageView)findViewById(R.id.navigationImageViewDrawerVendor);
+        textViewDrawerTitle.setText(Globals.getPatron().getIdentity().getFirstName() + " " + Globals.getPatron().getIdentity().getLastName());
+        if (Globals.getVendor() != null)
+        {
+            textViewDrawerSubtitle.setText(Globals.getVendor().getName());
+            Picasso.with(this).load(Globals.getVendor().getPicture()).into(imageViewDrawerVendor);
+        }
+        else
+        {
+            textViewDrawerSubtitle.setText("No vendor selected");
+        }
+        NavigationAdapter navigationAdapter = new NavigationAdapter(this);
+        GridLayoutManager layoutManagerNavigation = new GridLayoutManager(getApplicationContext(), 1);
+        recyclerViewNavigation.setLayoutManager(layoutManagerNavigation);
+        recyclerViewNavigation.setAdapter(navigationAdapter);
         drawerToggle.syncState();
 
-        // Check if networks are signed in.
-        /*
-        executor = new SocialExecutor(this, savedInstanceState, Network.FACEBOOK,
-                Network.TWITTER, Network.GOOGLE_PLUS);
-                */
+        // Set up funders recycler
+        final GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1);
+        adapter = new FunderAdapter(this, Globals.getPatron().getFunders());
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.settingsRecyclerViewFunders);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
-        // Edit the social network text to correct status.
-        /*
-        textViewFacebook = (TextView)findViewById(R.id.settingsTextViewNetworkFacebook);
-        textViewTwitter = (TextView)findViewById(R.id.settingsTextViewNetworkTwitter);
-        textViewGooglePlus = (TextView)findViewById(R.id.settingsTextViewNetworkGooglePlus);
-        buttonFacebook = (Button)findViewById(R.id.settingsButtonNetworkFacebook);
-        buttonTwitter = (Button)findViewById(R.id.settingsButtonNetworkTwitter);
-        buttonGooglePlus = (Button)findViewById(R.id.settingsButtonNetworkGooglePlus);
-        buttonAddCard = (Button)findViewById(R.id.settingsButtonAddCard);
-        */
+        // Check if networks are signed in.
         buttonUpdateAccount = (Button)findViewById(R.id.settingsButtonUpdateAccount);
         buttonLogout = (Button)findViewById(R.id.settingsButtonLogout);
 
@@ -116,6 +125,14 @@ public class SettingsActivity extends AppCompatActivity
         if (item.getItemId() == R.id.add)
         {
             CardDialog dialog = new CardDialog(this);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface)
+                {
+                    adapter.setFunders(Globals.getPatron().getFunders());
+                    adapter.notifyDataSetChanged();
+                }
+            });
             dialog.show();
         }
         return super.onOptionsItemSelected(item);
@@ -152,175 +169,8 @@ public class SettingsActivity extends AppCompatActivity
     startActivity(intent);
   }
 
-  public void update()
-  {
-      /*
-        boolean facebookSignedIn = executor.signedIn(Network.FACEBOOK);
-        boolean twitterSignedIn = executor.signedIn(Network.TWITTER);
-        boolean googlePlusSignedIn = executor.signedIn(Network.GOOGLE_PLUS);
-        */
-
-        // Identify the correct text for the social network statuses.
-        /*
-        String textFacebook = "";
-        String textTwitter = "";
-        String textGooglePlus = "";
-        if (facebookSignedIn)
-        {
-            textFacebook = "Facebook: " + executor.getUsername(Network.FACEBOOK);
-            buttonFacebook.setBackgroundResource(R.drawable.button_remove);
-            buttonFacebook.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signOut(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            Toast.makeText(context, "Signed out of Facebook", Toast.LENGTH_SHORT).show();
-                            update();
-                        }
-                    });
-                }
-            });
-        }
-        else
-        {
-            textFacebook = "Facebook: Disconnected";
-            buttonFacebook.setBackgroundResource(R.drawable.button_confirm);
-            buttonFacebook.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signIn(Network.FACEBOOK, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            String id = executor.getId(Network.FACEBOOK);
-                            String token = executor.getAccessToken(Network.FACEBOOK);
-                            ApiExecutor api = new ApiExecutor();
-                            api.login(id, token, "fb", new OnApiExecutedListener() {
-                                @Override
-                                public void onExecuted()
-                                {
-                                    Toast.makeText(context, "Signed out of Facebook", Toast.LENGTH_SHORT).show();
-                                    update();
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-        }
-
-        if (twitterSignedIn)
-        {
-            textTwitter = "Twitter: Connected";
-            buttonTwitter.setBackgroundResource(R.drawable.button_remove);
-            buttonTwitter.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signOut(Network.TWITTER, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            Toast.makeText(context, "Signed out of Twitter", Toast.LENGTH_SHORT).show();
-                            update();
-                        }
-                    });
-                }
-            });
-        }
-        else
-        {
-            textTwitter = "Twitter: Disconnected";
-            buttonTwitter.setBackgroundResource(R.drawable.button_confirm);
-            buttonTwitter.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signIn(Network.TWITTER, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            Toast.makeText(context, "Signed in with Twitter", Toast.LENGTH_SHORT).show();
-                            update();
-                        }
-                    });
-                }
-            });
-        }
-
-        if (googlePlusSignedIn)
-        {
-            textGooglePlus = "Google+: " + executor.getEmail(Network.GOOGLE_PLUS);
-            buttonGooglePlus.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signOut(Network.GOOGLE_PLUS, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            Toast.makeText(context, "Signed out of Google+", Toast.LENGTH_SHORT).show();
-                            update();
-                        }
-                    });
-                }
-            });
-        }
-        else
-        {
-            textGooglePlus = "Google+: Disconnected";
-            buttonGooglePlus.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view)
-                {
-                    final Context context = view.getContext();
-                    executor.signIn(Network.GOOGLE_PLUS, new OnSocialTaskCompletedListener() {
-                        @Override
-                        public void onComplete()
-                        {
-                            Toast.makeText(context, "Signed in with Google+", Toast.LENGTH_SHORT).show();
-                            update();
-                        }
-                    });
-                }
-            });
-        }
-
-        // Set the correct text for facebook
-        textViewFacebook.setText(textFacebook);
-        textViewTwitter.setText(textTwitter);
-        textViewGooglePlus.setText(textGooglePlus);
-
-        // Set up the funders list.
-        final ListViewFunders funders = (ListViewFunders) findViewById(R.id.settingsListViewFunders);
-        funders.update();
-        OnApiExecutedListener updater = new OnApiExecutedListener() {
-            @Override
-            public void onExecuted()
-            {
-                funders.update();
-            }
-        };
-        funders.setOnItemClickListener(new ListItemSettingsFunderListener(updater));
-        buttonAddCard.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Activity activity = (Activity)view.getContext();
-                Intent intent = new Intent(activity, FlashAddCard.class);
-                activity.startActivity(intent);
-            }
-        });
-        */
+    public void update()
+    {
         buttonUpdateAccount.setOnClickListener(new UpdateAccountButtonListener(null));
         buttonLogout.setOnClickListener(new OnClickListener() {
             @Override
@@ -336,6 +186,6 @@ public class SettingsActivity extends AppCompatActivity
                 activity.startActivity(intent);
             }
         });
-  }
+    }
 
 }

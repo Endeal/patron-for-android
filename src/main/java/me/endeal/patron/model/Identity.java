@@ -10,19 +10,19 @@ public class Identity implements Serializable
     private List<Credential> credentials;
     private long birthday;
     private List<Location> locations;
-    private List<String> vendors;
-    private List<String> items;
 
-    public Identity(String firstName, String lastName, List<Credential> credentials, long birthday, List<Location> locations,
-            List<String> vendors, List<String> items)
+    public Identity(List<Credential> credentials, String firstName, String lastName, long birthday, List<Location> locations)
     {
         setFirstName(firstName);
         setLastName(lastName);
         setCredentials(credentials);
         setBirthday(birthday);
         setLocations(locations);
-        setVendors(vendors);
-        setItems(items);
+    }
+
+    public void setCredentials(List<Credential> credentials)
+    {
+        this.credentials = credentials;
     }
 
     public void setFirstName(String firstName)
@@ -35,11 +35,6 @@ public class Identity implements Serializable
         this.lastName = lastName;
     }
 
-    public void setCredentials(List<Credential> credentials)
-    {
-        this.credentials = credentials;
-    }
-
     public void setBirthday(long birthday)
     {
         this.birthday = birthday;
@@ -50,14 +45,9 @@ public class Identity implements Serializable
         this.locations = locations;
     }
 
-    public void setVendors(List<String> vendors)
+    public List<Credential> getCredentials()
     {
-        this.vendors = vendors;
-    }
-
-    public void setItems(List<String> items)
-    {
-        this.items = items;
+        return this.credentials;
     }
 
     public String getFirstName()
@@ -70,11 +60,6 @@ public class Identity implements Serializable
         return this.lastName;
     }
 
-    public List<Credential> getCredentials()
-    {
-        return this.credentials;
-    }
-
     public long getBirthday()
     {
         return this.birthday;
@@ -83,15 +68,5 @@ public class Identity implements Serializable
     public List<Location> getLocations()
     {
         return this.locations;
-    }
-
-    public List<String> getVendors()
-    {
-        return this.vendors;
-    }
-
-    public List<String> getItems()
-    {
-        return this.items;
     }
 }

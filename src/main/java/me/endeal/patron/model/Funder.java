@@ -1,147 +1,128 @@
 package me.endeal.patron.model;
 
-public abstract class Funder
+import java.io.Serializable;
+
+public class Funder implements Serializable
 {
-    public static enum Type
-    {
-        Card, BankAccount
-    }
+    private static final long serialVersionUID = 1L;
 
-	// Properties
 	private String id;
-	private String name;
-	private String bankName;
-	private String number;
-	private String type;
-	private String address;
-	private String city;
-	private String state;
-	private String postalCode;
-	private String href;
-	private String createdAt;
+    private String object;
+    private String last4;
+    private String brand;
+    private String funding;
+    private String country;
+    private String exp_month;
+    private String exp_year;
+    private String cvc;
 
-    // Convenience for checking type.
-    public Type getFunderType()
+    public Funder(String id, String object, String last4, String brand, String funding,
+            String country, String month, String year, String cvc)
     {
-        if (this.type.toLowerCase().equals("credit") || this.type.toLowerCase().equals("debit"))
-        {
-            return Type.Card;
-        }
-        else
-        {
-            return Type.BankAccount;
-        }
+        setId(id);
+        setObject(object);
+        setLast4(last4);
+        setBrand(brand);
+        setFunding(funding);
+        setCountry(country);
+        setExpirationMonth(month);
+        setExpirationYear(year);
+        setCvc(cvc);
     }
 
-	// Setters
 	public void setId(String id)
 	{
 		this.id = id;
 	}
 
-	public void setName(String name)
+    public void setObject(String object)
+    {
+        this.object = object;
+    }
+
+	public void setLast4(String number)
 	{
-		this.name = name;
+		this.last4 = number;
 	}
 
-	public void setBankName(String bankName)
-	{
-		this.bankName = bankName;
-	}
+    public void setBrand(String brand)
+    {
+        this.brand = brand;
+    }
 
-	public void setNumber(String number)
-	{
-		this.number = number;
-	}
+    public void setFunding(String funding)
+    {
+        this.funding = funding;
+    }
 
-	public void setType(String type)
-	{
-		this.type = type;
-	}
+    public void setCountry(String country)
+    {
+        this.country = country;
+    }
 
-	public void setAddress(String address)
-	{
-		this.address = address;
-	}
+    public void setExpirationMonth(String month)
+    {
+        this.exp_month = month;
+    }
 
-	public void setCity(String city)
-	{
-		this.city = city;
-	}
+    public void setExpirationYear(String year)
+    {
+        this.exp_year = year;
+    }
 
-	public void setState(String state)
-	{
-		this.state = state;
-	}
+    public void setCvc(String cvc)
+    {
+        this.cvc = cvc;
+    }
 
-	public void setPostalCode(String postalCode)
-	{
-		this.postalCode = postalCode;
-	}
+    public String getId()
+    {
+        return this.id;
+    }
 
-	public void setHref(String href)
-	{
-		this.href = href;
-	}
+    public String getObject()
+    {
+        return this.object;
+    }
 
-	public void setCreatedAt(String createdAt)
-	{
-		this.createdAt = createdAt;
-	}
+    public String getLast4()
+    {
+        return this.last4;
+    }
 
-	// Getters
-	public String getId()
-	{
-		return this.id;
-	}
+    public String getBrand()
+    {
+        return this.brand;
+    }
 
-	public String getName()
-	{
-		return this.name;
-	}
+    public String getFunding()
+    {
+        return this.funding;
+    }
 
-	public String getBankName()
-	{
-		return this.bankName;
-	}
+    public String getCountry()
+    {
+        return this.country;
+    }
 
-	public String getNumber()
-	{
-		return this.number;
-	}
+    public String getExpirationMonth()
+    {
+        return this.exp_month;
+    }
 
-	public String getType()
-	{
-		return this.type;
-	}
+    public String getExpirationYear()
+    {
+        return this.exp_year;
+    }
 
-	public String getAddress()
-	{
-		return this.address;
-	}
+    public String getCvc()
+    {
+        return this.cvc;
+    }
 
-	public String getCity()
-	{
-		return this.city;
-	}
-
-	public String getState()
-	{
-		return this.state;
-	}
-
-	public String getPostalCode()
-	{
-		return this.postalCode;
-	}
-
-	public String getHref()
-	{
-		return this.href;
-	}
-
-	public String getCreatedAt()
-	{
-		return this.createdAt;
-	}
+    @Override
+    public String toString()
+    {
+        return getBrand() + " " + getLast4();
+    }
 }

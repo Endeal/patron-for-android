@@ -37,16 +37,21 @@ import com.squareup.picasso.Picasso;
 import io.karim.MaterialTabs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.endeal.patron.fragments.CustomizeFragmentPagerAdapter;
 import me.endeal.patron.fragments.CustomizeViewPager;
 import me.endeal.patron.fragments.FragmentAttributes;
 import me.endeal.patron.fragments.FragmentOptions;
+import me.endeal.patron.listeners.OnApiExecutedListener;
 import me.endeal.patron.model.*;
 import me.endeal.patron.R;
+import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
 import static me.endeal.patron.model.Order.Status;
 import static me.endeal.patron.model.Retrieval.Method;
+
+import org.joda.time.DateTime;
 
 public class FragmentViewHolder extends RecyclerView.ViewHolder
 {
@@ -76,7 +81,7 @@ public class FragmentViewHolder extends RecyclerView.ViewHolder
                 dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialogView.setContentView(R.layout.dialog_item);
                 ImageView imageViewPicture = (ImageView)dialogView.findViewById(R.id.dialogItemImageViewPicture);
-                ImageButton imageButtonFavorite = (ImageButton)dialogView.findViewById(R.id.dialogItemImageButtonFavorite);
+                final ImageButton favorite = (ImageButton)dialogView.findViewById(R.id.dialogItemImageButtonFavorite);
                 ImageButton imageButtonNutrition = (ImageButton)dialogView.findViewById(R.id.dialogItemImageButtonNutrition);
                 Button buttonQuantity = (Button)dialogView.findViewById(R.id.dialogItemButtonQuantity);
                 TextView textViewName = (TextView)dialogView.findViewById(R.id.dialogItemTextViewName);
@@ -92,22 +97,71 @@ public class FragmentViewHolder extends RecyclerView.ViewHolder
                 textViewDescription.setText(fragment.getItem().getDescription());
 
                 // Setup favorite
-                imageButtonFavorite.setOnClickListener(new OnClickListener() {
+                final Item item = fragment.getItem();
+                if (Globals.getPatron().getItems().contains(item.getId()))
+                {
+                    favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                }
+                else
+                {
+                    favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                }
+                favorite.setOnClickListener(new OnClickListener() {
                     @Override
-                    public void onClick(View view)
+                    public void onClick(final View view)
                     {
-                        /*
-                        if (Globals.getUser().hasFavoriteItem(fragment.getItem()))
+                        int found = -1;
+                        List<String> favorites = Globals.getPatron().getItems();
+                        for (int i = 0; i < favorites.size(); i++)
                         {
-                            // Remove from user favorites
-                            Snackbar.make(view.getRootView(), fragment.getItem().getName() + " removed to favorites", Snackbar.LENGTH_SHORT).show();
+                            if (favorites.get(i).equals(item.getId()))
+                            {
+                                found = i;
+                                break;
+                            }
                         }
+                        // Add if not favorited
+                        if (found == -1)
+                        {
+                            favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                            favorites.add(item.getId());
+                        }
+                        // Remove if favorited
                         else
                         {
-                        */
-                            // Add to user favorites
-                            Snackbar.make(view.getRootView(), fragment.getItem().getName() + " added to favorites", Snackbar.LENGTH_SHORT).show();
-                        //}
+                            favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                            favorites.remove(found);
+                        }
+                        Globals.getPatron().setItems(favorites);
+                        // Update the patron
+                        ApiExecutor executor = new ApiExecutor();
+                        executor.updatePatron(Globals.getPatron(), new OnApiExecutedListener() {
+                            @Override
+                            public void onExecuted(ApiResult result)
+                            {
+                                if (result.getStatusCode() != 200)
+                                {
+                                    Snackbar.make(view.getRootView(), result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                    if (Globals.getPatron().getItems().contains(item.getId()))
+                                    {
+                                        favorite.setImageResource(R.drawable.ic_favorite_border_white_48dp);
+                                        Globals.getPatron().getItems().remove(item.getId());
+                                    }
+                                    else
+                                    {
+                                        favorite.setImageResource(R.drawable.ic_favorite_white_48dp);
+                                        Globals.getPatron().getItems().add(item.getId());
+                                    }
+                                }
+                                else
+                                {
+                                    if (Globals.getPatron().getItems().contains(item.getId()))
+                                        Snackbar.make(view.getRootView(), "Item successfully added to favorites", Snackbar.LENGTH_SHORT).show();
+                                    else
+                                        Snackbar.make(view.getRootView(), "Item successfully removed from favorites", Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 });
 
@@ -116,7 +170,10 @@ public class FragmentViewHolder extends RecyclerView.ViewHolder
                     @Override
                     public void onClick(View view)
                     {
-                        new AlertDialog.Builder(view.getContext()).setTitle("Nutrition Information").setMessage(fragment.getItem().getNutrition().toString())
+                        String message = "No nutrition info provided";
+                        if (fragment.getItem().getNutrition() != null)
+                            message = fragment.getItem().getNutrition().toString();
+                        new AlertDialog.Builder(view.getContext()).setTitle("Nutrition Information").setMessage(message)
                             .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which)
                                 {
@@ -208,9 +265,12 @@ public class FragmentViewHolder extends RecyclerView.ViewHolder
                             }
                             else
                                 retrieval = new Retrieval(Method.SelfServe, null, null, null);
-                            Order order = new Order("92872", new ArrayList<Fragment>(), new ArrayList<Voucher>(), new Price(0, "USD"),
-                                "", retrieval, 1433833200, Status.WAITING, null, Globals.getVendor(),
-                                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/QR_Code_Example.svg/368px-QR_Code_Example.svg.png");
+                            Funder funder = null;
+                            if (Globals.getPatron().getFunders() != null && Globals.getPatron().getFunders().size() > 0)
+                                funder = Globals.getPatron().getFunders().get(0);
+                            DateTime currentDateTime = new DateTime();
+                            Order order = new Order(null, new ArrayList<Fragment>(), new ArrayList<Voucher>(), new Price(0, "USD"),
+                                "", retrieval, currentDateTime.getMillis(), Status.WAITING, funder, Globals.getVendor(), "", Globals.getPatron().getId());
                             Globals.setOrder(order);
                         }
 

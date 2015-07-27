@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.transitions.everywhere.TransitionManager;
 import android.transitions.everywhere.Explode;
 
+import me.endeal.patron.adapters.FragmentAdapter;
 import me.endeal.patron.model.*;
 import me.endeal.patron.system.Globals;
 import me.endeal.patron.R;
@@ -33,9 +34,9 @@ import java.util.Map;
 
 public class FilterButtonListener implements OnClickListener
 {
-    private Adapter adapter;
+    private FragmentAdapter adapter;
 
-    public FilterButtonListener(Adapter adapter)
+    public FilterButtonListener(FragmentAdapter adapter)
     {
         this.adapter = adapter;
     }
@@ -85,7 +86,7 @@ public class FilterButtonListener implements OnClickListener
                             }
                         }
                     }
-                    Globals.getVendor().setFilteredItems(items);
+                    adapter.setItems(items);
                 }
                 // Selected Favorites
                 else if (position == Globals.getCategories().size())
@@ -96,6 +97,15 @@ public class FilterButtonListener implements OnClickListener
                     title.setVisibility(View.VISIBLE);
                     search.setVisibility(View.GONE);
                     search.setText("");
+                    for (int i = 0; i < Globals.getVendor().getItems().size(); i++)
+                    {
+                        Item item = Globals.getVendor().getItems().get(i);
+                        if (Globals.getPatron().getItems().contains(item.getId()));
+                        {
+                            items.add(item);
+                        }
+                    }
+                    adapter.setItems(items);
                 }
                 // Selected Search
                 else if (position == Globals.getCategories().size() + 2)
@@ -124,9 +134,7 @@ public class FilterButtonListener implements OnClickListener
                                     items.add(item);
                                 }
                             }
-                            Globals.getVendor().setFilteredItems(items);
-                            setFragments();
-                            adapter.notifyDataSetChanged();
+                            adapter.setItems(items);
                         }
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                         {
@@ -143,9 +151,8 @@ public class FilterButtonListener implements OnClickListener
                     title.setVisibility(View.VISIBLE);
                     search.setVisibility(View.GONE);
                     search.setText("");
-                    Globals.getVendor().setFilteredItems(Globals.getVendor().getItems());
+                    adapter.setItems(Globals.getVendor().getItems());
                 }
-                setFragments();
                 adapter.notifyDataSetChanged();
                 popup.dismiss();
                 return true;
@@ -154,31 +161,5 @@ public class FilterButtonListener implements OnClickListener
 
         // Show popup
         popup.show();
-    }
-
-    public void setFragments()
-    {
-        List<Fragment> fragments = new ArrayList<Fragment>();
-        for (int i = 0; i < Globals.getVendor().getFilteredItems().size(); i++)
-        {
-            // Create default fragment
-            Item item = Globals.getVendor().getFilteredItems().get(i);
-            List<Selection> selections = new ArrayList<Selection>();
-            if (item.getAttributes() != null && item.getAttributes().size() > 0)
-            for (int j = 0; j < item.getAttributes().size(); j++)
-            {
-              Attribute attribute = item.getAttributes().get(j);
-              if (attribute.getOptions() != null && attribute.getOptions().size() > 0)
-              {
-                Option option = attribute.getOptions().get(0);
-                Selection selection = new Selection(attribute, option);
-                selections.add(selection);
-              }
-            }
-            List<Option> options = new ArrayList<Option>();
-            Fragment fragment = new Fragment("", item, options, selections, 1);
-            fragments.add(fragment);
-        }
-        Globals.setFragments(fragments);
     }
 }

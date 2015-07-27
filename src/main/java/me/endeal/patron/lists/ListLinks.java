@@ -11,18 +11,19 @@ public class ListLinks
 {
 	private static final String BASE_URL = "http://emporium.endeal.me/api/";
 
-	public static final String API_ADD_ACCOUNT = BASE_URL + "patrons";
+	public static final String API_ADD_ACCOUNT = BASE_URL + "patrons/";
 	public static final String API_REMOVE_ACCOUNT = BASE_URL + "patrons/"; // Append ID of patron to delete
 	public static final String API_UPDATE_ACCOUNT = BASE_URL + "patrons/"; // Append ID of patron to update
-	public static final String API_RESET_PASSWORD = BASE_URL + "patrons/reset/"; // Append ID of patron to reset
-	public static final String API_LOGIN_PATRON = BASE_URL + "patrons/login/"; // Append ID of patron to login
-	public static final String API_GET_ITEMS = BASE_URL + "vendors/menu/"; // Append ID of vendor to get items for
-	public static final String API_GET_VENDORS = BASE_URL + "vendors";
+	public static final String API_RESET_PASSWORD = BASE_URL + "reset/patrons/"; // Append ID of patron to reset
+	public static final String API_LOGIN_PATRON = BASE_URL + "login/patrons/"; // Append ID of patron to login
+	public static final String API_GET_ITEMS = BASE_URL + "items/"; // Append ID of vendor to get items for
+	public static final String API_GET_VENDORS = BASE_URL + "vendors/";
+	public static final String API_GET_ORDERS = BASE_URL + "orders/";
 	public static final String API_GET_CODES = BASE_URL + "patrons/orders/"; // Append ID of patron to get orders for
 	public static final String API_GET_SCAN = BASE_URL + "patrons/orders/scan/"; // Append ID of order to get scan for
-	public static final String API_ADD_ORDER = BASE_URL + "orders";
-	public static final String API_ADD_CARD = BASE_URL + "patrons/cards/"; // Append ID of patron to add card to
-	public static final String API_REMOVE_CARD = BASE_URL + "patrons/cards/"; // Append ID of patron to remove card from
+	public static final String API_ADD_ORDER = BASE_URL + "orders/";
+	public static final String API_ADD_FUNDER = BASE_URL + "funder/patrons/"; // Append ID of patron to add card to
+	public static final String API_REMOVE_FUNDER = BASE_URL + "funder/patrons/"; // Append ID of patron to add card to
     public static final String API_ADD_FAVORITE_VENDOR = BASE_URL + "patrons/vendors/"; // Append ID of patron to add vendor to
     public static final String API_ADD_FAVORITE_ITEM = BASE_URL + "patrons/items/"; // Append ID of patron to add item to
     public static final String API_REMOVE_FAVORITE_VENDOR = BASE_URL + "patrons/vendors/"; // Append ID of patron to remove vendor from

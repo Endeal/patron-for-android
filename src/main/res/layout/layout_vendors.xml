@@ -2,7 +2,7 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:patron="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ordersCoordinatorLayoutMain"
+    android:id="@+id/vendorsCoordinatorLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,7 +29,7 @@
 
         <android.support.v4.widget.DrawerLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/locationsDrawerNavigation"
+            android:id="@+id/vendorsDrawerNavigation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/vendorsToolbar"
@@ -48,15 +48,7 @@
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
-            <me.endeal.patron.view.NavigationListView
-                android:id="@+id/locationsListNavigation"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:background="#111"/>
+            <include layout="@layout/fragment_navigation" />
 
         </android.support.v4.widget.DrawerLayout>
 

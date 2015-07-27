@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
@@ -19,21 +21,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.ArrayList;
 
 import me.endeal.patron.adapters.VendorAdapter;
+import me.endeal.patron.adapters.NavigationAdapter;
 import me.endeal.patron.listeners.ButtonFindNearestListener;
 import me.endeal.patron.listeners.DrawerNavigationListener;
 import me.endeal.patron.listeners.OnApiExecutedListener;
+import me.endeal.patron.model.ApiResult;
 import me.endeal.patron.model.Contact;
 import me.endeal.patron.model.Location;
 import me.endeal.patron.model.Vendor;
@@ -48,6 +56,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class VendorsActivity extends AppCompatActivity
 {
     private DrawerNavigationListener drawerToggle;
+    private CoordinatorLayout coordinatorLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -61,84 +70,63 @@ public class VendorsActivity extends AppCompatActivity
 
         // Get layout elements
         final SwipeRefreshLayout swipeRefreshLayoutVendors = (SwipeRefreshLayout) findViewById(R.id.vendorsSwipeRefreshLayoutVendors);
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.vendorsCoordinatorLayoutMain);
 
 		// Set up the navigation drawer.
-		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.locationsDrawerNavigation);
-		NavigationListView listNavigation = (NavigationListView) findViewById(R.id.locationsListNavigation);
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.vendorsDrawerNavigation);
         drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
-		listNavigation.setHierarchy(drawerToggle, drawerLayoutNavigation, Hierarchy.BUY);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+        final RecyclerView recyclerViewNavigation = (RecyclerView)findViewById(R.id.navigationRecyclerViewNavigation);
+        final TextView textViewDrawerTitle = (TextView)findViewById(R.id.navigationTextViewDrawerTitle);
+        final TextView textViewDrawerSubtitle = (TextView)findViewById(R.id.navigationTextViewDrawerSubtitle);
+        final ImageView imageViewDrawerVendor = (ImageView)findViewById(R.id.navigationImageViewDrawerVendor);
+        textViewDrawerTitle.setText(Globals.getPatron().getIdentity().getFirstName() + " " + Globals.getPatron().getIdentity().getLastName());
+        if (Globals.getVendor() != null)
+        {
+            textViewDrawerSubtitle.setText(Globals.getVendor().getName());
+            Picasso.with(this).load(Globals.getVendor().getPicture()).into(imageViewDrawerVendor);
+        }
+        else
+        {
+            textViewDrawerSubtitle.setText("No vendor selected");
+        }
+        NavigationAdapter navigationAdapter = new NavigationAdapter(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 1);
+        recyclerViewNavigation.setLayoutManager(layoutManager);
+        recyclerViewNavigation.setAdapter(navigationAdapter);
         drawerToggle.syncState();
 
         // Set up recycler view.
-        //OnVendorRefreshListener refreshListener = new OnVendorRefreshListener(swipeRefreshLayoutVendors, recyclerView);
         final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.vendorsRecyclerViewMain);
         GridLayoutManager manager = new GridLayoutManager(getApplicationContext(), 1);
         recyclerView.setLayoutManager(manager);
-
-        // Loading indicator
-        /*
-        final RelativeLayout layout = (RelativeLayout)findViewById(R.id.vendorsRelativeLayoutContent);
-        final ProgressBar progressIndicator = new ProgressBar(this);
-        progressIndicator.setBackgroundColor(Color.TRANSPARENT);
-        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        final OnApiExecutedListener removeViewListener = new OnApiExecutedListener() {
-            @Override
-            public void onExecuted()
-            {
-                layout.removeView(progressIndicator);
-            }
-        };
-        final OnApiExecutedListener stopRefreshListener = new OnApiExecutedListener() {
-            @Override
-            public void onExecuted()
-            {
-                swipeRefreshLayoutVendors.setRefreshing(false);
-            }
-        };
-
-        // Refreshing the page.
+        final VendorAdapter adapter = new VendorAdapter(this, Globals.getVendors());
+        recyclerView.setAdapter(adapter);
         final ApiExecutor apiExecutor = new ApiExecutor();
         int startOffset = (int)Globals.convertDpToPixel(10, this);
         int endOffset = (int)Globals.convertDpToPixel(50, this);
         swipeRefreshLayoutVendors.setProgressViewOffset(false, startOffset, endOffset);
 				swipeRefreshLayoutVendors.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        final OnVendorRefreshListener vendorRefreshListener = new OnVendorRefreshListener(listVendors, buttonFindNearest);
-        layout.addView(progressIndicator, params);
-        apiExecutor.getVendors(vendorRefreshListener, removeViewListener);
-        swipeRefreshLayoutVendors.setOnRefreshListener(new OnRefreshListener() {
+        OnRefreshListener refreshListener = new OnRefreshListener() {
             @Override
             public void onRefresh()
             {
                 swipeRefreshLayoutVendors.setRefreshing(true);
-                apiExecutor.getVendors(vendorRefreshListener, stopRefreshListener);
+                apiExecutor.getVendors(new OnApiExecutedListener() {
+                    @Override
+                    public void onExecuted(ApiResult result)
+                    {
+                        swipeRefreshLayoutVendors.setRefreshing(false);
+                        adapter.setVendors(Globals.getVendors());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
-        });
-        */
-
-        // Add all vendors
-        Location location = new Location("144 Olympic Place", "Napa", "CA", "94552", 72.283, 29.993);
-        Location location2 = new Location("19 Yellow Drive", "San Rafael", "CA", "98532", 56.115, 31.334);
-        Contact contact = new Contact("(805) 442-4921", "johngalt@gmail.com", "http://facebook.com", "http://twitter.com", "http://plus.google.com");
-        Contact contact2 = new Contact("(235) 482-9288", "frandrescher@gmail.com", "http://facebook.com", "http://twitter.com", "http://plus.google.com");
-        Vendor vendor = new Vendor("", "Mike's Place", "http://rabda2.s3.amazonaws.com/images/images/180/large/Morimoto_Andaz_Maui___1_.jpg",
-                null, location, contact, 0.0833, 4.0, 72, 25, 25, 25, null, null, null, true, null);
-        Vendor vendor2 = new Vendor("", "Panda Express", "https://musicalcities.files.wordpress.com/2012/03/outside-arcade-low-res.jpg",
-                null, location2, null, 0.0833, 4.0, 72, 25, 25, 25, null, null, null, false, null);
-        List<Vendor> vendors = new ArrayList<Vendor>();
-        vendors.add(vendor);
-        vendors.add(vendor2);
-        Globals.setVendors(vendors);
-        VendorAdapter adapter = new VendorAdapter(this, Globals.getVendors());
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        //refreshListener.onExecuted();
-
-        // Find nearest vendor button.
-        //buttonFindNearest.setOnClickListener(new ButtonFindNearestListener());
+        };
+        swipeRefreshLayoutVendors.setOnRefreshListener(refreshListener);
+        refreshListener.onRefresh();
 	}
 
     public void onStart()
@@ -175,20 +163,25 @@ public class VendorsActivity extends AppCompatActivity
         {
             // Find Nearest Vendor
             final Activity activity = this;
-            new AlertDialog.Builder(this)
-                    .setTitle("Auto-Locate Vendor")
-                    .setMessage("Are you at Starbucks?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            final ApiExecutor executor = new ApiExecutor();
+            executor.selectNearestVendor(this, new OnApiExecutedListener() {
+                @Override
+                public void onExecuted(ApiResult result)
+                {
+                    if (result != null && result.getStatusCode() == 200)
+                    {
                         activity.finish();
-                        /*
-                        Globals.setVendor(vendor);
-                        Intent intent = new Intent(v.getContext(), FlashMenu.class);
-                        v.getContext().startActivity(intent);
-                        */
                     }
-                }).setNegativeButton("No", null).show();
+                    else if (result != null && result.getMessage() != null && result.getStatusCode() != 202)
+                    {
+                        Snackbar.make(coordinatorLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Snackbar.make(coordinatorLayout, "Failed to find nearest vendor", Snackbar.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }

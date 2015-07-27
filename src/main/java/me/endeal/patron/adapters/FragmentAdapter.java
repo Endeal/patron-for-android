@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import me.endeal.patron.bind.FragmentViewHolder;
 import me.endeal.patron.model.*;
@@ -24,18 +25,18 @@ import me.endeal.patron.system.Globals;
 
 public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
 {
-    private List<Fragment> fragments;
+    private List<Item> items;
     private Context context;
 
-    public FragmentAdapter(Context context, List<Fragment> fragments)
+    public FragmentAdapter(Context context, List<Item> items)
     {
-        this.fragments = fragments;
+        this.items = items;
         this.context = context;
     }
 
-    public void setFragments(List<Fragment> fragments)
+    public void setItems(List<Item> items)
     {
-        this.fragments = fragments;
+        this.items = items;
     }
 
     @Override
@@ -49,7 +50,25 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     @Override
     public void onBindViewHolder(FragmentViewHolder fragmentViewHolder, int i)
     {
-        Fragment fragment = Globals.getFragments().get(i);
+        Item item = items.get(i);
+
+        // Create Default fragment from items
+        List<Selection> selections = new ArrayList<Selection>();
+        if (item.getAttributes() != null && item.getAttributes().size() > 0)
+        for (int j = 0; j < item.getAttributes().size(); j++)
+        {
+          Attribute attribute = item.getAttributes().get(j);
+          if (attribute.getOptions() != null && attribute.getOptions().size() > 0)
+          {
+            Option option = attribute.getOptions().get(0);
+            Selection selection = new Selection(attribute, option);
+            selections.add(selection);
+          }
+        }
+        List<Option> options = new ArrayList<Option>();
+        Fragment fragment = new Fragment("", item, options, selections, 1);
+
+        // Bind fragment to view holder
         fragmentViewHolder.setFragment(fragment);
         fragmentViewHolder.getName().setText(fragment.getItem().getName());
         fragmentViewHolder.getPrice().setText(fragment.getItem().getPrice().toString());
@@ -59,6 +78,6 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     @Override
     public int getItemCount()
     {
-        return (null != Globals.getFragments() ? Globals.getFragments().size() : 0);
+        return (null != items ? items.size() : 0);
     }
 }

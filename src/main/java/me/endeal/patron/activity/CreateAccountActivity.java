@@ -1,6 +1,8 @@
 package me.endeal.patron.activity;
 
+import java.util.ArrayList;
 import java.lang.Exception;
+import java.util.List;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -16,6 +18,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.CoordinatorLayout;
+import android.view.inputmethod.InputMethodManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,12 +33,15 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import me.endeal.patron.activity.MenuActivity;
 import me.endeal.patron.lists.ListLinks;
 import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.Patron;
+import me.endeal.patron.model.*;
 import me.endeal.patron.R;
 import me.endeal.patron.system.ApiExecutor;
 import me.endeal.patron.system.Globals;
+
+import org.joda.time.DateTime;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -144,8 +150,10 @@ public class CreateAccountActivity extends AppCompatActivity
 	private class ButtonCreateAccountListener implements OnClickListener
 	{
 		@Override
-		public void onClick(View view)
+		public void onClick(final View view)
 		{
+            InputMethodManager inputMethodManager = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 			if (submitting)
                 return;
 
@@ -158,21 +166,21 @@ public class CreateAccountActivity extends AppCompatActivity
             final String birthday = CreateAccountActivity.year + "-" + (CreateAccountActivity.month + 1) + "-" + CreateAccountActivity.day;
             final OnApiExecutedListener listener = new OnApiExecutedListener() {
                 @Override
-                public void onExecuted()
+                public void onExecuted(ApiResult result)
                 {
                     layout.removeView(progressIndicator);
-                    /*
-                    if (Globals.getUser() != null)
+                    if (Globals.getPatron() != null)
                     {
-                        Globals.setEmail(email);
-                        Globals.setPassword(password);
-                        Globals.setProvider("patron");
-                        Intent intent = new Intent(context, FlashMenu.class);
+                        Intent intent = new Intent(context, MenuActivity.class);
                         context.startActivity(intent);
                         Activity activity = (Activity)context;
                         activity.finish();
                     }
-                    */
+                    else
+                    {
+                        submitting = false;
+                        Snackbar.make(coordinatorLayout, "Failed to create account, e-mail already in use", Snackbar.LENGTH_SHORT).show();
+                    }
                 }
             };
 
@@ -181,19 +189,19 @@ public class CreateAccountActivity extends AppCompatActivity
                     email.length() == 0 || password.length() == 0)
             {
                 Snackbar.make(coordinatorLayout, "Please fill out all the fields", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted();
+                listener.onExecuted(null);
                 return;
             }
             if (!password.equals(confirm))
             {
                 Snackbar.make(coordinatorLayout, "The password and confirmation do not match", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted();
+                listener.onExecuted(null);
                 return;
             }
             if (password.length() < 6)
             {
                 Snackbar.make(coordinatorLayout, "Password must be at least 6 characters", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted();
+                listener.onExecuted(null);
                 return;
             }
             Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
@@ -202,7 +210,7 @@ public class CreateAccountActivity extends AppCompatActivity
             if (!matchFound)
             {
                 Snackbar.make(coordinatorLayout, "Please enter a valid e-mail address", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted();
+                listener.onExecuted(null);
                 return;
             }
 
@@ -211,8 +219,22 @@ public class CreateAccountActivity extends AppCompatActivity
             layout.addView(progressIndicator, params);
             submitting = true;
 
-            //ApiExecutor api = new ApiExecutor();
-            //api.createAccount(firstName, lastName, email, password, birthday, listener);
+            // Create patron
+            List<Credential> credentials = new ArrayList<Credential>();
+            Credential credential = new Credential(email, password, "endeal");
+            credentials.add(credential);
+            DateTime rawBirthday = new DateTime(CreateAccountActivity.year, CreateAccountActivity.month, CreateAccountActivity.day, 0, 0);
+            long birthdayTimestamp = rawBirthday.getMillis();
+            List<Location> locations = new ArrayList<Location>();
+            Identity identity = new Identity(credentials, firstName, lastName, birthdayTimestamp, locations);
+            List<Funder> funders = new ArrayList<Funder>();
+            List<String> franchises = new ArrayList<String>();
+            List<String> vendors = new ArrayList<String>();
+            List<String> items = new ArrayList<String>();
+            Patron patron = new Patron("", "", identity, funders, franchises, vendors, items);
+
+            ApiExecutor api = new ApiExecutor();
+            api.createAccount(patron, listener);
 		}
 	}
 

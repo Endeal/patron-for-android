@@ -8,7 +8,7 @@ public class Vendor implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String _id;
 	private String name;
     private String picture;
     private Franchise franchise;
@@ -17,6 +17,7 @@ public class Vendor implements Serializable
     private boolean selfServe;
 	private double taxRate;
     private double range;
+    private Price deliveryFee;
     private int favorites;
     private int facebookPoints;
     private int twitterPoints;
@@ -31,7 +32,7 @@ public class Vendor implements Serializable
 	private Map<String, Integer> rewardOptions;
 
     public Vendor(String id, String name, String picture, Franchise franchise, Location location, Contact contact,
-            double taxRate, double range, int favorites, int facebookPoints, int twitterPoints,
+            double taxRate, double range, Price deliveryFee, int favorites, int facebookPoints, int twitterPoints,
             int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales, boolean selfServe,
             List<Query> queries)
     {
@@ -43,6 +44,7 @@ public class Vendor implements Serializable
         setContact(contact);
         setTaxRate(taxRate);
         setRange(range);
+        setDeliveryFee(deliveryFee);
         setFavorites(favorites);
         setFacebookPoints(facebookPoints);
         setTwitterPoints(twitterPoints);
@@ -56,7 +58,7 @@ public class Vendor implements Serializable
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	public void setName(String name)
@@ -92,6 +94,11 @@ public class Vendor implements Serializable
     public void setRange(double range)
     {
         this.range = range;
+    }
+
+    public void setDeliveryFee(Price deliveryFee)
+    {
+        this.deliveryFee = deliveryFee;
     }
 
     public void setFavorites(int favorites)
@@ -156,7 +163,7 @@ public class Vendor implements Serializable
 
 	public String getId()
 	{
-		return this.id;
+		return this._id;
 	}
 
 	public String getName()
@@ -192,6 +199,11 @@ public class Vendor implements Serializable
     public double getRange()
     {
         return this.range;
+    }
+
+    public Price getDeliveryFee()
+    {
+        return this.deliveryFee;
     }
 
     public int getFavorites()
