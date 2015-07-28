@@ -1,11 +1,13 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,14 +16,15 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import me.endeal.patron.bind.VendorViewHolder;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Price;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.R;
+import com.endeal.patron.bind.VendorViewHolder;
+import com.endeal.patron.dialogs.VendorDialog;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Price;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.R;
 
 public class VendorAdapter extends RecyclerView.Adapter<VendorViewHolder>
 {
@@ -50,12 +53,20 @@ public class VendorAdapter extends RecyclerView.Adapter<VendorViewHolder>
     @Override
     public void onBindViewHolder(VendorViewHolder vendorViewHolder, int i)
     {
-        Vendor vendor = vendors.get(i);
-        vendorViewHolder.setVendor(vendor);
+        final Vendor vendor = vendors.get(i);
+        final Activity activity = (Activity)context;
         if (vendor.getName() != null)
             vendorViewHolder.getTitle().setText(vendor.getName());
         if (vendor.getLocation() != null && vendor.getLocation().getAddress() != null && vendor.getLocation().getZip() != null)
             vendorViewHolder.getSubtitle().setText(vendor.getLocation().getAddress() + ", " + vendor.getLocation().getZip());
+        vendorViewHolder.itemView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                VendorDialog dialog = new VendorDialog(activity, vendor);
+                dialog.show();
+            }
+        });
     }
 
     @Override

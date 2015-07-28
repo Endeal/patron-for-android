@@ -1,4 +1,4 @@
-package me.endeal.patron.lists;
+package com.endeal.patron.lists;
 
 public class ListScreens
 {

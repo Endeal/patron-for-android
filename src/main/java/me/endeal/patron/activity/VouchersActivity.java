@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import java.lang.Exception;
 import java.util.ArrayList;
@@ -33,12 +33,10 @@ import com.appsee.Appsee;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.R;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.R;
+import com.endeal.patron.system.Globals;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

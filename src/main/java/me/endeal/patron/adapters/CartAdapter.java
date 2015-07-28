@@ -1,4 +1,4 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,15 +19,15 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import me.endeal.patron.bind.CartViewHolder;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Price;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
+import com.endeal.patron.bind.CartViewHolder;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Price;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
 
 public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>
 {

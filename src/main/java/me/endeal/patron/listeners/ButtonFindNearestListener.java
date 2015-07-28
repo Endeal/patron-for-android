@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import me.endeal.patron.activity.MenuActivity;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.activity.MenuActivity;
+import com.endeal.patron.system.Globals;
 
 public class ButtonFindNearestListener implements OnClickListener
 {

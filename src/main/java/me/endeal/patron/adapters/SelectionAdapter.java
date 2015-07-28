@@ -1,4 +1,4 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,13 +14,13 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import me.endeal.patron.bind.SelectionViewHolder;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Price;
-import me.endeal.patron.model.Selection;
-import me.endeal.patron.R;
+import com.endeal.patron.bind.SelectionViewHolder;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Price;
+import com.endeal.patron.model.Selection;
+import com.endeal.patron.R;
 
 public class SelectionAdapter extends RecyclerView.Adapter<SelectionViewHolder>
 {

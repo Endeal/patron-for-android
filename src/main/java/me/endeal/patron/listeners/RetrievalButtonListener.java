@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
@@ -11,15 +11,15 @@ import android.widget.Button;
 
 import java.util.List;
 
-import me.endeal.patron.dialogs.LocationDialog;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Locale;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Retrieval;
-import me.endeal.patron.model.Station;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.system.Globals;
-import static me.endeal.patron.model.Retrieval.Method;
+import com.endeal.patron.dialogs.LocationDialog;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.model.Locale;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Retrieval;
+import com.endeal.patron.model.Station;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.system.Globals;
+import static com.endeal.patron.model.Retrieval.Method;
 
 public class RetrievalButtonListener implements OnClickListener
 {
@@ -36,9 +36,14 @@ public class RetrievalButtonListener implements OnClickListener
         if (order.getRetrieval().getMethod() == Method.Pickup)
             buttonRetrieval.setText(Globals.getOrder().getRetrieval().getStation().getName());
         else if (order.getRetrieval().getMethod() == Method.Service)
-            buttonRetrieval.setText(order.getRetrieval().getLocale().getName() + " " + order.getRetrieval().getLocale().getNumber());
+            buttonRetrieval.setText(order.getRetrieval().getLocale().toString());
         else if (order.getRetrieval().getMethod() == Method.Delivery)
-            buttonRetrieval.setText(Globals.getOrder().getRetrieval().getLocation().getAddress());
+        {
+            if (order.getRetrieval().getLocation() != null)
+                buttonRetrieval.setText(Globals.getOrder().getRetrieval().getLocation().getAddress());
+            else
+                buttonRetrieval.setText("N/A");
+        }
         else
             buttonRetrieval.setText("Self-Serve");
     }
@@ -46,6 +51,8 @@ public class RetrievalButtonListener implements OnClickListener
     @Override
     public void onClick(final View view)
     {
+        final RetrievalButtonListener listener = this;
+        final Button button = (Button)view;
         final Order order = Globals.getOrder();
         if (order.getRetrieval().getMethod() == Method.Pickup)
         {
@@ -61,6 +68,7 @@ public class RetrievalButtonListener implements OnClickListener
                 {
                     Station station = order.getVendor().getStations().get(menuItem.getItemId());
                     order.getRetrieval().setStation(station);
+                    update();
                     popup.dismiss();
                     return true;
                 }
@@ -81,6 +89,7 @@ public class RetrievalButtonListener implements OnClickListener
                 {
                     Locale locale = order.getVendor().getLocales().get(menuItem.getItemId());
                     order.getRetrieval().setLocale(locale);
+                    update();
                     popup.dismiss();
                     return true;
                 }
@@ -111,10 +120,11 @@ public class RetrievalButtonListener implements OnClickListener
                     {
                         location = Globals.getPatron().getIdentity().getLocations().get(i);
                         order.getRetrieval().setLocation(location);
+                        update();
                     }
                     else
                     {
-                        LocationDialog dialog = new LocationDialog(view.getContext());
+                        LocationDialog dialog = new LocationDialog(view.getContext(), listener);
                         dialog.show();
                     }
                     popup.dismiss();

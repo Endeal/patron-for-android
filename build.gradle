@@ -7,12 +7,31 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 1
+        versionCode 2
         versionName "1"
+    }
+    signingConfigs {
+        release {
+            storeFile file("keys/endeal.keystore")
+            keyAlias "jameswhiteman"
+            storePassword System.console().readLine("\nKeystore password: ")
+            keyPassword System.console().readLine("\nKey password: ")
+        }
+        debug {
+
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 
-group = 'me.endeal.patron'
+group = 'com.endeal.patron'
 version = '1.0.0'
 
 description = """Patron"""

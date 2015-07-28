@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,21 +29,19 @@ import com.appsee.Appsee;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.adapters.FunderAdapter;
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.dialogs.CardDialog;
-import me.endeal.patron.listeners.UpdateAccountButtonListener;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.Credential;
-import me.endeal.patron.R;
-import me.endeal.patron.social.OnSocialTaskCompletedListener;
-import me.endeal.patron.social.SocialExecutor;
-import static me.endeal.patron.social.SocialExecutor.Network;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
+import com.endeal.patron.adapters.FunderAdapter;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.dialogs.CardDialog;
+import com.endeal.patron.listeners.UpdateAccountButtonListener;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.model.Credential;
+import com.endeal.patron.R;
+import com.endeal.patron.social.OnSocialTaskCompletedListener;
+import com.endeal.patron.social.SocialExecutor;
+import static com.endeal.patron.social.SocialExecutor.Network;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -159,13 +157,13 @@ public class SettingsActivity extends AppCompatActivity
   // TextView methods
   public void viewPrivacyPolicy(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/privacy-policy"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/products/patron/privacy-policy"));
     startActivity(intent);
   }
 
   public void viewTermsOfService(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/terms-of-service"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/products/patron/terms-of-service"));
     startActivity(intent);
   }
 

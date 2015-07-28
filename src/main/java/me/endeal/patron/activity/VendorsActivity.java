@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,20 +36,18 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.ArrayList;
 
-import me.endeal.patron.adapters.VendorAdapter;
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.listeners.ButtonFindNearestListener;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.ApiResult;
-import me.endeal.patron.model.Contact;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
+import com.endeal.patron.adapters.VendorAdapter;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.listeners.ButtonFindNearestListener;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.model.ApiResult;
+import com.endeal.patron.model.Contact;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -57,6 +55,7 @@ public class VendorsActivity extends AppCompatActivity
 {
     private DrawerNavigationListener drawerToggle;
     private CoordinatorLayout coordinatorLayout;
+    private boolean submitting = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -121,6 +120,10 @@ public class VendorsActivity extends AppCompatActivity
                         swipeRefreshLayoutVendors.setRefreshing(false);
                         adapter.setVendors(Globals.getVendors());
                         adapter.notifyDataSetChanged();
+                        if (result.getStatusCode() != 200)
+                        {
+                            Snackbar.make(coordinatorLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
@@ -159,15 +162,17 @@ public class VendorsActivity extends AppCompatActivity
         }
 
         // Handle your other action bar items...
-        if (item.getItemId() == R.id.findNearest)
+        if (item.getItemId() == R.id.findNearest && !submitting)
         {
             // Find Nearest Vendor
+            submitting = true;
             final Activity activity = this;
             final ApiExecutor executor = new ApiExecutor();
             executor.selectNearestVendor(this, new OnApiExecutedListener() {
                 @Override
                 public void onExecuted(ApiResult result)
                 {
+                    submitting = false;
                     if (result != null && result.getStatusCode() == 200)
                     {
                         activity.finish();
@@ -176,7 +181,7 @@ public class VendorsActivity extends AppCompatActivity
                     {
                         Snackbar.make(coordinatorLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
-                    else
+                    else if (result != null && result.getStatusCode() != 202)
                     {
                         Snackbar.make(coordinatorLayout, "Failed to find nearest vendor", Snackbar.LENGTH_SHORT).show();
                     }

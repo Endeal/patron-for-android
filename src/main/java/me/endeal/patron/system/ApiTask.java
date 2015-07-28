@@ -1,4 +1,4 @@
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import android.util.Log;
 
@@ -29,10 +29,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import me.endeal.patron.listeners.OnTaskCompletedListener;
-import me.endeal.patron.model.Credential;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.listeners.OnTaskCompletedListener;
+import com.endeal.patron.model.Credential;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.system.Globals;
 
 import android.os.AsyncTask;
 

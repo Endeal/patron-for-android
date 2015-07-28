@@ -1,4 +1,4 @@
-package me.endeal.patron.bind;
+package com.endeal.patron.bind;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Locale;
 import java.util.List;
 
-import me.endeal.patron.R;
+import com.endeal.patron.R;
 
 public class NavigationViewHolder extends RecyclerView.ViewHolder
 {

@@ -7,7 +7,7 @@
  *
  */
 
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,8 +15,8 @@ import java.util.List;
 import java.math.RoundingMode;
 import java.lang.Exception;
 
-import me.endeal.patron.system.Globals;
-import static me.endeal.patron.model.Retrieval.Method;
+import com.endeal.patron.system.Globals;
+import static com.endeal.patron.model.Retrieval.Method;
 
 import com.google.gson.Gson;
 
@@ -69,7 +69,7 @@ public class Order implements Serializable
 			total.add(fragments.get(i).getPrice());
 		}
 		total.add(getTax());
-        if (getRetrieval().getMethod() == Method.Delivery)
+        if (getVendor().getDeliveryFee() != null && getRetrieval().getMethod() == Method.Delivery)
         {
             total.add(getVendor().getDeliveryFee());
         }
@@ -155,18 +155,20 @@ public class Order implements Serializable
 
 	public static String getStatusText(Status status)
 	{
+        if (status == null)
+            return "completed";
 		switch (status)
 		{
 		case WAITING:
-			return "Waiting";
+			return "being made";
 		case READY:
-			return "Ready";
+			return "ready";
 		case SCANNED:
-			return "Scanned";
+			return "completed";
 		case COMPLETED:
-			return "Completed";
+			return "completed";
 		default:
-			return "Rejected";
+			return "refunded";
 		}
 	}
 
@@ -369,7 +371,7 @@ public class Order implements Serializable
         text = text + "Tax: " + getTax().toString() + " (" + taxRate + "% of " + getPrice().toString() + ")";
         sum.add(getTax());
         text = text + "\n  = " + sum.toString();
-        if (getRetrieval().getMethod() == Method.Delivery)
+        if (getVendor().getDeliveryFee() != null && getRetrieval().getMethod() == Method.Delivery)
         {
             text = text + "\n\nDelivery Fee: " + getVendor().getDeliveryFee().toString();
         }

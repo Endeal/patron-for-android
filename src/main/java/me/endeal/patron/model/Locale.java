@@ -1,4 +1,4 @@
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,5 +46,13 @@ public class Locale implements Serializable
     public int getNumber()
     {
         return this.number;
+    }
+
+    @Override
+    public String toString()
+    {
+        if (getName() == null)
+            return getNumber() + "";
+        return getName() + " " + getNumber();
     }
 }

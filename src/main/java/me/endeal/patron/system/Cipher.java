@@ -5,7 +5,7 @@ and his example at:
 http://stackoverflow.com/questions/4551263/how-can-i-convert-string-to-secretkey/8828196#8828196
 */
 
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import java.security.SecureRandom;
 import java.security.InvalidKeyException;
@@ -23,12 +23,11 @@ import javax.crypto.spec.IvParameterSpec;
 
 import android.util.Base64;
 
-import me.endeal.patron.lists.ListKeys;
+import com.endeal.patron.lists.ListKeys;
 
 public class Cipher
 {
-
-     public static String encrypt(String text)
+     public static String encrypt(String text) throws javax.crypto.IllegalBlockSizeException, java.lang.ArrayIndexOutOfBoundsException
      {
         final String plainMessage = text;
         final String symKeyHex = ListKeys.PASSWORD_ENCRYPTION_KEY;
@@ -71,7 +70,7 @@ public class Cipher
         }
     }
 
-    public static String decrypt(String text)
+    public static String decrypt(String text) throws javax.crypto.IllegalBlockSizeException, java.lang.ArrayIndexOutOfBoundsException
     {
         final String ivAndEncryptedMessageBase64 = text;
         final String symKeyHex = ListKeys.PASSWORD_DECRYPTION_KEY;

@@ -1,4 +1,4 @@
-package me.endeal.patron.bind;
+package com.endeal.patron.bind;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -29,16 +29,16 @@ import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Locale;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Retrieval;
-import me.endeal.patron.model.Station;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.R;
-import me.endeal.patron.system.Globals;
-import static me.endeal.patron.model.Order.Status;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Locale;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.model.Retrieval;
+import com.endeal.patron.model.Station;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.R;
+import com.endeal.patron.system.Globals;
+import static com.endeal.patron.model.Order.Status;
 
 public class CartViewHolder extends RecyclerView.ViewHolder
 {

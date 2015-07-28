@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import java.util.ArrayList;
 import java.lang.Exception;
@@ -33,13 +33,13 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
-import me.endeal.patron.activity.MenuActivity;
-import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.*;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.activity.MenuActivity;
+import com.endeal.patron.lists.ListLinks;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.model.*;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import org.joda.time.DateTime;
 

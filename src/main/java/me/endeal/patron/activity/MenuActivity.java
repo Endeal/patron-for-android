@@ -3,7 +3,7 @@
  * @author James Whiteman
  */
 
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -70,20 +70,18 @@ import com.appsee.Appsee;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.adapters.FragmentAdapter;
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.decor.GridSpacingItemDecoration;
-import me.endeal.patron.listeners.FilterButtonListener;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.lists.ListFonts;
-import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.model.*;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
+import com.endeal.patron.adapters.FragmentAdapter;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.decor.GridSpacingItemDecoration;
+import com.endeal.patron.listeners.FilterButtonListener;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.lists.ListFonts;
+import com.endeal.patron.lists.ListLinks;
+import com.endeal.patron.model.*;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -92,12 +90,15 @@ public class MenuActivity extends AppCompatActivity
     private List<Button> buttonCategories;
     private CoordinatorLayout coordinatorLayout;
     private DrawerNavigationListener drawerToggle;
+    private OnRefreshListener refreshListener;
+    private boolean activityChanged;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_menu);
+        activityChanged = false;
 
         // Set up toolbar
         Toolbar toolbar = (Toolbar)findViewById(R.id.menuToolbar);
@@ -111,6 +112,111 @@ public class MenuActivity extends AppCompatActivity
         drawerToggle = new DrawerNavigationListener(this, drawerLayoutNavigation, toolbar, R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
         drawerLayoutNavigation.setDrawerListener(drawerToggle);
         drawerLayoutNavigation.setScrimColor(getResources().getColor(R.color.scrim));
+
+        // Find navigation drawer elements
+        final RecyclerView recyclerViewNavigation = (RecyclerView)findViewById(R.id.navigationRecyclerViewNavigation);
+        final TextView textViewDrawerTitle = (TextView)findViewById(R.id.navigationTextViewDrawerTitle);
+        final TextView textViewDrawerSubtitle = (TextView)findViewById(R.id.navigationTextViewDrawerSubtitle);
+        final ImageView imageViewDrawerVendor = (ImageView)findViewById(R.id.navigationImageViewDrawerVendor);
+        final GridLayoutManager navigationLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
+
+        // Find the views.
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.menuCoordinatorLayoutMain);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.menuRecyclerViewItems);
+        final FragmentAdapter adapter = new FragmentAdapter(recyclerView.getContext(), new ArrayList<Item>());
+        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
+        swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+            android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.menuFloatingActionButtonFilter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
+
+        final Context context = this;
+        final ApiExecutor executor = new ApiExecutor();
+        refreshListener = new OnRefreshListener() {
+            @Override
+            public void onRefresh()
+            {
+                swipeRefreshLayoutItems.setRefreshing(true);
+                // Get items listener
+                final OnApiExecutedListener itemsListener = new OnApiExecutedListener() {
+                    @Override
+                    public void onExecuted(ApiResult result)
+                    {
+                        if (result.getStatusCode() != 200)
+                        {
+                            Snackbar.make(coordinatorLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            return;
+                        }
+                        adapter.setItems(Globals.getVendor().getItems());
+                        Globals.filterCategories(Globals.getVendor().getItems());
+                        adapter.notifyDataSetChanged();
+                        fab.setOnClickListener(new FilterButtonListener(adapter));
+                        swipeRefreshLayoutItems.setRefreshing(false);
+                    }
+                };
+
+                // Find vendor first if there is none, then get items
+                if (Globals.getVendor() == null)
+                {
+                    executor.selectNearestVendor(context, new OnApiExecutedListener() {
+                        @Override
+                        public void onExecuted(ApiResult result)
+                        {
+                            if (activityChanged)
+                            {
+                                swipeRefreshLayoutItems.setRefreshing(false);
+                                return;
+                            }
+                            if (Globals.getVendor() == null)
+                            {
+                                activityChanged = true;
+                                Intent intent = new Intent(context, VendorsActivity.class);
+                                context.startActivity(intent);
+                            }
+                            else
+                            {
+                                executor.getItems(itemsListener);
+
+                                // Update the navigation drawer
+                                textViewDrawerTitle.setText(Globals.getPatron().getIdentity().getFirstName() + " " + Globals.getPatron().getIdentity().getLastName());
+                                if (Globals.getVendor() != null)
+                                {
+                                    textViewDrawerSubtitle.setText(Globals.getVendor().getName());
+                                    Picasso.with(context).load(Globals.getVendor().getPicture()).into(imageViewDrawerVendor);
+                                }
+                                else
+                                {
+                                    textViewDrawerSubtitle.setText("No vendor selected");
+                                }
+                                NavigationAdapter navigationAdapter = new NavigationAdapter(context);
+                                recyclerViewNavigation.setLayoutManager(navigationLayoutManager);
+                                recyclerViewNavigation.setAdapter(navigationAdapter);
+                                drawerToggle.syncState();
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    executor.getItems(itemsListener);
+                }
+            }
+        };
+        swipeRefreshLayoutItems.setOnRefreshListener(refreshListener);
+	}
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        activityChanged = false;
+        refreshListener.onRefresh();
+
+		// Refresh the navigation drawer.
+		DrawerLayout drawerLayoutNavigation = (DrawerLayout) findViewById(R.id.menuDrawerNavigation);
         final RecyclerView recyclerViewNavigation = (RecyclerView)findViewById(R.id.navigationRecyclerViewNavigation);
         final TextView textViewDrawerTitle = (TextView)findViewById(R.id.navigationTextViewDrawerTitle);
         final TextView textViewDrawerSubtitle = (TextView)findViewById(R.id.navigationTextViewDrawerSubtitle);
@@ -130,73 +236,7 @@ public class MenuActivity extends AppCompatActivity
         recyclerViewNavigation.setLayoutManager(layoutManager);
         recyclerViewNavigation.setAdapter(navigationAdapter);
         drawerToggle.syncState();
-
-        // Find the views.
-        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.menuCoordinatorLayoutMain);
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.menuRecyclerViewItems);
-        final FragmentAdapter adapter = new FragmentAdapter(recyclerView.getContext(), new ArrayList<Item>());
-        layoutManager = new GridLayoutManager(getApplicationContext(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        final SwipeRefreshLayout swipeRefreshLayoutItems = (SwipeRefreshLayout) findViewById(R.id.menuSwipeRefreshLayoutItems);
-        swipeRefreshLayoutItems.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-            android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.menuFloatingActionButtonFilter);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, true));
-
-        final Context context = this;
-        final ApiExecutor executor = new ApiExecutor();
-        OnRefreshListener refreshListener = new OnRefreshListener() {
-            @Override
-            public void onRefresh()
-            {
-                swipeRefreshLayoutItems.setRefreshing(true);
-                // Get items listener
-                final OnApiExecutedListener itemsListener = new OnApiExecutedListener() {
-                    @Override
-                    public void onExecuted(ApiResult result)
-                    {
-                        if (result == null || result.getStatusCode() != 200)
-                        {
-                            Snackbar.make(coordinatorLayout, "Failed to retrieve items for vendor", Snackbar.LENGTH_SHORT).show();
-                            return;
-                        }
-                        adapter.setItems(Globals.getVendor().getItems());
-                        Globals.filterCategories(Globals.getVendor().getItems());
-                        adapter.notifyDataSetChanged();
-                        fab.setOnClickListener(new FilterButtonListener(adapter));
-                        swipeRefreshLayoutItems.setRefreshing(false);
-                    }
-                };
-
-                // Find vendor first if there is none, then get items
-                if (Globals.getVendor() == null)
-                {
-                    executor.selectNearestVendor(context, new OnApiExecutedListener() {
-                        @Override
-                        public void onExecuted(ApiResult result)
-                        {
-                            if (Globals.getVendor() == null)
-                            {
-                                Intent intent = new Intent(context, VendorsActivity.class);
-                                context.startActivity(intent);
-                            }
-                            else
-                            {
-                                executor.getItems(itemsListener);
-                            }
-                        }
-                    });
-                }
-                else
-                {
-                    executor.getItems(itemsListener);
-                }
-            }
-        };
-        swipeRefreshLayoutItems.setOnRefreshListener(refreshListener);
-        refreshListener.onRefresh();
-	}
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
@@ -245,6 +285,7 @@ public class MenuActivity extends AppCompatActivity
         {
             Intent intent = new Intent(this, VendorsActivity.class);
             startActivity(intent);
+            activityChanged = true;
         }
         else if (item.getItemId() == R.id.review)
         {
@@ -255,6 +296,7 @@ public class MenuActivity extends AppCompatActivity
             }
             Intent intent = new Intent(this, ReviewActivity.class);
             startActivity(intent);
+            activityChanged = true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -1,4 +1,4 @@
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import android.app.Application;
 import android.app.Activity;
@@ -6,9 +6,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 
-import me.endeal.patron.activity.LoginActivity;
-import me.endeal.patron.R;
-import me.endeal.patron.social.SocialExecutor;
+import com.endeal.patron.activity.LoginActivity;
+import com.endeal.patron.R;
+import com.endeal.patron.social.SocialExecutor;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 

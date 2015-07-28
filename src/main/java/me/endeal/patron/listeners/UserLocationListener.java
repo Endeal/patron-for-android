@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.content.Context;
 import android.location.Location;
@@ -6,8 +6,8 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.system.ApiExecutor;
 
 public class UserLocationListener implements LocationListener
 {

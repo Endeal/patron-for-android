@@ -1,4 +1,4 @@
-package me.endeal.patron.bind;
+package com.endeal.patron.bind;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -18,10 +18,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Selection;
-import me.endeal.patron.R;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Selection;
+import com.endeal.patron.R;
 
 public class SelectionViewHolder extends RecyclerView.ViewHolder
 {

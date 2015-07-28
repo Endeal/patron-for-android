@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -22,10 +22,10 @@ import android.widget.TextView;
 import android.transitions.everywhere.TransitionManager;
 import android.transitions.everywhere.Explode;
 
-import me.endeal.patron.adapters.FragmentAdapter;
-import me.endeal.patron.model.*;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
+import com.endeal.patron.adapters.FragmentAdapter;
+import com.endeal.patron.model.*;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +53,10 @@ public class FilterButtonListener implements OnClickListener
             Category category = categories.get(i);
             popup.getMenu().add(Menu.NONE, i, Menu.NONE, category.getName());
         }
-        popup.getMenu().add(Menu.NONE, i + 1, Menu.NONE, "Favorites");
-        popup.getMenu().add(Menu.NONE, i + 2, Menu.NONE, "Search...");
-        popup.getMenu().add(Menu.NONE, i + 3, Menu.NONE, "All");
+        popup.getMenu().add(Menu.NONE, i, Menu.NONE, "Favorites");
+        popup.getMenu().add(Menu.NONE, i + 1, Menu.NONE, "Search...");
+        popup.getMenu().add(Menu.NONE, i + 2, Menu.NONE, "All");
+        final int choices = i;
 
         // Popup Menu Item Selections
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -100,15 +101,25 @@ public class FilterButtonListener implements OnClickListener
                     for (int i = 0; i < Globals.getVendor().getItems().size(); i++)
                     {
                         Item item = Globals.getVendor().getItems().get(i);
-                        if (Globals.getPatron().getItems().contains(item.getId()));
+                        System.out.println("Item name in question:" + item.getName());
+                        System.out.println("Item ID in question:" + item.getId());
+                        for (int j = 0; j < Globals.getPatron().getItems().size(); j++)
                         {
-                            items.add(item);
+                            String itemId = Globals.getPatron().getItems().get(j);
+                            System.out.println("Favorite item ID:" + itemId);
+                            if (itemId.equals(item.getId()))
+                            {
+                                items.add(item);
+                                System.out.println("Items have same ID");
+                            }
+                            else
+                                System.out.println("Items do not have same ID");
                         }
                     }
                     adapter.setItems(items);
                 }
                 // Selected Search
-                else if (position == Globals.getCategories().size() + 2)
+                else if (position == Globals.getCategories().size() + 1)
                 {
                     View rootView = view.getRootView();
                     TextView title = (TextView)rootView.findViewById(R.id.menuTextViewTitle);
@@ -122,7 +133,7 @@ public class FilterButtonListener implements OnClickListener
                     search.addTextChangedListener(new TextWatcher() {
                         public void afterTextChanged(Editable s)
                         {
-                            if (s == null)
+                            if (s == null || s.toString().length() == 0)
                                 return;
                             String term = s.toString();
                             List<Item> items = new ArrayList<Item>();
@@ -135,11 +146,14 @@ public class FilterButtonListener implements OnClickListener
                                 }
                             }
                             adapter.setItems(items);
+                            adapter.notifyDataSetChanged();
                         }
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                         {
                         }
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        public void onTextChanged(CharSequence s, int start, int before, int count)
+                        {
+                        }
                     });
                 }
                 // Selected All

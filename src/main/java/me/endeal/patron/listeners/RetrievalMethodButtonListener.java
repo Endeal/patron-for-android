@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
@@ -10,12 +10,16 @@ import android.widget.ImageButton;
 
 import java.util.List;
 
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.model.Retrieval;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
-import static me.endeal.patron.model.Retrieval.Method;
+import com.endeal.patron.model.Identity;
+import com.endeal.patron.model.Locale;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.model.Retrieval;
+import com.endeal.patron.model.Station;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
+import static com.endeal.patron.model.Retrieval.Method;
 
 public class RetrievalMethodButtonListener implements OnClickListener
 {
@@ -64,19 +68,33 @@ public class RetrievalMethodButtonListener implements OnClickListener
                 {
                     order.getRetrieval().setMethod(Method.Pickup);
                     order.getRetrieval().setStation(order.getVendor().getStations().get(0));
+                    order.getRetrieval().setLocale(null);
+                    order.getRetrieval().setLocation(null);
                 }
                 else if (menuItem.getItemId() == 1)
                 {
                     order.getRetrieval().setMethod(Method.Service);
                     order.getRetrieval().setLocale(order.getVendor().getLocales().get(0));
+                    order.getRetrieval().setStation(null);
+                    order.getRetrieval().setLocation(null);
                 }
                 else if (menuItem.getItemId() == 2)
                 {
                     order.getRetrieval().setMethod(Method.Delivery);
+                    List<Location> locations = Globals.getPatron().getIdentity().getLocations();
+                    if (locations != null && locations.size() > 0)
+                    {
+                        order.getRetrieval().setLocation(locations.get(0));
+                    }
+                    order.getRetrieval().setStation(null);
+                    order.getRetrieval().setLocale(null);
                 }
                 else
                 {
                     order.getRetrieval().setMethod(Method.SelfServe);
+                    order.getRetrieval().setStation(null);
+                    order.getRetrieval().setLocale(null);
+                    order.getRetrieval().setLocation(null);
                 }
                 update();
                 listener.update();

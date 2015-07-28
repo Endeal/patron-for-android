@@ -2,6 +2,9 @@ target/
 build/
 gen/
 bin/
+keys/
 src/main/res/values/appboy.xml
 src/main/java/me/endeal/patron/lists/ListKeys.java
 patron-release.keystore
+endeal.keystore
+build.gradle

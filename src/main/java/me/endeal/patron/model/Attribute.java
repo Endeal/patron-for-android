@@ -1,4 +1,4 @@
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import com.google.gson.Gson;
 

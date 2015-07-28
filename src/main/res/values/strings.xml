@@ -4,22 +4,6 @@
 
     <!-- Manifest -->
 
-    <!-- Home Screen -->
-    <string name="homeTextUser">User</string>
-    <string name="homeTextLocation">Location</string>
-    <string name="homeButtonVendors">Vendors</string>
-    <string name="homeButtonMenu">Buy</string>
-    <string name="homeButtonCodes">Codes</string>
-    <string name="homeButtonProfile">Profile</string>
-
-    <string name="homeImageDescriptionUser">User Image</string>
-    <string name="homeImageDescriptionServer">Server Image</string>
-
-    <string name="homeImageButtonDescriptionMenu">Menu</string>
-    <string name="homeImageButtonDescriptionCart">Cart</string>
-    <string name="homeImageButtonDescriptionCodes">Codes</string>
-    <string name="homeImageButtonDescriptionProfile">Profile</string>
-
     <!-- Login Screen -->
     <string name="loginTextViewTitle">Patron</string>
     <string name="loginEditTextEmail">E-mail Address</string>

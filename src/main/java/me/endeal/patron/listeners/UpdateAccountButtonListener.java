@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,14 +9,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.ApiResult;
-import me.endeal.patron.model.Patron;
-import me.endeal.patron.model.Credential;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.model.ApiResult;
+import com.endeal.patron.model.Patron;
+import com.endeal.patron.model.Credential;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -25,10 +27,12 @@ import java.util.regex.Matcher;
 public class UpdateAccountButtonListener implements OnClickListener
 {
     private OnApiExecutedListener listener;
+    private boolean submitting;
 
     public UpdateAccountButtonListener(OnApiExecutedListener listener)
     {
         this.listener = listener;
+        this.submitting = false;
     }
 
     @Override
@@ -52,9 +56,18 @@ public class UpdateAccountButtonListener implements OnClickListener
 
         final Button buttonDone = (Button)dialogView.findViewById(R.id.dialogUpdateAccountButtonDone);
         final AlertDialog dialog = builder.create();
+        final ProgressBar progressBar = new ProgressBar(view.getContext());
+        progressBar.setIndeterminate(true);
         buttonDone.setOnClickListener(new OnClickListener() {
             public void onClick(final View view)
             {
+                if (submitting)
+                    return;
+                submitting = true;
+                final RelativeLayout layout = (RelativeLayout)view.getRootView().findViewById(R.id.dialogUpdateAccountRelativeLayoutMain);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200,200);
+                params.addRule(RelativeLayout.CENTER_IN_PARENT);
+                layout.addView(progressBar, params);
                 ApiExecutor executor = new ApiExecutor();
                 final String email = editTextEmail.getText().toString();
                 final String password = editTextPassword.getText().toString();
@@ -65,19 +78,25 @@ public class UpdateAccountButtonListener implements OnClickListener
                 boolean matchFound = m.matches();
                 if (!matchFound)
                 {
-                    Toast.makeText(view.getContext(), "Please enter a valid e-mail address", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view.getRootView(), "Please enter a valid e-mail address", Snackbar.LENGTH_SHORT).show();
+                    submitting = false;
+                    layout.removeView(progressBar);
                     return;
                 }
 
                 // Validate text length.
                 else if (email.length() == 0)
                 {
-                    Toast.makeText(view.getContext(), "Please enter an e-mail address", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view.getRootView(), "Please enter an e-mail address", Snackbar.LENGTH_SHORT).show();
+                    submitting = false;
+                    layout.removeView(progressBar);
                     return;
                 }
                 else if (password.length() < 6)
                 {
-                    Toast.makeText(view.getContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(view.getRootView(), "Password must be at least 6 characters", Snackbar.LENGTH_SHORT).show();
+                    submitting = false;
+                    layout.removeView(progressBar);
                     return;
                 }
 
@@ -94,23 +113,16 @@ public class UpdateAccountButtonListener implements OnClickListener
                     @Override
                     public void onExecuted(ApiResult result)
                     {
-                        if (listener != null)
+                        submitting = false;
+                        layout.removeView(progressBar);
+                        if (result.getStatusCode() == 200)
                         {
-                            listener.onExecuted(null);
+                            Snackbar.make(view.getRootView(), "Successfully updated account", Snackbar.LENGTH_SHORT).show();
+                            dialog.dismiss();
                         }
-                        for (int i = 0; i < patron.getIdentity().getCredentials().size(); i++)
+                        else
                         {
-                            Credential credential = patron.getIdentity().getCredentials().get(i);
-                            if (credential.getProvider().equals("endeal") &&
-                                credential.getIdentifier().equals(email) &&
-                                credential.getVerifier().equals(password))
-                            {
-                                dialog.dismiss();
-                            }
-                            else
-                            {
-                                Snackbar.make(view.getRootView(), "Failed to update account", Snackbar.LENGTH_SHORT).show();
-                            }
+                            Snackbar.make(view.getRootView(), result.getMessage(), Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

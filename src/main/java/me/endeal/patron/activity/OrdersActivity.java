@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,20 +45,18 @@ import com.appsee.Appsee;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.adapters.OrderAdapter;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.listeners.OrderRefreshListener;
-import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.model.*;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
-import static me.endeal.patron.model.Order.Status;
-import static me.endeal.patron.model.Retrieval.Method;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.adapters.OrderAdapter;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.listeners.OrderRefreshListener;
+import com.endeal.patron.lists.ListLinks;
+import com.endeal.patron.model.*;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
+import static com.endeal.patron.model.Order.Status;
+import static com.endeal.patron.model.Retrieval.Method;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

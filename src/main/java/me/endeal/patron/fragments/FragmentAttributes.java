@@ -1,4 +1,4 @@
-package me.endeal.patron.fragments;
+package com.endeal.patron.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,16 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.endeal.patron.adapters.SelectionAdapter;
-import me.endeal.patron.model.Fragment;
+import com.endeal.patron.adapters.SelectionAdapter;
+import com.endeal.patron.model.Fragment;
 
-import me.endeal.patron.R;
+import com.endeal.patron.R;
 
 public class FragmentAttributes extends android.support.v4.app.Fragment
 {
     private Fragment fragment;
 
-    public FragmentAttributes(Fragment fragment)
+    public FragmentAttributes()
+    {
+        super();
+        this.fragment = null;
+    }
+
+    public void setFragment(Fragment fragment)
     {
         this.fragment = fragment;
     }

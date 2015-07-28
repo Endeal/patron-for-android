@@ -1,60 +1,69 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogUpdateAccountRelativeLayoutMain"
+    android:layout_width="300dp"
     android:layout_height="wrap_content">
 
-    <TextView
-    	android:id="@+id/dialogUpdateAccountTextViewTitle"
-        style="@style/subtitle"
-    	android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-    	android:gravity="center_horizontal"
-    	android:text="Enter your new login credentials" />
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/dialogUpdateAccountEditTextEmail"
-            style="@style/darkEditText"
-            android:hint="New login e-mail"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:lines="1"
-            android:singleLine="true"
+        <TextView
+            android:id="@+id/dialogUpdateAccountTextViewTitle"
+            style="@style/subtitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="Enter your new login credentials" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-
-        <EditText
-            android:id="@+id/dialogUpdateAccountEditTextPassword"
-            style="@style/darkEditText"
-            android:hint="New login password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:lines="1"
-            android:singleLine="true"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/dialogUpdateAccountEditTextEmail"
+                style="@style/darkEditText"
+                android:hint="New login e-mail"
+                android:inputType="textEmailAddress"
+                android:maxLength="200"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <Button
-    	android:id="@+id/dialogUpdateAccountButtonDone"
-        style="@style/flatButton"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_margin="10dp"
-        android:layout_gravity="center"
-        android:text="Submit" />
+        </android.support.design.widget.TextInputLayout>
 
-</LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/dialogUpdateAccountEditTextPassword"
+                style="@style/darkEditText"
+                android:hint="New login password"
+                android:inputType="textPassword"
+                android:maxLength="200"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/dialogUpdateAccountButtonDone"
+            style="@style/flatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+</RelativeLayout>

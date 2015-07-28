@@ -1,4 +1,4 @@
-package me.endeal.patron.bind;
+package com.endeal.patron.bind;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -29,8 +29,8 @@ import android.view.WindowManager;
 
 import com.squareup.picasso.Picasso;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.R;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.R;
 
 public class FunderViewHolder extends RecyclerView.ViewHolder
 {

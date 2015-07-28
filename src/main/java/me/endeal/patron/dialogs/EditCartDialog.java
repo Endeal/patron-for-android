@@ -1,4 +1,4 @@
-package me.endeal.patron.dialogs;
+package com.endeal.patron.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,10 +13,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-import me.endeal.patron.adapters.CartAdapter;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
+import com.endeal.patron.adapters.CartAdapter;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
 
 import org.joda.time.DateTime;
 

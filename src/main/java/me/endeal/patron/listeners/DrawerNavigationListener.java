@@ -1,16 +1,24 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.CoordinatorLayout.LayoutParams;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.View;
+
+import com.endeal.patron.activity.MenuActivity;
+import com.endeal.patron.activity.ReviewActivity;
+import com.endeal.patron.R;
 
 public class DrawerNavigationListener extends ActionBarDrawerToggle
 {
@@ -63,6 +71,19 @@ public class DrawerNavigationListener extends ActionBarDrawerToggle
     public void onDrawerSlide(View view, float offset)
     {
         super.onDrawerSlide(view, offset);
+        Activity activity = (Activity)view.getContext();
+        FloatingActionButton fab;
+        float alpha = 1 - offset;
+        if (activity.getClass() == MenuActivity.class)
+        {
+            fab = (FloatingActionButton)activity.findViewById(R.id.menuFloatingActionButtonFilter);
+            fab.setAlpha(alpha);
+        }
+        else if (activity.getClass() == ReviewActivity.class)
+        {
+            fab = (FloatingActionButton)activity.findViewById(R.id.reviewFloatingActionButtonPay);
+            fab.setAlpha(alpha);
+        }
     }
 
     @Override

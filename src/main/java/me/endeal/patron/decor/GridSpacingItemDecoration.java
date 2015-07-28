@@ -1,4 +1,4 @@
-package me.endeal.patron.decor;
+package com.endeal.patron.decor;
 
 import android.support.v7.widget.RecyclerView;
 import android.graphics.Rect;

@@ -1,4 +1,4 @@
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,9 +11,9 @@ import android.util.Log;
 
 import com.appboy.AppboyGcmReceiver;
 
-import me.endeal.patron.activity.LoginActivity;
-import me.endeal.patron.activity.OrdersActivity;
-import me.endeal.patron.system.PatronApplication;
+import com.endeal.patron.activity.LoginActivity;
+import com.endeal.patron.activity.OrdersActivity;
+import com.endeal.patron.system.PatronApplication;
 
 public class PatronIntentReceiver extends BroadcastReceiver
 {

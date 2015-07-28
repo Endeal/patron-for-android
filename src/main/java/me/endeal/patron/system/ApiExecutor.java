@@ -1,4 +1,4 @@
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,18 +21,17 @@ import com.stripe.android.model.Token;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.listeners.OnTaskCompletedListener;
-import me.endeal.patron.listeners.UserLocationListener;
-import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.lists.ListKeys;
-import me.endeal.patron.activity.LoginActivity;
-import me.endeal.patron.model.*;
-import me.endeal.patron.R;
-import me.endeal.patron.system.ApiTask;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.system.PatronApplication;
-import me.endeal.patron.view.QustomDialogBuilder;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.listeners.OnTaskCompletedListener;
+import com.endeal.patron.listeners.UserLocationListener;
+import com.endeal.patron.lists.ListLinks;
+import com.endeal.patron.lists.ListKeys;
+import com.endeal.patron.activity.LoginActivity;
+import com.endeal.patron.model.*;
+import com.endeal.patron.R;
+import com.endeal.patron.system.ApiTask;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.system.PatronApplication;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -157,6 +156,14 @@ public class ApiExecutor
                             if (json.getString("statusCode").equals("200"))
                             {
                                 Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                for (int i = 0; i < user.getIdentity().getCredentials().size(); i++)
+                                {
+                                    Credential returnedCredential = user.getIdentity().getCredentials().get(i);
+                                    if (returnedCredential.getProvider().equals(credential.getProvider()))
+                                    {
+                                        user.getIdentity().getCredentials().set(i, credential);
+                                    }
+                                }
                                 Globals.setPatron(user);
                             }
                         }
@@ -262,15 +269,13 @@ public class ApiExecutor
                         {
                             String response = new String(entry.getValue());
                             JSONObject json = new JSONObject(response);
-                            if (json.getString("statusCode").equals("200"))
-                            {
-                                Toast.makeText(PatronApplication.getContext(), "Password successfully reset.", Toast.LENGTH_SHORT).show();
-                            }
-                            else
-                            {
-                                Toast.makeText(PatronApplication.getContext(), json.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), json.getString("message"), json.getString("data")), listeners);
+                            String message = null;
+                            String returnData = null;
+                            if (json.has("message"))
+                                message = json.getString("message");
+                            if (json.has("data"))
+                                returnData = json.getString("data");
+                            callback(new ApiResult(Integer.parseInt(json.getString("statusCode")), message, returnData), listeners);
                         }
                         catch (JSONException e)
                         {
@@ -336,79 +341,60 @@ public class ApiExecutor
         final Runnable runnable = new Runnable() {
             public void run()
             {
-                try
+                LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                if (isGPSEnabled == false && isNetworkEnabled == false)
                 {
-                    LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-                    boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                    if (isGPSEnabled == false && isNetworkEnabled == false)
-                    {
-                        // no network provider is enabled
-                        callback(new ApiResult(400, "Both GPS and Network are disabled", null), listeners);
-                    }
-                    else
-                    {
-                        long minTime = (long)1;
-                        float minDistance = (float)1;
-                        boolean canGetLocation = true;
-                        android.location.Location location = null;
-                        UserLocationListener listener = new UserLocationListener(context, executor, listeners);
-                        if (isGPSEnabled)
-                        {
-                          locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
-                          location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        }
-                        else if (isNetworkEnabled)
-                        {
-                          locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
-                          location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        }
-                        selectNearestLocation(location, context);
-
-                        // Confirm the user wants to use this vendor.
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                              switch (which)
-                              {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                  dialog.dismiss();
-                                  callback(new ApiResult(200, "Vendor found and selected", null), listeners);
-                                  break;
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                  Globals.setVendor(null);
-                                  dialog.dismiss();
-                                  callback(new ApiResult(202, "Vendor found but not selected", null), listeners);
-                                  break;
-                              }
-                            }
-                        };
-                        if (Globals.getVendor() != null)
-                        {
-                            AlertDialog alert = new AlertDialog.Builder(context)
-                                .setMessage("Are you at " + Globals.getVendor().getName() + "?")
-                                .setPositiveButton("Yes", dialogClickListener)
-                                .setNegativeButton("No", dialogClickListener)
-                                .create();
-                            alert.setCancelable(false);
-                            alert.setCanceledOnTouchOutside(false);
-                            alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface)
-                                {
-                                    callback(new ApiResult(202, "Dismissed vendor auto-selection", null), listeners);
-                                }
-                            });
-                            alert.show();
-                        }
-                    }
-
+                    // no network provider is enabled
+                    callback(new ApiResult(400, "Both GPS and Network are disabled", null), listeners);
                 }
-                catch (Exception e)
+                else
                 {
-                    e.printStackTrace();
-                    callback(new ApiResult(500, "Failed to locate nearest vendor", null), listeners);
+                    long minTime = (long)1;
+                    float minDistance = (float)1;
+                    boolean canGetLocation = true;
+                    android.location.Location location = null;
+                    UserLocationListener listener = new UserLocationListener(context, executor, listeners);
+                    if (isGPSEnabled)
+                    {
+                      locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, listener, null);
+                      location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    }
+                    else if (isNetworkEnabled)
+                    {
+                      locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null);
+                      location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                    selectNearestLocation(location, context);
+
+                    // Confirm the user wants to use this vendor.
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            switch (which)
+                            {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    callback(new ApiResult(200, "Vendor found and selected", null), listeners);
+                                    dialog.dismiss();
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    Globals.setVendor(null);
+                                    callback(new ApiResult(202, "Vendor found but not selected", null), listeners);
+                                    dialog.dismiss();
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog alert = new AlertDialog.Builder(context)
+                        .setMessage("Are you at " + Globals.getVendor().getName() + "?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener)
+                        .create();
+                    alert.setCancelable(false);
+                    alert.setCanceledOnTouchOutside(false);
+                    alert.show();
                 }
             }
         };
@@ -416,7 +402,10 @@ public class ApiExecutor
             @Override
             public void onExecuted(ApiResult result)
             {
-                runnable.run();
+                if (result.getStatusCode() == 200)
+                    runnable.run();
+                else
+                    callback(result);
             }
         });
     }
@@ -440,12 +429,15 @@ public class ApiExecutor
               latDiff = Math.abs(closestVendor.getLocation().getLatitude() - latitude);
               longDiff = Math.abs(closestVendor.getLocation().getLongitude() - longitude);
               double oldDistance = latDiff + longDiff;
-              if (newDistance < oldDistance)
+              if (newDistance < oldDistance && vendor.getOpen())
               {
                 closest = i;
               }
           }
-          Globals.setVendor(vendors.get(closest));
+          if (vendors.get(closest).getOpen())
+              Globals.setVendor(vendors.get(closest));
+          else
+              Globals.setVendor(null);
       }
       else
       {
@@ -681,6 +673,7 @@ public class ApiExecutor
         final String url = ListLinks.API_UPDATE_ACCOUNT + patron.getId();
         HttpPut request = new HttpPut(url);
         final String postData = gson.toJson(patron);
+        System.out.println(postData);
         ApiTask apiTask = new ApiTask();
         try
         {
@@ -706,6 +699,7 @@ public class ApiExecutor
                                 if (json.getString("statusCode").equals("200"))
                                 {
                                     Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                    user.getIdentity().setCredentials(patron.getIdentity().getCredentials());
                                     Globals.setPatron(user);
                                     Globals.setCredential(user.getIdentity().getCredentials().get(0));
                                 }
@@ -770,6 +764,14 @@ public class ApiExecutor
                             if (json.getString("statusCode").equals("201"))
                             {
                                 Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                for (int i = 0; i < user.getIdentity().getCredentials().size(); i++)
+                                {
+                                    Credential credential = user.getIdentity().getCredentials().get(i);
+                                    if (credential.getProvider().equals(Globals.getCredential().getProvider()))
+                                    {
+                                        user.getIdentity().getCredentials().set(i, Globals.getCredential());
+                                    }
+                                }
                                 Globals.setPatron(user);
                             }
                             callback(new ApiResult(Integer.parseInt(json.getString("statusCode")),
@@ -826,6 +828,14 @@ public class ApiExecutor
                             if (json.getString("statusCode").equals("200"))
                             {
                                 Patron user = gson.fromJson(json.getString("data"), Patron.class);
+                                for (int i = 0; i < user.getIdentity().getCredentials().size(); i++)
+                                {
+                                    Credential credential = user.getIdentity().getCredentials().get(i);
+                                    if (credential.getProvider().equals(Globals.getCredential().getProvider()))
+                                    {
+                                        user.getIdentity().getCredentials().set(i, Globals.getCredential());
+                                    }
+                                }
                                 Globals.setPatron(user);
                             }
                             callback(new ApiResult(Integer.parseInt(json.getString("statusCode")),

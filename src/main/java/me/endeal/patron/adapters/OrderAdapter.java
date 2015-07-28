@@ -1,4 +1,4 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -14,22 +14,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.StringBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.DateTime;
 
-import me.endeal.patron.bind.OrderViewHolder;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Retrieval;
-import me.endeal.patron.model.Location;
-import me.endeal.patron.model.Price;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.R;
-import static me.endeal.patron.model.Order.Status;
+import com.endeal.patron.bind.OrderViewHolder;
+import com.endeal.patron.dialogs.OrderDialog;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.model.Retrieval;
+import com.endeal.patron.model.Location;
+import com.endeal.patron.model.Price;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.R;
+import static com.endeal.patron.model.Order.Status;
+import static com.endeal.patron.model.Retrieval.Method;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
 {
@@ -40,11 +43,35 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
     {
         this.context = context;
         this.orders = orders;
+        sortOrders();
     }
 
     public void setOrders(List<Order> orders)
     {
         this.orders = orders;
+        sortOrders();
+    }
+
+    private void sortOrders()
+    {
+        // Sort orders by timestamp
+        boolean foundHigher = true;
+        if (orders != null && orders.size() > 1)
+        while (foundHigher)
+        {
+            foundHigher = false;
+            for (int i = 1; i < orders.size(); i++)
+            {
+                Order order = orders.get(i);
+                if (order.getTime() > orders.get(i - 1).getTime())
+                {
+                    orders.remove(i);
+                    orders.add(i - 1, order);
+                    foundHigher = true;
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -58,8 +85,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
     @Override
     public void onBindViewHolder(OrderViewHolder orderViewHolder, int position)
     {
-        Order order = orders.get(position);
-        orderViewHolder.setOrder(order);
+        final Order order = orders.get(position);
+        orderViewHolder.itemView.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                OrderDialog dialog = new OrderDialog(view.getContext(), order);
+                dialog.show();
+            }
+        });
 
         // Set title
         StringBuilder builder = new StringBuilder();
@@ -73,11 +107,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
         orderViewHolder.getTitle().setText(builder.toString());
 
         // Set time
-        DateTimeZone timezone = DateTimeZone.getDefault();
-        long offset = timezone.getOffset(order.getTime());
-        DateTime date = new DateTime(order.getTime() + offset);
-        //String s = date.toString("hh:mma, E MM/dd/yyyy");
+        DateTimeZone utcTimeZone = DateTimeZone.UTC;
+        long localTimeStamp = utcTimeZone.convertUTCToLocal(order.getTime());
+        DateTime date = new DateTime(localTimeStamp);
+        DateTime current = new DateTime();
         String s = date.toString("hh:mma MM/dd/yyyy");
+        if (date.year().get() == current.year().get() && date.monthOfYear().get() == current.monthOfYear().get() && date.dayOfMonth().get() == current.dayOfMonth().get())
+            s = date.toString("hh:mma") + " Today";
         orderViewHolder.getSubtitle().setText(s);
 
         // Set status
@@ -110,15 +146,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
         Retrieval retrieval = order.getRetrieval();
         if (retrieval == null || retrieval.getMethod() == null)
             return;
-        else if (retrieval.getMethod().equals("pickup"))
+        else if (retrieval.getMethod() == Method.Pickup)
         {
             orderViewHolder.getRetrieval().setImageResource(R.drawable.ic_directions_walk_black_48dp);
         }
-        else if (retrieval.getMethod().equals("delivery"))
+        else if (retrieval.getMethod() == Method.Delivery)
         {
             orderViewHolder.getRetrieval().setImageResource(R.drawable.ic_local_shipping_black_48dp);
         }
-        else if (retrieval.getMethod().equals("service"))
+        else if (retrieval.getMethod() == Method.Service)
         {
             orderViewHolder.getRetrieval().setImageResource(R.drawable.ic_pin_drop_black_48dp);
         }

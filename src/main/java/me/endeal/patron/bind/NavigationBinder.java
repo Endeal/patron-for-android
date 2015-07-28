@@ -1,4 +1,4 @@
-package me.endeal.patron.bind;
+package com.endeal.patron.bind;
 
 import android.graphics.Typeface;
 import android.view.View;
@@ -7,8 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.LinearLayout.LayoutParams;
 
-import me.endeal.patron.lists.ListFonts;
-import me.endeal.patron.R;
+import com.endeal.patron.lists.ListFonts;
+import com.endeal.patron.R;
 
 public class NavigationBinder implements SimpleAdapter.ViewBinder
 {

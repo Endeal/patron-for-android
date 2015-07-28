@@ -1,4 +1,4 @@
-package me.endeal.patron.social;
+package com.endeal.patron.social;
 
 public interface OnSocialTaskCompletedListener
 {

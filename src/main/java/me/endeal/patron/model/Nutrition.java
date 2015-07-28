@@ -1,4 +1,4 @@
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import java.lang.StringBuilder;
 import java.io.Serializable;
@@ -222,7 +222,7 @@ public class Nutrition implements Serializable
     @Override
     public String toString()
     {
-       StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         builder.append("Calories: " + getCalories() + "kCal\n");
         builder.append("Fat: " + getFat() + "g\n");
         builder.append("Protein: " + getProtein() + "g\n");
@@ -262,11 +262,18 @@ public class Nutrition implements Serializable
         builder.append("Nut-Free: " + nutFree + "\n");
         builder.append("Alcoholic: " + alcoholic + "\n");
         builder.append("Ingredients: ");
-        for (int i = 0; i < getIngredients().size(); i++)
+        if (getIngredients() == null || getIngredients().size() == 0)
         {
-            builder.append(getIngredients().get(i));
-            if (i < getIngredients().size() - 1)
-                builder.append(", ");
+            builder.append("N/A");
+        }
+        else
+        {
+            for (int i = 0; i < getIngredients().size(); i++)
+            {
+                builder.append(getIngredients().get(i));
+                if (i < getIngredients().size() - 1)
+                    builder.append(", ");
+            }
         }
         return builder.toString();
     }

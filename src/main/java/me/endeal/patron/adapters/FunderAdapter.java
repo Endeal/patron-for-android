@@ -1,4 +1,4 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,16 +24,16 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.bind.FunderViewHolder;
-import me.endeal.patron.model.ApiResult;
-import me.endeal.patron.model.Attribute;
-import me.endeal.patron.model.Funder;
-import me.endeal.patron.model.Option;
-import me.endeal.patron.model.Patron;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.bind.FunderViewHolder;
+import com.endeal.patron.model.ApiResult;
+import com.endeal.patron.model.Attribute;
+import com.endeal.patron.model.Funder;
+import com.endeal.patron.model.Option;
+import com.endeal.patron.model.Patron;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
 
 public class FunderAdapter extends RecyclerView.Adapter<FunderViewHolder>
 {
@@ -97,7 +97,7 @@ public class FunderAdapter extends RecyclerView.Adapter<FunderViewHolder>
                                     {
                                         Snackbar.make(relativeLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
                                     }
-                                    else
+                                    else if (Globals.getOrder() != null && Globals.getOrder().getFunder() != null)
                                     {
                                         if (funder.getId().equals(Globals.getOrder().getFunder().getId()))
                                         {

@@ -1,4 +1,4 @@
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import dalvik.system.DexFile;
 
@@ -49,18 +49,18 @@ import com.appsee.Appsee;
 
 import com.facebook.widget.LoginButton;
 
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.listeners.OnTaskCompletedListener;
-import me.endeal.patron.lists.ListLinks;
-import me.endeal.patron.model.ApiResult;
-import me.endeal.patron.model.Patron;
-import me.endeal.patron.model.Credential;
-import me.endeal.patron.R;
-import me.endeal.patron.social.OnSocialTaskCompletedListener;
-import me.endeal.patron.social.SocialExecutor;
-import static me.endeal.patron.social.SocialExecutor.Network;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.listeners.OnTaskCompletedListener;
+import com.endeal.patron.lists.ListLinks;
+import com.endeal.patron.model.ApiResult;
+import com.endeal.patron.model.Patron;
+import com.endeal.patron.model.Credential;
+import com.endeal.patron.R;
+import com.endeal.patron.social.OnSocialTaskCompletedListener;
+import com.endeal.patron.social.SocialExecutor;
+import static com.endeal.patron.social.SocialExecutor.Network;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
 
 import org.apache.http.HttpEntity;
 
@@ -219,6 +219,14 @@ public class LoginActivity extends AppCompatActivity
                             @Override
                             public void onExecuted(ApiResult result)
                             {
+                                if (result.getStatusCode() == 200)
+                                {
+                                    Snackbar.make(coordinatorLayout, "Password successfully reset", Snackbar.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    Snackbar.make(coordinatorLayout, result.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         dialogRequestPassword.dismiss();

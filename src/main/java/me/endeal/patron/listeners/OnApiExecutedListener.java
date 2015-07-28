@@ -1,6 +1,6 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
-import me.endeal.patron.model.ApiResult;
+import com.endeal.patron.model.ApiResult;
 
 public interface OnApiExecutedListener
 {

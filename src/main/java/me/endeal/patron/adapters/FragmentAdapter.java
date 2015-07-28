@@ -1,8 +1,9 @@
-package me.endeal.patron.adapters;
+package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -18,10 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.ArrayList;
 
-import me.endeal.patron.bind.FragmentViewHolder;
-import me.endeal.patron.model.*;
-import me.endeal.patron.R;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.bind.FragmentViewHolder;
+import com.endeal.patron.dialogs.FragmentDialog;
+import com.endeal.patron.model.*;
+import com.endeal.patron.R;
+import com.endeal.patron.system.Globals;
 
 public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
 {
@@ -66,13 +68,20 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
           }
         }
         List<Option> options = new ArrayList<Option>();
-        Fragment fragment = new Fragment("", item, options, selections, 1);
+        final Fragment fragment = new Fragment("", item, options, selections, 1);
 
         // Bind fragment to view holder
-        fragmentViewHolder.setFragment(fragment);
         fragmentViewHolder.getName().setText(fragment.getItem().getName());
         fragmentViewHolder.getPrice().setText(fragment.getItem().getPrice().toString());
         Picasso.with(context).load(fragment.getItem().getPicture()).into(fragmentViewHolder.getPicture());
+        fragmentViewHolder.itemView.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                FragmentDialog dialog = new FragmentDialog((FragmentActivity)context, fragment);
+                dialog.show();
+            }
+        });
     }
 
     @Override

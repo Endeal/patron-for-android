@@ -1,4 +1,4 @@
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.endeal.patron"
-    android:versionCode="1"
+    package="com.endeal.patron"
     xmlns:tools="http://schemas.android.com/tools"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -13,8 +13,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<permission android:name="me.endeal.patron.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="me.endeal.patron.permission.C2D_MESSAGE" />
+	<permission android:name="com.endeal.patron.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.endeal.patron.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -25,12 +25,11 @@
 
     <application
         android:icon="@drawable/logo_app"
-        android:name="me.endeal.patron.system.PatronApplication"
+        android:logo="@drawable/logo_app"
+        android:name="com.endeal.patron.system.PatronApplication"
         android:allowClearUserData="true"
-        android:debuggable="false"
         android:enabled="true"
         android:label="@string/globalAppName"
-        tools:replace="android:label"
         android:allowBackup="true">
 
         <!-- API Keys -->
@@ -42,10 +41,10 @@
             android:value="@string/appId"/>
 
         <!-- Intent Receivers -->
-        <receiver android:name="me.endeal.patron.system.PatronIntentReceiver" android:exported="false">
+        <receiver android:name="com.endeal.patron.system.PatronIntentReceiver" android:exported="false">
             <intent-filter>
-                <action android:name="me.endeal.patron.intent.APPBOY_PUSH_RECEIVED" />
-                <action android:name="me.endeal.patron.intent.APPBOY_NOTIFICATION_OPENED" />
+                <action android:name="com.endeal.patron.intent.APPBOY_PUSH_RECEIVED" />
+                <action android:name="com.endeal.patron.intent.APPBOY_NOTIFICATION_OPENED" />
             </intent-filter>
         </receiver>
 
@@ -57,13 +56,13 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="me.endeal.patron" />
+                <category android:name="com.endeal.patron" />
             </intent-filter>
         </receiver>
 
         <!-- The Login Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.LoginActivity"
+            android:name="com.endeal.patron.activity.LoginActivity"
             android:label="@string/globalAppName"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
@@ -76,32 +75,32 @@
 
         <!-- Vouchers Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.VouchersActivity"
+            android:name="com.endeal.patron.activity.VouchersActivity"
             android:label="@string/titleActivityVouchers"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.main.FlashLogin">
+            android:parentActivityName="com.endeal.patron.main.FlashLogin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.LoginActivity" />
+                android:value="com.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Create Account Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.CreateAccountActivity"
+            android:name="com.endeal.patron.activity.CreateAccountActivity"
             android:label="@string/titleActivityCreateAccount"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="me.endeal.patron.main.FlashLogin">
+            android:parentActivityName="com.endeal.patron.main.FlashLogin">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.LoginActivity" />
+                android:value="com.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Menu Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.MenuActivity"
+            android:name="com.endeal.patron.activity.MenuActivity"
             android:label="@string/titleActivityMenu"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
@@ -109,31 +108,31 @@
 
         <!-- The Cart Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.ReviewActivity"
+            android:name="com.endeal.patron.activity.ReviewActivity"
             android:label="@string/titleActivityCart"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.activity.MenuActivity">
+            android:parentActivityName="com.endeal.patron.activity.MenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.MenuActivity" />
+                android:value="com.endeal.patron.activity.MenuActivity" />
         </activity>
 
         <!-- The Vendors Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.VendorsActivity"
+            android:name="com.endeal.patron.activity.VendorsActivity"
             android:label="@string/titleActivityLocations"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.activity.MenuActivity">
+            android:parentActivityName="com.endeal.patron.activity.MenuActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.MenuActivity" />
+                android:value="com.endeal.patron.activity.MenuActivity" />
         </activity>
 
         <!-- The Orders Screen Activity -->
         <activity
-            android:name="me.endeal.patron.activity.OrdersActivity"
+            android:name="com.endeal.patron.activity.OrdersActivity"
             android:label="@string/titleActivityOrders"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
@@ -141,7 +140,7 @@
 
         <!-- The Settings Activity -->
         <activity
-            android:name="me.endeal.patron.activity.SettingsActivity"
+            android:name="com.endeal.patron.activity.SettingsActivity"
             android:label="@string/titleActivitySettings"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
@@ -153,10 +152,10 @@
             android:label="@string/titleActivityFacebook"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
+            android:parentActivityName="com.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.LoginActivity" />
+                android:value="com.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Twitter Login Activity -->
@@ -165,10 +164,10 @@
             android:label="@string/titleActivityTwitter"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
+            android:parentActivityName="com.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.LoginActivity" />
+                android:value="com.endeal.patron.activity.LoginActivity" />
         </activity>
 
         <!-- The Twitter Share E-mail Activity -->
@@ -178,10 +177,10 @@
             android:label="@string/titleActivityTwitterShareEmail"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:parentActivityName="me.endeal.patron.activity.LoginActivity">
+            android:parentActivityName="com.endeal.patron.activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.endeal.patron.activity.LoginActivity" />
+                android:value="com.endeal.patron.activity.LoginActivity" />
         </activity>
 
     </application>

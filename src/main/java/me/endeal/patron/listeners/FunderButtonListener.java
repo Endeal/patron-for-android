@@ -1,4 +1,4 @@
-package me.endeal.patron.listeners;
+package com.endeal.patron.listeners;
 
 import android.app.Dialog;
 import android.support.v7.widget.PopupMenu;
@@ -11,9 +11,9 @@ import android.widget.Button;
 
 import java.util.List;
 
-import me.endeal.patron.dialogs.CardDialog;
-import me.endeal.patron.model.*;
-import me.endeal.patron.system.Globals;
+import com.endeal.patron.dialogs.CardDialog;
+import com.endeal.patron.model.*;
+import com.endeal.patron.system.Globals;
 
 public class FunderButtonListener implements OnClickListener
 {

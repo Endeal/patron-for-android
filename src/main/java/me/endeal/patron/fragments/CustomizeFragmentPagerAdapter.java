@@ -1,4 +1,4 @@
-package me.endeal.patron.fragments;
+package com.endeal.patron.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class CustomizeFragmentPagerAdapter extends FragmentPagerAdapter
 {
-    private me.endeal.patron.model.Fragment fragment;
+    private com.endeal.patron.model.Fragment fragment;
 
-    public CustomizeFragmentPagerAdapter(FragmentManager fragmentManager, me.endeal.patron.model.Fragment fragment)
+    public CustomizeFragmentPagerAdapter(FragmentManager fragmentManager, com.endeal.patron.model.Fragment fragment)
     {
         super(fragmentManager);
         this.fragment = fragment;
@@ -25,14 +25,15 @@ public class CustomizeFragmentPagerAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem(int position)
     {
-        Fragment fragment;
         if (position == 0)
         {
-            fragment = new FragmentAttributes(this.fragment);
-            return fragment;
+            FragmentAttributes fragmentAttributes = new FragmentAttributes();
+            fragmentAttributes.setFragment(this.fragment);
+            return fragmentAttributes;
         }
-        fragment = new FragmentOptions(this.fragment);
-        return fragment;
+        FragmentOptions fragmentOptions = new FragmentOptions();
+        fragmentOptions.setFragment(this.fragment);
+        return fragmentOptions;
     }
 
     @Override

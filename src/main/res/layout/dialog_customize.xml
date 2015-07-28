@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialogCustomizeMaterialTabs">
 
-        <me.endeal.patron.fragments.CustomizeViewPager
+        <com.endeal.patron.fragments.CustomizeViewPager
              android:id="@+id/dialogCustomizeViewPagerMain"
              android:layout_width="match_parent"
              android:layout_height="150dp" />

@@ -1,4 +1,4 @@
-package me.endeal.patron.fragments;
+package com.endeal.patron.fragments;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

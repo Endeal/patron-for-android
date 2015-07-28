@@ -1,4 +1,4 @@
-package me.endeal.patron.system;
+package com.endeal.patron.system;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,13 +28,13 @@ import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import me.endeal.patron.model.Credential;
-import me.endeal.patron.model.Category;
-import me.endeal.patron.model.Fragment;
-import me.endeal.patron.model.Item;
-import me.endeal.patron.model.Order;
-import me.endeal.patron.model.Vendor;
-import me.endeal.patron.model.Patron;
+import com.endeal.patron.model.Credential;
+import com.endeal.patron.model.Category;
+import com.endeal.patron.model.Fragment;
+import com.endeal.patron.model.Item;
+import com.endeal.patron.model.Order;
+import com.endeal.patron.model.Vendor;
+import com.endeal.patron.model.Patron;
 
 public class Globals
 {
@@ -193,8 +193,29 @@ public class Globals
         SharedPreferences shared = PatronApplication.getContext().getSharedPreferences("patron", Context.MODE_PRIVATE);
         String json = gson.toJson(credential);
         Editor editor = shared.edit();
-        editor.putString("credential", json);
-        editor.commit();
+        Cipher cipher = new Cipher();
+        try
+        {
+            String encryptedJson = cipher.encrypt(json);
+            editor.putString("credential", encryptedJson);
+            editor.commit();
+        }
+        catch (javax.crypto.IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (java.lang.IllegalStateException e)
+        {
+            e.printStackTrace();
+        }
+        catch (java.lang.ArrayIndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 	// Getters
@@ -255,8 +276,30 @@ public class Globals
     {
         Gson gson = new Gson();
         SharedPreferences shared = PatronApplication.getContext().getSharedPreferences("patron", Context.MODE_PRIVATE);
-        String json = shared.getString("credential", "");
-        Credential credential = gson.fromJson(json, Credential.class);
-        return credential;
+        String encryptedJson = shared.getString("credential", "");
+        Cipher cipher = new Cipher();
+        try
+        {
+            String json = cipher.decrypt(encryptedJson);
+            Credential credential = gson.fromJson(json, Credential.class);
+            return credential;
+        }
+        catch (javax.crypto.IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (java.lang.IllegalStateException e)
+        {
+            e.printStackTrace();
+        }
+        catch (java.lang.ArrayIndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 /**
  * The Cart screen.
  */
-package me.endeal.patron.activity;
+package com.endeal.patron.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -47,21 +47,20 @@ import com.squareup.picasso.Picasso;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import me.endeal.patron.adapters.NavigationAdapter;
-import me.endeal.patron.dialogs.CardDialog;
-import me.endeal.patron.dialogs.EditCartDialog;
-import me.endeal.patron.listeners.DrawerNavigationListener;
-import me.endeal.patron.listeners.FunderButtonListener;
-import me.endeal.patron.listeners.RetrievalMethodButtonListener;
-import me.endeal.patron.listeners.RetrievalButtonListener;
-import me.endeal.patron.listeners.OnApiExecutedListener;
-import me.endeal.patron.model.*;
-import me.endeal.patron.system.ApiExecutor;
-import me.endeal.patron.system.Globals;
-import me.endeal.patron.R;
-import me.endeal.patron.view.NavigationListView;
-import static me.endeal.patron.model.Retrieval.Method;
-import static me.endeal.patron.view.NavigationListView.Hierarchy;
+import com.endeal.patron.adapters.NavigationAdapter;
+import com.endeal.patron.dialogs.CardDialog;
+import com.endeal.patron.dialogs.EditCartDialog;
+import com.endeal.patron.dialogs.LocationDialog;
+import com.endeal.patron.listeners.DrawerNavigationListener;
+import com.endeal.patron.listeners.FunderButtonListener;
+import com.endeal.patron.listeners.RetrievalMethodButtonListener;
+import com.endeal.patron.listeners.RetrievalButtonListener;
+import com.endeal.patron.listeners.OnApiExecutedListener;
+import com.endeal.patron.model.*;
+import com.endeal.patron.system.ApiExecutor;
+import com.endeal.patron.system.Globals;
+import com.endeal.patron.R;
+import static com.endeal.patron.model.Retrieval.Method;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -184,7 +183,7 @@ public class ReviewActivity extends AppCompatActivity
           });
 
         // Set retrieval options available
-        RetrievalButtonListener retrievalButtonListener = new RetrievalButtonListener(buttonRetrieval);
+        final RetrievalButtonListener retrievalButtonListener = new RetrievalButtonListener(buttonRetrieval);
         buttonRetrieval.setOnClickListener(retrievalButtonListener);
         retrievalButtonListener.update();
 
@@ -279,19 +278,19 @@ public class ReviewActivity extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int which)
                         {
-                            Dialog dialog = new CardDialog(view.getContext());
-                            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface)
-                                {
-                                    if (Globals.getOrder().getFunder() == null && Globals.getPatron().getFunders() != null &&
-                                        Globals.getPatron().getFunders().size() > 0)
-                                    {
-                                        Globals.getOrder().setFunder(Globals.getPatron().getFunders().get(0));
-                                        buttonFunder.setText(order.getFunder().toString());
-                                    }
-                                }
-                            });
+                            Dialog dialog = new CardDialog(view.getContext(), buttonFunder);
+                            dialog.show();
+                        }
+                    }).create();
+                final AlertDialog deliver = new AlertDialog.Builder(view.getContext())
+                    .setTitle("No address added")
+                    .setMessage("You must add an address to receive delivery. Add one now?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int which)
+                        {
+                            Dialog dialog = new LocationDialog(view.getContext(), retrievalButtonListener);
                             dialog.show();
                         }
                     }).create();
@@ -299,6 +298,10 @@ public class ReviewActivity extends AppCompatActivity
                     .setTitle("Empty order")
                     .setMessage("You must add items to your order for purchasing")
                     .setPositiveButton("Done", null).create();
+                final AlertDialog tip = new AlertDialog.Builder(view.getContext())
+                    .setTitle("Tip too large")
+                    .setMessage("You cannot tip over $500")
+                    .setNegativeButton("Done", null).create();
                 if (order == null || order.getFragments() == null || order.getFragments().size() <= 0)
                 {
                     empty.show();
@@ -306,6 +309,14 @@ public class ReviewActivity extends AppCompatActivity
                 else if (order.getFunder() == null)
                 {
                     alert.show();
+                }
+                else if (order.getRetrieval().getMethod() == Method.Delivery && order.getRetrieval().getLocation() == null)
+                {
+                    deliver.show();
+                }
+                else if (order.getTip().getValue() > 50000)
+                {
+                    tip.show();
                 }
                 else
                 {

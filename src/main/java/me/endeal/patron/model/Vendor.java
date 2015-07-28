@@ -1,4 +1,4 @@
-package me.endeal.patron.model;
+package com.endeal.patron.model;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,10 +14,11 @@ public class Vendor implements Serializable
     private Franchise franchise;
     private Location location;
     private Contact contact;
-    private boolean selfServe;
 	private double taxRate;
     private double range;
     private Price deliveryFee;
+    private boolean open;
+    private boolean selfServe;
     private int favorites;
     private int facebookPoints;
     private int twitterPoints;
@@ -32,8 +33,8 @@ public class Vendor implements Serializable
 	private Map<String, Integer> rewardOptions;
 
     public Vendor(String id, String name, String picture, Franchise franchise, Location location, Contact contact,
-            double taxRate, double range, Price deliveryFee, int favorites, int facebookPoints, int twitterPoints,
-            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales, boolean selfServe,
+            double taxRate, double range, Price deliveryFee, boolean open, boolean selfServe, int favorites, int facebookPoints, int twitterPoints,
+            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales,
             List<Query> queries)
     {
         setId(id);
@@ -45,6 +46,8 @@ public class Vendor implements Serializable
         setTaxRate(taxRate);
         setRange(range);
         setDeliveryFee(deliveryFee);
+        setOpen(open);
+        setSelfServe(selfServe);
         setFavorites(favorites);
         setFacebookPoints(facebookPoints);
         setTwitterPoints(twitterPoints);
@@ -52,7 +55,6 @@ public class Vendor implements Serializable
         setItems(items);
         setStations(stations);
         setLocales(locales);
-        setSelfServe(selfServe);
         setQueries(queries);
     }
 
@@ -101,6 +103,16 @@ public class Vendor implements Serializable
         this.deliveryFee = deliveryFee;
     }
 
+    public void setOpen(boolean open)
+    {
+        this.open = open;
+    }
+
+    public void setSelfServe(boolean selfServe)
+    {
+        this.selfServe = selfServe;
+    }
+
     public void setFavorites(int favorites)
     {
         this.favorites = favorites;
@@ -139,11 +151,6 @@ public class Vendor implements Serializable
     public void setLocales(List<Locale> locales)
     {
         this.locales = locales;
-    }
-
-    public void setSelfServe(boolean selfServe)
-    {
-        this.selfServe = selfServe;
     }
 
     public void setQueries(List<Query> queries)
@@ -206,6 +213,16 @@ public class Vendor implements Serializable
         return this.deliveryFee;
     }
 
+    public boolean getOpen()
+    {
+        return this.open;
+    }
+
+    public boolean getSelfServe()
+    {
+        return this.selfServe;
+    }
+
     public int getFavorites()
     {
         return this.favorites;
@@ -244,11 +261,6 @@ public class Vendor implements Serializable
     public List<Locale> getLocales()
     {
         return this.locales;
-    }
-
-    public boolean getSelfServe()
-    {
-        return this.selfServe;
     }
 
     public List<Query> getQueries()
