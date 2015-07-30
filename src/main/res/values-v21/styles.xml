@@ -1,0 +1,15 @@
+<styles>
+    <style name="flatButton" parent="@android:Widget.Material.Button.Borderless">
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+    <style name="raisedButton">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="android:elevation">@dimen/raisedButtonElevation</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
+</styles>

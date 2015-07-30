@@ -5,6 +5,7 @@
     <dimen name="appTitleTextSize">48sp</dimen>
     <dimen name="raisedButtonTextSize">16sp</dimen>
     <dimen name="raisedButtonElevation">8dp</dimen>
+    <dimen name="raisedButtonPadding">0dp</dimen>
     <dimen name="labelTextSize">16sp</dimen>
     <dimen name="subtitleTextSize">12sp</dimen>
     <dimen name="localeTextSize">48sp</dimen>

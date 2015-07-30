@@ -9,21 +9,51 @@
         <item name="android:colorAccent">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/label</item>
+        <item name="android:textColorHint">@color/placeholder</item>
+        <item name="android:textColor">@color/title</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorButtonNormal">@color/accent</item>
+        <item name="android:colorControlNormal">@color/accent</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowTitleSize">0dp</item>
         <item name="drawerArrowStyle">@style/drawerArrow</item>
+
         <item name="popupMenuStyle">@style/menu</item>
+        <!--
+        <item name="android:popupMenuStyle">@style/menu</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupMenuSmallTextAppearance</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/PopupMenuSmallTextAppearance</item>
+        <item name="textAppearanceLargePopupMenu">@style/PopupMenuLargeTextAppearance</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/PopupMenuLargeTextAppearance</item>
+        -->
+        <item name="android:itemTextAppearance">@style/label</item>
+
+        <item name="android:alertDialogTheme">@style/DialogTheme</item>
+        <item name="alertDialogTheme">@style/DialogTheme</item>
+        <item name="android:windowTitleStyle">@style/DialogTitleTheme</item>
     </style>
-    <style name="Widget.EditText.White" parent="@android:style/Widget.EditText">
-        <item name="android:textColor">#FFFFFF</item>
+
+    <style name="DialogTheme" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <!--
+        <item name="android:windowBackground">@android:color/transparent</item>
+        -->
+        <item name="android:windowTitleStyle">@style/DialogTitleTheme</item>
+        <item name="android:textColor">@color/label</item>
+        <item name="android:textAppearance">@style/label</item>
+        <item name="android:textAppearanceLarge">@style/label</item>
     </style>
-    <style name="StyleDefaultTextView" parent="@android:style/Widget.TextView">
-        <item name="android:background">#00FFFFFF</item>
+    <style name="DialogTitleTheme">
+        <item name="android:textAppearance">@style/label</item>
+        <item name="android:textAppearanceLarge">@style/label</item>
+        <item name="android:textColor">@color/label</item>
+    </style>
+    <style name="PopupMenuSmallTextAppearance" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small">
+        <item name="android:textColor">@color/label</item>
+    </style>
+    <style name="PopupMenuLargeTextAppearance" parent="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large">
+        <item name="android:textColor">@color/label</item>
     </style>
 
 </resources>

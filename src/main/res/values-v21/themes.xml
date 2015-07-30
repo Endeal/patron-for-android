@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="BaseTheme">
-
-        <!--
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primaryDark</item>
-        <item name="android:colorAccent">@color/accent</item>
-        <item name="android:textColorPrimary">@color/title</item>
-        <item name="android:windowBackground">@color/background</item>
-        <item name="android:colorButtonNormal">@color/accent</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowTitleSize">0dp</item>
-        -->
-
-    </style>
+    <style name="AppTheme" parent="BaseTheme" />
 
 </resources>

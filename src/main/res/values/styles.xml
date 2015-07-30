@@ -18,6 +18,7 @@
     <style name="label">
         <item name="android:textColor">@color/label</item>
         <item name="android:textSize">@dimen/labelTextSize</item>
+        <item name="android:textStyle">normal</item>
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
     </style>
     <style name="price">
@@ -32,19 +33,23 @@
     </style>
     <style name="raisedButton">
         <item name="android:textColor">@color/title</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/raisedButtonTextSize</item>
         <item name="android:elevation">@dimen/raisedButtonElevation</item>
+        <item name="android:background">@drawable/selector_raised_button</item>
+        <item name="android:padding">@dimen/raisedButtonPadding</item>
         <item name="fontPath">fonts/Roboto-Bold.ttf</item>
     </style>
-    <style name="flatButton" parent="android:Widget.Material.Button.Borderless">
+    <style name="flatButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:textColor">@color/accent</item>
         <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="android:textAllCaps">true</item>
         <item name="fontPath">fonts/Roboto-Bold.ttf</item>
     </style>
     <style name="lightEditText">
         <item name="fontPath">fonts/Roboto-Regular.ttf</item>
         <item name="android:textColor">@color/title</item>
-        <item name="android:textColorHint">@color/placeholder</item>
+        <item name="android:textColorHint">@color/lightPlaceholder</item>
         <item name="android:textSize">@dimen/labelTextSize</item>
         <item name="colorControlActivated">@color/accent</item>
         <item name="colorControlHighlight">@color/accent</item>
@@ -70,6 +75,7 @@
     <style name="menu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">true</item>
         <item name="android:overlapAnchor">true</item>
+        <item name="android:textColor">@color/label</item>
     </style>
 
 </resources>
