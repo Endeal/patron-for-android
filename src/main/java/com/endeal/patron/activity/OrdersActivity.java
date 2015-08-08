@@ -103,6 +103,7 @@ public class OrdersActivity extends AppCompatActivity
         drawerToggle.syncState();
 
         // Set up the user interface elements.
+        final TextView empty = (TextView)findViewById(R.id.ordersTextViewEmpty);
         final SwipeRefreshLayout swipeRefreshLayoutOrders = (SwipeRefreshLayout)findViewById(R.id.ordersSwipeRefreshLayoutOrders);
 		final RecyclerView recyclerView = (RecyclerView)findViewById(R.id.ordersRecyclerViewMain);
         GridLayoutManager manager = new GridLayoutManager(context, 1);
@@ -127,6 +128,14 @@ public class OrdersActivity extends AppCompatActivity
                     public void onExecuted(ApiResult result)
                     {
                         swipeRefreshLayoutOrders.setRefreshing(false);
+                        if (Globals.getOrders() == null || Globals.getOrders().size() == 0)
+                        {
+                            empty.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            empty.setVisibility(View.GONE);
+                        }
                         if (result.getStatusCode() == 200)
                         {
                             System.out.println("Number of orders:" + Globals.getOrders().size());

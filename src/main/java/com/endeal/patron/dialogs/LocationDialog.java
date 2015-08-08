@@ -77,6 +77,48 @@ public class LocationDialog extends Dialog
                 popup.getMenu().add(Menu.NONE, 5, Menu.NONE, "CO");
                 popup.getMenu().add(Menu.NONE, 6, Menu.NONE, "CT");
                 popup.getMenu().add(Menu.NONE, 7, Menu.NONE, "DE");
+                popup.getMenu().add(Menu.NONE, 8, Menu.NONE, "FL");
+                popup.getMenu().add(Menu.NONE, 9, Menu.NONE, "GA");
+                popup.getMenu().add(Menu.NONE, 10, Menu.NONE, "HI");
+                popup.getMenu().add(Menu.NONE, 11, Menu.NONE, "ID");
+                popup.getMenu().add(Menu.NONE, 12, Menu.NONE, "IL");
+                popup.getMenu().add(Menu.NONE, 13, Menu.NONE, "IN");
+                popup.getMenu().add(Menu.NONE, 14, Menu.NONE, "IA");
+                popup.getMenu().add(Menu.NONE, 15, Menu.NONE, "KS");
+                popup.getMenu().add(Menu.NONE, 16, Menu.NONE, "KY");
+                popup.getMenu().add(Menu.NONE, 17, Menu.NONE, "LA");
+                popup.getMenu().add(Menu.NONE, 18, Menu.NONE, "ME");
+                popup.getMenu().add(Menu.NONE, 19, Menu.NONE, "MD");
+                popup.getMenu().add(Menu.NONE, 20, Menu.NONE, "MA");
+                popup.getMenu().add(Menu.NONE, 21, Menu.NONE, "MI");
+                popup.getMenu().add(Menu.NONE, 22, Menu.NONE, "MN");
+                popup.getMenu().add(Menu.NONE, 23, Menu.NONE, "MS");
+                popup.getMenu().add(Menu.NONE, 24, Menu.NONE, "MO");
+                popup.getMenu().add(Menu.NONE, 25, Menu.NONE, "MT");
+                popup.getMenu().add(Menu.NONE, 26, Menu.NONE, "NE");
+                popup.getMenu().add(Menu.NONE, 27, Menu.NONE, "NV");
+                popup.getMenu().add(Menu.NONE, 28, Menu.NONE, "NH");
+                popup.getMenu().add(Menu.NONE, 29, Menu.NONE, "NJ");
+                popup.getMenu().add(Menu.NONE, 30, Menu.NONE, "NM");
+                popup.getMenu().add(Menu.NONE, 31, Menu.NONE, "NY");
+                popup.getMenu().add(Menu.NONE, 32, Menu.NONE, "NC");
+                popup.getMenu().add(Menu.NONE, 33, Menu.NONE, "ND");
+                popup.getMenu().add(Menu.NONE, 34, Menu.NONE, "OH");
+                popup.getMenu().add(Menu.NONE, 35, Menu.NONE, "OK");
+                popup.getMenu().add(Menu.NONE, 36, Menu.NONE, "OR");
+                popup.getMenu().add(Menu.NONE, 37, Menu.NONE, "PA");
+                popup.getMenu().add(Menu.NONE, 38, Menu.NONE, "RI");
+                popup.getMenu().add(Menu.NONE, 39, Menu.NONE, "SC");
+                popup.getMenu().add(Menu.NONE, 40, Menu.NONE, "SD");
+                popup.getMenu().add(Menu.NONE, 41, Menu.NONE, "TN");
+                popup.getMenu().add(Menu.NONE, 42, Menu.NONE, "TX");
+                popup.getMenu().add(Menu.NONE, 43, Menu.NONE, "UT");
+                popup.getMenu().add(Menu.NONE, 44, Menu.NONE, "VT");
+                popup.getMenu().add(Menu.NONE, 45, Menu.NONE, "VA");
+                popup.getMenu().add(Menu.NONE, 46, Menu.NONE, "WA");
+                popup.getMenu().add(Menu.NONE, 47, Menu.NONE, "WV");
+                popup.getMenu().add(Menu.NONE, 48, Menu.NONE, "WI");
+                popup.getMenu().add(Menu.NONE, 49, Menu.NONE, "WY");
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem)
@@ -121,8 +163,13 @@ public class LocationDialog extends Dialog
                         layout.removeView(progressBar);
                         if (result.getStatusCode() == 200)
                         {
+                            if (Globals.getOrder() == null)
+                            {
+                                dialog.dismiss();
+                                return;
+                            }
                             Retrieval retrieval = Globals.getOrder().getRetrieval();
-                            if (retrieval.getMethod() == Method.Delivery && retrieval.getLocation() == null)
+                            if (retrieval.getMethod() == Method.Delivery)
                             {
                                 retrieval.setLocation(location);
                                 if (button != null)

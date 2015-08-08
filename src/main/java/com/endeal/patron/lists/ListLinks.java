@@ -9,8 +9,7 @@ package com.endeal.patron.lists;
 
 public class ListLinks
 {
-	private static final String BASE_URL = "http://emporium.endeal.me/api/v1/";
-
+	private static final String BASE_URL = "https://emporium.endeal.me/api/v1/";
 	public static final String API_ADD_ACCOUNT = BASE_URL + "patrons/";
 	public static final String API_REMOVE_ACCOUNT = BASE_URL + "patrons/"; // Append ID of patron to delete
 	public static final String API_UPDATE_ACCOUNT = BASE_URL + "patrons/"; // Append ID of patron to update

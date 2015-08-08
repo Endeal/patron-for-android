@@ -73,7 +73,7 @@
     <string name="scanTextOrder">Order</string>
 
     <!-- Vouchers Screen -->
-    <string name="vouchersTextViewTitle">You do not have any vouchers.</string>
+    <string name="vouchersTextViewTitle">You do not have any vouchers</string>
 
     <!-- Search Vendors Screen -->
     <string name="searchVendorsTextMain">Search:</string>
@@ -161,6 +161,7 @@
     <string name="titleActivityAddBank">Add Bank</string>
     <string name="titleActivityRemovePayment">Remove Payment</string>
     <string name="titleActivityMenu">Buy</string>
+    <string name="titleActivityReview">Review</string>
     <string name="titleActivityCart">Cart</string>
     <string name="titleActivityOrders">Orders</string>
     <string name="titleActivityScan">Scan</string>

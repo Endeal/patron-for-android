@@ -40,6 +40,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
+                <TextView
+                    android:id="@+id/ordersTextViewEmpty"
+                    style="@style/label"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="You have not placed any orders" />
+
                 <android.support.v4.widget.SwipeRefreshLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/ordersSwipeRefreshLayoutOrders"

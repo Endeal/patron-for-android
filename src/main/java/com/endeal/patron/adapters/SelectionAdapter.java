@@ -2,11 +2,19 @@ package com.endeal.patron.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,18 +45,41 @@ public class SelectionAdapter extends RecyclerView.Adapter<SelectionViewHolder>
     public SelectionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
     {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_holder_selection, null);
-        Selection selection = fragment.getSelections().get(i);
-        SelectionViewHolder viewHolder = new SelectionViewHolder(view, selection);
+        SelectionViewHolder viewHolder = new SelectionViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(SelectionViewHolder selectionViewHolder, int i)
+    public void onBindViewHolder(final SelectionViewHolder selectionViewHolder, int i)
     {
-        Selection selection = fragment.getSelections().get(i);
+        final Selection selection = fragment.getSelections().get(i);
         selectionViewHolder.getTitle().setText(selection.getAttribute().getName());
         Option option = selection.getOption();
         selectionViewHolder.getSubtitle().setText(option.getName() + " (" + option.getPrice().toString() + ")");
+        selectionViewHolder.itemView.setOnClickListener(new android.view.View.OnClickListener() {
+            @Override
+            public void onClick(final View view)
+            {
+                final PopupMenu popup = new PopupMenu(view.getContext(), view);
+                for (int i = 0; i < selection.getAttribute().getOptions().size(); i++)
+                {
+                    Option option = selection.getAttribute().getOptions().get(i);
+                    popup.getMenu().add(Menu.NONE, i, Menu.NONE, option.getName() + " (" + option.getPrice().toString() + ")");
+                }
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem)
+                    {
+                        Option option = selection.getAttribute().getOptions().get(menuItem.getItemId());
+                        selection.setOption(option);
+                        selectionViewHolder.getSubtitle().setText(option.getName() + " (" + option.getPrice().toString() + ")");
+                        popup.dismiss();
+                        return true;
+                    }
+                });
+                popup.show();
+            }
+        });
     }
 
     @Override

@@ -9,6 +9,7 @@
       <item android:id="@+id/review"
         android:icon="@drawable/ic_shopping_basket_white_48dp"
         android:title="Review"
+        patron:actionLayout="@layout/menu_badge"
         patron:showAsAction="ifRoom" />
 
 </menu>

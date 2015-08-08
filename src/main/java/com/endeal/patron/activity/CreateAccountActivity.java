@@ -197,19 +197,22 @@ public class CreateAccountActivity extends AppCompatActivity
                     email.length() == 0 || password.length() == 0)
             {
                 Snackbar.make(coordinatorLayout, "Please fill out all the fields", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted(null);
+                submitting = false;
+                layout.removeView(progressIndicator);
                 return;
             }
             if (!password.equals(confirm))
             {
                 Snackbar.make(coordinatorLayout, "The password and confirmation do not match", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted(null);
+                submitting = false;
+                layout.removeView(progressIndicator);
                 return;
             }
             if (password.length() < 6)
             {
                 Snackbar.make(coordinatorLayout, "Password must be at least 6 characters", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted(null);
+                submitting = false;
+                layout.removeView(progressIndicator);
                 return;
             }
             Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
@@ -218,7 +221,8 @@ public class CreateAccountActivity extends AppCompatActivity
             if (!matchFound)
             {
                 Snackbar.make(coordinatorLayout, "Please enter a valid e-mail address", Snackbar.LENGTH_SHORT).show();
-                listener.onExecuted(null);
+                submitting = false;
+                layout.removeView(progressIndicator);
                 return;
             }
 

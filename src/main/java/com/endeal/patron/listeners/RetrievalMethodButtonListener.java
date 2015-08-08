@@ -51,6 +51,7 @@ public class RetrievalMethodButtonListener implements OnClickListener
     @Override
     public void onClick(final View view)
     {
+        view.clearAnimation();
         final PopupMenu methodPopup = new PopupMenu(view.getContext(), view, Gravity.START);
         if (order.getVendor().getStations() != null && order.getVendor().getStations().size() > 0)
             methodPopup.getMenu().add(Menu.NONE, 0, Menu.NONE, "Pickup");

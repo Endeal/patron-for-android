@@ -17,6 +17,8 @@
     <color name="accent">#FFCF30</color>
     <color name="darkAccent">#B29122</color>
     <color name="accentLight">#FFF047</color>
+    <color name="raisedIconBackground">#FFFFFF</color>
+    <color name="darkRaisedIconBackground">#BBBBBB</color>
     <color name="primary">#7984C9</color>
     <color name="primaryDark">#4C579E</color>
     <color name="disabled">#5E5E5E</color>

@@ -20,7 +20,7 @@
             <TextView
                 android:id="@+id/reviewTextViewTitle"
                 style="@style/title"
-                android:text="@string/titleActivityMenu"
+                android:text="@string/titleActivityReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />

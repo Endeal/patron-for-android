@@ -1,6 +1,8 @@
 package com.endeal.patron.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
@@ -52,6 +54,7 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
     @Override
     public void onBindViewHolder(FragmentViewHolder fragmentViewHolder, int i)
     {
+        final Activity activity = (Activity)this.context;
         Item item = items.get(i);
 
         // Create Default fragment from items
@@ -79,6 +82,13 @@ public class FragmentAdapter extends RecyclerView.Adapter<FragmentViewHolder>
             public void onClick(View view)
             {
                 FragmentDialog dialog = new FragmentDialog((FragmentActivity)context, fragment);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface)
+                    {
+                        activity.invalidateOptionsMenu();
+                    }
+                });
                 dialog.show();
             }
         });

@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 22
-        versionCode 3
+        versionCode 6
         versionName "1"
     }
     signingConfigs {
@@ -89,6 +89,9 @@ dependencies {
     compile "io.karim:materialtabs:2.0.2"
     compile ('com.appboy:android-sdk-ui:1.7.+') {
         exclude(module: 'support-v4')
+    }
+    compile('com.mikepenz:actionitembadge:3.0.4@aar') {
+        transitive = true
     }
     compile group: 'com.stripe', name: 'stripe-android', version:'1.0.0'
     compile(group: 'com.facebook.android', name: 'facebook-android-sdk', version:'3.23.1') {
