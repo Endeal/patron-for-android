@@ -282,7 +282,7 @@ public class FragmentDialog extends Dialog
                 final Fragment clone = (Fragment)Globals.deepClone(fragment);
                 Globals.getOrder().getFragments().add(clone);
                 View coordinatorLayout = activity.findViewById(R.id.menuCoordinatorLayoutMain);
-                Snackbar.make(coordinatorLayout, clone.getItem().getName() + " added to order", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, clone.getItem().getName() + " added to basket", Snackbar.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

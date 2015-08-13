@@ -68,6 +68,11 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
+import com.mikepenz.actionitembadge.library.ActionItemBadgeAdder;
+import com.mikepenz.iconics.typeface.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+
 import com.squareup.picasso.Picasso;
 
 import com.endeal.patron.adapters.FragmentAdapter;
@@ -212,6 +217,7 @@ public class MenuActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+        invalidateOptionsMenu();
         activityChanged = false;
         refreshListener.onRefresh();
 
@@ -268,6 +274,17 @@ public class MenuActivity extends AppCompatActivity
     {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_menu, menu);
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+            return true;
+        if (Globals.getOrder() != null && Globals.getOrder().getFragments() != null &&
+                Globals.getOrder().getFragments().size() > 0) {
+            ActionItemBadge.update(this, menu.findItem(R.id.review),
+                    GoogleMaterial.Icon.gmd_shopping_basket,
+                    ActionItemBadge.BadgeStyles.DARK_GREY, Globals.getOrder().getFragments().size());
+        } else {
+            ActionItemBadge.hide(menu.findItem(R.id.review));
+        }
         return true;
     }
 
@@ -292,7 +309,7 @@ public class MenuActivity extends AppCompatActivity
         {
             if (Globals.getOrder() == null || Globals.getOrder().getFragments() == null || Globals.getOrder().getFragments().size() <= 0)
             {
-                Snackbar.make(coordinatorLayout, "Your order is empty", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(coordinatorLayout, "Your basket is empty", Snackbar.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
             }
             Intent intent = new Intent(this, ReviewActivity.class);

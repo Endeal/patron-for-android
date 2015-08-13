@@ -186,7 +186,10 @@ public class SettingsActivity extends AppCompatActivity
                 Credential credential = new Credential(null, null, null);
                 Globals.setCredential(credential);
                 Globals.setOrder(null);
+                Globals.setOrders(null);
                 Globals.setPatron(null);
+                Globals.setVendor(null);
+                Globals.setVendors(null);
                 Activity activity = (Activity)view.getContext();
                 Intent intent = new Intent(activity, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

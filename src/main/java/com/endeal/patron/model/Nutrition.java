@@ -227,7 +227,7 @@ public class Nutrition implements Serializable
         builder.append("Fat: " + getFat() + "g\n");
         builder.append("Protein: " + getProtein() + "g\n");
         builder.append("Sugar: " + getSugar() + "g\n");
-        builder.append("Sodium: " + getSodium() + "g\n");
+        builder.append("Sodium: " + getSodium() + "mg\n");
         builder.append("Carbohydrates: " + getCarbs() + "g\n");
         builder.append("Fiber: " + getFiber() + "g\n");
 

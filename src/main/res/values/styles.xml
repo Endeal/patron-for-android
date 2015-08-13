@@ -40,6 +40,15 @@
         <item name="android:padding">@dimen/raisedButtonPadding</item>
         <item name="fontPath">fonts/Roboto-Bold.ttf</item>
     </style>
+    <style name="raisedIconButton">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/raisedButtonTextSize</item>
+        <item name="android:elevation">@dimen/raisedButtonElevation</item>
+        <item name="android:background">@drawable/selector_raised_icon_button</item>
+        <item name="android:padding">@dimen/raisedButtonPadding</item>
+        <item name="fontPath">fonts/Roboto-Bold.ttf</item>
+    </style>
     <style name="flatButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
         <item name="android:textColor">@color/accent</item>
         <item name="android:textSize">@dimen/raisedButtonTextSize</item>

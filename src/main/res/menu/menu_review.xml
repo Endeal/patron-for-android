@@ -4,6 +4,7 @@
       <item android:id="@+id/edit"
         android:icon="@drawable/ic_edit_white_48dp"
         android:title="Edit Order"
+        patron:actionLayout="@layout/menu_badge"
         patron:showAsAction="ifRoom" />
 
 </menu>

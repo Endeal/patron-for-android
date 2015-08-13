@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import android.support.v7.widget.PopupMenu;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +64,11 @@ import com.endeal.patron.system.ApiExecutor;
 import com.endeal.patron.system.Globals;
 import com.endeal.patron.R;
 import static com.endeal.patron.model.Retrieval.Method;
+
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
+import com.mikepenz.actionitembadge.library.ActionItemBadgeAdder;
+import com.mikepenz.iconics.typeface.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
@@ -131,6 +139,11 @@ public class ReviewActivity extends AppCompatActivity
         final Button buttonFunder = (Button)findViewById(R.id.reviewButtonFunder);
         buttonTotal = (Button)findViewById(R.id.reviewButtonTotal);
         final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.reviewFloatingActionButtonPay);
+
+        // Apply wiggle animations to vouchers/method buttons
+        Animation wiggle = AnimationUtils.loadAnimation(this, R.anim.wiggle);
+        imageButtonRetrieval.startAnimation(wiggle);
+        imageButtonVoucher.startAnimation(wiggle);
 
         // Set tip slider
         editTextChange = false;
@@ -210,6 +223,7 @@ public class ReviewActivity extends AppCompatActivity
             @Override
             public void onClick(final View view)
             {
+                view.clearAnimation();
                 Snackbar.make(coordinatorLayout, "You do not have any vouchers", Snackbar.LENGTH_SHORT).show();
             }
         });
@@ -343,6 +357,17 @@ public class ReviewActivity extends AppCompatActivity
     {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_review, menu);
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion < android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+            return true;
+        if (Globals.getOrder() != null && Globals.getOrder().getFragments() != null &&
+                Globals.getOrder().getFragments().size() > 0) {
+            ActionItemBadge.update(this, menu.findItem(R.id.edit),
+                    GoogleMaterial.Icon.gmd_edit,
+                    ActionItemBadge.BadgeStyles.DARK_GREY, Globals.getOrder().getFragments().size());
+        } else {
+            ActionItemBadge.hide(menu.findItem(R.id.edit));
+        }
         return true;
     }
 
@@ -356,6 +381,7 @@ public class ReviewActivity extends AppCompatActivity
 
         if (item.getItemId() == R.id.edit)
         {
+            final Activity activity = this;
             EditCartDialog dialog = new EditCartDialog(this);
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
@@ -369,6 +395,7 @@ public class ReviewActivity extends AppCompatActivity
                     discreteSeekBarTip.setProgress(order.getTipPercent());
                     double tipValue = (double)(order.getTip().getValue() / 100.0);
                     editTextTip.setText(tipValue + "", TextView.BufferType.EDITABLE);
+                    activity.invalidateOptionsMenu();
                 }
             });
             dialog.show();

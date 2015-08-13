@@ -155,10 +155,10 @@ public class CardDialog extends Dialog
                                     if (result.getStatusCode() == 201)
                                     {
                                         dialog.dismiss();
-                                        if (Globals.getOrder().getFunder() == null && Globals.getPatron().getFunders() != null &&
-                                            Globals.getPatron().getFunders().size() > 0)
+                                        if (Globals.getOrder() != null && Globals.getPatron().getFunders() != null)
                                         {
-                                            Globals.getOrder().setFunder(Globals.getPatron().getFunders().get(0));
+                                            int i = Globals.getPatron().getFunders().size() - 1;
+                                            Globals.getOrder().setFunder(Globals.getPatron().getFunders().get(i));
                                             if (buttonFunder != null)
                                                 buttonFunder.setText(Globals.getOrder().getFunder().toString());
                                         }

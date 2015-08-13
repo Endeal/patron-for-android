@@ -8,3 +8,4 @@ src/main/java/me/endeal/patron/lists/ListKeys.java
 patron-release.keystore
 endeal.keystore
 build.gradle
+.gradle/
