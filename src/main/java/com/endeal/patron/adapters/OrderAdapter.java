@@ -120,7 +120,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
 
         // Set status
         int color = 0;
-        if (order.getStatus() == Status.WAITING)
+        if (order.getStatus() == Status.PREPARING)
         {
             color = R.color.waiting;
             orderViewHolder.getStatus().setImageResource(R.drawable.ic_access_time_black_48dp);
@@ -130,7 +130,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder>
             color = R.color.ready;
             orderViewHolder.getStatus().setImageResource(R.drawable.ic_check_circle_black_48dp);
         }
-        else if (order.getStatus() == Status.COMPLETED)
+        else if (order.getStatus() == Status.COMPLETE)
         {
             color = R.color.completed;
             orderViewHolder.getStatus().setImageResource(R.drawable.ic_history_black_48dp);

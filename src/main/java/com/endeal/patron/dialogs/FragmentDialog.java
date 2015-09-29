@@ -275,7 +275,7 @@ public class FragmentDialog extends Dialog
                         funder = Globals.getPatron().getFunders().get(0);
                     DateTime currentDateTime = new DateTime();
                     Order order = new Order(null, new ArrayList<Fragment>(), new ArrayList<Voucher>(), new Price(0, "USD"),
-                        "", retrieval, currentDateTime.getMillis(), Status.WAITING, funder, Globals.getVendor(), "", Globals.getPatron().getId());
+                        "", retrieval, currentDateTime.getMillis(), Status.PREPARING, funder, Globals.getVendor(), "", Globals.getPatron().getId());
                     Globals.setOrder(order);
                 }
 

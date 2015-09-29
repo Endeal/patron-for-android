@@ -26,7 +26,7 @@ public class Order implements Serializable
 
 	public enum Status
 	{
-		WAITING, READY, SCANNED, COMPLETED, REJECTED
+		PREPARING, READY, COMPLETE, CANCELED
 	}
 
 	private String _id;
@@ -124,15 +124,13 @@ public class Order implements Serializable
 		switch (i)
 		{
 		case 0:
-			return Status.WAITING;
+			return Status.PREPARING;
 		case 1:
 			return Status.READY;
 		case 2:
-			return Status.SCANNED;
-		case 3:
-			return Status.COMPLETED;
+			return Status.COMPLETE;
 		default:
-			return Status.REJECTED;
+			return Status.CANCELED;
 		}
 	}
 
@@ -140,16 +138,14 @@ public class Order implements Serializable
 	{
 		switch (status)
 		{
-		case WAITING:
+		case PREPARING:
 			return 0;
 		case READY:
 			return 1;
-		case SCANNED:
+		case COMPLETE:
 			return 2;
-		case COMPLETED:
-			return 3;
 		default:
-			return 4;
+			return 3;
 		}
 	}
 
@@ -159,16 +155,14 @@ public class Order implements Serializable
             return "completed";
 		switch (status)
 		{
-		case WAITING:
-			return "being made";
-		case READY:
-			return "ready";
-		case SCANNED:
-			return "completed";
-		case COMPLETED:
-			return "completed";
-		default:
-			return "refunded";
+            case PREPARING:
+                return "being made";
+            case READY:
+                return "ready";
+            case COMPLETE:
+                return "completed";
+            default:
+                return "refunded";
 		}
 	}
 

@@ -73,7 +73,15 @@ public class OrdersActivity extends AppCompatActivity
 
         // Check Intent
         Bundle extras = getIntent().getExtras();
-        CharSequence rawOrderId = extras.getCharSequence("orderId", "");
+        CharSequence rawOrderId;
+        if (extras != null)
+        {
+            rawOrderId = extras.getCharSequence("orderId", "");
+        }
+        else
+        {
+            rawOrderId = "";
+        }
         final String orderId = rawOrderId.toString();
 
 		setContentView(R.layout.layout_orders);
