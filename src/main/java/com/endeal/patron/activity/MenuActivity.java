@@ -217,6 +217,12 @@ public class MenuActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         invalidateOptionsMenu();
         activityChanged = false;
         refreshListener.onRefresh();

@@ -201,7 +201,8 @@ public class ReviewActivity extends AppCompatActivity
         retrievalButtonListener.update();
 
         // Set retrieval types available
-        RetrievalMethodButtonListener retrievalMethodButtonListener = new RetrievalMethodButtonListener(imageButtonRetrieval, order, retrievalButtonListener);
+        RetrievalMethodButtonListener retrievalMethodButtonListener = new RetrievalMethodButtonListener(
+            imageButtonRetrieval, buttonTotal, order, retrievalButtonListener);
         imageButtonRetrieval.setOnClickListener(retrievalMethodButtonListener);
         retrievalMethodButtonListener.update();
 
@@ -339,6 +340,18 @@ public class ReviewActivity extends AppCompatActivity
             }
         });
 	}
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     public void onStart()
     {

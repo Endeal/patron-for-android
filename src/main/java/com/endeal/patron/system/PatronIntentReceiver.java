@@ -37,10 +37,10 @@ public class PatronIntentReceiver extends BroadcastReceiver
                 return;
             }
 
-            Intent scanIntent = new Intent(context.getApplicationContext(), OrdersActivity.class);
-            scanIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            scanIntent.putExtra("orderId", orderId);
-            context.startActivity(scanIntent, extras);
+            Intent orderIntent = new Intent(context.getApplicationContext(), OrdersActivity.class);
+            orderIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            orderIntent.putExtra("orderId", orderId);
+            context.startActivity(orderIntent, extras);
         }
         else if (action.equals(pushReceivedAction))
         {

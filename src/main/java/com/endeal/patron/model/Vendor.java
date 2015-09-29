@@ -17,12 +17,14 @@ public class Vendor implements Serializable
 	private double taxRate;
     private double range;
     private Price deliveryFee;
+    private Hours hours;
     private boolean open;
     private boolean selfServe;
     private int favorites;
-    private int facebookPoints;
-    private int twitterPoints;
-    private int googlePlusPoints;
+    private Price facebookPoints;
+    private Price twitterPoints;
+    private Price googlePlusPoints;
+    private Price earnRate;
 
 	private List<Item> items;
 	private List<Item> filteredItems;
@@ -33,9 +35,9 @@ public class Vendor implements Serializable
 	private Map<String, Integer> rewardOptions;
 
     public Vendor(String id, String name, String picture, Franchise franchise, Location location, Contact contact,
-            double taxRate, double range, Price deliveryFee, boolean open, boolean selfServe, int favorites, int facebookPoints, int twitterPoints,
-            int googlePlusPoints, List<Item> items, List<Station> stations, List<Locale> locales,
-            List<Query> queries)
+            double taxRate, double range, Price deliveryFee, boolean open, boolean selfServe, int favorites,
+            Price facebookPoints, Price twitterPoints, Price googlePlusPoints, Price earnRate, List<Item> items,
+            List<Station> stations, List<Locale> locales, List<Query> queries)
     {
         setId(id);
         setName(name);
@@ -52,6 +54,7 @@ public class Vendor implements Serializable
         setFacebookPoints(facebookPoints);
         setTwitterPoints(twitterPoints);
         setGooglePlusPoints(googlePlusPoints);
+        setEarnRate(earnRate);
         setItems(items);
         setStations(stations);
         setLocales(locales);
@@ -103,6 +106,11 @@ public class Vendor implements Serializable
         this.deliveryFee = deliveryFee;
     }
 
+    public void setHours(Hours hours)
+    {
+        this.hours = hours;
+    }
+
     public void setOpen(boolean open)
     {
         this.open = open;
@@ -118,19 +126,24 @@ public class Vendor implements Serializable
         this.favorites = favorites;
     }
 
-    public void setFacebookPoints(int facebookPoints)
+    public void setFacebookPoints(Price facebookPoints)
     {
         this.facebookPoints = facebookPoints;
     }
 
-    public void setTwitterPoints(int twitterPoints)
+    public void setTwitterPoints(Price twitterPoints)
     {
         this.twitterPoints = twitterPoints;
     }
 
-    public void setGooglePlusPoints(int googlePlusPoints)
+    public void setGooglePlusPoints(Price googlePlusPoints)
     {
         this.googlePlusPoints = googlePlusPoints;
+    }
+
+    public void setEarnRate(Price earnRate)
+    {
+        this.earnRate = earnRate;
     }
 
 	public void setItems(List<Item> items)
@@ -213,6 +226,11 @@ public class Vendor implements Serializable
         return this.deliveryFee;
     }
 
+    public Hours getHours()
+    {
+        return this.hours;
+    }
+
     public boolean getOpen()
     {
         return this.open;
@@ -228,19 +246,24 @@ public class Vendor implements Serializable
         return this.favorites;
     }
 
-    public int getFacebookPoints()
+    public Price getFacebookPoints()
     {
         return this.facebookPoints;
     }
 
-    public int getTwitterPoints()
+    public Price getTwitterPoints()
     {
         return this.twitterPoints;
     }
 
-    public int getGooglePlusPoints()
+    public Price getGooglePlusPoints()
     {
         return this.googlePlusPoints;
+    }
+
+    public Price getEarnRate()
+    {
+        return this.earnRate;
     }
 
 	public List<Item> getItems()

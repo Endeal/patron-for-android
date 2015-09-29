@@ -47,6 +47,7 @@ import com.squareup.picasso.Picasso;
 
 import com.endeal.patron.adapters.NavigationAdapter;
 import com.endeal.patron.adapters.OrderAdapter;
+import com.endeal.patron.dialogs.OrderDialog;
 import com.endeal.patron.listeners.DrawerNavigationListener;
 import com.endeal.patron.listeners.OnApiExecutedListener;
 import com.endeal.patron.listeners.OrderRefreshListener;
@@ -69,6 +70,12 @@ public class OrdersActivity extends AppCompatActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+        // Check Intent
+        Bundle extras = getIntent().getExtras();
+        CharSequence rawOrderId = extras.getCharSequence("orderId", "");
+        final String orderId = rawOrderId.toString();
+
 		setContentView(R.layout.layout_orders);
 		final Context context = this;
         Toolbar toolbar = (Toolbar)findViewById(R.id.ordersToolbar);
@@ -138,9 +145,26 @@ public class OrdersActivity extends AppCompatActivity
                         }
                         if (result.getStatusCode() == 200)
                         {
-                            System.out.println("Number of orders:" + Globals.getOrders().size());
                             adapter.setOrders(Globals.getOrders());
                             adapter.notifyDataSetChanged();
+                            if (orderId != null && !orderId.equals(""))
+                            {
+                                Order order = null;
+                                for (int i = 0; i < Globals.getOrders().size(); i++)
+                                {
+                                    Order currentOrder = Globals.getOrders().get(i);
+                                    if (currentOrder.getId().equals(orderId))
+                                    {
+                                        order = currentOrder;
+                                        break;
+                                    }
+                                }
+                                if (order != null)
+                                {
+                                    OrderDialog dialog = new OrderDialog(context, order);
+                                    dialog.show();
+                                }
+                            }
                         }
                         else
                         {
@@ -153,6 +177,12 @@ public class OrdersActivity extends AppCompatActivity
         swipeRefreshLayoutOrders.setOnRefreshListener(refreshListener);
         refreshListener.onRefresh();
 	}
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+    }
 
     public void onStart()
     {

@@ -23,12 +23,13 @@ tar zxvf android-sdk.tgz -C /opt/
 rm android-sdk.tgz
 
 # Install Build Tools, Android 5.1.1 and 2.3.3, x86 images, Google Play Services, and support repositories
-/opt/android-sdk-linux/tools/android update sdk -u -a -t 1,3,5,24,37,68,99,100,139,140,145,146,150,151
+/opt/android-sdk-linux/tools/android update sdk -u -a -t 1,2,6,24,26,74,99,100,139,140,145,146,150,151
 
 # Install Gradle
 sudo add-apt-repository ppa:cwchien/gradle
 sudo apt-get update
 sudo apt-get install -y gradle
+sudo apt-get upgrade gradle
 
 # Install Android Studio
 apt-add-repository ppa:paolorotolo/android-studio

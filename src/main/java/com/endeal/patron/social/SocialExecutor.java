@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+/*
 import com.facebook.internal.SessionTracker;
 import com.facebook.model.GraphUser;
 import com.facebook.Request;
@@ -24,7 +25,8 @@ import com.facebook.SessionState;
 import com.facebook.SharedPreferencesTokenCachingStrategy;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
-import com.facebook.widget.LoginButton;
+import com.facebook.login.widget.LoginButton;
+*/
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -76,6 +78,7 @@ public class SocialExecutor
     private boolean googleIntentInProgress;
 
     // Facebook
+    /*
     private LoginButton facebookButton;
     private UiLifecycleHelper facebookHelper;
     private static String facebookId;
@@ -83,6 +86,7 @@ public class SocialExecutor
     private static String facebookEmail;
     private static String facebookFirstName;
     private static String facebookLastName;
+    */
 
     // Twitter
     private TwitterLoginButton twitterButton;
@@ -104,6 +108,7 @@ public class SocialExecutor
         // Google+
 
         // Facebook
+        /*
         if (Arrays.asList(networks).contains(Network.FACEBOOK))
         {
             facebookButton = new LoginButton(activity);
@@ -125,6 +130,7 @@ public class SocialExecutor
             facebookHelper = new UiLifecycleHelper(activity, null);
             facebookHelper.onCreate(bundle);
         }
+        */
 
         // Twitter
         if (Arrays.asList(networks).contains(Network.TWITTER))
@@ -141,22 +147,22 @@ public class SocialExecutor
 
     public void onPause()
     {
-        facebookHelper.onPause();
+        //facebookHelper.onPause();
     }
 
     public void onResume()
     {
-        facebookHelper.onResume();
+        //facebookHelper.onResume();
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState)
     {
-        facebookHelper.onSaveInstanceState(savedInstanceState);
+        //facebookHelper.onSaveInstanceState(savedInstanceState);
     }
 
     public void onDestroy()
     {
-        facebookHelper.onDestroy();
+        //facebookHelper.onDestroy();
     }
 
     public void onActivityResult(int requestCode, int responseCode, Intent intent)
@@ -177,7 +183,7 @@ public class SocialExecutor
         {
             twitterButton.onActivityResult(requestCode, responseCode, intent);
         }
-        facebookHelper.onActivityResult(requestCode, responseCode, intent, new FacebookDialog.Callback() {
+        /*facebookHelper.onActivityResult(requestCode, responseCode, intent, new FacebookDialog.Callback() {
             @Override
             public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data)
             {
@@ -190,6 +196,7 @@ public class SocialExecutor
                 Toast.makeText(activity, "Facebook result successful.", Toast.LENGTH_SHORT).show();
             }
         });
+        */
     }
     public boolean signedIn(Network network)
     {
@@ -199,9 +206,11 @@ public class SocialExecutor
             case GOOGLE_PLUS:
                 return (googleClient != null && googleClient.isConnected());
             // Facebook
+            /*
             case FACEBOOK:
                 Session facebookSession = Session.getActiveSession();
                 return (facebookSession != null && facebookSession.isOpened());
+            */
             // Twitter
             case TWITTER:
                 TwitterSession twitterSession = Twitter.getSessionManager().getActiveSession();
@@ -299,6 +308,7 @@ public class SocialExecutor
                 }
             }
         }
+        /*
         if (network == Network.FACEBOOK)
         {
             StatusCallback statusCallback = new StatusCallback() {
@@ -362,6 +372,7 @@ public class SocialExecutor
                 Toast.makeText(activity, "Facebook session not set, restart to use.", Toast.LENGTH_SHORT).show();
             }
         }
+        */
         if (network == Network.TWITTER)
         {
             twitterButton.setCallback(new Callback<TwitterSession>() {
@@ -385,6 +396,7 @@ public class SocialExecutor
 
     public void signOut(Network network, OnSocialTaskCompletedListener listener)
     {
+        /*
         if (network == Network.FACEBOOK)
         {
             Session session = Session.getActiveSession();
@@ -394,27 +406,31 @@ public class SocialExecutor
                 listener.onComplete();
             }
         }
-
+        */
     }
 
     public String getFirstName(Network network)
     {
-        return facebookFirstName;
+       // return facebookFirstName;
+       return "";
     }
 
     public String getLastName(Network network)
     {
-        return facebookLastName;
+        //return facebookLastName;
+        return "";
     }
 
     public String getId(Network network)
     {
-        return facebookId;
+        //return facebookId;
+        return "";
     }
 
     public String getUsername(Network network)
     {
-        return SocialExecutor.facebookUsername;
+        //return SocialExecutor.facebookUsername;
+        return "";
     }
 
     public String getEmail(Network network)
@@ -437,10 +453,12 @@ public class SocialExecutor
                 }
             });
         }
+        /*
         else if (network == Network.FACEBOOK)
         {
             return facebookEmail;
         }
+        */
         return "";
     }
 
@@ -468,6 +486,7 @@ public class SocialExecutor
         }
 
         // Facebook
+        /*
         if (network == Network.FACEBOOK)
         {
             FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(activity)
@@ -478,6 +497,7 @@ public class SocialExecutor
                 .build();
             facebookHelper.trackPendingDialogCall(shareDialog.present());
         }
+        */
 
         // Twitter
         if (network == Network.TWITTER)
@@ -529,6 +549,7 @@ public class SocialExecutor
                     throw new RuntimeException(e);
                 }
                 return accessToken;
+                /*
             case FACEBOOK:
                 Session facebookSession = Session.getActiveSession();
                 if (facebookSession.isOpened())
@@ -536,6 +557,7 @@ public class SocialExecutor
                     return facebookSession.getAccessToken();
                 }
                 break;
+                */
             case TWITTER:
                 TwitterSession twitterSession = Twitter.getSessionManager().getActiveSession();
                 TwitterAuthToken authToken = twitterSession.getAuthToken();

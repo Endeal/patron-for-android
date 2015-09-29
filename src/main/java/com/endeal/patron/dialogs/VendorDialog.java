@@ -246,7 +246,8 @@ public class VendorDialog extends Dialog
                 textOffers = textOffers + ", self-serve";
         }
         String textFavorites = "\n" + vendor.getFavorites() + " Favorites";
-        description.setText(vendor.getLocation().toString() + textDelivery + textOffers + textFavorites);
+        description.setText(vendor.getLocation().toString() + textDelivery +
+            textOffers + textFavorites);
 
         // Set select
         select.setOnClickListener(new android.view.View.OnClickListener() {

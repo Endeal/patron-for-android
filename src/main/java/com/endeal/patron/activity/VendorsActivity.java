@@ -45,6 +45,7 @@ import com.endeal.patron.model.ApiResult;
 import com.endeal.patron.model.Contact;
 import com.endeal.patron.model.Location;
 import com.endeal.patron.model.Vendor;
+import com.endeal.patron.model.Patron;
 import com.endeal.patron.R;
 import com.endeal.patron.system.ApiExecutor;
 import com.endeal.patron.system.Globals;
@@ -131,6 +132,18 @@ public class VendorsActivity extends AppCompatActivity
         swipeRefreshLayoutVendors.setOnRefreshListener(refreshListener);
         refreshListener.onRefresh();
 	}
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     public void onStart()
     {

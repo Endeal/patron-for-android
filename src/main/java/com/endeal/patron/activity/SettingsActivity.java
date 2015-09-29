@@ -36,6 +36,7 @@ import com.endeal.patron.dialogs.UpdateAccountDialog;
 import com.endeal.patron.listeners.DrawerNavigationListener;
 import com.endeal.patron.listeners.OnApiExecutedListener;
 import com.endeal.patron.model.Credential;
+import com.endeal.patron.model.Patron;
 import com.endeal.patron.R;
 import com.endeal.patron.social.OnSocialTaskCompletedListener;
 import com.endeal.patron.social.SocialExecutor;
@@ -144,6 +145,18 @@ public class SettingsActivity extends AppCompatActivity
             dialog.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void onStart()

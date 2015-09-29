@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.List;
@@ -25,12 +26,14 @@ import static com.endeal.patron.model.Retrieval.Method;
 public class RetrievalMethodButtonListener implements OnClickListener
 {
     private ImageButton imageButton;
+    private Button buttonTotal;
     private Order order;
     private RetrievalButtonListener listener;
 
-    public RetrievalMethodButtonListener(ImageButton imageButton, Order order, RetrievalButtonListener listener)
+    public RetrievalMethodButtonListener(ImageButton imageButton, Button buttonTotal, Order order, RetrievalButtonListener listener)
     {
         this.imageButton = imageButton;
+        this.buttonTotal = buttonTotal;
         this.order = order;
         this.listener = listener;
     }
@@ -38,6 +41,7 @@ public class RetrievalMethodButtonListener implements OnClickListener
     public void update()
     {
         Order order = Globals.getOrder();
+        buttonTotal.setText("Total: " + order.getTotalPrice().toString());
         if (order.getRetrieval().getMethod() == Method.Pickup)
             imageButton.setImageDrawable(ContextCompat.getDrawable(imageButton.getContext(), R.drawable.ic_directions_walk_black_48dp));
         else if (order.getRetrieval().getMethod() == Method.Service)

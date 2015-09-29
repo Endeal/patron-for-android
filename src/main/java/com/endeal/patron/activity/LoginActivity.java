@@ -47,8 +47,6 @@ import com.appboy.Appboy;
 
 import com.appsee.Appsee;
 
-import com.facebook.widget.LoginButton;
-
 import com.endeal.patron.dialogs.ResetPasswordDialog;
 import com.endeal.patron.listeners.OnApiExecutedListener;
 import com.endeal.patron.listeners.OnTaskCompletedListener;
