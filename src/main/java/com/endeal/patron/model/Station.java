@@ -6,7 +6,7 @@ public class Station implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String _id;
 	private String name;
 
 	public Station(String id, String name)
@@ -17,7 +17,7 @@ public class Station implements Serializable
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	public void setName(String name)
@@ -27,7 +27,7 @@ public class Station implements Serializable
 
 	public String getId()
 	{
-		return this.id;
+		return this._id;
 	}
 
 	public String getName()

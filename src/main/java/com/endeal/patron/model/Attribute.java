@@ -14,7 +14,7 @@ public class Attribute implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String _id;
 	private String name;
 	private List<Option> options;
 
@@ -27,7 +27,7 @@ public class Attribute implements Serializable
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 	public void setName(String name)
 	{
@@ -40,14 +40,14 @@ public class Attribute implements Serializable
 
 	public String getId()
 	{
-		return id;
+		return this._id;
 	}
 	public String getName()
 	{
-		return name;
+		return this.name;
 	}
 	public List<Option> getOptions()
 	{
-		return options;
+		return this.options;
 	}
 }

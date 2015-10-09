@@ -7,7 +7,7 @@ public class Locale implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private String _id;
     private String name;
     private int number;
 
@@ -20,7 +20,7 @@ public class Locale implements Serializable
 
     public void setId(String id)
     {
-        this.id = id;
+        this._id = id;
     }
 
     public void setName(String name)
@@ -35,7 +35,7 @@ public class Locale implements Serializable
 
     public String getId()
     {
-        return this.id;
+        return this._id;
     }
 
     public String getName()

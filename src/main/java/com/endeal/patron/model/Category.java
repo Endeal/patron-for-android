@@ -12,7 +12,7 @@ public class Category implements Serializable, Comparable
 {
     private static final long serialVersionUID = 1L;
 
-	private String id;
+	private String _id;
 	private String name;
 
 	public Category(String id, String name)
@@ -45,7 +45,7 @@ public class Category implements Serializable, Comparable
 
 	public void setId(String id)
 	{
-		this.id = id;
+		this._id = id;
 	}
 
 	public void setName(String name)
@@ -56,11 +56,11 @@ public class Category implements Serializable, Comparable
 	// Getters
 	public String getId()
 	{
-		return id;
+		return this._id;
 	}
 
 	public String getName()
 	{
-		return name;
+		return this.name;
 	}
 }
