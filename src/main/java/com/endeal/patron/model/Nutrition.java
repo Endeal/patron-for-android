@@ -235,7 +235,9 @@ public class Nutrition implements Serializable
         String vegetarian = "No";
         String vegan = "No";
         String kosher = "No";
+        String lactoseFree = "No";
         String glutenFree = "No";
+        String gmoFree = "No";
         String nutFree = "No";
         String alcoholic = "No";
 
@@ -247,8 +249,12 @@ public class Nutrition implements Serializable
             vegan = "Yes";
         if (getKosher())
             kosher = "Yes";
+        if (getLactoseFree())
+            lactoseFree = "Yes";
         if (getGlutenFree())
             glutenFree = "Yes";
+        if (getGmoFree())
+            gmoFree = "Yes";
         if (getNutFree())
             nutFree = "Yes";
         if (getAlcoholic())
@@ -258,7 +264,9 @@ public class Nutrition implements Serializable
         builder.append("Vegetarian: " + vegetarian + "\n");
         builder.append("Vegan: " + vegan + "\n");
         builder.append("Kosher: " + kosher + "\n");
+        builder.append("Lactose-Free: " + lactoseFree + "\n");
         builder.append("Gluten-Free: " + glutenFree + "\n");
+        builder.append("GMO-Free: " + gmoFree + "\n");
         builder.append("Nut-Free: " + nutFree + "\n");
         builder.append("Alcoholic: " + alcoholic + "\n");
         builder.append("Ingredients: ");

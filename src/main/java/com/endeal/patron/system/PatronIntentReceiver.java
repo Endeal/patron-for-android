@@ -15,7 +15,6 @@ import com.endeal.patron.activity.LoginActivity;
 import com.endeal.patron.activity.OrdersActivity;
 import com.endeal.patron.listeners.OnApiExecutedListener;
 import com.endeal.patron.model.ApiResult;
-import com.endeal.patron.system.PatronApplication;
 
 public class PatronIntentReceiver extends BroadcastReceiver
 {
@@ -85,6 +84,17 @@ public class PatronIntentReceiver extends BroadcastReceiver
                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 Ringtone ringtone = RingtoneManager.getRingtone(context.getApplicationContext(), notification);
                 ringtone.play();
+
+                // Refresh the orders page if on it already
+                Bundle extras = intent.getExtras().getBundle("extra");
+                final String orderId = extras.getString("orderId");
+                if (PatronApplication.isOrdersActivityVisible())
+                {
+                    Intent orderIntent = new Intent(context.getApplicationContext(), OrdersActivity.class);
+                    orderIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    orderIntent.putExtra("orderId", orderId);
+                    context.startActivity(orderIntent);
+                }
             }
             catch (Exception e)
             {

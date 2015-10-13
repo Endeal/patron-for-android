@@ -68,6 +68,14 @@ public class VendorsActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         // Get layout elements
         final SwipeRefreshLayout swipeRefreshLayoutVendors = (SwipeRefreshLayout) findViewById(R.id.vendorsSwipeRefreshLayoutVendors);
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.vendorsCoordinatorLayoutMain);
@@ -137,12 +145,6 @@ public class VendorsActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        if (Globals.getPatron() == null)
-        {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
 
     public void onStart()

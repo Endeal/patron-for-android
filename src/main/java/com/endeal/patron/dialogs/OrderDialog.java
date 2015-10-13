@@ -76,7 +76,8 @@ public class OrderDialog extends Dialog
         if (order.getRetrieval().getMethod() == Method.Pickup)
         {
             textTitle = "Pickup at " + order.getRetrieval().getStation().getName();
-            code.setVisibility(View.VISIBLE);
+            if (order.getStatus() == Status.READY)
+                code.setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(order.getCode()).into(code);
         }
         else if (order.getRetrieval().getMethod() == Method.Delivery)
@@ -94,7 +95,8 @@ public class OrderDialog extends Dialog
         else
         {
             textTitle = "Self-Served";
-            code.setVisibility(View.VISIBLE);
+            if (order.getStatus() == Status.READY)
+                code.setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(order.getCode()).into(code);
         }
         title.setText(textTitle);

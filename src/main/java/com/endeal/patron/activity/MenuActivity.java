@@ -222,6 +222,7 @@ public class MenuActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+            return;
         }
         invalidateOptionsMenu();
         activityChanged = false;

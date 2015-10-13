@@ -56,6 +56,7 @@ import com.endeal.patron.model.*;
 import com.endeal.patron.R;
 import com.endeal.patron.system.ApiExecutor;
 import com.endeal.patron.system.Globals;
+import com.endeal.patron.system.PatronApplication;
 import static com.endeal.patron.model.Order.Status;
 import static com.endeal.patron.model.Retrieval.Method;
 
@@ -65,6 +66,7 @@ public class OrdersActivity extends AppCompatActivity
 {
     private CoordinatorLayout coordinatorLayout;
     private DrawerNavigationListener drawerToggle;
+    private OnRefreshListener refreshListener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -83,6 +85,14 @@ public class OrdersActivity extends AppCompatActivity
             rawOrderId = "";
         }
         final String orderId = rawOrderId.toString();
+
+        if (Globals.getPatron() == null)
+        {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
 		setContentView(R.layout.layout_orders);
 		final Context context = this;
@@ -133,7 +143,7 @@ public class OrdersActivity extends AppCompatActivity
         swipeRefreshLayoutOrders.setProgressViewOffset(false, startOffset, endOffset);
         swipeRefreshLayoutOrders.setColorScheme(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
-        OnRefreshListener refreshListener = new OnRefreshListener() {
+        refreshListener = new OnRefreshListener() {
             @Override
             public void onRefresh()
             {
@@ -190,6 +200,14 @@ public class OrdersActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+        PatronApplication.ordersActivityResumed(this);
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        PatronApplication.ordersActivityPaused();
     }
 
     public void onStart()
@@ -221,6 +239,11 @@ public class OrdersActivity extends AppCompatActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void receivedPush()
+    {
+        refreshListener.onRefresh();
     }
 
 	@Override

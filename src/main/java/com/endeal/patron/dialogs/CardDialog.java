@@ -72,7 +72,7 @@ public class CardDialog extends Dialog
             public void onClick(final View view)
             {
                 final PopupMenu popup = new PopupMenu(view.getContext(), view, Gravity.END);
-                for (int i = 1; i < 12; i++)
+                for (int i = 1; i <= 12; i++)
                 {
                     popup.getMenu().add(Menu.NONE, i, Menu.NONE, i + "");
                 }
