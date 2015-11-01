@@ -145,13 +145,13 @@ public class CreateAccountActivity extends AppCompatActivity
   // TextView methods
   public void viewPrivacyPolicy(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/privacy-policy"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/products/patron/privacy-policy"));
     startActivity(intent);
   }
 
   public void viewTermsOfService(View view)
   {
-    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/patron/terms-of-service"));
+    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.endeal.me/products/patron/terms-of-service"));
     startActivity(intent);
   }
 

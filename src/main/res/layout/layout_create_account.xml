@@ -7,224 +7,230 @@
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true">
 
-    <RelativeLayout
-        android:id="@+id/createAccountRelativeLayoutMain"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/createAccountToolbar"
+        <RelativeLayout
+            android:id="@+id/createAccountRelativeLayoutMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@color/primary"
-            android:minHeight="@dimen/toolbarHeight">
+            android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/createAccountTextViewTitle"
-                style="@style/title"
-                android:text="@string/titleActivityCreateAccount"
-                android:layout_width="wrap_content"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/createAccountToolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_alignParentTop="true"
+                android:background="@color/primary"
+                android:minHeight="@dimen/toolbarHeight">
 
-        </android.support.v7.widget.Toolbar>
+                <TextView
+                    android:id="@+id/createAccountTextViewTitle"
+                    style="@style/title"
+                    android:text="@string/titleActivityCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/createAccountTextInputLayoutFirst"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/createAccountToolbar">
+            </android.support.v7.widget.Toolbar>
 
-            <EditText
-                android:id="@+id/createAccountEditTextFirst"
-                style="@style/darkEditText"
-                android:hint="@string/createAccountEditTextFirst"
-                android:inputType="textCapWords"
-                android:maxLength="200"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/createAccountTextInputLayoutFirst"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/createAccountTextInputLayoutLast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/createAccountTextInputLayoutFirst">
-
-            <EditText
-                android:id="@+id/createAccountEditTextLast"
-                style="@style/darkEditText"
-                android:hint="@string/createAccountEditTextLast"
-                android:inputType="textCapWords"
-                android:maxLength="200"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/createAccountTextInputLayoutEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/createAccountTextInputLayoutLast">
-
-            <EditText
-                android:id="@+id/createAccountEditTextEmail"
-                style="@style/darkEditText"
-                android:hint="@string/createAccountEditTextEmail"
-                android:inputType="textEmailAddress"
-                android:maxLength="200"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/createAccountTextInputLayoutPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/createAccountTextInputLayoutEmail">
-
-            <EditText
-                android:id="@+id/createAccountEditTextPassword"
-                style="@style/darkEditText"
-                android:hint="@string/createAccountEditTextPassword"
-                android:inputType="textPassword"
-                android:maxLength="200"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/createAccountTextInputLayoutConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/createAccountTextInputLayoutPassword">
-
-            <EditText
-                android:id="@+id/createAccountEditTextConfirm"
-                style="@style/darkEditText"
-                android:hint="@string/createAccountEditTextConfirm"
-                android:inputType="textPassword"
-                android:maxLength="200"
-                android:maxLines="1"
-                android:lines="1"
-                android:singleLine="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:id="@+id/createAccountLinearLayoutBirthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/createAccountTextInputLayoutConfirm"
-            android:weightSum="2" >
-
-            <TextView
-                android:id="@+id/createAccountTextViewBirthday"
-                style="@style/label"
-                android:text="@string/createAccountTextViewBirthday"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:layout_weight="1" />
+                android:layout_below="@+id/createAccountToolbar">
+
+                <EditText
+                    android:id="@+id/createAccountEditTextFirst"
+                    style="@style/darkEditText"
+                    android:hint="@string/createAccountEditTextFirst"
+                    android:inputType="textCapWords"
+                    android:maxLength="200"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/createAccountTextInputLayoutLast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/createAccountTextInputLayoutFirst">
+
+                <EditText
+                    android:id="@+id/createAccountEditTextLast"
+                    style="@style/darkEditText"
+                    android:hint="@string/createAccountEditTextLast"
+                    android:inputType="textCapWords"
+                    android:maxLength="200"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/createAccountTextInputLayoutEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/createAccountTextInputLayoutLast">
+
+                <EditText
+                    android:id="@+id/createAccountEditTextEmail"
+                    style="@style/darkEditText"
+                    android:hint="@string/createAccountEditTextEmail"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="200"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/createAccountTextInputLayoutPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/createAccountTextInputLayoutEmail">
+
+                <EditText
+                    android:id="@+id/createAccountEditTextPassword"
+                    style="@style/darkEditText"
+                    android:hint="@string/createAccountEditTextPassword"
+                    android:inputType="textPassword"
+                    android:maxLength="200"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/createAccountTextInputLayoutConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/createAccountTextInputLayoutPassword">
+
+                <EditText
+                    android:id="@+id/createAccountEditTextConfirm"
+                    style="@style/darkEditText"
+                    android:hint="@string/createAccountEditTextConfirm"
+                    android:inputType="textPassword"
+                    android:maxLength="200"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/createAccountLinearLayoutBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/createAccountTextInputLayoutConfirm"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/createAccountTextViewBirthday"
+                    style="@style/label"
+                    android:text="@string/createAccountTextViewBirthday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/createAccountButtonBirthday"
+                    style="@style/flatButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/createAccountTextViewAgreement"
+                style="@style/subtitle"
+                android:text="By clicking submit, you agree to the following:"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/createAccountLinearLayoutBirthday"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:id="@+id/createAccountLinearLayoutLegal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/createAccountTextViewAgreement"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/createAccountTextViewPrivacyPolicy"
+                    style="@style/subtitle"
+                    android:text="Privacy Policy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="viewPrivacyPolicy"
+                    android:clickable="true" />
+
+                <TextView
+                    android:id="@+id/createAccountTextViewTermsOfService"
+                    style="@style/subtitle"
+                    android:text="Terms of Service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="viewTermsOfService"
+                    android:clickable="true" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/createAccountButtonBirthday"
-                style="@style/flatButton"
-                android:layout_width="0dp"
+                android:id="@+id/createAccountButtonSubmit"
+                style="@style/raisedButton"
+                android:text="@string/createAccountButtonSubmit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1" />
+                android:layout_below="@+id/createAccountLinearLayoutLegal"
+                android:layout_margin="30dp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <Button
-            android:id="@+id/createAccountButtonSubmit"
-            style="@style/raisedButton"
-            android:text="@string/createAccountButtonSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="30dp" />
-
-        <LinearLayout
-            android:id="@+id/createAccountLinearLayoutLegal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/createAccountButtonSubmit"
-            android:orientation="horizontal"
-            android:weightSum="2" >
-
-            <TextView
-                android:id="@+id/createAccountTextViewPrivacyPolicy"
-                style="@style/subtitle"
-                android:text="Privacy Policy"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="viewPrivacyPolicy"
-                android:clickable="true" />
-
-            <TextView
-                android:id="@+id/createAccountTextViewTermsOfService"
-                style="@style/subtitle"
-                android:text="Terms of Service"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="viewTermsOfService"
-                android:clickable="true" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/createAccountTextViewAgreement"
-            style="@style/subtitle"
-            android:text="By clicking submit, you agree to the following:"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_above="@+id/createAccountLinearLayoutLegal"/>
-
-    </RelativeLayout>
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
