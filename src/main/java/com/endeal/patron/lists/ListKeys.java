@@ -1,9 +1,0 @@
-package com.endeal.patron.lists;
-
-public class ListKeys
-{
-	public static String PASSWORD_ENCRYPTION_KEY = "9D131D72B1F6B726D954BB13BE521C763BEBAD4825486A73DC9390967CE703D6";// "T2{KvQ}*8RTvXEK";
-	public static String PASSWORD_DECRYPTION_KEY = "9D131D72B1F6B726D954BB13BE521C763BEBAD4825486A73DC9390967CE703D6";
-    public static String STRIPE_PUBLIC_KEY = "pk_live_y6QfeIaU3wuWMltE6oTc84aA";
-    public static String STRIPE_PRIVATE_KEY = "sk_live_euqBy1mPLxPLiyznCWIp0iwe";
-}
